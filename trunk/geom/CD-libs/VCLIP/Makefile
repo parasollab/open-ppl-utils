@@ -37,7 +37,7 @@ all:	lib/libvclip.a lib/libvclip.so
 # (The qhull directory should contain libqhull.a and several header
 # files such as qhull_a.h.)
 #
-QHULL_DIR  = /research/nancydrew/dsmft/users/shawna/CodeCheck/linux/qhull/src
+QHULL_DIR  = ../qhull3.0/src
 QHULL_CC   = -DQHULL -I $(QHULL_DIR)
 QHULL_LD   = -L $(QHULL_DIR) -lqhull
 # 
