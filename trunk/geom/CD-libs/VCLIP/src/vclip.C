@@ -35,12 +35,12 @@
 
 
 
-#include <iostream.h>
-#include <iomanip.h>
-#include <fstream.h>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <limits.h>
 #include <stdlib.h>
-#include <vector.h>
+#include <vector>
 
 #include "vclip.h"
 
@@ -84,8 +84,8 @@ int Polyhedron::vertVertTest(const Feature *&v1, const Feature *&v2,
 			     const VclipPose &X12, const VclipPose &X21,
 			     Vect3 &cp1, Vect3 &cp2, Real &dist)
 {
-  const list<VertConeNode> *cone;
-  list<VertConeNode>::const_iterator cni;
+  const std::list<VertConeNode> *cone;
+  std::list<VertConeNode>::const_iterator cni;
   Vect3 xcoords;
 
   // check if v2 lies in v1's cone
@@ -115,16 +115,16 @@ int Polyhedron::vertVertTest(const Feature *&v1, const Feature *&v2,
 
 int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f, 
 			     XformedGeom &xv, 
-			     const VclipPose &Xvf, const list<Face> &allFaces,
+			     const VclipPose &Xvf, const std::list<Face> &allFaces,
 			     Vect3 &cpv, Vect3 &cpf, Real &dist)
 {
   int update;
   const Edge *e;
-  const list<VertConeNode> *vcone;
-  const list<FaceConeNode> *fcone;
-  list<VertConeNode>::const_iterator vcni;
-  list<FaceConeNode>::const_iterator fcni;
-  list<Face>::const_iterator facei;
+  const std::list<VertConeNode> *vcone;
+  const std::list<FaceConeNode> *fcone;
+  std::list<VertConeNode>::const_iterator vcni;
+  std::list<FaceConeNode>::const_iterator fcni;
+  std::list<Face>::const_iterator facei;
   Real d, d2, dmin;
   Vect3 xother;
 
@@ -190,7 +190,7 @@ int Polyhedron::vertEdgeTest(const Feature *&v, const Feature *&e,
 			     Vect3 &cpv, Vect3 &cpe, Real &dist)
 {
   const Feature *minNbr, *maxNbr;
-  list<VertConeNode>::const_iterator cni;
+  std::list<VertConeNode>::const_iterator cni;
   Real min, max, lambda, dt, dh;
   Vect3 offset;
   Vect3 h;
@@ -462,16 +462,16 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   enum Code {INSIDE, OUTSIDE, MIN, MAX};
 
   int i, intersect;
-  list<FaceConeNode>::const_iterator cni;
+  std::list<FaceConeNode>::const_iterator cni;
   const FaceConeNode *cn, *prev, *next, *maxCn, *minCn, *chopCn;
   const Edge *s;
   const Vertex *minv, *maxv;
   Real lambda, min, max, dt, dh, dmin, dmax;
   Vect3 point;
-  vector<int>::iterator c;
-  vector<Real>::iterator l;
-  static vector<int> code(MAX_VERTS_PER_FACE); //(template can't use local type)
-  static vector<Real> lam(MAX_VERTS_PER_FACE);
+  std::vector<int>::iterator c;
+  std::vector<Real>::iterator l;
+  static std::vector<int> code(MAX_VERTS_PER_FACE); //(template can't use local type)
+  static std::vector<Real> lam(MAX_VERTS_PER_FACE);
 
   if (F(f)->sides > code.capacity()) {
     code.reserve(F(f)->sides);
@@ -717,7 +717,7 @@ Real Polyhedron::vclip(const Polyhedron *const poly1,
   // uh oh...
   if (loop > MAX_ITERS) {
     int i;
-    ofstream ofs("vclipCrash", ios::app);
+    std::ofstream ofs("vclipCrash", std::ios::app);
     ofs << "(" << ptree1name << "," << ptree2name << ")" << endl;
     ofs << feat1->name() << '\n' << feat2->name() << '\n' << '*';
     for (i = 0; i < sizeof(VclipPose); i++) ofs << ((char *) &X12)[i];
@@ -745,7 +745,7 @@ Real PolyTree::vclip_(const PolyTree *const ptree1,
 		      Vect3 &cp1, Vect3 &cp2)
 {
   PolyTreePair ptrees;
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
   Real dist, compDist;
   Vect3 compCp1, compCp2;
   VclipPose Xp1p2, Xp2p1;

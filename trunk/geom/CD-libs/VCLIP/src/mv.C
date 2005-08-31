@@ -37,7 +37,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <strstream.h>
+#include <sstream>
 #include <string.h>
 #include "mv.h"
 
@@ -75,16 +75,16 @@ const Se3  Se3::ID    (Quat::ID, Vect3::ZERO);
 ///////////////////////////////////////////////////////////////////////////////
 
 
-ostream& Vect3::print(ostream &os) const
+std::ostream& Vect3::print(std::ostream &os) const
 {
-  std::_Ios_Fmtflags oldFlags = os.setf(ios::showpos);
+  std::_Ios_Fmtflags oldFlags = os.setf(std::ios::showpos);
   os << '(' << x << ' ' << y << ' ' << z << ')';
   os.flags(oldFlags);
   return os;
 }
 
 
-istream& Vect3::read(istream &is)
+std::istream& Vect3::read(std::istream &is)
 {
   char tok[STR_LENGTH];
   char *code;
@@ -135,12 +135,12 @@ void Mat3::set(const Quat &q)
 }
 
 
-ostream& Mat3::print(ostream &os) const
+std::ostream& Mat3::print(std::ostream &os) const
 {
-  std::_Ios_Fmtflags oldFlags = os.setf(ios::showpos);
-  os << '[' << xx << ' ' << xy << ' ' << xz << ']' << endl;
-  os << '[' << yx << ' ' << yy << ' ' << yz << ']' << endl;
-  os << '[' << zx << ' ' << zy << ' ' << zz << ']' << endl;
+  std::_Ios_Fmtflags oldFlags = os.setf(std::ios::showpos);
+  os << '[' << xx << ' ' << xy << ' ' << xz << ']' << std::endl;
+  os << '[' << yx << ' ' << yy << ' ' << yz << ']' << std::endl;
+  os << '[' << zx << ' ' << zy << ' ' << zz << ']' << std::endl;
   os.flags(oldFlags);
   return os;
 }
@@ -467,9 +467,9 @@ void Quat::set(const Mat3 &R)
 }
 
 
-ostream& Quat::print(ostream &os) const
+std::ostream& Quat::print(std::ostream &os) const
 {
-  std::_Ios_Fmtflags oldFlags = os.setf(ios::showpos);
+  std::_Ios_Fmtflags oldFlags = os.setf(std::ios::showpos);
   os << '(' << s_ << ' ' << x_ << ' ' << y_ << ' ' << z_ << ')';
   os.flags(oldFlags);
   return os;
@@ -582,7 +582,7 @@ void Quat::invXform(Vect3 &v) const
 ///////////////////////////////////////////////////////////////////////////////
 
 
-istream& Se3::read(istream &is)
+std::istream& Se3::read(std::istream &is)
 {
   char c;
   int i;
@@ -595,10 +595,10 @@ istream& Se3::read(istream &is)
   
   *this = Se3::ID;
 
-  is >> ws;
+  is >> std::ws;
   if (is.peek() == '{') is.get(c);
   else {
-    cerr << "Se3::read : didn't find '{' \a" << endl;
+    std::cerr << "Se3::read : didn't find '{' \a" << std::endl;
     return is;
   }
     
@@ -612,11 +612,11 @@ istream& Se3::read(istream &is)
     }
     buffer[i++] = c;
     if (i == STR_LENGTH || is.eof()) {
-      cerr << "Se3::read : didn't find '}' or specification too long\a" << endl;
+      std::cerr << "Se3::read : didn't find '}' or specification too long\a" << std::endl;
       return is;
     }
   }
-  istrstream iss(buffer);
+  std::istringstream iss(buffer);
 
   
   while (!((iss >> tok).fail())) {
@@ -632,7 +632,7 @@ istream& Se3::read(istream &is)
       op.set(quat, Vect3::ZERO);
     }
     else {
-      cerr << "Se3::read : unknown token " << tok << " \a" << endl;
+      std::cerr << "Se3::read : unknown token " << tok << " \a" << std::endl;
       break;
     }
 

@@ -36,14 +36,14 @@
 
 
 #include <stdio.h>
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
-#include <fstream.h>
-#include <strstream.h>
-#include <iomanip.h>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 #include <ctype.h>
 #include <string.h>
-#include <function.h>
+#include <functional>
 
 #include "vclip.h"
 
@@ -84,7 +84,7 @@ char edgeName[2 * VF_NAME_SZ];  // space for 2 Vertex names, :, and \0.
 ///////////////////////////////////////////////////////////////////////////////
 
 // Output a Plane
-ostream& Plane::print(ostream &os) const
+std::ostream& Plane::print(std::ostream &os) const
 {
   std::_Ios_Fmtflags oldFlags;
 
@@ -115,15 +115,15 @@ const char *Edge::name() const
 }
 
 
-ostream& VertConeNode::print(ostream &os) const 
+std::ostream& VertConeNode::print(std::ostream &os) const 
 {
-  return os << setw(16) << (nbr ? nbr->name() : "?") << "]  " << *plane;
+  return os << std::setw(16) << (nbr ? nbr->name() : "?") << "]  " << *plane;
 }
 
 
-ostream& FaceConeNode::print(ostream &os) const 
+std::ostream& FaceConeNode::print(std::ostream &os) const 
 {
-  return os << setw(16) << (nbr ? nbr->name() : "?") << "]  " << *plane;
+  return os << std::setw(16) << (nbr ? nbr->name() : "?") << "]  " << *plane;
 }
 
 
@@ -140,8 +140,8 @@ ostream& FaceConeNode::print(ostream &os) const
 
 void Polyhedron::processEdge(Face *f, Vertex *tail, Vertex *head)
 {
-  list<VertConeNode>::iterator vci;
-  list<FaceConeNode>::iterator fci;;
+  std::list<VertConeNode>::iterator vci;
+  std::list<FaceConeNode>::iterator fci;;
   VertConeNode vcn;
   FaceConeNode fcn;
 
@@ -198,12 +198,12 @@ void Polyhedron::processEdge(Face *f, Vertex *tail, Vertex *head)
 
 // No checking done, but numVerts better be at least 3!
 void Polyhedron::addFace(const char *name, 
-			 vector<Vertex *> &verts, int clockwise)
+			 std::vector<Vertex *> &verts, int clockwise)
 {
   int i;
   Face f0, *f;
-  vector<Vertex *>::iterator vi;
-  list<FaceConeNode>::iterator cni;
+  std::vector<Vertex *>::iterator vi;
+  std::list<FaceConeNode>::iterator cni;
   FaceConeNode *last;
   Vect3 u, v, normal;
 
@@ -242,58 +242,58 @@ void Polyhedron::addFace(const char *name,
 }  
 
 
-ostream& Polyhedron::print(ostream &os) const
+std::ostream& Polyhedron::print(std::ostream &os) const
 {
   const Vertex *v;
   const Edge *e;
   const Face *f;
-  list<VertConeNode>::const_iterator vcni;
-  list<FaceConeNode>::const_iterator fcni;
-  list<Vertex>::const_iterator vi;
-  list<Edge  >::const_iterator ei;
-  list<Face  >::const_iterator fi;
+  std::list<VertConeNode>::const_iterator vcni;
+  std::list<FaceConeNode>::const_iterator fcni;
+  std::list<Vertex>::const_iterator vi;
+  std::list<Edge  >::const_iterator ei;
+  std::list<Face  >::const_iterator fi;
   //typename faces_.const_iterator fi;
 
   os << verts_.size() << " verts :  ";
   FOR_EACH(verts_, vi) os << vi->name() << " ";
-  os << endl;
+  os << std::endl;
 
   os << edges_.size() << " edges :  ";
   FOR_EACH(edges_, ei) os << ei->name() << " ";
-  os << endl;
+  os << std::endl;
 
   os << faces_.size() << " faces :  ";
   FOR_EACH(faces_, fi) os << fi->name() << " ";
-  os << endl << endl;
+  os << std::endl << std::endl;
 
   FOR_EACH(verts_, vi) {
     v = &*vi;
     os << "vertex " << v->name() << " "  << v->coords_ << "   "
-       << v->cone.size() << " neighbors" << endl;
-    FOR_EACH(v->cone, vcni) os << *vcni << endl;
-    os << endl;
+       << v->cone.size() << " neighbors" << std::endl;
+    FOR_EACH(v->cone, vcni) os << *vcni << std::endl;
+    os << std::endl;
   }
 
   FOR_EACH(edges_, ei) {
     e = &*ei;
-    os << "edge " << e->name() << " " <<  e->dir << endl;
-    os << "tail: " << setw(16) << e->tail->name() << "]  " 
-       << e->tplane << endl;
-    os << "head: " << setw(16) << e->head->name() << "]  " 
-       << e->hplane << endl;
-    os << "left: " << setw(16) << e->left->name() << "]  " 
-       << e->lplane << endl;
-    os << "rght: " << setw(16) << e->right->name() << "]  " 
-       << e->rplane << endl;
-    os << endl;
+    os << "edge " << e->name() << " " <<  e->dir << std::endl;
+    os << "tail: " << std::setw(16) << e->tail->name() << "]  " 
+       << e->tplane << std::endl;
+    os << "head: " << std::setw(16) << e->head->name() << "]  " 
+       << e->hplane << std::endl;
+    os << "left: " << std::setw(16) << e->left->name() << "]  " 
+       << e->lplane << std::endl;
+    os << "rght: " << std::setw(16) << e->right->name() << "]  " 
+       << e->rplane << std::endl;
+    os << std::endl;
   }
 
   FOR_EACH(faces_, fi) {
     f = &*fi;
     os << "face " << f->name() << " " << f->plane << "   "
-       << f->sides << " neighbors" << endl;
-    FOR_EACH(f->cone, fcni) os << *fcni << endl;
-    os << endl;
+       << f->sides << " neighbors" << std::endl;
+    FOR_EACH(f->cone, fcni) os << *fcni << std::endl;
+    os << std::endl;
   }
 
   return os;
@@ -306,9 +306,9 @@ SoShapeKit *Polyhedron::buildInvModel() const
   int numVerts, numEdges, numFaces;
   const Vertex *v;
   const Edge *e;
-  list<Vertex>::const_iterator vi;
-  list<Face  >::const_iterator fi;
-  list<FaceConeNode>::const_iterator cni;
+  std::list<Vertex>::const_iterator vi;
+  std::list<Face  >::const_iterator fi;
+  std::list<FaceConeNode>::const_iterator cni;
   SbVec3f sbv;
   // map:  Vertex *  -->  int, (we cast Vertex * to int for default hasher)
   static hash_map<int, int> vertIndices(1000);  
@@ -375,7 +375,7 @@ PolyTree::PolyTree()
 // copy constructor
 PolyTree::PolyTree(const PolyTree &orig)
 {
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
 
   poly_ = orig.poly_;
   vol_ = orig.vol_;
@@ -405,7 +405,7 @@ PolyTree::PolyTree(const PolyTree &orig)
 // accuracy, since these calculations should be performed only once.
 void PolyTree::xform(const Se3 &T)
 {
-  list< Handle<PolyTree> >::iterator compi;
+  std::list< Handle<PolyTree> >::iterator compi;
 
   Tpr_.premult(T);
   Tpr_.rot().normalize();
@@ -419,11 +419,11 @@ void PolyTree::xform(const Se3 &T)
 
 
 
-void PolyTree::printRecur(ostream &os, int level) const
+void PolyTree::printRecur(std::ostream &os, int level) const
 {
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
 
-  os << setw(level * 4) << " " << Tpr_ << "  " << name << endl;
+  os << std::setw(level * 4) << " " << Tpr_ << "  " << name << std::endl;
 
   FOR_EACH(components, compi) (*compi)->printRecur(os, level+1);
 }
@@ -433,7 +433,7 @@ void PolyTree::printRecur(ostream &os, int level) const
 int PolyTree::numNodes() const
 {
   int i;
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
 
   if (components.empty()) return 1;
   else {
@@ -448,7 +448,7 @@ int PolyTree::numNodes() const
 int PolyTree::numLeaves() const
 {
   int i;
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
 
   if (components.empty()) return 1;
   else {
@@ -459,22 +459,22 @@ int PolyTree::numLeaves() const
 }
 
 
-ostream& PolyTree::print(ostream &os) const
+std::ostream& PolyTree::print(std::ostream &os) const
 {
-  os << "polytree " << name << endl;
+  os << "polytree " << name << std::endl;
   if (!components.empty())
     os << "compound:  " << components.size() << " children, " << numLeaves() 
-       << " leaves, " << numNodes() << " total nodes" << endl;
-  else os << "atomic" << endl;
-  os << "volume            " << vol_  << endl;
-  os << "1st moment of vol " << mov1_ << endl;
-  os << "2nd moment of vol " << mov2_ << endl;
-  os << "product of vol    " << pov_  << endl;
-  os << "radius            " << rad_  << endl;
+       << " leaves, " << numNodes() << " total nodes" << std::endl;
+  else os << "atomic" << std::endl;
+  os << "volume            " << vol_  << std::endl;
+  os << "1st moment of vol " << mov1_ << std::endl;
+  os << "2nd moment of vol " << mov2_ << std::endl;
+  os << "product of vol    " << pov_  << std::endl;
+  os << "radius            " << rad_  << std::endl;
 
   if (!components.empty()) {
     printRecur(os, 0);
-    os << endl;
+    os << std::endl;
   }
   else {
     os << &*poly_ << flush;
@@ -493,7 +493,7 @@ SoNode *PolyTree::buildInvModel() const
   SoNode *node;
   SoTransform *xform;
   SoSeparator *root;
-  list< Handle<PolyTree> >::const_iterator compi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
   Se3 T;
 
   if (components.empty()) return poly_->buildInvModel();    // atomic poly
@@ -524,9 +524,9 @@ int Polyhedron::check() const
   int nv, ne, nf;
   const Edge *e, *e1, *e2;
   const Face *f;
-  list<FaceConeNode>::const_iterator cni;
-  list<Edge>::const_iterator ei;
-  list<Face>::const_iterator fi;
+  std::list<FaceConeNode>::const_iterator cni;
+  std::list<Edge>::const_iterator ei;
+  std::list<Face>::const_iterator fi;
   Real dp;
   Vect3 v;
 
@@ -538,12 +538,12 @@ int Polyhedron::check() const
     v.cross(e->lplane.normal(), e->rplane.normal());
     if ((dp = Vect3::dot(e->dir, v)) >= 0) {
       error = 1;
-      cerr << "\anonconvex edge:  "
+      std::cerr << "\anonconvex edge:  "
 	   << " tail=" << e->tail->name_
 	   << " head=" << e->head->name_
 	   << " left=" << e->left->name_
 	   << " rght=" << e->right->name_
-	   << " angle=" << asin(-dp) << endl;
+	   << " angle=" << asin(-dp) << std::endl;
     }
   }
 
@@ -557,9 +557,9 @@ int Polyhedron::check() const
       if ((e1->tail == e2->tail || e1->head == e2->head)) v.negate();
       if ((dp = Vect3::dot(f->plane.normal(), v)) <= 0) {
 	error = 1;
-	cerr << "\anonconvex face:  " << f->name_
+	std::cerr << "\anonconvex face:  " << f->name_
 	     << "  vertex=" << (e1->left == f ? e1->head : e1->tail)->name_
-	     << "  angle=" << asin(-dp) << endl;
+	     << "  angle=" << asin(-dp) << std::endl;
       }
     }
   }
@@ -572,7 +572,7 @@ int Polyhedron::check() const
   if (nv - ne + nf - 2) {
     error = 1;
     cout << "\apolyhedral Euler formula failure: "
-	 << "nv=" << nv << " ne=" << ne << " nf=" << nf << endl;
+	 << "nv=" << nv << " ne=" << ne << " nf=" << nf << std::endl;
   }
 
   return error;
@@ -597,15 +597,15 @@ int Polyhedron::buildHull()
   vertexT **vertexp;
   setT *vertices;
   coordT *qhullData, *qhd;
-  list<Vertex>::iterator vi, vi0;
+  std::list<Vertex>::iterator vi, vi0;
   char options [200];
   char name[LONG_STR_SZ];
 
-  static vector<Vertex *> facelist(MAX_VERTS_PER_FACE);
+  static std::vector<Vertex *> facelist(MAX_VERTS_PER_FACE);
 #define MAX_VERTS_PER_HULL 1000  // initial size; exceeding it breaks nothing
-  static vector<coordT> array      (MAX_VERTS_PER_HULL * 3);
-  static vector<Vertex *> hullVerts(MAX_VERTS_PER_HULL);
-  static vector<int> vertUsed      (MAX_VERTS_PER_HULL);
+  static std::vector<coordT> array      (MAX_VERTS_PER_HULL * 3);
+  static std::vector<Vertex *> hullVerts(MAX_VERTS_PER_HULL);
+  static std::vector<int> vertUsed      (MAX_VERTS_PER_HULL);
 #undef MAX_VERTS_PER_HULL 1000
 
   //cout << "invoking qhull...   " << flush;
@@ -678,7 +678,7 @@ int Polyhedron::buildHull()
     }
   nv = verts_.size();
 
-  //cout << nf << " faces, " << nv << " vertices " << endl;
+  //cout << nf << " faces, " << nv << " vertices " << std::endl;
 
   qh NOerrexit= True;
   qh_freeqhull (!qh_ALL);
@@ -687,8 +687,8 @@ int Polyhedron::buildHull()
   return 0;
 
 error:
-  cerr << "error building convex hull of Polyhedron \a" << endl;
-  cerr << "exitcode: " << exitcode << endl;
+  std::cerr << "error building convex hull of Polyhedron \a" << std::endl;
+  std::cerr << "exitcode: " << exitcode << std::endl;
 
   qh NOerrexit= True;
   qh_freeqhull (!qh_ALL);
@@ -701,9 +701,9 @@ error:
 // QHULL not available - crash and burn
 int Polyhedron::buildHull()
 {
-  cerr << "fatal error:" << endl;
-  cerr << "attempt to compute convex hull of vertex set\n "
-       << "but no QHULL library linked" << endl;
+  std::cerr << "fatal error:" << std::endl;
+  std::cerr << "attempt to compute convex hull of vertex set\n "
+       << "but no QHULL library linked" << std::endl;
   exit(1);
   return 1;
 }
@@ -719,9 +719,9 @@ int PolyTree::buildHull()
 {
   int nv;
   const PolyTree *comp;
-  list< Handle<PolyTree> >::const_iterator compi;
-  list<Vertex>::const_iterator cvi;
-  list<Vertex>::iterator vi;
+  std::list< Handle<PolyTree> >::const_iterator compi;
+  std::list<Vertex>::const_iterator cvi;
+  std::list<Vertex>::iterator vi;
   Vect3 xcoords;
 
   setPoly(new Polyhedron);
@@ -757,10 +757,10 @@ void PolyTree::compVolInts()
   //Vertex *vert;
   Edge *e;
   const Face *f;
-  list< Handle<PolyTree> >::const_iterator compi;
-  list<Face>::const_iterator fi;
-  list<Vertex>::const_iterator vi;
-  list<FaceConeNode>::const_iterator cni;
+  std::list< Handle<PolyTree> >::const_iterator compi;
+  std::list<Face>::const_iterator fi;
+  std::list<Vertex>::const_iterator vi;
+  std::list<FaceConeNode>::const_iterator cni;
   Real a0, a1, da;
   Real b0, b1, db;
   Real a0_2, a0_3, a0_4, b0_2, b0_3, b0_4;
@@ -954,7 +954,7 @@ void PolyTree::compVolInts()
 
 const PolyTree *PolyTreeLibrary::lookup(const char *name) const
 {
-  list< Handle<PolyTree> >::const_iterator libi;
+  std::list< Handle<PolyTree> >::const_iterator libi;
 
   FOR_EACH(lib, libi) 
     if (!strcmp((*libi)->name, name)) break;
@@ -964,7 +964,7 @@ const PolyTree *PolyTreeLibrary::lookup(const char *name) const
 
 const PolyTree *PolyTreeLibrary::lookup(int i) const
 {
-  list< Handle<PolyTree> >::const_iterator libi;
+  std::list< Handle<PolyTree> >::const_iterator libi;
 
   if (i < 0 || i >= lib.size()) return NULL;
   for (libi = lib.begin(); i-- > 0; ++libi);
@@ -980,18 +980,18 @@ const PolyTree *PolyTreeLibrary::lookup(int i) const
 // the verts, edges, and faces for a Polyhedron, links features
 // together, and builds the Voronoi structure.
 
-Polyhedron *readPolyhedron(istream &is)
+Polyhedron *readPolyhedron(std::istream &is)
 {
   char c, next;
   int vertCounter, faceCounter, i;
   Vertex *v;
   Polyhedron *p;
-  list<Vertex>::iterator vi;
-  list<Vertex>::const_iterator cvi;
+  std::list<Vertex>::iterator vi;
+  std::list<Vertex>::const_iterator cvi;
   char s[LONG_STR_SZ]; 
   Vect3 coords;
   VertFaceName vertName, faceName;
-  static vector<Vertex *> facelist(MAX_VERTS_PER_FACE);
+  static std::vector<Vertex *> facelist(MAX_VERTS_PER_FACE);
   static hash_map<int, Vertex *> indexedVerts(1000); // map:  int -> Vertex *
 
 
@@ -1024,14 +1024,14 @@ Polyhedron *readPolyhedron(istream &is)
     if (*faceName == '-') sprintf(faceName, "f%d", faceCounter++);
 
     is.get(s, LONG_STR_SZ, '\n'); is.get(c);  // read line & ending '\n'
-    istrstream line(s);                       // create input stream
+    std::istringstream line(s);               // create input stream
     facelist.clear();
     while (1) {
       if ((line >> vertName).fail()) break;
       if (isdigit(*vertName)) {
 	i = atoi(vertName);
 	if (i < 0 || i >= vertCounter) {
-	  cerr << "no vertex " << i << " on Polyhedron\a" << endl;
+	  std::cerr << "no vertex " << i << " on Polyhedron\a" << std::endl;
 	  goto error;
 	}
 	facelist.push_back(indexedVerts.find(i)->second);
@@ -1041,7 +1041,7 @@ Polyhedron *readPolyhedron(istream &is)
 	FOR_EACH(indexedVerts, hmi)
 	  if (!strcmp(hmi->second->name(), vertName)) break;
 	if (hmi == indexedVerts.end()) {
-	  cerr << "no vertex " << vertName << " on Polyhedron\a" << endl;
+	  std::cerr << "no vertex " << vertName << " on Polyhedron\a" << std::endl;
 	  goto error;
 	}
 	facelist.push_back(hmi->second);
@@ -1064,7 +1064,7 @@ error:
 // Read and return an atomic PolyTree, or NULL on error.  Volume
 // properties are automatically computed.
 
-PolyTree *readAtomicPolyTree(istream &is)
+PolyTree *readAtomicPolyTree(std::istream &is)
 {
   Polyhedron *p;
   PolyTree *ptree;
@@ -1080,7 +1080,7 @@ PolyTree *readAtomicPolyTree(istream &is)
 // Read in a compound PolyTree.  Return NULL on error.  Volume
 // properties are also computed.
 
-PolyTree *readCompoundPolyTree(istream &is, const PolyTreeLibrary &library)
+PolyTree *readCompoundPolyTree(std::istream &is, const PolyTreeLibrary &library)
 {
   char c;
   PolyTree *pt, *comp;
@@ -1112,7 +1112,7 @@ PolyTree *readCompoundPolyTree(istream &is, const PolyTreeLibrary &library)
   return pt;
 
 error:
-  cerr << "error reading polyTree \a" << endl;
+  std::cerr << "error reading polyTree \a" << std::endl;
   delete pt;
   return NULL;
 }
@@ -1134,7 +1134,7 @@ int loadPolyTreeFile(const char *fname, PolyTreeLibrary &library)
   int n;
   char token[200], name[PTREE_NAME_SZ];
 
-  ifstream ifs(fname);
+  std::ifstream ifs(fname);
   if (!ifs) return 0;
 
   n = 0;
@@ -1146,13 +1146,13 @@ int loadPolyTreeFile(const char *fname, PolyTreeLibrary &library)
     }
 
     if (strcmp(token, "atomic") && strcmp(token, "compound")) {
-      cerr << "bad token: " << token << " \a" << endl;
+      std::cerr << "bad token: " << token << " \a" << std::endl;
       break;
     }
 
     ifs >> name;
     if (library.lookup(name))
-      cerr << "warning: PolyTree " <<name<< " already in library \a" << endl;
+      std::cerr << "warning: PolyTree " <<name<< " already in library \a" << std::endl;
     
     pt = (!strcmp(token, "compound")) ? 
       readCompoundPolyTree(ifs, library) : readAtomicPolyTree(ifs);
