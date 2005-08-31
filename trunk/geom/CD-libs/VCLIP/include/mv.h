@@ -38,7 +38,7 @@
 #ifndef MV_H
 #define MV_H
 
-#include <iostream.h>
+#include <iostream>
 #include <math.h>
 
 #if INVENTOR
@@ -210,13 +210,13 @@ public:
 
   // input / output ////////////////////////////////////////////////////////////
 
-  ostream &print(ostream &os) const;
+  std::ostream &print(std::ostream &os) const;
 
   // Read vector from stream If the next string read is the single
   // character i, j, or k, the appropriate unit vector is returned.
   // Plus and minus signs may be optionally placed in front of these
   // codes, e.g. +i or -k
-  istream &read(istream &is);
+  std::istream &read(std::istream &is);
 
   // operations not returning a Vect3 //////////////////////////////////////////
 
@@ -358,7 +358,7 @@ public:
 
   // input / output ////////////////////////////////////////////////////////////
 
-  ostream& print(ostream &os) const;
+  std::ostream& print(std::ostream &os) const;
 
   // operations not returning a Mat3 ///////////////////////////////////////////
 
@@ -449,8 +449,8 @@ public:
   
   // input / output ////////////////////////////////////////////////////////////
 
-  inline ostream& print(ostream &os) const;
-  inline istream& read(istream &is);
+  inline std::ostream& print(std::ostream &os) const;
+  inline std::istream& read(std::istream &is);
 
   // operations returning result via this //////////////////////////////////////
 
@@ -539,7 +539,7 @@ public:
 
   // input / output ////////////////////////////////////////////////////////////
 
-  ostream& print(ostream &os) const;
+  std::ostream& print(std::ostream &os) const;
 
   // operations not returning a Quat ///////////////////////////////////////////
 
@@ -630,7 +630,7 @@ public:
   // input / output ////////////////////////////////////////////////////////////
 
 
-  inline ostream& print(ostream &os) const;
+  inline std::ostream& print(std::ostream &os) const;
 
   // Read Se3 from input stream.  The Se3 specification must be
   // enclosed in curly brackets { }.  Se3's are built up from a
@@ -640,7 +640,7 @@ public:
   // is the scalar rotation in *degrees*, and v is the axis of
   // rotation (a vector).
 
-  istream& read(istream &is);
+  std::istream& read(std::istream &is);
 
   // operations returning result via this //////////////////////////////////////
 
@@ -686,15 +686,15 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 
 
-inline ostream &operator<<(ostream &os, const Vect3 &v) {return v.print(os);}
-inline ostream &operator<<(ostream &os, const Mat3 &M)  {return M.print(os);}
-inline ostream &operator<<(ostream &os, const MatX &X)  {return X.print(os);}
-inline ostream &operator<<(ostream &os, const Quat &q)  {return q.print(os);}
-inline ostream &operator<<(ostream &os, const Se3 &T)   {return T.print(os);}
+inline std::ostream &operator<<(std::ostream &os, const Vect3 &v) {return v.print(os);}
+inline std::ostream &operator<<(std::ostream &os, const Mat3 &M)  {return M.print(os);}
+inline std::ostream &operator<<(std::ostream &os, const MatX &X)  {return X.print(os);}
+inline std::ostream &operator<<(std::ostream &os, const Quat &q)  {return q.print(os);}
+inline std::ostream &operator<<(std::ostream &os, const Se3 &T)   {return T.print(os);}
 
-inline istream &operator>>(istream &os, Vect3 &v)       {return v.read(os);}
-inline istream &operator>>(istream &is, MatX &X)        {return X.read(is);}
-inline istream &operator>>(istream &is, Se3 & T)        {return T.read(is);}
+inline std::istream &operator>>(std::istream &os, Vect3 &v)       {return v.read(os);}
+inline std::istream &operator>>(std::istream &is, MatX &X)        {return X.read(is);}
+inline std::istream &operator>>(std::istream &is, Se3 & T)        {return T.read(is);}
 
 
 
@@ -1276,13 +1276,13 @@ void MatX::set(const Se3 &T)
   d = T.d;
 }
 
-ostream& MatX::print(ostream &os) const
+std::ostream& MatX::print(std::ostream &os) const
 {
-  return os << R << d << endl;
+  return os << R << d << std::endl;
 }
 
 
-istream& MatX::read(istream &is)
+std::istream& MatX::read(std::istream &is)
 {
   Se3 T;
   is >> T;
@@ -1462,7 +1462,7 @@ void Se3::toSoTransform(SoTransform *xform) const
 #endif
   
 
-ostream& Se3::print(ostream &os) const
+std::ostream& Se3::print(std::ostream &os) const
 {
   return os << q << d;
 }

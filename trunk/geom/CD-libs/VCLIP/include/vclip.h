@@ -40,10 +40,10 @@
 #ifndef VCLIP_H
 #define VCLIP_H
 
-#include <list.h>
+#include <list>
 #include <hash_map.h>
 #include <algo.h>
-#include <vector.h>
+#include <vector>
 
 #include "mv.h"
 
@@ -284,7 +284,7 @@ class Vertex : private Feature
   friend class PolyTree;
 
   Vect3 coords_;
-  list<VertConeNode> cone;
+  std::list<VertConeNode> cone;
   VertFaceName name_;
 
 public:
@@ -333,7 +333,7 @@ class Face : private Feature
 
   int sides;     // number of edges around boundary
   Plane plane;
-  list<FaceConeNode> cone;
+  std::list<FaceConeNode> cone;
   VertFaceName name_;
 
   Face() {type_ = FACE;}
@@ -357,9 +357,9 @@ class Polyhedron
 
   int handleCount;  // number of PolyTrees pointing to thie Polyhedron
 
-  list<Vertex> verts_;
-  list<Edge  > edges_;
-  list<Face  > faces_;
+  std::list<Vertex> verts_;
+  std::list<Edge  > edges_;
+  std::list<Face  > faces_;
 
   void processEdge(Face *f, Vertex *tail, Vertex *head);
 
@@ -369,7 +369,7 @@ class Polyhedron
 			  Vect3 &cp1, Vect3 &cp2, Real &dist);
 
   static int vertFaceTest(const Feature *&v, const Feature *&f, XformedGeom &xv,
-			  const VclipPose &Xvf, const list<Face> &allFaces,
+			  const VclipPose &Xvf, const std::list<Face> &allFaces,
 			  Vect3 &cpv, Vect3 &cpf, Real &dist);
 
   static int vertEdgeTest(const Feature *&v, const Feature *&e, 
@@ -405,15 +405,15 @@ public:
   // construction
   inline Vertex *addVertex(const char *name, const Vect3 &coords);
   void addFace(const char *name, 
-			   vector<Vertex *> &verts, int clockwise = 0);
+			   std::vector<Vertex *> &verts, int clockwise = 0);
   int buildHull();
   int check() const;
 
   // examination
   ostream& print(ostream &os) const;
-  const list<Vertex> &verts() const {return verts_;}
-  const list<Edge  > &edges() const {return edges_;}
-  const list<Face  > &faces() const {return faces_;}
+  const std::list<Vertex> &verts() const {return verts_;}
+  const std::list<Edge  > &edges() const {return edges_;}
+  const std::list<Face  > &faces() const {return faces_;}
 };
 
 
@@ -481,7 +481,7 @@ class PolyTree
   Se3 Tpr_, Trp_;
   MatX Xpr_, Xrp_;
 
-  list< Handle<PolyTree> > components;  // children in convex decomp'n, if any
+  std::list< Handle<PolyTree> > components;  // children in convex decomp'n, if any
 
 public:
   char name[PTREE_NAME_SZ];
@@ -564,7 +564,7 @@ public:
 
 class PolyTreeLibrary
 {
-  list< Handle<PolyTree> > lib;
+  std::list< Handle<PolyTree> > lib;
 
 public:
 
