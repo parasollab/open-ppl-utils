@@ -105,7 +105,7 @@ clean:
 	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull 
 
 cleanall: clean
-	rm -f *~ ../rbox ../qhull ../qhalf ../qconvex ../qdelaunay ../qhalf\
+	rm -f *~ libqhull.a ../rbox ../qhull ../qhalf ../qconvex ../qdelaunay ../qhalf\
 	   ../qvoronoi ../user_eg ../user_eg2 ../*.exe >/dev/null
 
 doc: 
