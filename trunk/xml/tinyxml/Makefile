@@ -102,7 +102,9 @@ OBJS := $(addsuffix .o,$(basename ${SRCS}))
 # Output
 #****************************************************************************
 
-libs: ${OBJS}
+libs: libtinyxml.a
+
+libtinyxml.a: ${OBJS}
 #	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
 	$(AR) libtinyxml.a $(OBJS)
 
