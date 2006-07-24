@@ -17,6 +17,7 @@
 #include "qhull.h"
 #include "mem.h"
 #include "qset.h"
+#include "qhull_a.h"
 
 #if __MWERKS__ && __POWERPC__
 #include <SIOUX.h>

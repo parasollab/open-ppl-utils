@@ -370,7 +370,7 @@ int main(int argc, char **argv) {
     }
     /* ============= simplex distribution =============== */
     if (issimplex+issimplex2) {
-      if (!(simplex= malloc( dim * (dim+1) * sizeof(double)))) {
+      if (!(simplex= (double*)malloc( dim * (dim+1) * sizeof(double)))) {
 	fprintf (stderr, "insufficient memory for simplex\n");
 	exit(0);
       }
