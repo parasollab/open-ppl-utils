@@ -39,7 +39,7 @@ all:	lib/libvclip.a lib/libvclip.so
 #
 QHULL_DIR  = ../qhull3.0/src
 QHULL_CC   = -DQHULL -I $(QHULL_DIR)
-QHULL_LD   = -L $(QHULL_DIR) -lqhull
+QHULL_LD   = -L$(QHULL_DIR) -lqhull
 # 
 # The V-Clip library and the example programs do not require Qhull,
 # but it is needed to define compound PolyTrees and to compute faces of
