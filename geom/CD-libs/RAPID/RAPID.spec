@@ -9,7 +9,7 @@
 # mv RAPID RAPID-0-`date +%Y.%m.%d`
 # tar cvzf RAPID-0-`date +%Y.%m.%d`.tar.gz RAPID-0-`date +%Y.%m.%d`
 #
-%define date 2007.10.08
+%define date 2007.10.11
 Name: RAPID
 Summary: RAPID - Robust and Accurate Polygon Interference Detection library
 Version: 0 
@@ -38,12 +38,13 @@ Header files and development libraries for RAPID.
 head -41 RAPID.H > LICENSE
 cat >> Makefile << EEOOFF
 lib%{name}.so.%{version}.%{date}: \$(OBJECTS)
-	\${CC} -shared \${CFLAGS} \$^ -Xlinker -soname=lib%{name}.so.%{version} -o lib%{name}.so.%{version}.%{date}
+	\${CC} -shared \${CFLAGS} \$^ -Wl,-soname=lib%{name}.so.%{version} -o lib%{name}.so.%{version}.%{date}
 EEOOFF
 
 %build
 make
 make lib%{name}.so.%{version}.%{date}
+cp lib%{name}.so.%{version}.%{date} lib%{name}.so
 
 %install
 rm -rf %{buildroot}
@@ -72,7 +73,10 @@ rm -rf %{buildroot}
 /sbin/ldconfig
 
 %changelog
-* Mon Oct  8 2007 Jack Perdue <j-perdue@tamu.edu> 0-08oct2007 
+* Thu Oct 11 2007 Jack Perdue <j-perdue@tamu.edu> 0-2007.10.11
+- fix library versioning 
+
+* Mon Oct  8 2007 Jack Perdue <j-perdue@tamu.edu> 0-2007.10.08
 - Initial version
 
 # EOF - RAPID.spec
