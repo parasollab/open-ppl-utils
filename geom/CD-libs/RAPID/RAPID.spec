@@ -15,7 +15,7 @@ Summary: RAPID - Robust and Accurate Polygon Interference Detection library
 Version: 0 
 Release: %{date}%{dist}
 License: Copyright 1995 The University of North Carolina at Chapel Hill.  All Rights Reserved.
-Group: Development/Tools
+Group: Development/Libraries
 Source: RAPID-%{version}-%{date}.tar.gz
 URL: http://www.cs.unc.edu/~geom/OBB/OBBT.html
 Packager: Jack Perdue <j-perdue@tamu.edu>, Parasol Laboratory, Texas A&M University -- http://parasol.tamu.edu/
@@ -28,7 +28,7 @@ of unstructured models.
 
 %package devel
 Summary: RAPID header files and development libraries
-Group: Development/Tools
+Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 %description devel
 Header files and development libraries for RAPID.
