@@ -8,7 +8,7 @@
 #****************************************************************************
 
 # DEBUG can be set to YES to include debugging info, or NO otherwise
-DEBUG          := NO
+DEBUG          := YES
 
 # PROFILE can be set to YES to include profiling info, or NO otherwise
 PROFILE        := NO
@@ -25,7 +25,7 @@ LD     := g++
 AR     := ar rc
 RANLIB := ranlib
 
-DEBUG_CFLAGS     := -Wall -Wno-unknown-pragmas -Wno-format -g -DDEBUG
+DEBUG_CFLAGS     := -Wall -Wno-format -g -DDEBUG
 RELEASE_CFLAGS   := -Wall -Wno-unknown-pragmas -Wno-format -O3
 
 LIBS		 :=
@@ -77,21 +77,20 @@ INCS :=
 CFLAGS   := ${CFLAGS}   ${DEFS}
 CXXFLAGS := ${CXXFLAGS} ${DEFS}
 
-
 #****************************************************************************
 # Targets of the build
 #****************************************************************************
 
-OUTPUT :=libs
+OUTPUT := xmltest
 
-all: ${OUTPUT}
-
+#all: ${OUTPUT}
+all: libs
 
 #****************************************************************************
 # Source files
 #****************************************************************************
 
-SRCS := tinyxml.cpp tinyxmlparser.cpp tinyxmlerror.cpp tinystr.cpp
+SRCS := tinyxml.cpp tinyxmlparser.cpp xmltest.cpp tinyxmlerror.cpp tinystr.cpp
 
 # Add on the sources for libraries
 SRCS := ${SRCS}
@@ -102,10 +101,12 @@ OBJS := $(addsuffix .o,$(basename ${SRCS}))
 # Output
 #****************************************************************************
 
+#${OUTPUT}: ${OBJS}
+#	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
 libs: libtinyxml.a
 
 libtinyxml.a: ${OBJS}
-#	${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
+#       ${LD} -o $@ ${LDFLAGS} ${OBJS} ${LIBS} ${EXTRA_LIBS}
 	$(AR) libtinyxml.a $(OBJS)
 
 #****************************************************************************
@@ -119,13 +120,16 @@ libtinyxml.a: ${OBJS}
 %.o : %.c
 	${CC} -c ${CFLAGS} ${INCS} $< -o $@
 
+dist:
+	bash makedistlinux
+
 clean:
-	-rm -f core ${OBJS} ${OUTPUT} libtinyxml.a
+	-rm -f core ${OBJS} ${OUTPUT}
 
 depend:
 	#makedepend ${INCS} ${SRCS}
 
 tinyxml.o: tinyxml.h tinystr.h
 tinyxmlparser.o: tinyxml.h tinystr.h
-xml-pmp.o: tinyxml.h tinystr.h xml-pmp.h
+xmltest.o: tinyxml.h tinystr.h
 tinyxmlerror.o: tinyxml.h tinystr.h
