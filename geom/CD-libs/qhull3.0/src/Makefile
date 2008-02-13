@@ -1,4 +1,4 @@
-include ../../../../Makefile.defaults
+include ../../../../makefile_includes/Makefile.defaults
 
 CLEAN = *.o ../core qconvex qdelaunay qhalf qvoronoi qhull *~ libqhull.a ../rbox ../qhull ../qhalf ../qconvex ../qdelaunay ../qvoronoi ../user_eg ../user_eg2 ../*.exe
 

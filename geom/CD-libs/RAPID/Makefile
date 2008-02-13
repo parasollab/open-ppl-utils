@@ -1,4 +1,4 @@
-include ../../../Makefile.defaults
+include ../../../makefile_includes/Makefile.defaults
 
 INCL = -I. -I..
 

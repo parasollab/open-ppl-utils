@@ -1,4 +1,4 @@
-include ../../Makefile.defaults
+include ../../makefile_includes/Makefile.defaults
 
 # TINYXML_USE_STL can be used to turn on STL support. NO, then STL
 # will not be used. YES will include the STL files.
