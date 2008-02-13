@@ -1,42 +1,27 @@
+include ../../../Makefile.defaults
 
-CC = g++
+INCL = -I. -I..
 
-#CFLAGS		= -I. -I..
+OBJECTS	= RAPID.o build.o collide.o overlap.o 
 
-# IRR
-CFLAGS		= -I. -I.. -O2
+CLEAN = sample_client ${OBJECTS} *.a *.o *~ *.so
 
-LDFLAGS		= -L. -L..
+#default target
+default_target: library
 
-.SUFFIXES: .C
+library: libRAPID.a
 
-SRCS		= RAPID.C build.C collide.C overlap.C 
+install: library sample_client
 
-OBJECTS		= RAPID.o build.o collide.o overlap.o 
-
-CLEAN		= sample_client $(OBJECTS) *.a *.o *~ *.so
-
-default: library test
-
-install: libRAPID.a libRAPID.so
-library: libRAPID.a libRAPID.so
-
-libRAPID.a: $(OBJECTS)
+libRAPID.a: ${OBJECTS}
 	/bin/rm -f libRAPID.a
-	ar ruv libRAPID.a $(OBJECTS)
+	${AR} libRAPID.a ${OBJECTS}
 
-libRAPID.so: $(OBJECTS)
-	${CC} -shared ${CFLAGS} $^  -o libRAPID.so
-
+.SUFFIXES: .o .C
 .C.o:
-	$(CC) ${CFLAGS} -c $<
+	@${MAKE} -s check_platform
+	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
 
-.c.o:
-	$(CC) ${CFLAGS} -c $<
+sample_client: sample_client.C
+	${CXX} ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@ -L. -lRAPID -lm
 
-test:
-	$(CC) -o sample_client sample_client.C -L. -lRAPID -lm
-
-clean:
-	touch clean.a
-	/bin/rm -f $(CLEAN)

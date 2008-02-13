@@ -16,7 +16,7 @@ vcdemo:
 	rm -r ii_files
 
 clean:
-	-rm inventorize
-	-rm vcdemo
-	-rm -r ii_files
-	-rm -r *.o
+	-rm -f inventorize
+	-rm -f vcdemo
+	-rm -rf ii_files
+	-rm -rf *.o
