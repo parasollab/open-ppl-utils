@@ -297,6 +297,7 @@ class Vertex : private Feature
 
 public:
   Vertex() {type_ = VERTEX;}
+  virtual ~Vertex() {}
   const char *name() const;
   const Vect3 &coords() const {return coords_;}
 
@@ -347,6 +348,7 @@ class Face : private Feature
   Face() {type_ = FACE;}
 
 public:
+  virtual ~Face() {}
   const char *name() const;
 
 };
