@@ -74,7 +74,7 @@ ifeq (${platform}, AIX_64_xlC)
 	CFLAGS = -q64 -qarch=auto -D_64_BIT #_64_BIT define used by VCLIP
 	CXXFLAGS := ${CFLAGS}
 	ifeq (${debug}, 0)
-		OPTS = -O3 -qstrict -w
+		OPTS = -O4 -qstrict -w
 	else
 		OPTS = -g -qwarn64 -qflag=w:w
 	endif
