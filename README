@@ -1,0 +1,4 @@
+Subversion Repository: utils
+Usage:  Holds libraries and other tools used by "amatogroup" (dsmft) in Parasol.
+
+Projects linking here: pmpl
