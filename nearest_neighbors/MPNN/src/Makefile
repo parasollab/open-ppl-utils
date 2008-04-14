@@ -8,70 +8,27 @@
 #
 ################################################################
 
-# configurable part of the Makefile
-include ../Makefile.config
 
-######## INC configuration
+include ../../../makefile_includes/Makefile.defaults
 
-INC = $(OTHERINC)
+INCL = -I. -I../include
 
-######## LIB configuration
+OBJECTS = ANN.o kd_tree.o kd_util.o kd_split.o kd_search.o \
+	nn.o multiann.o
 
-LIB = $(OTHERLIB)
+CLEAN = ${OBJECTS} *.a *.o *~ *.so
 
-######## Flags
+#default target
+default_target: library
 
-FLAGS = $(C++FLAGS) -pg
+library: libMPNN.a
 
-DEPSRC = *.C
+install: library sample_client
 
+libMPNN.a: ${OBJECTS}
+	/bin/rm -f libMPNN.a
+	${AR} libMPNN.a ${OBJECTS}
 
-#############
-SOURCES = ANN.C kd_tree.C kd_util.C kd_split.C kd_search.C \
-	nn.C multiann.C
-
-HEADERS = ANN.h kd_tree.h kd_util.h kd_split.h \
-	kd_search.h nn.h multiann.h
-
-OBJECTS = $(SOURCES:.C=.o)
-
-#-----------------------------------------------------------------------------
-# Rules
-#-----------------------------------------------------------------------------
-
+.SUFFIXES: .o .C
 .C.o:
-	$(C++) $(FLAGS) -c -Wno-deprecated $< $(INC)
-
-#-----------------------------------------------------------------------------
-# Make the library
-#-----------------------------------------------------------------------------
-
-$(LIBDIR)/$(ANNLIB): $(OBJECTS)
-	$(MAKELIB) $(ANNLIB) $(OBJECTS)
-	$(RANLIB) $(ANNLIB)
-	mv $(ANNLIB) $(LIBDIR)
-
-all: libDNN.a
-
-libDNN.a: $(OBJECTS)
-	ar ruv ../lib/libDNN.a $(OBJECTS)
-
-#-----------------------------------------------------------------------------
-# Cleaning
-#-----------------------------------------------------------------------------
-
-clean:
-	-rm -f *.o core
-
-realclean: clean
-
-backup:
-	@echo "Creating tar archive..."
-	@echo "-----------------------"
-	tar -cvf backup_src.tar *.[Ch] Makefile*
-	gzip backup_src.tar 
-	@echo "DONE!"
-count:
-	@wc *.[Ch]
-
-# DO NOT DELETE
+	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
