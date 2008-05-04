@@ -66,7 +66,8 @@ class ANN {
       int size, 				// size of the chunk of points to be used
       int dim, 					// dimension of the space
       int *topology, 				// topology of the space
-      ANNpoint scaling); 			// scaling of the coordinates
+      ANNpoint scaling, 			// scaling of the coordinates
+      double _epsilon);
 
   ~ANN();					// destructor
 

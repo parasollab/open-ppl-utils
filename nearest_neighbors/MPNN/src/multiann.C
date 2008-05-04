@@ -59,11 +59,13 @@ MultiANN::MultiANN(					// constructor
 	   ANNpoint x_coor, 				// coordinates of the initial point in the data structure
 	   void *x_ptr,					// pointer to the object holding the initial point
 	   int *tt, 					// topology of the space
-	   ANNpoint ss)					// scaling of the coordinates
+	   ANNpoint ss,					// scaling of the coordinates
+     double _epsilon)
 {
   dimension = dim;
   LastNodeCount = 1;
   size = 1;
+  epsilon = _epsilon;
 
   topology = new int[dimension]; 			// allocate topology array
   scaling = annAllocPt(dimension); 			// allocate scaling array
@@ -86,11 +88,13 @@ MultiANN::MultiANN(					// constructor
 MultiANN::MultiANN(					// constructor
 	   int dim,  					// dimension of the space
 	   int *tt, 					// topology of the space 
-	   ANNpoint ss)					// scaling of the coordinates
+	   ANNpoint ss,					// scaling of the coordinates
+     double _epsilon)
 {
   dimension = dim;
   LastNodeCount = 0;
   size = 0;
+  epsilon = _epsilon;
 	
   topology = new int[dimension];			// allocate topology array	
   scaling = annAllocPt(dimension); 			// allocate scaling array
@@ -202,7 +206,7 @@ void MultiANN::UpdateAnnArray()				// updates the arrays of data points
 
       // Finally, make the new ANN tree
       AnnArray[k] = new ANN(points_coor, n, size, (int) pow((double)2,k), dimension, 
-      		    topology, scaling); 
+      		    topology, scaling, epsilon); 
 
       //cout << "New ANN Tree:  k: " << k << " num: " << num << "\n";
       //for (j = ANN_MAXIMUM_INDEX; j >= ANN_STARTING_INDEX; j--) {

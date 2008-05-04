@@ -43,7 +43,8 @@
 
 int anncount = 0;
 
-ANN::ANN(ANNpointArray points, int n1, int n2, int size, int dim, int *topology, ANNpoint scaling) {
+ANN::ANN(ANNpointArray points, int n1, int n2, int size, int dim, int *topology, 
+          ANNpoint scaling, double _epsilon) {
   int n = 0, i = 0, j = 0;
 
   anncount++;
@@ -55,7 +56,7 @@ ANN::ANN(ANNpointArray points, int n1, int n2, int size, int dim, int *topology,
   
   query_pt = annAllocPt(dimension);		// allocate query point
   data_pts = annAllocPts(numPoints, dimension); // allocate data points
-  epsilon = 0.0;
+  epsilon = _epsilon;
 
   // NOTE: nearest neighbor dynamic index/dist array allocation moved
   //       to NearestNeighbor functions

@@ -60,6 +60,7 @@ class MultiANN{
   void **points_ptr;				// array of the pointers to data points
   int *topology;				// topology of the space 
   ANNpoint scaling;				// scaling of the coordinates
+  double epsilon;
 
   ANN  *AnnArray[ANN_MAXIMUM_INDEX+1];		// array of ANNs to hold data points
 
@@ -69,12 +70,14 @@ class MultiANN{
 	   ANNpoint x_coor, 		       	// coordinate of the initial point in the data structure
 	   void *x_ptr, 		       	// pointer to the initial point in the data structure
 	   int *topology, 			// topology of the space
-	   ANNpoint scaling);			// scaling of the coordinates
+	   ANNpoint scaling,			// scaling of the coordinates
+     double _epsilon);
 
   MultiANN(					// constructor
 	   int dim,  				// dimension of the space
 	   int *topology, 			// topology of the space 
-	   ANNpoint scaling);			// scaling of the coordinates
+	   ANNpoint scaling,			// scaling of the coordinates
+     double _epsilon);
 
   ~MultiANN();					// destructor
   void ResetMultiANN();				// destroys all the arrays of data points
