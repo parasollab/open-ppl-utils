@@ -2,7 +2,7 @@ include ../../../makefile_includes/Makefile.defaults
 
 QHULL_DIR  = ../qhull3.0/src
 
-DEFS = -DQHULL
+DEPS = -DQHULL
 
 INCL = -I include -I ${QHULL_DIR}
 
@@ -19,7 +19,7 @@ all: lib/libvclip.a
 	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEPS} ${INCL} $< -o $@
 
 lib/libvclip.a: mv.o PolyTree.o vclip.o
-	${AR} $@ mv.o PolyTree.o vclip.o ${QHULL_DIR}/libqhull.a
+	${AR} $@ mv.o PolyTree.o vclip.o
 
 examples:
 	cd $@; ${MAKE}

@@ -1,9 +1,9 @@
 # This Makefile builds two example programs that do not use Inventor.
 
 #CFLAGS=  -O2 -I ../include -I
-CFLAGS=   -I ../include -I/pub/dsmft/STL 
+CFLAGS=   -I../include
 #lkdlkd
-LDFLAGS= -o32 -L ../lib -rpath ../lib -lvclip -lm
+LDFLAGS= -L../lib -lvclip -L../../qhull3.0/src -lqhull -lm
 
 CC = g++
 
