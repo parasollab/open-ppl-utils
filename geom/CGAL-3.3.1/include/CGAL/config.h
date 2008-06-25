@@ -43,7 +43,7 @@
 //             include platform specific workaround flags (CGAL_CFG_...)
 //----------------------------------------------------------------------//
 
-#include <CGAL/compiler_config.h>
+#include <CGAL/config/msvc/CGAL/compiler_config.h>
 
 //----------------------------------------------------------------------//
 //        auto-link the CGAL library on platforms that support it
