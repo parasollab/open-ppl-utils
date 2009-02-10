@@ -500,12 +500,11 @@ private:
 
   void printRecur(ostream &os, int level) const;
 
-  // copy constructor (perform a deep copy of this)
-  PolyTree(const PolyTree &orig);
-
 public:
 
   PolyTree();
+  // copy constructor (perform a deep copy of this)
+  PolyTree(const PolyTree &orig);
 
   // construction
   void setPoly(Polyhedron *p) {poly_ = ShareHandle<Polyhedron>(p);}
