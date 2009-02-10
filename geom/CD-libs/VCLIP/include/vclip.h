@@ -239,6 +239,7 @@ protected:
 public:
   Type type() const {return type_;}
   virtual const char *name() const = 0;
+  virtual ~Feature() {}
 };
 
 
@@ -324,8 +325,8 @@ class Edge : private Feature
   Edge() {type_ = EDGE;}
 
 public:
+  virtual ~Edge() {}
   const char *name() const;
-
 };
 
 
