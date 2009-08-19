@@ -125,4 +125,3 @@ clean:
 .c.o:
 	@${MAKE} -s check_platform
 	${CC} -c ${CFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
-
