@@ -47,7 +47,7 @@
 
 #include "nn.h"
 
-#define ANN_STARTING_INDEX 9 			// Start a new ANN for each 2^n samples
+#define ANN_STARTING_INDEX 8 			// Start a new ANN for each 2^n samples
 #define ANN_MAXIMUM_INDEX 30  			// Absolute max on number of nodes (2^n)
 
 class MultiANN{
