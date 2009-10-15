@@ -47,7 +47,6 @@
 class ANN {
 
  protected:
-  int numPoints;  				// Total number currently stored in the ANN tree
   int dimension;				// dimension of the space
   ANNpointArray	data_pts;			// data points
   ANNpoint query_pt;		        	// query point
@@ -58,6 +57,8 @@ class ANN {
   double epsilon;        			// the error bound for the search
 
  public:
+  int numPoints;  				// Total number currently stored in the ANN tree
+ 
   ANN() {};
   ANN(						// constructor
       ANNpointArray points, 			// array of data points

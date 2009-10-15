@@ -55,7 +55,7 @@ class MultiANN{
 
   int size;					// the number of points in MultiANN
   int dimension;				// dimension of the space
-  int LastNodeCount;				// the index of the last node
+  int LastNodeCount;				// the index of the last nodes
   ANNpointArray points_coor;			// array of the coordinates of data points
   void **points_ptr;				// array of the pointers to data points
   int *topology;				// topology of the space 
