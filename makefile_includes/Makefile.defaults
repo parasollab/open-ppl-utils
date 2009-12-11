@@ -28,7 +28,7 @@
 
 # available platforms
 #PLATFORMS = "HP_aCC IBM_xlC IBM_xlC_llnl IBM_gcc_llnl LINUX_gcc LINUX_gcc_llnl MACOSX_gcc IRIX_gcc LINUX_KCC SGI_CC BLRTS_gcc BLRTS_xlC"
-PLATFORMS = "LINUX_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC"
+PLATFORMS = "LINUX_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64"
 
 
 ifndef debug
@@ -66,6 +66,21 @@ ifeq (${platform}, MACOS_gcc)
 	endif 
 	AR = ar rc  
 endif
+
+ifeq (${platform}, LINUX_gcc64)
+        FOUNDPLAT = 1
+        CC  = gcc-4.1
+        CXX = g++-4.1
+        CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
+        CXXFLAGS := ${CFLAGS}
+        ifeq (${debug}, 0)
+                OPTS = -O3 -w
+        else
+                OPTS = -g -Wall
+        endif
+        AR = ar rc
+endif
+
 
 ifeq (${platform}, AIX_64_gcc)
 	FOUNDPLAT = 1
