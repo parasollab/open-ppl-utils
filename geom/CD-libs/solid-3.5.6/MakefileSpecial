@@ -1,0 +1,15 @@
+
+
+OBJECTS = src/*.o src/broad/*.o src/complex/*.o src/convex/*.o src/qhull/*.o
+
+
+library: lib/libsolid.a
+
+
+lib/libsolid.a: ${OBJECTS}
+	${AR} rc lib/libsolid.a ${OBJECTS}
+        
+cleanlibrary:
+	/bin/rm -f lib/libsolid.a 
+
+                  

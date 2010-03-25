@@ -1,4 +1,4 @@
-all: rapid pqp vclip
+all: rapid pqp vclip solid
 
 rapid:
 	@echo "compiling rapid..."
@@ -20,7 +20,14 @@ vclip: qhull
 	@cd VCLIP; ${MAKE}
 	@echo "vclip done"
 
-clean: clean_rapid clean_pqp clean_qhull clean_vclip
+SOLIDLIB := ${PWD}/solid-3.5.6
+
+solid: 
+	@echo "comiling solid..."
+	@cd solid-3.5.6; ./configure --prefix=${SOLIDLIB} --exec-prefix=${SOLIDLIB}; ${MAKE}; ${MAKE} -f MakefileSpecial cleanlibrary; ${MAKE} -f MakefileSpecial library
+	@echo "solid done"
+
+clean: clean_rapid clean_pqp clean_qhull clean_vclip clean_solid
 
 clean_rapid:
 	@echo "cleaning rapid..."
@@ -41,3 +48,9 @@ clean_vclip:
 	@echo "cleaning vclip..."
 	@cd VCLIP; ${MAKE} clean
 	@echo "vclip done"
+
+clean_solid:
+	@echo "cleaning solid..."
+	@cd solid-3.5.6; ${MAKE} clean; ${MAKE} -f MakefileSpecial cleanlibrary
+	@echo "solid done"
+
