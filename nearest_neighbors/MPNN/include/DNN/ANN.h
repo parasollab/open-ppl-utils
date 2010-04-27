@@ -96,7 +96,7 @@
 //----------------------------------------------------------------------
 #include <stdlib.h>			// standard libs
 #include <stdio.h>			// standard I/O (for NULL)
-#include <iostream.h>			// I/O streams
+#include <iostream>			// I/O streams
 #include <math.h>			// math includes
 #include <values.h>			// special values
 

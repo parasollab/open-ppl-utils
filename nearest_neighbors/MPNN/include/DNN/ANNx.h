@@ -73,8 +73,12 @@
 #ifndef ANNx_H
 #define ANNx_H
 
-#include <iomanip.h>			// I/O manipulators
+#include <iomanip>			// I/O manipulators
 #include "ANN.h"			// ANN includes
+#include <ostream>
+#include <iostream>
+
+using namespace std;
 
 //----------------------------------------------------------------------
 //  Global constants and types
