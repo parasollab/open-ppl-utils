@@ -12,7 +12,7 @@ pqp:
 
 qhull:
 	@echo "compiling qhull..."
-	@cd qhull3.0/src; ${MAKE}
+	@cd qhull-2010.1/src; ${MAKE} debug=1 
 	@echo "qhull done"
 
 vclip: qhull
@@ -41,7 +41,7 @@ clean_pqp:
 
 clean_qhull:
 	@echo "cleaning qhull..."
-	@cd qhull3.0/src; ${MAKE} clean
+	@cd qhull-2010.1/src; ${MAKE} clean
 	@echo "qhull done"
 
 clean_vclip:

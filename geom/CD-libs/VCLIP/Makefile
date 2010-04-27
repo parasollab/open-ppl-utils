@@ -1,6 +1,6 @@
 include ../../../makefile_includes/Makefile.defaults
 
-QHULL_DIR  = ../qhull3.0/src
+QHULL_DIR  = ../qhull-2010.1/src
 
 DEPS = -DQHULL
 

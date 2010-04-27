@@ -41,11 +41,20 @@
 #define VCLIP_H
 
 #include <list>
-#include <hash_map.h>
-#include <algo.h>
-#include <vector>
 
+#include <ext/hash_map>
+#include <ext/algorithm>
+#include <vector>
+#include <iostream>
+#include <ostream>
 #include "mv.h"
+#include <string.h>
+
+
+using namespace __gnu_cxx;
+
+using namespace std;
+
 
 #if INVENTOR
 #include <Inventor/nodekits/SoShapeKit.h>
