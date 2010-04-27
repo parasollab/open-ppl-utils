@@ -9,6 +9,10 @@
 
 #include "Basic.h"
 
+#include <string.h>
+
+using namespace std;
+
 namespace mathtool{
 
     /*
