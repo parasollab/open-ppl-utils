@@ -148,7 +148,7 @@ void ANNkd_tree::annkSearch(
     ANNptsVisited = 0;			// initialize count of points visited
 
     if (k > n_pts) {			// too many near neighbors?
-	annError("Requesting more near neighbors than data points", ANNabort);
+	annError((char*)"Requesting more near neighbors than data points", ANNabort);
     }
 
     ANNkdMaxErr = ANN_POW(1.0 + eps);

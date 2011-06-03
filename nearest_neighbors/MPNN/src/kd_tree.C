@@ -311,7 +311,7 @@ ANNkd_tree::ANNkd_tree(			// construct from point array
 	root = rkd_tree(pa, pidx, n, dd, bs, bnd_box, sl_fair_split);
 	break;
     default:
-	annError("Illegal splitting method", ANNabort);
+	annError((char*)"Illegal splitting method", ANNabort);
     }
     delete [] TreeTopology;
     delete [] TreeP3Topology;
