@@ -49,7 +49,7 @@ PRINTC = enscript -2r
 
 #for Gnu's gcc compiler -O2 for optimization, -g for debugging, -Wall for check
 #   -fno-strict-aliasing not needed for gcc 4.4+ (segfault in qset.c)
-CCOPTS1 = ${OPTS} 
+#CCOPTS1 = ${OPTS} 
 
 # for Sun's cc compiler, -fast or O2 for optimization, -g for debugging, -Xc for ANSI
 #CC = cc
@@ -106,11 +106,12 @@ qset.o:	    qset.h mem.h
 stat.o:	    $(HFILES)
 user.o:	    $(HFILES)
 
-.c.o:
-	$(CC) -c $(CCOPTS1) $<
+#.c.o:
+#	$(CC) -c $(CCOPTS1) $<
 
-clean:
-	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull libqhull.a \
+CLEAN = $(OBJS) ../core qconvex qdelauney qhalf qvoronoi qhull libqhull.a *.exe 
+#clean:
+#	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull libqhull.a \
              *.exe
 
 cleanall: clean
