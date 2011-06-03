@@ -1252,22 +1252,15 @@ Matrix3x3 Matrix3x3::operator*(double a) const
 
 Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2)
 {
-    double h=m1.row[0][0];
-
     int i, j, rc;
     Matrix3x3 result;
     
-    h=m1.row[0][0];
     for(i = 0; i < 3; i++){
         for(j = 0; j < 3; j++){
             result.row[i][j] = 0;
             for(rc = 0; rc < 3; rc++){
                 result.row[i][j] += m1.row[i][rc] * m2[rc][j];
-                double a=m1.row[i][rc];
-                double b=m2.row[rc][j];
-                double s=result.row[i][j];
             }
-            double s=result.row[i][j];
         }
     }
         
