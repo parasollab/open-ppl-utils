@@ -420,7 +420,7 @@ box::split_recurse(int *t, int n)
       mean_from_moment(c, RAPID_moment[in]);
       
       if (((pR[0][0]*c[0] + pR[1][0]*c[1] + pR[2][0]*c[2]) < axdmp)
-	  && ((n!=2)) || ((n==2) && (i==0)))    
+	  && (((n!=2)) || ((n==2) && (i==0))))    
 	{
 	  // accumulate first and second order moments for group 1
 	  accum_moment(M1, RAPID_moment[in]);
