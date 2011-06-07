@@ -585,7 +585,8 @@ int Polyhedron::check() const
 // from the Vertex list.
 int Polyhedron::buildHull()
 {
-  int nf, nv, npts, idx, i;
+  int nf, nv, idx, i;
+  size_t npts;
   Vertex *v;
   //List<Vertex> origVerts;
   Vect3 xcoords;
@@ -606,7 +607,7 @@ int Polyhedron::buildHull()
   static std::vector<coordT> array      (MAX_VERTS_PER_HULL * 3);
   static std::vector<Vertex *> hullVerts(MAX_VERTS_PER_HULL);
   static std::vector<int> vertUsed      (MAX_VERTS_PER_HULL);
-#undef MAX_VERTS_PER_HULL 1000
+#undef MAX_VERTS_PER_HULL
 
   //cout << "invoking qhull...   " << flush;
 
@@ -962,7 +963,7 @@ const PolyTree *PolyTreeLibrary::lookup(const char *name) const
 }
 
 
-const PolyTree *PolyTreeLibrary::lookup(int i) const
+const PolyTree *PolyTreeLibrary::lookup(size_t i) const
 {
   std::list< Handle<PolyTree> >::const_iterator libi;
 

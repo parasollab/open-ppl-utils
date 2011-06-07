@@ -154,7 +154,7 @@ int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f,
     e = vcni->nbr;
     Xvf.xformPoint((e->tail==v) ? e->head->coords_ : e->tail->coords_, xother);
     d2 = F(f)->plane.dist(xother);
-    if (d < 0 && d2 > d || d > 0 && d2 < d) {
+    if ((d < 0 && d2 > d) || (d > 0 && d2 < d)) {
       if (e->tail == v) {xv.tail = xv.coords; xv.head = xother;}
       else {xv.tail = xother; xv.head = xv.coords;}
       xv.seg.sub(xv.head, xv.tail);
@@ -300,8 +300,8 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
     maxNbr = E(e)->head;
   }
 
-  if (vminNbr = minNbr) vmin = min;
-  if (vmaxNbr = maxNbr) vmax = max;
+  if ((vminNbr = minNbr)) vmin = min;
+  if ((vmaxNbr = maxNbr)) vmax = max;
 
   // clip against left & right face planes
   for (i = 0; i < 2; i++) {
@@ -473,7 +473,8 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   static std::vector<int> code(MAX_VERTS_PER_FACE); //(template can't use local type)
   static std::vector<Real> lam(MAX_VERTS_PER_FACE);
 
-  if (F(f)->sides > code.capacity()) {
+  int capacity = code.capacity();
+  if (F(f)->sides > capacity) {
     code.reserve(F(f)->sides);
     lam.reserve(F(f)->sides);
   }
@@ -633,7 +634,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   }
 
   // at this point, dmin & dmax are both +ve or both -ve
-  if (dmin > 0 && dt <= dh || dmin < 0 && dt >= dh)
+  if ((dmin > 0 && dt <= dh) || (dmin < 0 && dt >= dh))
     if (minCn) f = minCn->nbr; 
     else {
       xe.coords = xe.tail;
@@ -716,7 +717,7 @@ Real Polyhedron::vclip(const Polyhedron *const poly1,
 
   // uh oh...
   if (loop > MAX_ITERS) {
-    int i;
+    size_t i;
     std::ofstream ofs("vclipCrash", std::ios::app);
     ofs << "(" << ptree1name << "," << ptree2name << ")" << endl;
     ofs << feat1->name() << '\n' << feat2->name() << '\n' << '*';

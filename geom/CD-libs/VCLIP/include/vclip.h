@@ -42,7 +42,9 @@
 
 #include <list>
 
+#undef __DEPRECATED
 #include <ext/hash_map>
+#define __DEPRECATED
 #include <ext/algorithm>
 #include <vector>
 #include <iostream>
@@ -594,7 +596,7 @@ public:
     {Handle<PolyTree> h(pt); lib.push_front(h); h.set(NULL);}
 
   const PolyTree *lookup(const char *name) const;  // lookup by name
-  const PolyTree *lookup(int i) const;             // lookup by index
+  const PolyTree *lookup(size_t i) const;             // lookup by index
   
   PolyTree *create(const char *name) const         // instantiate by name
     {const PolyTree *pt; return (pt = lookup(name)) ? new PolyTree(*pt) : NULL;}
