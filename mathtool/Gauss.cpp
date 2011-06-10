@@ -19,7 +19,7 @@
 #include "Gauss.h"
 #include "Basic.h"
 
-namespace mathtool{
+//namespace mathtool{
 
     double gauss(double mean, double std)
     {
@@ -75,5 +75,5 @@ namespace mathtool{
       return(gaussian_random_value);
     }
 
-}//end of nprmlib namespace
+//}//end of nprmlib namespace
 

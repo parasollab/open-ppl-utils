@@ -15,6 +15,9 @@
 
   Your program must #include <math.h>
 */
+#ifndef GAUSS_H_
+#define GAUSS_H_
+
 #include <math.h>
 #include "Basic.h"
 
@@ -30,3 +33,5 @@
         return gauss(mean,std);
     };
 //}
+
+#endif
