@@ -81,7 +81,6 @@ ifeq (${platform}, LINUX_64_gcc)
 	AR = ar rc  
 endif
 
-<<<<<<< .mine
 ifeq (${platform}, LINUX_gcc_brazos)
 	FOUNDPLAT = 1
         CC  = gcc
@@ -96,22 +95,6 @@ ifeq (${platform}, LINUX_gcc_brazos)
         AR = ar rc  
 endif
 
-=======
-ifeq (${platform}, LINUX_gcc_brazos)
-	FOUNDPLAT = 1
-        CC  = gcc
-        CXX = mpiCC
-        CFLAGS = 
-        CXXFLAGS := ${CFLAGS} 
-        ifeq (${debug}, 0)
-                OPTS = -O3 -w
-        else
-                OPTS = -g -Wall
-        endif 
-        AR = ar rc  
-endif
-
->>>>>>> .r79
 ifeq (${platform}, MACOS_gcc)
 	FOUNDPLAT = 1
 	CC  = gcc
