@@ -153,7 +153,7 @@ endif
 
 # clean target
 .PHONY: clean
-clean:
+clean::
 	/bin/rm -rf ${CLEAN}
 
 .SUFFIXES: .o .c .cpp
