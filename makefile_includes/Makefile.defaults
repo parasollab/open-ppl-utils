@@ -70,7 +70,11 @@ endif
 ifeq (${platform}, LINUX_64_gcc)
 	FOUNDPLAT = 1
 	CC  = gcc
-	CXX = g++
+	ifeq (${parallel}, 1)
+	  CXX = mpic++
+	else
+	  CXX = g++
+	endif
 	CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
 	CXXFLAGS := ${CFLAGS} 
 	ifeq (${debug}, 0)
