@@ -98,17 +98,13 @@ double IModel::getRadiusToJoint(EdgeList& el, int jointIndex, bool useFirst) {
    return dist;
 }
 void IModel::transform(EdgeList& el, double radius, double height) { 
+   /*
    typedef EdgeList::iterator EIT;
    Vector3d vecToCenter(m_Center[0],m_Center[1],m_Center[2]);
    Matrix2x2 rotM( cos(m_RotRAD), -1*sin(m_RotRAD), sin(m_RotRAD), cos(m_RotRAD) );
    Vector2d W_dir(0,1);
    
    double bbx_radius = getBBXRadius();
-   /*
-   int jointIndex=8;
-   bool useFirst=true;
-   double bbx_radius = getRadiusToJoint(el, jointIndex, useFirst);
-   */
    double bbx_height = fabs(m_BBX[3]-m_BBX[2]);
    double scale = radius/bbx_radius;//model with get scaled by this factor
    cout << " r1: " << radius << " r2: " << bbx_radius << " scale: " << scale << endl;
@@ -150,4 +146,5 @@ void IModel::transform(EdgeList& el, double radius, double height) {
    }//endfor
    resetBBX();
    skelBBX(el);
+   */
 }
