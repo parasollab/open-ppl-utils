@@ -195,7 +195,7 @@ bool CObjLoader::FirstPass(istream& in)
  */
 bool CObjLoader::SecondPass(istream& in) 
 {
-    unsigned int  material=0;           // current material
+    //unsigned int  material=0; // current material -- leaving in since materials would be nice
     string  buf;
     char c1,c2;
     Point3d pt;

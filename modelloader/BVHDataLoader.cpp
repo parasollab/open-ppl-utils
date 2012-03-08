@@ -8,7 +8,6 @@
 void CBVHDataLoader::load(ifstream& infile) {
 
    string first;
-   double dtmp;
    int itmp;
    string stmp; 
    
@@ -18,7 +17,6 @@ void CBVHDataLoader::load(ifstream& infile) {
    while( infile >> first ) {
       if( first == "edge" ) {
 	 infile >>itmp;
-	 int edge_num=itmp;
 	 infile>>stmp;
 	 Point3d p1,p2;
 	 if( stmp=="p1" ) { 
@@ -52,6 +50,7 @@ bool
 CBVHDataLoader::ParseFile(bool silent)
 {
    cout << " CBVHDataLoader::ParseFile --> does not ParseFile the way the other loaders do..." << endl;
+   return true;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -71,8 +70,6 @@ void CBVHDataInstance::load(string file, double radius, double height) {
       exit(0);
    }
    string first;
-   double dtmp;
-   int itmp;
    string stmp; 
    //load all models from same file (bvh_data) 
    while( infile >> first ) {
@@ -114,8 +111,8 @@ void CBVHDataInstance::load(string file, double radius, double height) {
 	 dir2d=dir2d.normalize();
 	 double theta_rad = acos( dir2d*W_dir );
 	 model_i->setRotRAD( theta_rad );
-	 double theta_deg = RadToDeg(theta_rad);
-	 cout << "Dir: " << i << "\tdirection: \t" << model_i->m_Dir <<"\t2d dir: "<< dir2d<< endl;
+	 //double theta_deg = RadToDeg(theta_rad);
+	 //cout << "Dir: " << i << "\tdirection: \t" << model_i->m_Dir <<"\t2d dir: "<< dir2d<< endl;
       }
       else {
 	 model_next = m_Models[i+1];
@@ -125,8 +122,8 @@ void CBVHDataInstance::load(string file, double radius, double height) {
 	 dir2d=dir2d.normalize();
 	 double theta_rad = acos( dir2d*W_dir );
 	 model_i->setRotRAD( theta_rad );
-	 double theta_deg = RadToDeg(theta_rad);
-	 cout << "Dir: " << i << "\tdirection: \t" << model_i->m_Dir <<"\t2d dir: "<< dir2d<<" theta: " << theta_deg << endl;
+	 //double theta_deg = RadToDeg(theta_rad);
+	 //cout << "Dir: " << i << "\tdirection: \t" << model_i->m_Dir <<"\t2d dir: "<< dir2d<<" theta: " << theta_deg << endl;
       }
    }//endfor
    
