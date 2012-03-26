@@ -28,7 +28,7 @@
 
 # available platforms
 #PLATFORMS = "HP_aCC IBM_xlC IBM_xlC_llnl IBM_gcc_llnl LINUX_gcc LINUX_gcc_llnl MACOSX_gcc IRIX_gcc LINUX_KCC SGI_CC BLRTS_gcc BLRTS_xlC"
-PLATFORMS = "LINUX_gcc LINUX_gcc_mh LINUX_64_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64 LINUX_gcc_brazos"
+PLATFORMS = "LINUX_gcc LINUX_gcc_mh LINUX_64_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64 LINUX_gcc_brazos LINUX_gcc_hopper"
 
 
 ifndef debug
@@ -98,6 +98,21 @@ ifeq (${platform}, LINUX_gcc_brazos)
         endif 
         AR = ar rc  
 endif
+
+ifeq (${platform}, LINUX_gcc_hopper)
+        FOUNDPLAT = 1
+        CC  = cc
+        CXX = CC
+        CFLAGS = -D_64_BIT
+        CXXFLAGS := ${CFLAGS}
+        ifeq (${debug}, 0)
+                OPTS = -O3 -w
+        else
+                OPTS = -g -Wall
+        endif
+        AR = ar rc
+endif
+
 
 ifeq (${platform}, MACOS_gcc)
 	FOUNDPLAT = 1
