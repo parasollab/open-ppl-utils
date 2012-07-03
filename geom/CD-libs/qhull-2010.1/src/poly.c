@@ -245,7 +245,7 @@ boolT qh_checkflipped(facetT *facet, realT *distp, boolT allerror) {
     assumes vertices and ridges already freed
 */
 void qh_delfacet(facetT *facet) {
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   trace4((qh ferr, 4046, "qh_delfacet: delete f%d\n", facet->id));
   if (facet == qh tracefacet)
@@ -270,6 +270,8 @@ void qh_delfacet(facetT *facet) {
   if (facet->coplanarset)
     qh_setfree(&(facet->coplanarset));
   qh_memfree_(facet, (int)sizeof(facetT), freelistp);
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* delfacet */
 
 
@@ -561,7 +563,7 @@ void qh_makenewplanes(void /* newfacet_list */) {
 */
 #ifndef qh_NOmerge
 facetT *qh_makenew_nonsimplicial(facetT *visible, vertexT *apex, int *numnew) {
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
   ridgeT *ridge, **ridgep;
   facetT *neighbor, *newfacet= NULL, *samecycle;
   setT *vertices;
@@ -576,6 +578,8 @@ facetT *qh_makenew_nonsimplicial(facetT *visible, vertexT *apex, int *numnew) {
         if (neighbor->visitid == qh visit_id) {
           qh_setfree(&(ridge->vertices));  /* delete on 2nd visit */
           qh_memfree_(ridge, (int)sizeof(ridgeT), freelistp);
+          if(freelistp!=NULL)
+            free(freelistp);
         }
       }
     }else {  /* neighbor is an horizon facet */
@@ -977,7 +981,7 @@ boolT qh_matchvertices(int firstindex, setT *verticesA, int skipA,
 */
 facetT *qh_newfacet(void) {
   facetT *facet;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   qh_memalloc_((int)sizeof(facetT), freelistp, facet, facetT);
   memset((char *)facet, (size_t)0, sizeof(facetT));
@@ -998,6 +1002,8 @@ facetT *qh_newfacet(void) {
   facet->good= True;
   facet->newfacet= True;
   trace4((qh ferr, 4055, "qh_newfacet: created facet f%d\n", facet->id));
+  if(freelistp!=NULL)
+    free(freelistp);
   return(facet);
 } /* newfacet */
 
@@ -1010,7 +1016,7 @@ facetT *qh_newfacet(void) {
 */
 ridgeT *qh_newridge(void) {
   ridgeT *ridge;
-  void **freelistp;   /* used !qh_NOmem */
+  void **freelistp = NULL;   /* used !qh_NOmem */
 
   qh_memalloc_((int)sizeof(ridgeT), freelistp, ridge, ridgeT);
   memset((char *)ridge, (size_t)0, sizeof(ridgeT));
@@ -1022,6 +1028,8 @@ may have the same identifier.  Otherwise output ok.\n", 0xFFFFFF);
   }
   ridge->id= qh ridge_id++;
   trace4((qh ferr, 4056, "qh_newridge: created ridge r%d\n", ridge->id));
+  if(freelistp!=NULL)
+    free(freelistp);
   return(ridge);
 } /* newridge */
 

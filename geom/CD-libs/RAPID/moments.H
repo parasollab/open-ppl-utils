@@ -157,7 +157,6 @@ compute_moments(moment *M, tri *tris, int num_tris)
 
   double Amin = 0.0;
   int zero = 0;
-  int nonzero = 0;
   for(i=0; i<num_tris; i++)
     {
       compute_moment(M[i], 
@@ -170,7 +169,6 @@ compute_moments(moment *M, tri *tris, int num_tris)
 	}
       else
 	{
-	  nonzero = 1;
 	  if (Amin == 0.0) Amin = M[i].A;
 	  else if (M[i].A < Amin) Amin = M[i].A;
 	}

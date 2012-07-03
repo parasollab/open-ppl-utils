@@ -14,6 +14,7 @@
 #include "qset.h"
 #include "mem.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 /*** uncomment here and qhull_a.h
      if string.h does not define memcpy()
@@ -681,7 +682,7 @@ int qh_setequal_skip(setT *setA, int skipA, setT *setB, int skipB) {
 */
 void qh_setfree(setT **setp) {
   int size;
-  void **freelistp;  /* used !qh_NOmem */
+  void **freelistp = NULL;  /* used !qh_NOmem */
 
   if (*setp) {
     size= sizeof(setT) + ((*setp)->maxsize)*SETelemsize;
@@ -691,6 +692,8 @@ void qh_setfree(setT **setp) {
       qh_memfree(*setp, size);
     *setp= NULL;
   }
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* setfree */
 
 
@@ -888,7 +891,7 @@ setT *qh_setnew(int setsize) {
   setT *set;
   int sizereceived; /* used !qh_NOmem */
   int size;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   if (!setsize)
     setsize++;
@@ -905,6 +908,8 @@ setT *qh_setnew(int setsize) {
   set->maxsize= setsize;
   set->e[setsize].i= 1;
   set->e[0].p= NULL;
+  if(freelistp!=NULL)
+    free(freelistp);
   return(set);
 } /* setnew */
 

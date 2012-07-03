@@ -120,13 +120,10 @@ tri_contact (double *P1, double *P2, double *P3,
   double g1[3], g2[3], g3[3];
   double h1[3], h2[3], h3[3];
   double n1[3], m1[3];
-  double z[3];
 
   double ef11[3], ef12[3], ef13[3];
   double ef21[3], ef22[3], ef23[3];
   double ef31[3], ef32[3], ef33[3];
-  
-  z[0] = 0.0;  z[1] = 0.0;  z[2] = 0.0;
   
   p1[0] = P1[0] - P1[0];  p1[1] = P1[1] - P1[1];  p1[2] = P1[2] - P1[2];
   p2[0] = P2[0] - P1[0];  p2[1] = P2[1] - P1[1];  p2[2] = P2[2] - P1[2];

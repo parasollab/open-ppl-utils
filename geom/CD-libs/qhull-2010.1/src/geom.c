@@ -894,13 +894,15 @@ pointT *qh_projectpoint(pointT *point, facetT *facet, realT dist) {
   pointT *newpoint, *np, *normal;
   int normsize= qh normal_size;
   int k;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   qh_memalloc_(normsize, freelistp, newpoint, pointT);
   np= newpoint;
   normal= facet->normal;
   for (k=qh hull_dim; k--; )
     *(np++)= *point++ - dist * *normal++;
+  if(freelistp!=NULL)
+    free(freelistp);
   return(newpoint);
 } /* projectpoint */
 
@@ -932,7 +934,7 @@ void qh_setfacetplane(facetT *facet) {
   int normsize= qh normal_size;
   int k,i, oldtrace= 0;
   realT dist;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
   coordT *coord, *gmcoord;
   pointT *point0= SETfirstt_(facet->vertices, vertexT)->point;
   boolT nearzero= False;
@@ -1053,6 +1055,8 @@ void qh_setfacetplane(facetT *facet) {
   }
   if (facet == qh tracefacet)
     qh IStracing= oldtrace;
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* setfacetplane */
 
 

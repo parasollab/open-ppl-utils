@@ -1073,12 +1073,14 @@ void qh_createsimplex(setT *vertices) {
     ridges also freed in qh_freeqhull
 */
 void qh_delridge(ridgeT *ridge) {
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   qh_setdel(ridge->top->ridges, ridge);
   qh_setdel(ridge->bottom->ridges, ridge);
   qh_setfree(&(ridge->vertices));
   qh_memfree_(ridge, (int)sizeof(ridgeT), freelistp);
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* delridge */
 
 

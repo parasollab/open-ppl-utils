@@ -216,7 +216,7 @@ void qh_all_merges(boolT othermerge, boolT vneighbors) {
   facetT *facet1, *facet2;
   mergeT *merge;
   boolT wasmerge= True, isreduce;
-  void **freelistp;  /* used !qh_NOmem */
+  void **freelistp = NULL;  /* used !qh_NOmem */
   vertexT *vertex;
   mergeType mergetype;
   int numcoplanar=0, numconcave=0, numdegenredun= 0, numnewmerges= 0;
@@ -288,6 +288,8 @@ void qh_all_merges(boolT othermerge, boolT vneighbors) {
     numcoplanar, numconcave, numdegenredun));
   if (qh IStracing >= 4 && qh num_facets < 50)
     qh_printlists();
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* all_merges */
 
 
@@ -319,7 +321,7 @@ void qh_all_merges(boolT othermerge, boolT vneighbors) {
 */
 void qh_appendmergeset(facetT *facet, facetT *neighbor, mergeType mergetype, realT *angle) {
   mergeT *merge, *lastmerge;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   if (facet->redundant)
     return;
@@ -358,6 +360,8 @@ void qh_appendmergeset(facetT *facet, facetT *neighbor, mergeType mergetype, rea
     neighbor->redundant= True;
     qh_setappend(&(qh degen_mergeset), merge);
   }
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* appendmergeset */
 
 
@@ -2083,7 +2087,7 @@ void qh_mergecycle_ridges(facetT *samecycle, facetT *newfacet) {
   unsigned int samevisitid;
   ridgeT *ridge, **ridgep;
   boolT toporient;
-  void **freelistp; /* used !qh_NOmem */
+  void **freelistp = NULL; /* used !qh_NOmem */
 
   trace4((qh ferr, 4033, "qh_mergecycle_ridges: delete shared ridges from newfacet\n"));
   samevisitid= qh visit_id -1;
@@ -2151,6 +2155,8 @@ void qh_mergecycle_ridges(facetT *samecycle, facetT *newfacet) {
 
   trace2((qh ferr, 2033, "qh_mergecycle_ridges: found %d old ridges and %d new ones\n",
              numold, numnew));
+  if(freelistp!=NULL)
+    free(freelistp);
 } /* mergecycle_ridges */
 
 /*-<a                             href="qh-merge.htm#TOC"

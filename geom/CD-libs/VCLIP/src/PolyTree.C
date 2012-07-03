@@ -585,7 +585,7 @@ int Polyhedron::check() const
 // from the Vertex list.
 int Polyhedron::buildHull()
 {
-  int nf, nv, idx, i;
+  int nf, idx, i;
   size_t npts;
   Vertex *v;
   //List<Vertex> origVerts;
@@ -677,8 +677,8 @@ int Polyhedron::buildHull()
       vi++;
       verts_.erase(vi0);
     }
-  nv = verts_.size();
-
+  
+  //int nv = verts_.size();
   //cout << nf << " faces, " << nv << " vertices " << std::endl;
 
   qh NOerrexit= True;
