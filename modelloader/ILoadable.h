@@ -12,6 +12,10 @@ class ILoadable : public IModel
 public:
 
     ILoadable(){ m_strFileName=NULL; }
+    virtual ~ILoadable(){ 
+      if(m_strFileName!=NULL)
+        delete m_strFileName; 
+    }
     virtual void SetDataFileName( const char * szFileName )
     {
         if( szFileName==NULL )
