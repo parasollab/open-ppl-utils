@@ -96,6 +96,13 @@ namespace mathtool
 
     private:
         VT v;
+    
+    #ifdef _PARALLEL
+    public:
+      void define_type(stapl::typer &_t) {
+        _t.member(v);
+      }  
+    #endif
     };
 
     template<class T, int D>
