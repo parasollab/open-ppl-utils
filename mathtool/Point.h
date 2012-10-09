@@ -96,13 +96,15 @@ namespace mathtool
 
     private:
         VT v;
-    
-    #ifdef _PARALLEL
-    public:
-      void define_type(stapl::typer &_t) {
-        _t.member(v);
-      }  
-    #endif
+  ///Needed for shipping (assignment) Cfg2D
+  public:
+  #ifdef _PARALLEL
+    void define_type(stapl::typer &_t)  
+    {
+      _t.member(v);
+    }
+ #endif
+  
     };
 
     template<class T, int D>
@@ -130,7 +132,6 @@ namespace mathtool
     /* Typedef common used vector type */
     typedef Point<double,2> Point2d;
     typedef Point<double,3> Point3d;
-
 }//end off nprmlib namespace
 
 #endif // !defined(_Point_H_)
