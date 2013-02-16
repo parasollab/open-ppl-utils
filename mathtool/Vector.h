@@ -79,6 +79,11 @@ using namespace std;
         Vector operator-(const Vector& v2) const; // vector sub
         Vector operator*(const T& s) const;       // scalar multiply
         Vector operator/(const T& s) const;       // division by scalar
+
+        Vector operator+=(const Vector& v2);     //vector add to self
+        Vector operator-=(const Vector& v2);     //vector subtract from self
+        Vector operator*=(const T& s);           //scalar multiply to self
+        Vector operator/=(const T& s);           //scalar divide from self
         
         Vector operator^(const Vector& v2) const; // component *
         T operator*(const Vector& v2) const;      // dot product
@@ -187,14 +192,14 @@ using namespace std;
             v[i] = v[i] / magnitude;
     }
     */
-    
+
     template<class T, int D >
     const Vector<T,D>& Vector<T,D>::operator=(const Vector<T,D>& v2)
     {
         v=v2.v;
         return *this;
     }
-    
+
     template<class T, int D >
     Vector<T,D> Vector<T,D>::operator-() const
     {
@@ -202,12 +207,40 @@ using namespace std;
         for( int i=0;i<D;i++ ) newv.v[i]=-newv.v[i];
         return newv;
     }
+
+    template<class T, int D >
+    Vector<T,D> Vector<T,D>::operator+=(const Vector& v2){
+        for( int i=0;i<D;i++ )
+          v[i]+=v2.v[i];
+        return *this;
+    }
+    
+    template<class T, int D >
+    Vector<T,D> Vector<T,D>::operator-=(const Vector& v2){
+        for( int i=0;i<D;i++ )
+          v[i]-=v2.v[i];
+        return *this;
+    }
+    
+    template<class T, int D >
+    Vector<T,D> Vector<T,D>::operator*=(const T& s){
+        for( int i=0;i<D;i++ )
+          v[i]*=s;
+        return *this;
+    }
+    
+    template<class T, int D >
+    Vector<T,D> Vector<T,D>::operator/=(const T& s){
+        for( int i=0;i<D;i++ )
+          v[i]/=s;
+        return *this;
+    }
     
     template<class T, int D >
     Vector<T,D> Vector<T,D>::operator+(const Vector& v2) const
     {
         Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]+=v2.v[i];
+        newv += v2;
         return newv;
     }
     
@@ -215,7 +248,7 @@ using namespace std;
     Vector<T,D> Vector<T,D>::operator-(const Vector& v2) const
     {
         Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]-=v2.v[i];
+        newv -= v2;
         return newv;
     }
     
@@ -223,7 +256,7 @@ using namespace std;
     Vector<T,D> Vector<T,D>::operator*(const T& s) const
     {
         Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]*=s;
+        newv *= s;
         return newv;
     }
     
@@ -231,10 +264,10 @@ using namespace std;
     Vector<T,D> Vector<T,D>::operator/(const T& s) const
     {
         Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]/=s;
+        newv /= s;
         return newv;
     }
-    
+
     template<class T, int D >
     Vector<T,D> Vector<T,D>::operator^(const Vector<T,D>& v2) const
     {
