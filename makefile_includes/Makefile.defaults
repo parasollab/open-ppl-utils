@@ -28,7 +28,7 @@
 
 # available platforms
 #PLATFORMS = "HP_aCC IBM_xlC IBM_xlC_llnl IBM_gcc_llnl LINUX_gcc LINUX_gcc_llnl MACOSX_gcc IRIX_gcc LINUX_KCC SGI_CC BLRTS_gcc BLRTS_xlC"
-PLATFORMS = "LINUX_gcc LINUX_gcc_mh LINUX_32_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64 LINUX_gcc_brazos LINUX_gcc_hopper"
+PLATFORMS = "LINUX_gcc LINUX_gcc_mh LINUX_32_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64 LINUX_gcc_brazos LINUX_gcc_hopper CRAY_gcc"
 
 
 ifndef debug
@@ -155,6 +155,25 @@ ifeq (${platform}, AIX_64_xlC)
 	endif
 	AR = ar -X64 rc
 endif
+
+ifeq (${platform}, CRAY_gcc)
+	FOUNDPLAT = 1
+	CC  = gcc
+	ifeq (${parallel}, 1)
+	  CXX = mpic++
+	else
+	  CXX = g++
+	endif
+	CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
+	CXXFLAGS := ${CFLAGS} 
+	ifeq (${debug}, 0)
+		OPTS = -O3 -w
+	else
+		OPTS = -g -Wall
+	endif 
+	AR = ar rc  
+endif
+
 
 # default target
 default: default_target
