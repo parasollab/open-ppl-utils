@@ -1,71 +1,88 @@
-// EularAngle.h: interface for the CL_CulerAngle class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(_EULERANGLE_H_)
-#define _EULERANGLE_H_
+#ifndef EULERANGLE_H_
+#define EULERANGLE_H_
 
 #include "Basic.h"
 
-#ifndef GB
-#include <iostream>
-#include <math.h>
-#else
-#include "Defines.h"
-#endif
+namespace mathtool {
 
-using namespace std;
+  template<size_t N, size_t M> class Matrix;
+  typedef Matrix<3, 3> Matrix3x3;
+  class Quaternion;
 
-//namespace mathtool {
-
-    class EulerAngle  
-    {
+  class EulerAngle {
     public:
-        ///////////////////////////////////////////////////////////////////////////////
-        // Constructors & Destructor
-        EulerAngle(){ m_alpha=0.0; m_beta=0.0; m_gamma=0.0; }
-        
-        EulerAngle(double alpha, double beta, double gamma){
-            SetCoordinate( alpha, beta, gamma);
-        }
-        
-        ///////////////////////////////////////////////////////////////////////////////
-        // Access
-        void SetCoordinate(double alpha, double beta, double gamma){
-            m_alpha=fmod(alpha ,2*PI);
-            m_beta =fmod(beta  ,2*PI);
-            m_gamma=fmod(gamma ,2*PI);
-        }
-        
-        void SetCoordinate(const EulerAngle & other){
-            SetCoordinate( other.m_alpha, other.m_beta, other.m_gamma);
-        }
-        
-        EulerAngle & operator=( const EulerAngle & other ){
-            SetCoordinate(other.m_alpha, other.m_beta, other.m_gamma );
-            return *this;
-        }
-        
-        void operator+=(const EulerAngle & other){
-            double alpha =fmod(other.m_alpha +m_alpha,2*PI);
-            double beta  =fmod(other.m_beta  +m_beta, 2*PI);
-            double gamma =fmod(other.m_gamma +m_gamma,2*PI);
-            
-            SetCoordinate(alpha, beta, gamma);
-        }
-        
-        double Alpha() const {  return m_alpha; }
-        double Beta() const  {  return m_beta;  }
-        double Gamma() const {  return m_gamma; }
-        
-    ///////////////////////////////////////////////////////////////////////////////
-    // Access
+
+      EulerAngle(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) 
+        : m_alpha(_alpha), m_beta(_beta), m_gamma(_gamma) {}
+
+      //equality
+      bool operator==(const EulerAngle& _e) const {
+        return m_alpha == _e.m_alpha && m_beta == _e.m_beta && m_gamma == _e.m_gamma;
+      }
+      //inequality
+      bool operator!=(const EulerAngle& _e) const {
+        return !(*this == _e);
+      }
+
+      //self addition
+      EulerAngle& operator+=(const EulerAngle& _e) {
+        m_alpha = fmod(_e.m_alpha + m_alpha, TWOPI);
+        m_beta = fmod(_e.m_beta + m_beta, TWOPI);
+        m_gamma = fmod(_e.m_gamma + m_gamma, TWOPI);
+        return *this;
+      }
+      //self subtraction
+      EulerAngle& operator-=(const EulerAngle& _e) {
+        m_alpha = fmod(_e.m_alpha - m_alpha, TWOPI);
+        m_beta = fmod(_e.m_beta - m_beta, TWOPI);
+        m_gamma = fmod(_e.m_gamma - m_gamma, TWOPI);
+        return *this;
+      }
+
+      //inversion
+      EulerAngle operator-() const {
+        return (fmod(-m_alpha + PI, TWOPI), m_beta, fmod(-m_gamma + PI, TWOPI));
+      }
+      //addition
+      EulerAngle operator+(const EulerAngle& _e) const {
+        EulerAngle e(*this);
+        e += _e;
+        return e;
+      }
+      //subtraction
+      EulerAngle operator-(const EulerAngle& _e) const {
+        EulerAngle e(*this);
+        e -= _e;
+        return e;
+      }
+
+      friend std::istream& operator>>(std::istream& _is, EulerAngle& _e);
+      friend std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e);
+      friend EulerAngle& convertFromMatrix(EulerAngle& _e, const Matrix3x3& _m);
+      friend Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e);
+
     private:
-        double m_alpha, m_beta, m_gamma;
-    };
+      
+      double m_alpha, m_beta, m_gamma;
+  };
 
-    ostream & operator<<(ostream & out, const EulerAngle & angle); 
-//}//end of nprmlib namespace .
+  //input EulerAngle from degrees
+  inline std::istream& operator>>(std::istream& _is, EulerAngle& _e) {
+    double a, b, g;
+    _is >> a >> b >> g;
+    _e.m_alpha = fmod(degToRad(a), TWOPI);
+    _e.m_beta = fmod(degToRad(b), TWOPI);
+    _e.m_gamma = fmod(degToRad(g), TWOPI);
+    return _is;
+  }
 
-#endif // !defined(_EULERANGLE_H_)
+  //output EulerAngle to degrees
+  inline std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e) {
+    return _os << std::fixed
+      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI)) << " " 
+      << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " " 
+      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI)); 
+  }
+}
 
+#endif

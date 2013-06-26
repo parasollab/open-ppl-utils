@@ -1,313 +1,247 @@
-/********************************************************************
+#ifndef MATRIX_H_
+#define MATRIX_H_
 
-    Matrix.H    Header File
+#include "Basic.h"
 
-    Matrix Algebra Objects, Methods, and Procedures
-        Donald H. House  April 17, 1997
-        Visualization Laboratory
-        Texas A&M University
+namespace mathtool {
 
-*********************************************************************/
-
-#ifndef _H_Matrix
-#define _H_Matrix
-
-#include "Vector.h"
-#include <iostream>
-#include <ostream>
-#include <fstream>
-using namespace std;
-
-//namespace mathtool{
-
-    /* Matrix Descriptions and Operations */
-    class Matrix2x2;
-    class Matrix3x3;
-    class Matrix4x4;
-    //class Matrix;
-
-    //
-    // The internal storage form of transforms.  The matrices in row-major
-    // order (ie  mat[row][column] )
-    //
-
-    class Matrix2x2 {
-    protected:
-        Vector2d row[2];
-
-    public:
-      Matrix2x2(double a11 = 0, double a12 = 0,
-            double a21 = 0, double a22 = 0);
-
-      Vector2d& operator[](int i);
-      const Vector2d& operator[](int i) const;
-
-      operator Matrix3x3();
-      operator Matrix4x4();
-      //operator Matrix();
-
-      void print(int w = 7, int p = 3) const; // print with width and precision
-
-      void set(double a11 = 0, double a12 = 0,
-           double a21 = 0, double a22 = 0);
-      void identity();
-
-      Matrix2x2 transpose() const;
-      Matrix2x2 inv() const;
-
-      friend Matrix2x2 operator+(const Matrix2x2& m1, const Matrix2x2& m2);
-      friend Matrix2x2 operator-(const Matrix2x2& m1, const Matrix2x2& m2);
-      friend Matrix2x2 operator*(const Matrix2x2& m1, const Matrix2x2& m2);
-      friend Matrix2x2 operator*(double a, const Matrix2x2& m);
-      Matrix2x2 operator*(double a) const;
-      // mat times vector
-      friend Vector2d operator*(const Matrix2x2& m, const Vector2d& v);
-      // vector times mat
-      friend Vector2d operator*(const Vector2d& v, const Matrix2x2& m);
-      // outer product
-      friend Matrix2x2 operator&(const Vector2d& v1, const Vector2d& v2);
-    };
-
-    class Matrix3x3 {
-    //protected:
-    public:
-      Vector3d row[3];
-
-    public:
-        /*
-      Matrix3x3(double a11 = 0, double a12 = 0,
-            double a21 = 0, double a22 = 0);
-    */
-      Matrix3x3(double a11=0, double a12=0, double a13=0,
-            double a21=0, double a22=0, double a23=0,
-            double a31=0, double a32=0, double a33=0);
-
-      Vector3d& operator[](int i);
-      const Vector3d& operator[](int i) const;
-
-      operator Matrix4x4();
-      //operator Matrix();
-
-      void print(int w = 7, int p = 3) const;  // print with width and precision
-/*
-      void set(double a11 = 0, double a12 = 0,
-           double a21 = 0, double a22 = 0);
-*/
-      void set(double a11, double a12, double a13,
-           double a21, double a22, double a23,
-           double a31, double a32, double a33);
-      void identity();
-
-      Matrix3x3 transpose() const;
-      Matrix3x3 inv() const;
-
-      friend Matrix3x3 operator+(const Matrix3x3& m1, const Matrix3x3& m2);
-      friend Matrix3x3 operator-(const Matrix3x3& m1, const Matrix3x3& m2);
-      friend Matrix3x3 operator*(const Matrix3x3& m1, const Matrix3x3& m2);
-      friend Matrix3x3 operator*(double a, const Matrix3x3& m);
-      Matrix3x3 operator*(double a) const;
-      // mat times vector
-      friend Vector3d operator*(const Matrix3x3& m, const Vector3d& v);
-      // vector times mat
-      friend Vector3d operator*(const Vector3d& v, const Matrix3x3& m);
-      // outer product
-      friend Matrix3x3 operator&(const Vector3d& v1, const Vector3d& v2);
-    };
-
-    class Matrix4x4 {
-    protected:
-      Vector4d row[4];
-
-    public:
-        /*
-      Matrix4x4(double a11 = 0, double a12 = 0, double a13 = 0,
-            double a21 = 0, double a22 = 0, double a23 = 0,
-            double a31 = 0, double a32 = 0, double a33 = 0);
-    */
-      Matrix4x4(double a11=0, double a12=0, double a13=0, double a14=0,
-            double a21=0, double a22=0, double a23=0, double a24=0,
-            double a31=0, double a32=0, double a33=0, double a34=0,
-            double a41=0, double a42=0, double a43=0, double a44=0);
-
-      //operator Matrix();
-
-      Vector4d& operator[](int i);
-      const Vector4d& operator[](int i) const;
-
-      void print(int w = 7, int p = 3) const;  // print with width and precision
-/*
-      void set(double a11 = 0, double a12 = 0, double a13 = 0,
-           double a21 = 0, double a22 = 0, double a23 = 0,
-           double a31 = 0, double a32 = 0, double a33 = 0);
-*/
-      void set(double a11, double a12, double a13, double a14,
-           double a21, double a22, double a23, double a24,
-           double a31, double a32, double a33, double a34,
-           double a41, double a42, double a43, double a44);
-      void identity();
-
-      Matrix4x4 transpose() const;
-      Matrix4x4 inv() const;
-
-      friend Matrix4x4 operator+(const Matrix4x4& m1, const Matrix4x4& m2);
-      friend Matrix4x4 operator-(const Matrix4x4& m1, const Matrix4x4& m2);
-      friend Matrix4x4 operator*(const Matrix4x4& m1, const Matrix4x4& m2);
-      friend Matrix4x4 operator*(double a, const Matrix4x4& m);
-      Matrix4x4 operator*(double a) const;
-      friend Matrix4x4 LU_Decompose(const Matrix4x4& M, int *indx);
-      friend void LU_back_substitution(const Matrix4x4& M, int *indx, double col[]);
-      // mat times vector
-      friend Vector4d operator*(const Matrix4x4& m, const Vector4d& v);
-      // vector times mat
-      friend Vector4d operator*(const Vector4d& v, const Matrix4x4& m);
-      // outer product
-      friend Matrix4x4 operator&(const Vector4d& v1, const Vector4d& v2);
-    };
-
-/*
+  template<size_t N, size_t M = N>
     class Matrix {
-    protected:
-      Vector *row;
-      int Nrows, Ncols;
+      public:
+        //internal class row to control access for [][] operations
+        class Row {
+          public:
+            Row() {
+              for(size_t i = 0; i<M; ++i)
+                m_r[i] = 0.0;
+            }
+            Row(const double _r[M]){
+              for(size_t i = 0; i<M; ++i)
+                m_r[i] = _r[i];
+            }
+            Row(const Row& _r) {
+              for(size_t i = 0; i<M; ++i)
+                m_r = _r.m_r;
+            }
 
-    public:
-      Matrix(int rows = 0, int cols = 0, const double *M = NULL);
-      Matrix(const Matrix& M);
-      Matrix(double a11, double a12,
-         double a21, double a22);
-      Matrix(double a11, double a12, double a13,
-         double a21, double a22, double a23,
-         double a31, double a32, double a33);
-      Matrix(double a11, double a12, double a13, double a14,
-         double a21, double a22, double a23, double a24,
-         double a31, double a32, double a33, double a34,
-         double a41, double a42, double a43, double a44);
+            //assignment
+            Row& operator=(const Row& _r) {
+              for(size_t i = 0; i<M; ++i)
+                m_r[i] = _r.m_r[i];
+              return *this;
+            }
 
-      ~Matrix();
+            //access
+            double& operator[](size_t _i) {return m_r[_i];}
+            const double& operator[](size_t _i) const {return m_r[_i];}
 
-      void setsize(int rows, int cols);
-      int nrows() const;
-      int ncols() const;
+          private:
+            double m_r[M];
+        };
 
-      operator Matrix2x2();
-      operator Matrix3x3();
-      operator Matrix4x4();
+        Matrix() {
+          for(size_t i = 0; i<N; ++i)
+            m_m[i] = Row();
+        }
+        Matrix(const double _m[N][M]){
+          for(size_t i = 0; i<N; ++i)
+            m_m[i] = _m[i];
+        }
+        Matrix(const Matrix& _m) {
+          for(size_t i = 0; i<N; ++i)
+            m_m[i] = _m.m_m[i];
+        }
 
-      Vector& operator[](int i);
-      const Vector& operator[](int i) const;
+        //assignment
+        Matrix& operator=(const Matrix& _m) {
+          for(size_t i = 0; i<N; ++i)
+            m_m[i] = _m.m_m[i];
+        }
 
-      void print(int w = 7, int p = 3) const;  // print with width and precision
+        //access
+        Row& operator[](size_t _i) {return m_m[_i];}
+        const Row& operator[](size_t _i) const {return m_m[_i];}
 
-      void set(double *M);
-      void set(double a11, double a12,
-           double a21, double a22);
-      void set(double a11, double a12, double a13,
-           double a21, double a22, double a23,
-           double a31, double a32, double a33);
-      void set(double a11, double a12, double a13, double a14,
-           double a21, double a22, double a23, double a24,
-           double a31, double a32, double a33, double a34,
-           double a41, double a42, double a43, double a44);
-      void identity();
+        //equality
+        bool operator==(const Matrix& _m) const {
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              if(m_m[i][j] != _m[i][j])
+                return false;
+          return true;
+        }
+        //inequality
+        bool operator!=(const Matrix& _m) const {
+          return !(*this == _m);
+        }
 
-      Matrix transpose() const;
-      Matrix inv() const;
-      void svd(Matrix &U, Vector &W, Matrix &V) const;
+        //self addition
+        Matrix& operator+=(const Matrix& _m) {
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] += _m[i][j];
+          return *this;
+        }
+        //self subtraction
+        Matrix& operator-=(const Matrix& _m) {
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] -= _m[i][j];
+          return *this;
+        }
+        //self multiplication
+        Matrix& operator*=(double _d) {
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] *= _d;
+          return *this;
+        }
+        //self division
+        Matrix& operator/=(double _d) {
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] /= _d;
+          return *this;
+        }
 
-      friend Matrix diag(const Vector &V);
+        //addition
+        Matrix operator+(const Matrix& _m) const {
+          Matrix m(*this);
+          m += _m;
+          return m;
+        }
+        //subtraction
+        Matrix operator-(const Matrix& _m) const {
+          Matrix m(*this);
+          m -= _m;
+          return m;
+        }
+        //scalar multiplication
+        Matrix operator*(double _d) {
+          Matrix m(*this);
+          m *= _d;
+          return m;
+        }
+        //scalar division
+        Matrix operator/(double _d) {
+          Matrix m(*this);
+          m /= _d;
+          return m;
+        }
 
-      const Matrix& operator=(const Matrix& m2);
-      friend Matrix operator+(const Matrix& m1, const Matrix& m2);
-      friend Matrix operator-(const Matrix& m1, const Matrix& m2);
-      friend Matrix operator*(const Matrix& m1, const Matrix& m2);
-      friend Matrix operator*(double a, const Matrix& m);
-      Matrix operator*(double a) const;
-      friend Matrix LU_Decompose(const Matrix& M, int *indx);
-      friend void LU_back_substitution(const Matrix& M, int *indx, double col[]);
-      // mat times vector
-      friend Vector operator*(const Matrix& m, const Vector& v); 
-      // vector times mat
-      friend Vector operator*(const Vector& v, const Matrix& m);
-      // outer product
-      friend Matrix operator&(const Vector& v1, const Vector& v2);
+        Matrix<M, N> transpose() const {
+          Matrix<M, N> m;
+          for(size_t i = 0; i<N; ++i)
+            for(size_t j = 0; j<M; ++j)
+              m[j][i] = m_m[i][j];
+        }
+
+      private:
+        Row m_m[N];
     };
-*/
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Matrix utilities and operators
+  //////////////////////////////////////////////////////////////////////////////
+  
+  //Grab identity matrix
+  template<size_t N>
+    inline void identity(Matrix<N>& _m) {
+      for(size_t i = 0; i<N; ++i)
+        for(size_t j = 0; j<N; ++j)
+          if(i == j) _m[i][j] = 1.0;
+          else _m[i][j] = 0.0;
+    }
 
-class Matrix {
-public:
-    //----------------------------------------------------------------------
-    //  Constructors and Destructor
-    //----------------------------------------------------------------------
-    Matrix(int _ncol, int _nrow);
-    Matrix(double *_m = 0, int _ncol = 0, int _nrow = 0);
-    Matrix(const Matrix & _m);
-    virtual ~Matrix();
-    //----------------------------------------------------------------------
-    //  Operators
-    //----------------------------------------------------------------------
-    Matrix operator+(Matrix & _matrix);
-    Matrix operator-(Matrix & _matrix);
-    Matrix operator-();
-    Matrix operator*(Matrix & _matrix);
-    Matrix & operator=(const Matrix & _matrix);
-    double & operator()(int _i, int _j);
-    //----------------------------------------------------------------------
-    //  Methods
-    //----------------------------------------------------------------------
-    int GetNrows();
-    int GetNcols();
-    double * GetArray();
-    virtual Matrix Inverse();
-    Matrix Transpose();
-    void RowColumnCouple(Matrix & _m);
-    void RowCouple(Matrix & _m);
-    void ColumnCouple(Matrix & _m);
-    Matrix Extract(int _startRow, int _endRow, int _startCol, int _endCol);
+  //get a 2x2 matrix from 4 doubles
+  inline void getMatrix2x2(Matrix<2>& _m,
+      double _m00, double _m01,
+      double _m10, double _m11) {
+    _m[0][0] = _m00; _m[0][1] = _m01;
+    _m[1][0] = _m10; _m[1][1] = _m11;
+  }
 
-    virtual void Copy(const Matrix & _matrix);
-    virtual void Read(ifstream & _is);
-    virtual void Write(ostream & _os);
-    void Print();
-    //----------------------------------------------------------------------
-    //  Data
-    //----------------------------------------------------------------------
-    double *m;
-    int ncol;
-    int nrow;
-protected:
-};
+  //get a 3x3 matrix from 9 doubles
+  inline void getMatrix2x2(Matrix<3>& _m,
+      double _m00, double _m01, double _m02,
+      double _m10, double _m11, double _m12,
+      double _m20, double _m21, double _m22) {
+    _m[0][0] = _m00; _m[0][1] = _m01; _m[0][2] = _m02;
+    _m[1][0] = _m10; _m[1][1] = _m11; _m[1][2] = _m12;
+    _m[2][0] = _m20; _m[2][1] = _m21; _m[2][2] = _m22;
+  }
 
-//==========================================================================
-// Inline functions
-//==========================================================================
-inline double & Matrix::operator()(int _i, int _j) {
-    return m[(_i-1)*ncol + (_j-1)];
+  //get a 3x3 matrix from 9 doubles
+  inline void getMatrix4x4(Matrix<4>& _m,
+      double _m00, double _m01, double _m02, double _m03,
+      double _m10, double _m11, double _m12, double _m13,
+      double _m20, double _m21, double _m22, double _m23,
+      double _m30, double _m31, double _m32, double _m33) {
+    _m[0][0] = _m00; _m[0][1] = _m01; _m[0][2] = _m02; _m[0][3] = _m03;
+    _m[1][0] = _m10; _m[1][1] = _m11; _m[1][2] = _m12; _m[1][3] = _m13;
+    _m[2][0] = _m20; _m[2][1] = _m21; _m[2][2] = _m22; _m[2][3] = _m23;
+    _m[3][0] = _m20; _m[3][1] = _m21; _m[3][2] = _m22; _m[3][3] = _m23;
+  }
+
+  //vector multiplication
+  template<size_t N, size_t M>
+    Vector<double, N> operator*(const Matrix<N, M>& _m, const Vector<double, M>& _v) {
+      Vector<double, N> v;
+      for(size_t i = 0; i<N; ++i)
+        for(size_t j = 0; j<M; ++j)
+          v[i] += _m[i][j]*_v[j];
+      return v;
+    }
+  template<size_t N, size_t M>
+    Vector<double, M> operator*(const Vector<double, N>& _v, const Matrix<N, M>& _m) {
+      Vector<double, M> v;
+      for(size_t i = 0; i<N; ++i)
+        for(size_t j = 0; j<M; ++j)
+          v[j] += _m[i][j]*_v[i];
+      return v;
+    }
+
+  //matrix multiplication
+  template<size_t N, size_t K, size_t M>
+    Matrix<N, M> operator*(const Matrix<N, K>& _m1, const Matrix<K, M>& _m2){
+      Matrix<N, M> m;
+      for(size_t i = 0; i<N; ++i)
+        for(size_t j = 0; j<M; ++j)
+          for(size_t k = 0; k<K; ++k)
+            m[i][j] += _m1[i][k] * _m2[k][j];
+      return m;
+    }
+
+  //vector outer product
+  template<size_t N, size_t M>
+    Matrix<N, M> operator&(const Vector<double, N>& _v1, const Vector<double, M>& _v2){
+      Matrix<N, M> m;
+      for(size_t i = 0; i<N; ++i)
+        for(size_t j = 0; j<M; ++j)
+          m[i][j] = _v1[i]*_v2[j];
+      return m;
+    }
+
+  //output a NxM matrix
+  template<size_t N, size_t M>
+    std::ostream& operator<<(std::ostream& _os, const Matrix<N, M>& _m){
+      _os << "[ " << std::endl;
+      for(size_t i = 0; i<N; ++i) {
+        _os << "[ ";
+        for(size_t j = 0; j<M; ++j) {
+          _os << _m[i][j] << ", ";
+        }
+        _os << "];" << std::endl;
+      }
+      return _os << "]";
+    }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Common Typedefs of matrices
+  //////////////////////////////////////////////////////////////////////////////
+  typedef Matrix<2> Matrix2x2;
+  typedef Matrix<3> Matrix3x3;
+  typedef Matrix<4> Matrix4x4;
 }
-
-//==========================================================================
-// Inline functions
-//==========================================================================
-inline int Matrix::GetNrows() {
-    return  nrow;
-}
-
-//==========================================================================
-// Inline functions
-//==========================================================================
-inline int Matrix::GetNcols() {
-    return  ncol;
-}
-
-//==========================================================================
-// Inline functions
-//==========================================================================
-inline double * Matrix::GetArray() {
-    return  m;
-}
-
-
-
-//} //end of nprmlib namespace
 
 #endif

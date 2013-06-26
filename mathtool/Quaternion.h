@@ -1,209 +1,133 @@
-/********************************************************************
+//Operations for Quaternion - addition, scalar multiplication, and
+//quaternion multiplication
 
-    Quaternion.h    Header File
+#ifndef QUATERNION_H
+#define QUATERNION_H
 
-    Jyh-Ming Lien 03/30/2002
-    Computer Science.
-    Texas A&M University
-
-*********************************************************************/
-
-#if !defined( _QUATERNION_H_NPRM_ )
-#define _QUATERNION_H_NPRM_
-
-#include "Matrix.h"
+#include "Basic.h"
 #include "Vector.h"
-#include <math.h>
-//namespace mathtool{
 
-    class Quaternion {
+namespace mathtool{
+
+  class EulerAngle;
+  template<size_t N, size_t M> class Matrix;
+  typedef Matrix<3, 3> Matrix3x3;
+
+  class Quaternion {
+
     public:
-        Quaternion(){ m_s=1; m_v.set(0,0,0); }
-        Quaternion( double s, Vector3d v ){ m_v=v; m_s=s; }
-        Quaternion( const Quaternion & q){ *this=q; }
+      Quaternion(double _s = 1, const Vector3d& _v = Vector3d()) : m_s(_s), m_v(_v) {}
 
-        ////////////////////////////////////////////////////////////////////////
-        // Operations for Quaternion
-        Quaternion operator*(const Quaternion & q) const {
-            //double k=q.m_s*m_s;
-            q.m_v*m_v; //not sure what this op is for
-            double s=q.m_s*m_s-q.m_v*m_v;
-            Vector3d v=m_s*q.m_v+q.m_s*m_v+m_v%q.m_v;
-            return Quaternion(s,v);
-        }
-        Quaternion operator*(const Vector3d & v) const { return *this*Quaternion(0,v); }
-        Quaternion operator/(double s) const { return Quaternion(m_s/s,m_v/s); }
-        Quaternion & operator=(const Quaternion & q){ set(q.m_s,q.m_v); return *this; }
-        Quaternion operator+(const Quaternion & q) const { return Quaternion(m_s+q.m_s,m_v+q.m_v); }
-        Quaternion operator-(const Quaternion & q) const { return Quaternion(m_s-q.m_s,m_v-q.m_v); }
-        Quaternion operator-() const { return Quaternion(m_s,-m_v); }
-        friend Quaternion operator*(const Vector3d & v, const Quaternion & q);
-        friend istream& operator>>(istream & in, Quaternion & q );
-        friend ostream& operator<<(ostream & out, Quaternion & q );
+      //access
+      const Vector3d& imaginary() const {return m_v;}
 
-        //////////////////////////////////////////////////////////////////////////
-        //Normalization
-        Quaternion normalize(){ 
-            Quaternion q(*this);
-            double l=q.norm();
-            q=q/l;
-            return q;
-        }
+      //equality
+      bool operator==(const Quaternion& _q) const {
+        return m_s == _q.m_s && m_v == _q.m_v;
+      }
+      //inequality
+      bool operator!=(const Quaternion& _q) const {
+        return !(*this == _q);
+      }
+      
+      //self addition
+      Quaternion& operator+=(const Quaternion& _q) {
+        m_s += _q.m_s; m_v += _q.m_v;
+        return *this;
+      }
+      //self subtraction
+      Quaternion& operator-=(const Quaternion& _q) {
+        m_s -= _q.m_s; m_v -= _q.m_v;
+        return *this;
+      }
+      //self scalar multiplication
+      Quaternion& operator*=(double _d) {
+        m_s *= _d; m_v *= _d;
+        return *this;
+      }
+      //self scalar division
+      Quaternion& operator/=(double _d) {
+        m_s /= _d; m_v /= _d;
+      }
+      //self multiplication
+      Quaternion& operator*=(const Quaternion& _q) {
+        double s = m_s;
+        m_s = s*_q.m_s - m_v*_q.m_v;
+        m_v = s*_q.m_v + m_v*_q.m_s + m_v%_q.m_v;
+        return *this;
+      }
+      Quaternion& operator*=(const Vector3d& _v) {
+        return *this *= Quaternion(0, _v);
+      }
+    
+      //inverse of quaternion
+      Quaternion operator-() const {
+        return Quaternion(m_s, -m_v);
+      }
+      //addition
+      Quaternion operator+(const Quaternion& _q) const {
+        return Quaternion(m_s + _q.m_s, m_v + _q.m_v);
+      }
+      //subtraction
+      Quaternion operator-(const Quaternion& _q) const {
+        return Quaternion(m_s - _q.m_s, m_v - _q.m_v);
+      }
+      //scalar multiplication
+      Quaternion operator*(double _d) const {
+        return Quaternion(m_s*_d, m_v*_d);
+      }
+      //scalar division
+      Quaternion operator/(double _d) const {
+        return Quaternion(m_s/_d, m_v/_d);
+      }
+      //multiplication
+      Quaternion operator*(const Quaternion& _q) const {
+        Quaternion q(*this);
+        q *= _q;
+        return q;
+      }
+      Quaternion operator*(const Vector3d & _v) const {
+        return *this * Quaternion(0, _v);
+      }
 
-        double norm(){ return sqrt(normsqr()); }
-        double normsqr(){ return m_v.normsqr()+pow(m_s,2); }
+      //magnitude
+      double norm() const {return sqrt(normsqr());}
+      //magnitude squared
+      double normsqr() const {return m_s*m_s + m_v.normsqr();}
+      //Normalization
+      Quaternion& normalize() { 
+        return *this /= norm();
+      }
+      Quaternion normalized() const { 
+        return *this / norm();
+      }
 
-        //////////////////////////////////////////////////////////////////////////
-        //Access
-        Matrix3x3 getMatrix(){
-            double x_2=2*pow(m_v[0],2); double y_2=2*pow(m_v[1],2); double z_2=2*pow(m_v[2],2);
-            double xy=2*m_v[0]*m_v[1]; double yz=2*m_v[1]*m_v[2]; double zx=2*m_v[2]*m_v[0]; 
-            double sx=2*m_s*m_v[0]; double sy=2*m_s*m_v[1]; double sz=2*m_s*m_v[2]; 
-
-/*             return Matrix3x3(1-y_2-z_2, xy-sz, zx+sy, */
-/*                              xy+sz, 1-x_2-z_2, yz-sx, */
-/*                              zx-sy, yz+sx, 1-x_2-y_2); */
-            //have to assume this function is a fix over one before//
-	    return Matrix3x3(1-y_2-z_2,  xy+sz,      zx-sy,
-                             xy-sz,      1-x_2-z_2,  yz+sx,
-                             zx+sy,      yz-sx,      1-x_2-y_2);
-        }
-
-	/////////////////////////////////////////////////////////////
-	/////// Aimee Vargas june/2004
-	/////// given a rotation matrix, get the quaternion.
-
-	Quaternion getQuaternionFromMatrix(Matrix3x3 mat){
-
-	  double X, Y, Z, W, S;
-	  double T = 1 + mat[0][0] + mat[1][1] + mat[2][2];
-
-	  if ( T > 0.00000001 ){
-	    S = 0.5 / sqrt(T);
-	    X = ( mat[2][1] - mat[1][2] ) * S;
-	    Y = ( mat[0][2] - mat[2][0] ) * S;
-	    Z = ( mat[1][0] - mat[0][1] ) * S;
-	    W = 0.25 / S;
-	  }
-	  else{ //if(T <= 0)
-	    if ( (mat[0][0] > mat[1][1]) && (mat[0][0] > mat[2][2]) )  {  // Column 0: 
-	      S  = sqrt( 1.0 + mat[0][0] - mat[1][1] - mat[2][2] ) * 2;
-	      X = 0.25 * S;
-	      Y = (mat[0][1] + mat[1][0] ) / S;
-	      Z = (mat[2][0] + mat[0][2] ) / S;
-	      W = (mat[1][2] - mat[2][1] ) / S;
-	    } else if ( mat[1][1] > mat[2][2] ) {		 // Column 1: 
-	      S  = sqrt( 1.0 + mat[1][1] - mat[0][0] - mat[2][2] ) * 2;
-	      X = (mat[0][1] + mat[1][0] ) / S;
-	      Y = 0.25 * S;
-	      Z = (mat[1][2] + mat[2][1] ) / S;
-	      W = (mat[0][2] - mat[2][0] ) / S;
-	    } else {						// Column 2:
-	      S  = sqrt( 1.0 + mat[2][2] - mat[0][0] - mat[1][1] ) * 2;
-	      X = (mat[2][0] + mat[0][2] ) / S;
-	      Y = (mat[1][2] + mat[2][1] ) / S;
-	      Z = 0.25 * S;
-	      W = (mat[0][1] - mat[1][0] ) / S;
-	    }
-	  }
-
-	  //The quaternion is then defined as: Q = | X Y Z W |
-	  Vector3d v;
-	  v.set(X, Y, Z);	
-	  Quaternion qt(W,v);  
-	  return qt;
-	}
-
-	/////////////////////////////////////////////////////////////
-	/////// Aimee Vargas sept./2004
-	/////// given a rotation matrix, get the Euler angles (ZYX)
-	/////// returns a vector in the order: x, y, z
-	/////////////////////////////////////////////////////////////
-
-	Vector3d MatrixToEuler(Matrix3x3 mat){
-	  double sx, sy, sz, cx, cy, cz;
-
-	  sy = -mat[0][2];
-	  double s2y = sy * sy;
-	  cy = sqrt(1-s2y);
-
-	  if(cy !=0){
-	    sx = mat[1][2] / cy;
-	    cx = mat[2][2] / cy;
-
-	    sz = mat[0][1] / cy;
-	    cz = mat[0][0] / cy;
-	  }
-	  else{
-	    sx = -mat[2][1];
-	    cx = mat[1][1];
-	    sz = 0;
-	    cz = 1;
-	  }
-
-	  double x = atan2(sx, cx);
-	  double y = atan2(sy, cy);
-	  double z = atan2(sz, cz);
-
-	  //double TwoPI=3.1415926535*2.0;
-
-	  //NEW section jan/06/05
-	  //make sure x, y, and  are in correct range
-	  //between 0 and 2PI
-
-	    x = norm(x);
-	    y = norm(y);
-	    z = norm(z);
-
-	  /*
-	    if(x<0)
-	    x += TwoPI;
-	    if(y<0)
-	    y += TwoPI;
-	    if(z<0)
-	    z += TwoPI;
-	  */
-
-	  Vector3d angles; 
-	  angles[0] = x;
-	  angles[1] = y;
-	  angles[2] = z;
-	  return angles;
-	}
-
-	double norm(double phi){
-
-	  //double TwoPI=3.1415926535*2.0;
-	  double TwoPI= M_PI * 2;
-	  double phi_n,n;
-	  //printf("PHI:: %2f \t", phi);
-	  if( (phi > TwoPI) || (phi < -TwoPI)){
-
-	    n = (int)(phi/TwoPI);
-	    phi_n = phi - (n*TwoPI);
-	  }
-	  else
-	    phi_n = phi;
-
-	  if(phi_n < 0)
-	    phi_n += TwoPI;
-
-	  //cout<<"PHI_N::"<<phi_n<<endl;
-
-	  return phi_n;
-
-	}
-
-        void set(double s,const Vector3d & v){ m_v=v; m_s=s; }
-        const Vector3d& getComplex() const { return m_v; }
-        double getReal() const { return m_s; }
+      friend std::istream& operator>>(std::istream& _is, Quaternion& _q);
+      friend std::ostream& operator<<(std::ostream& _os, const Quaternion& _q);
+      friend Quaternion& convertFromMatrix(Quaternion& _q, const Matrix3x3& _m);
+      friend Matrix3x3& convertFromQuaternion(Matrix3x3& _m, const Quaternion& _q);
 
     private:
-        Vector3d m_v;
-        double m_s;
-    };
 
-//}//emd of nprmlib
+      double m_s; //real component of Quaternion
+      Vector3d m_v; //vector component of Quaternion
+  };
 
-#endif //#if !defined( _QUATERNION_H_NPRM_ ) 
+  //////////////////////////////////////////////////////////////////////////////
+  // Utility for multiplication, input, and output
+  //////////////////////////////////////////////////////////////////////////////
+  inline Quaternion operator*(const Vector3d& _v, const Quaternion& _q) {
+    return Quaternion(0, _v)*_q;
+  }
+  
+  inline std::istream& operator>>(std::istream& _is, Quaternion& _q) {
+    return _is >> _q.m_s >> _q.m_v;
+  }
 
+  inline std::ostream& operator<<(std::ostream& _os, const Quaternion& _q) {
+    return _os << _q.m_s << " " << _q.m_v;
+  }
+
+}
+
+#endif

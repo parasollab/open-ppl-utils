@@ -1,404 +1,394 @@
-/********************************************************************
-
-  Vector.H    Header File
-  
-    Vector Algebra Objects, Methods, and Procedures
-    Donald H. House  April 17, 1997
-    Visualization Laboratory
-    Texas A&M University
-    
-*********************************************************************/
-
-#ifndef _H_Vector
-#define _H_Vector
+#ifndef VECTOR_H_
+#define VECTOR_H_
 
 #include "Basic.h"
 
-#ifndef GB
-#include <algorithm>
-#include <vector>
-using namespace std;
-#else
-#include "Defines.h"
-#endif
-////////////////////////////////////////////////////////////////////////////////////////////
-//From VectorConstantSize (PMPL)
-/**@name 3D rigit body Cfg index*/
-//@{
-#define Xx  0
-#define Yy  1
-#define Zz  2
-#define ROLLroll    3
-#define PITCHpitch  4
-#define YAWyaw      5
-//@}
+namespace mathtool{
 
-//namespace mathtool{
-    
-    /* Vector Descriptions and Operations */
-    template<class T, int D=3 >
-    class Vector
-    {
-    public:
+  //////////////////////////////////////////////////////////////////////////////
+  // General D-dimensional Vector
+  //////////////////////////////////////////////////////////////////////////////
+  template<class T, size_t D>
+    class Vector {
+      public:
 
-        typedef vector<T> VT;
-
-        Vector(const VT& V);
-        Vector(const Vector& V);
-        Vector(const T& x=0, const T& y=0, const T& z=0, const T& w=0);
-	Vector(std::istream& );
-	//next two may be needed for compatibility
-        //Vector3(const T& x=0, const T& y=0, const T& z=0);
-        Vector(const T& x, const T& y, const T& z, const T& a, const T& b, const T& c);
-
-        T& operator[](int i){ return v[i]; }
-        const T& operator[](int i) const{ return v[i]; }
-        
-        T norm() const;               // magnitude of vector
-        T normsqr() const;            // magnitude squared
-        Vector normalize() const;     // normalize
-	//void selfNormalize();         // normalize this vector
-        
-        void set(const Vector &other){ *this=other; }
-        void set(const VT& V){ v=V; }
-        void set(const T other[D]){ 
-            /*copy(&other[0],&other[4],v.begin());*/ 
-            for( int i=0;i<D;i++ ) v[i]=other[i];
+        //construction
+        Vector() {
+          for(size_t i = 0; i<D; ++i) m_v[i] = T();
         }
-        void set(const T& x=0, const T& y=0, const T& z=0, const T& w=0){
-            if( D>0 ) v[0]=x; if( D>1 ) v[1]=y;
-            if( D>2 ) v[2]=z; if( D>3 ) v[3]=w;
+        Vector(const Vector& _v){
+          for(size_t i = 0; i<D; ++i) m_v[i] = _v.m_v[i];
         }
-        void get(T other[D]) const { copy(v.begin(),v.end(),other); }
-        void get(VT & other) const { other=v; }
 
-        /* Vector operator prototypes */
-        const Vector& operator=(const Vector& v2);        // assignment
-        Vector operator-() const;                 // unary negation
-        Vector operator+(const Vector& v2) const; // vector add
-        Vector operator-(const Vector& v2) const; // vector sub
-        Vector operator*(const T& s) const;       // scalar multiply
-        Vector operator/(const T& s) const;       // division by scalar
+        //assignment
+        Vector& operator=(const Vector& _v) {
+          for(size_t i = 0; i<D; ++i) m_v[i] = _v[i];
+          return *this;
+        }
 
-        Vector operator+=(const Vector& v2);     //vector add to self
-        Vector operator-=(const Vector& v2);     //vector subtract from self
-        Vector operator*=(const T& s);           //scalar multiply to self
-        Vector operator/=(const T& s);           //scalar divide from self
-        
-        Vector operator^(const Vector& v2) const; // component *
-        T operator*(const Vector& v2) const;      // dot product
-        Vector operator%(const Vector& v2) const; // cross product
-        bool operator==(const Vector& two) const; // equality
+        //access
+        T& operator[](size_t _i) {return m_v[_i];}
+        const T& operator[](size_t _i) const{return m_v[_i];}
 
-	///////////////////////////////////////////////////////////////////////////////
-	//functions from PMPL VectorConstantSize
-	/// Dot Product Operation. Vnew = (V11*V21)+(V12*V22)+(V13*V23)+....
-	//inline double dotProduct(Vector&) const;
-	T dotProduct(Vector&) const;
-	T magnitude();    
-	/// I/O for vector
-	void Read(std::istream&);
-	void Write(std::ostream&) const;
-	Vector crossProduct(const Vector& v2) const; //call %
-	T getX() const; 
-	T getY() const;
-	T getZ() const;
-	T getRoll() const;
-	T getPitch() const;
-	T getYaw() const;
-        
-    protected:
-        VT v;
+        //equality
+        bool operator==(const Vector& _v) const {
+          for(size_t i = 0; i<D; ++i) if(m_v[i] != _v.m_v[i]) return false;
+          return true;
+        }
+        //inequality
+        bool operator!=(const Vector& _v) const {
+          return !(*this == _v);
+        }
+
+        //self addition
+        Vector& operator+=(const Vector& _v) {
+          for(size_t i = 0; i<D; ++i) m_v[i] += _v.m_v[i];
+          return *this;
+        }
+        //self subtraction
+        Vector& operator-=(const Vector& _v) {
+          for(size_t i = 0; i<D; ++i) m_v[i] -= _v.m_v[i];
+          return *this;
+        }
+        //self scalar multiply
+        Vector& operator*=(const T& _d) {
+          for(size_t i = 0; i<D; ++i) m_v[i] *= _d;
+          return *this;
+        }
+        //self scalar divide
+        Vector& operator/=(const T& _d) {
+          for(size_t i = 0; i<D; ++i) m_v[i] /= _d;
+          return *this;
+        }
+        //self component *
+        Vector& operator^=(const Vector& _v) {
+          for(size_t i = 0; i<D; ++i) m_v[i] *= _v.m_v[i];
+          return *this;
+        }
+
+        //negation
+        Vector operator-() const {
+          Vector v;
+          for(size_t i = 0; i<D; ++i) v.m_v[i] = -m_v[i];
+          return v;
+        }
+        //addition
+        Vector operator+(const Vector& _v) const {
+          Vector v(*this);
+          return v += _v;
+        }
+        //subtraction
+        Vector operator-(const Vector& _v) const {
+          Vector v(*this);
+          return v -= _v;
+        }
+        //scalar multiply
+        Vector operator*(const T& _d) const {
+          Vector v(*this);
+          return v *= _d;
+        }
+        //scalar divide
+        Vector operator/(const T& _d) const {
+          Vector v(*this);
+          return v /= _d;
+        }
+        //component *
+        Vector operator^(const Vector& _v) const {
+          Vector v(*this);
+          return v ^= _v;
+        }
+
+        //dot product
+        T operator*(const Vector& _v) const {
+          T dot = 0;
+          for(size_t i = 0; i<D; ++i) dot += m_v[i] * _v.m_v[i];
+          return dot;
+        }
+        //magnitude
+        T norm() const {
+          return std::sqrt(normsqr());
+        }
+        //magnitude squared
+        T normsqr() const {
+          return (*this)*(*this);
+        }
+        //normalized vector
+        Vector& normalize() {
+          return *this /= norm();
+        }
+        Vector normalized() const {
+          return *this / norm();
+        }
+
+      private:
+        T m_v[D];
     };
-    
-    //Implementation
-    template<class T, int D >Vector<T,D>::
-    Vector(const VT& V):v(D,0)
-    {
-        set(V);
-    }
 
-    template<class T, int D >Vector<T,D>::
-    Vector(const T& x, const T& y, const T& z, const T& w)
-    :v(D,0)
-    {
-        set(x,y,z,w);
-    }
-    
-    template<class T, int D >Vector<T,D>::
-    Vector(const T& x, const T& y, const T& z, const T& a, const T& b, const T& c)
-    :v(D,0)
-    {
-            if( D>0 ) v[0]=x; if( D>1 ) v[1]=y;
-            if( D>2 ) v[2]=z; if( D>3 ) v[3]=a;
-            if( D>4 ) v[4]=b; if( D>5 ) v[5]=c;
-    }
+  //////////////////////////////////////////////////////////////////////////////
+  // Specialized 2-dimensional Vector
+  //////////////////////////////////////////////////////////////////////////////
+  template<class T>
+    class Vector<T,2> {
+      public:
 
-    template<class T, int D >
-    Vector<T,D>::Vector(const Vector<T,D>& V)
-    :v(D,0)
-    {
-        v=V.v;
-    }
-    
-    template<class T, int D >
-    Vector<T,D>::
-    Vector(std::istream& is)
-    :v(D,0)
-    {
-       Read(is); 
-    }
-    
-    template<class T, int D >
-    T Vector<T,D>::norm() const               // magnitude of vector
-    {
-        return (T)sqrt(normsqr());
-    }
-    
-    template<class T, int D >
-    T Vector<T,D>::normsqr() const            // magnitude squared
-    {
-        T sumsqr = 0;
-        for(int i = 0; i < D; i++)
-            sumsqr += pow(v[i],2);
-        return sumsqr;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::normalize() const     // normalize
-    {
-        Vector<T,D> newv;
-        double magnitude = norm();
-        int i;
-        for(i=0; i<D; i++){
-            newv.v[i] = v[i] / magnitude;
-            if(fabs(v[i]) > magnitude * HUGENUMBER){
-                cerr << "taking the norm of a zero" << D << " Vector" << endl;
-                break;
-            }
+        //construction
+        Vector(const T& _x = T(), const T& _y = T()) {
+          m_v[0] = _x; m_v[1] = _y;
         }
-        for(; i < D; i++){
-            newv.v[i] = v[i] / magnitude;
+        Vector(const Vector& _v){
+          m_v[0] = _v.m_v[0]; m_v[1] = _v.m_v[1];
         }
-        return newv;
-    }
-   
-    /* 
-    template<class T, int D >
-    void Vector<T,D>::selfNormalize()           // normalize this vector
-    {
-        double magnitude = norm();
-        for(int i=0; i<D; i++)
-            v[i] = v[i] / magnitude;
-    }
-    */
 
-    template<class T, int D >
-    const Vector<T,D>& Vector<T,D>::operator=(const Vector<T,D>& v2)
-    {
-        v=v2.v;
-        return *this;
-    }
-
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator-() const
-    {
-        Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]=-newv.v[i];
-        return newv;
-    }
-
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator+=(const Vector& v2){
-        for( int i=0;i<D;i++ )
-          v[i]+=v2.v[i];
-        return *this;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator-=(const Vector& v2){
-        for( int i=0;i<D;i++ )
-          v[i]-=v2.v[i];
-        return *this;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator*=(const T& s){
-        for( int i=0;i<D;i++ )
-          v[i]*=s;
-        return *this;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator/=(const T& s){
-        for( int i=0;i<D;i++ )
-          v[i]/=s;
-        return *this;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator+(const Vector& v2) const
-    {
-        Vector<T,D> newv(*this);
-        newv += v2;
-        return newv;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator-(const Vector& v2) const
-    {
-        Vector<T,D> newv(*this);
-        newv -= v2;
-        return newv;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator*(const T& s) const
-    {
-        Vector<T,D> newv(*this);
-        newv *= s;
-        return newv;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator/(const T& s) const
-    {
-        Vector<T,D> newv(*this);
-        newv /= s;
-        return newv;
-    }
-
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator^(const Vector<T,D>& v2) const
-    {
-        Vector<T,D> newv(*this);
-        for( int i=0;i<D;i++ ) newv.v[i]*=v2.v[i];
-        return newv;
-    }
-    
-    template<class T, int D >
-    T Vector<T,D>::operator*(const Vector<T,D>& v2) const
-    {
-        T dot=0;
-        for( int i=0;i<D;i++ ) dot+=(v[i]*v2.v[i]);
-        return dot;
-    }
-    
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::operator%(const Vector<T,D>& v2) const
-    {
-        if( D>3 ){
-            cerr << "cannot take cross product of " << D << "D Vector";
-            exit(1);
+        //assignment
+        Vector& operator=(const Vector& _v) {
+          m_v[0] = _v.m_v[0]; m_v[1] = _v.m_v[1];
+          return *this;
         }
-        if( D==2 ) return Vector<T,D>();
-        //D==3
-        Vector<T,D> newv(*this);
-        newv.v[0]=v[1] * v2.v[2] - v[2] * v2.v[1];
-        newv.v[1]=v[2] * v2.v[0] - v[0] * v2.v[2];
-        newv.v[2]=v[0] * v2.v[1] - v[1] * v2.v[0];
-        return newv;
-    }
-    
-    template<class T, int D >
-    bool Vector<T,D>::operator==(const Vector<T,D>& other) const
-    {
-        return v==other.v;
+
+        //access
+        T& operator[](size_t _i) {return m_v[_i];}
+        const T& operator[](size_t _i) const{return m_v[_i];}
+
+        //equality
+        bool operator==(const Vector& _v) const {
+          return m_v[0] == _v.m_v[0] && m_v[1] == _v.m_v[1];
+        }
+        //inequality
+        bool operator!=(const Vector& _v) const {
+          return !(*this == _v);
+        }
+
+        //self addition
+        Vector& operator+=(const Vector& _v) {
+          m_v[0] += _v.m_v[0]; m_v[1] += _v.m_v[1];
+          return *this;
+        }
+        //self subtraction
+        Vector& operator-=(const Vector& _v) {
+          m_v[0] -= _v.m_v[0]; m_v[1] -= _v.m_v[1];
+          return *this;
+        }
+        //self scalar multiply
+        Vector& operator*=(const T& _d) {
+          m_v[0] *= _d; m_v[1] *= _d;
+          return *this;
+        }
+        //self scalar divide
+        Vector& operator/=(const T& _d) {
+          m_v[0] /= _d; m_v[1] /= _d;
+          return *this;
+        }
+        //self component *
+        Vector& operator^=(const Vector& _v) {
+          m_v[0] *= _v.m_v[0]; m_v[1] *= _v.m_v[1];
+          return *this;
+        }
+
+        //negation
+        Vector operator-() const {
+          return Vector(-m_v[0], -m_v[1]);
+        }
+        //addition
+        Vector operator+(const Vector& _v) const {
+          return Vector(m_v[0] + _v.m_v[0], m_v[1] + _v.m_v[1]);
+        }
+        //subtraction
+        Vector operator-(const Vector& _v) const {
+          return Vector(m_v[0] - _v.m_v[0], m_v[1] - _v.m_v[1]);
+        }
+        //scalar multiply
+        Vector operator*(const T& _d) const {
+          return Vector(m_v[0] * _d, m_v[1] * _d);
+        }
+        //scalar divide
+        Vector operator/(const T& _d) const {
+          return Vector(m_v[0] / _d, m_v[1] / _d);
+        }
+        //component *
+        Vector operator^(const Vector& _v) const {
+          return Vector(m_v[0] * _v.m_v[0], m_v[1] * _v.m_v[1]);
+        }
+        //cross product magnitude
+        T operator%(const Vector& _v) const {
+          return m_v[0]*_v.m_v[1] - m_v[1]*_v.m_v[0];
+        }
+
+        //dot product
+        T operator*(const Vector& _v) const {
+          return m_v[0]*_v.m_v[0] + m_v[1]*_v.m_v[1];
+        }
+        //magnitude
+        T norm() const {
+          return std::sqrt(normsqr());
+        }
+        //magnitude squared
+        T normsqr() const {
+          return (*this)*(*this);
+        }
+        //normalized vector
+        Vector& normalize() {
+          return *this /= norm();
+        }
+        Vector normalized() const {
+          return *this / norm();
+        }
+
+      private:
+        T m_v[2];
+    };
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Specialized 3-dimensional Vector
+  //////////////////////////////////////////////////////////////////////////////
+  template<class T>
+    class Vector<T,3> {
+      public:
+
+        //construction
+        Vector(const T& _x = T(), const T& _y = T(), const T& _z = T()) {
+          m_v[0] = _x; m_v[1] = _y; m_v[2] = _z;
+        }
+        Vector(const Vector& _v){
+          m_v[0] = _v.m_v[0]; m_v[1] = _v.m_v[1]; m_v[2] = _v.m_v[2];
+        }
+
+        //assignment
+        Vector& operator=(const Vector& _v) {
+          m_v[0] = _v.m_v[0]; m_v[1] = _v.m_v[1]; m_v[2] = _v.m_v[2];
+          return *this;
+        }
+
+        //access
+        T& operator[](size_t _i) {return m_v[_i];}
+        const T& operator[](size_t _i) const{return m_v[_i];}
+
+        //equality
+        bool operator==(const Vector& _v) const {
+          return m_v[0] == _v.m_v[0] && m_v[1] == _v.m_v[1] && m_v[2] == _v.m_v[2];
+        }
+        //inequality
+        bool operator!=(const Vector& _v) const {
+          return !(*this == _v);
+        }
+
+        //self addition
+        Vector& operator+=(const Vector& _v) {
+          m_v[0] += _v.m_v[0]; m_v[1] += _v.m_v[1]; m_v[2] += _v.m_v[2];
+          return *this;
+        }
+        //self subtraction
+        Vector& operator-=(const Vector& _v) {
+          m_v[0] -= _v.m_v[0]; m_v[1] -= _v.m_v[1]; m_v[2] -= _v.m_v[2];
+          return *this;
+        }
+        //self scalar multiply
+        Vector& operator*=(const T& _d) {
+          m_v[0] *= _d; m_v[1] *= _d; m_v[2] *= _d;
+          return *this;
+        }
+        //self scalar divide
+        Vector& operator/=(const T& _d) {
+          m_v[0] /= _d; m_v[1] /= _d; m_v[2] /= _d;
+          return *this;
+        }
+        //self component *
+        Vector& operator^=(const Vector& _v) {
+          m_v[0] *= _v.m_v[0]; m_v[1] *= _v.m_v[1]; m_v[2] *= _v.m_v[2];
+          return *this;
+        }
+        //self cross product
+        Vector& operator%=(const Vector& _v) {
+          T v0 = m_v[0], v1 = m_v[1], v2 = m_v[2];
+          m_v[0] = v1 * _v.m_v[2] - v2 * _v.m_v[1];
+          m_v[1] = v2 * _v.m_v[0] - v0 * _v.m_v[2];
+          m_v[2] = v0 * _v.m_v[1] - v1 * _v.m_v[0];
+          return *this;
+        }
+
+        //negation
+        Vector operator-() const {
+          return Vector(-m_v[0], -m_v[1], -m_v[2]);
+        }
+        //addition
+        Vector operator+(const Vector& _v) const {
+          return Vector(m_v[0] + _v.m_v[0], m_v[1] + _v.m_v[1], m_v[2] + _v.m_v[2]);
+        }
+        //subtraction
+        Vector operator-(const Vector& _v) const {
+          return Vector(m_v[0] - _v.m_v[0], m_v[1] - _v.m_v[1], m_v[2] - _v.m_v[2]);
+        }
+        //scalar multiply
+        Vector operator*(const T& _d) const {
+          return Vector(m_v[0] * _d, m_v[1] * _d, m_v[2] * _d);
+        }
+        //scalar divide
+        Vector operator/(const T& _d) const {
+          return Vector(m_v[0] / _d, m_v[1] / _d, m_v[2] / _d);
+        }
+        //component *
+        Vector operator^(const Vector& _v) const {
+          return Vector(m_v[0] * _v.m_v[0], m_v[1] * _v.m_v[1], m_v[2] * _v.m_v[2]);
+        }
+        //cross product
+        Vector operator%(const Vector& _v) const {
+          Vector v(*this);
+          return v %= _v;
+        }
+
+        //dot product
+        T operator*(const Vector& _v) const {
+          return m_v[0]*_v.m_v[0] + m_v[1]*_v.m_v[1] + m_v[2]*_v.m_v[2];
+        }
+        //magnitude
+        T norm() const {
+          return std::sqrt(normsqr());
+        }
+        //magnitude squared
+        T normsqr() const {
+          return (*this)*(*this);
+        }
+        //normalized vector
+        Vector& normalize() {
+          return *this /= norm();
+        }
+        Vector normalized() const {
+          return *this / norm();
+        }
+
+      private:
+        T m_v[3];
+    };
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Useful functions. Input/Output and commutativity on multiply
+  //////////////////////////////////////////////////////////////////////////////
+  //for commutativity of scalar multiply
+  template<class T, size_t D>
+    inline Vector<T,D> operator*(const T& _d, const Vector<T,D>& _v) {
+      return _v*_d;
     }
 
-    template<class T, int D >
-    Vector<T,D> operator*(const T& s, const Vector<T,D>& v)
-    {
-        Vector<T,D> newv(v);
-        for( int i=0;i<D;i++ ) newv[i]=newv[i]*s;
-        return newv;
+  template<class T, size_t D>
+    inline std::ostream& operator<<(std::ostream& _os, const Vector<T,D>& _v) {
+      for(size_t i = 0; i<D; ++i) _os << _v[i] << " ";
+      return _os;
     }
 
-    template<class T, int D>
-    ostream & operator<<(ostream & out, const Vector<T,D> & v) {
-        for( int d=0;d<D;d++ ) out<<v[d]<<" ";
-        return out;
+  template<class T, size_t D>
+    inline std::istream& operator>>(std::istream& _is, Vector<T,D>& _v) {
+      for(size_t i=0; i<D; ++i) _is >> _v[i];
+      return _is;
     }
 
-    template<class T, int D>
-    istream & operator>>(istream & in, Vector<T,D> & vec) {
-        T v[D];
-        for(int i=0;i<D;i++) in>>v[i];
-        vec.set(v);
-        return in;
-    }
-
-    /////////////////////////////////////////////////////////////////
-    // Function from PMPL VectorConstantSize/Vectors
-    template<class T, int D >
-    T Vector<T,D>::dotProduct(Vector<T,D>& v2) const
-    {
-        T dot=0;
-	dot = (*this)*v2;
-        return dot;
-    }
-    template<class T, int D >
-    T Vector<T,D>::magnitude() 
-    {
-        return norm();
-    }
-    template<class T, int D >
-    void Vector<T,D>::Read(std::istream & _is)
-    {
-       _is>>(*this);
-    }
-    template<class T, int D >
-    void Vector<T,D>::Write(std::ostream & _os)const
-    {
-       _os<<(*this);
-    }
-    template<class T, int D >
-    Vector<T,D> Vector<T,D>::crossProduct(const Vector<T,D>& v2) const
-    {
-       return (*this)%v2;
-    }
-    template<class T, int D >
-    T Vector<T,D>::getX() const
-    {
-       return v[Xx];
-    }
-    template<class T, int D >
-    T Vector<T,D>::getY() const
-    {
-       return v[Yy];
-    }
-    template<class T, int D >
-    T Vector<T,D>::getZ() const
-    {
-       return v[Zz];
-    }
-    template<class T, int D >
-    T Vector<T,D>::getRoll() const
-    {
-       return v[ROLLroll];
-    }
-    template<class T, int D >
-    T Vector<T,D>::getPitch() const
-    {
-       return v[PITCHpitch];
-    }
-    template<class T, int D >
-    T Vector<T,D>::getYaw() const
-    {
-       return v[YAWyaw];
-    }
-   
-
-    
-    /* Typedef common used vector type */
-    typedef Vector<double,2> Vector2d;
-    typedef Vector<double,3> Vector3d;
-    typedef Vector<double,4> Vector4d;
-
-    //for PMPL code
-    typedef Vector3d Vector3D;
-    typedef Vector<double,6> Vector6D;
-
-//} //end of nprmlib namespace
+  //////////////////////////////////////////////////////////////////////////////
+  // Typedef common used vector type
+  //////////////////////////////////////////////////////////////////////////////
+  typedef Vector<double,2> Vector2d;
+  typedef Vector2d Point2d;
+  typedef Vector<double,3> Vector3d;
+  typedef Vector3d Point3d;
+  typedef Vector<double,4> Vector4d;
+  typedef Vector4d Point4d;
+}
 
 #endif

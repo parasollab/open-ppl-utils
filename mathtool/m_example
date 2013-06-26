@@ -1,1 +1,0 @@
-g++ -O2 -MMD -I/usr/local/include -I. example.cpp -o example
