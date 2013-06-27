@@ -36,7 +36,7 @@ namespace mathtool {
   //////////////////////////////////////////////////////////////////////////////
 
   //assignment from Euler
-  Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e) {
+  inline Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e) {
     double sa = sin(_e.m_alpha);
     double ca = cos(_e.m_alpha);
     double sb = sin(_e.m_beta);
@@ -55,7 +55,7 @@ namespace mathtool {
     return _m;
   }
   //assignment from Quaternion
-  Matrix3x3& convertFromQuaternion(Matrix3x3& _m, const Quaternion& _q) {
+  inline Matrix3x3& convertFromQuaternion(Matrix3x3& _m, const Quaternion& _q) {
     double  w = _q.m_s;
     double  x = _q.m_v[0];
     double  y = _q.m_v[1];
