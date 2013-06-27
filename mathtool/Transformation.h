@@ -49,14 +49,14 @@ namespace mathtool {
 
       //vector multiplication
       Vector3d operator*(const Vector3d& _v) const {
-        return /*m_rotation **/ _v + m_translation;
+        return m_rotation * _v + m_translation;
       }
 
       //inversion
       //  Creates the reverse transformation of "this"
       //  Refer to Craig Eq 2.45 
       Transformation operator-() const {
-        Orientation inverse/* = -m_rotation*/;
+        Orientation inverse = -m_rotation;
         return Transformation(-(inverse * m_translation), inverse);
       }
 

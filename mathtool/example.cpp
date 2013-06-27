@@ -1,6 +1,6 @@
 #include "Basic.h"
 #include "EulerAngle.h"
-#include "Gauss.h"
+#include "GaussianRand.h"
 #include "Quaternion.h"
 #include "Transformation.h"
 #include "Vector.h"
@@ -9,7 +9,8 @@ using namespace mathtool;
 
 int main(int argc, char ** argv ) {
 
-  double g1 = gaussRand(2, 0.1), g2 = gaussRand(2, 0.1);
+  GaussianRand g;
+  double g1 = g(2, 0.1), g2 = g(2, 0.1);
   std::cout << "Random Gaussian numbers from N~(2, 0.1):: " << g1 << " " << g2 << std::endl;
 
   int sec_num =102;
