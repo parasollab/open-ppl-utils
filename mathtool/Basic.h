@@ -25,9 +25,9 @@ namespace mathtool {
   inline int sign(double x) {return x >=0 ? 1: -1;}
 
   // Angle conversions
-  inline double degToRad(double x) {return x*180/PI;}
+  inline double degToRad(double x) {return x*PI/180;}
 
-  inline double radToDeg(double x) {return x*PI/180;}
+  inline double radToDeg(double x) {return x*180/PI;}
 
   // computes sqrt(a^2 + b^2) without destructive underflow or overflow
   // prerequisite: a and b are positive real numbers
