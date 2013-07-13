@@ -1,3 +1,6 @@
+/* EulerAngle is expressed in EulerZYX or FixedXYZ rotation format
+ */
+
 #ifndef EULERANGLE_H_
 #define EULERANGLE_H_
 
@@ -12,8 +15,24 @@ namespace mathtool {
   class EulerAngle {
     public:
 
-      EulerAngle(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) 
-        : m_alpha(_alpha), m_beta(_beta), m_gamma(_gamma) {}
+      EulerAngle(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) {
+        operator()(_alpha, _beta, _gamma); 
+      }
+      
+      //assignment
+      EulerAngle& operator=(const EulerAngle& _e){
+        return operator()(_e.m_alpha, _e.m_beta, _e.m_gamma);
+      }
+      //set the values of the EulerAngle
+      EulerAngle& operator()(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) {
+        m_alpha = _alpha; m_beta = _beta; m_gamma = _gamma;
+        return *this;
+      }
+      
+      //access
+      double alpha() const {return m_alpha;}
+      double beta() const {return m_beta;}
+      double gamma() const {return m_gamma;}
 
       //equality
       bool operator==(const EulerAngle& _e) const {
@@ -26,22 +45,20 @@ namespace mathtool {
 
       //self addition
       EulerAngle& operator+=(const EulerAngle& _e) {
-        m_alpha = fmod(_e.m_alpha + m_alpha, TWOPI);
-        m_beta = fmod(_e.m_beta + m_beta, TWOPI);
-        m_gamma = fmod(_e.m_gamma + m_gamma, TWOPI);
+        for(int i=0;i<3;++i)
+          m_v[i] = fmod(_e.m_v[i] + m_v[i], TWOPI);
         return *this;
       }
       //self subtraction
       EulerAngle& operator-=(const EulerAngle& _e) {
-        m_alpha = fmod(_e.m_alpha - m_alpha, TWOPI);
-        m_beta = fmod(_e.m_beta - m_beta, TWOPI);
-        m_gamma = fmod(_e.m_gamma - m_gamma, TWOPI);
+        for(int i=0;i<3;++i)
+          m_v[i] = fmod(_e.m_v[i] - m_v[i], TWOPI);
         return *this;
       }
 
       //inversion
       EulerAngle operator-() const {
-        return (fmod(-m_alpha + PI, TWOPI), m_beta, fmod(-m_gamma + PI, TWOPI));
+        return EulerAngle(fmod(-m_alpha + PI, TWOPI), m_beta, fmod(-m_gamma + PI, TWOPI));
       }
       //addition
       EulerAngle operator+(const EulerAngle& _e) const {
@@ -58,12 +75,12 @@ namespace mathtool {
 
       friend std::istream& operator>>(std::istream& _is, EulerAngle& _e);
       friend std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e);
+      
       friend EulerAngle& convertFromMatrix(EulerAngle& _e, const Matrix3x3& _m);
       friend Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e);
-
-    private:
       
-      double m_alpha, m_beta, m_gamma;
+    private:
+      double m_alpha, m_beta, m_gamma;      
   };
 
   //input EulerAngle from degrees

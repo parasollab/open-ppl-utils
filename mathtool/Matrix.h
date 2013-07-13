@@ -2,6 +2,7 @@
 #define MATRIX_H_
 
 #include "Basic.h"
+#include "Vector.h"
 
 namespace mathtool {
 
@@ -56,6 +57,7 @@ namespace mathtool {
         Matrix& operator=(const Matrix& _m) {
           for(size_t i = 0; i<N; ++i)
             m_m[i] = _m.m_m[i];
+          return *this;
         }
 
         //access
@@ -134,6 +136,7 @@ namespace mathtool {
           for(size_t i = 0; i<N; ++i)
             for(size_t j = 0; j<M; ++j)
               m[j][i] = m_m[i][j];
+          return m;
         }
 
       private:
@@ -143,7 +146,7 @@ namespace mathtool {
   //////////////////////////////////////////////////////////////////////////////
   // Matrix utilities and operators
   //////////////////////////////////////////////////////////////////////////////
-  
+
   //Grab identity matrix
   template<size_t N>
     inline void identity(Matrix<N>& _m) {
@@ -162,7 +165,7 @@ namespace mathtool {
   }
 
   //get a 3x3 matrix from 9 doubles
-  inline void getMatrix2x2(Matrix<3>& _m,
+  inline void getMatrix3x3(Matrix<3>& _m,
       double _m00, double _m01, double _m02,
       double _m10, double _m11, double _m12,
       double _m20, double _m21, double _m22) {
@@ -225,7 +228,7 @@ namespace mathtool {
   //output a NxM matrix
   template<size_t N, size_t M>
     std::ostream& operator<<(std::ostream& _os, const Matrix<N, M>& _m){
-      _os << "[ " << std::endl;
+      _os << std::endl << "[ " << std::endl;
       for(size_t i = 0; i<N; ++i) {
         _os << "[ ";
         for(size_t j = 0; j<M; ++j) {
@@ -233,7 +236,7 @@ namespace mathtool {
         }
         _os << "];" << std::endl;
       }
-      return _os << "]";
+      return _os << "]" << std::endl;
     }
 
   //////////////////////////////////////////////////////////////////////////////

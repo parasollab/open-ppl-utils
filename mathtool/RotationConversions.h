@@ -10,16 +10,15 @@ namespace mathtool {
   // Conversions to EulerAngles
   //////////////////////////////////////////////////////////////////////////////
 
-  //assignment from a 3x3 rotation matrix.
+  //assignment from a 3x3 rotation matrix. Convert matrix to EulerZYX.
   inline EulerAngle& convertFromMatrix(EulerAngle& _e, const Matrix3x3& _m) {
-    _e.m_beta = atan2(_m[0][2], sqrt(_m[1][2]*_m[1][2] + _m[2][2]*_m[2][2]));
-    if(cos(_e.m_beta) > 0) {
-      _e.m_alpha = atan2(-_m[1][2], _m[2][2]);
-      _e.m_gamma = atan2(-_m[0][1], _m[0][0]);
-    }
-    else {
-      _e.m_alpha = atan2(_m[1][2], -_m[2][2]);
-      _e.m_gamma = atan2(_m[0][1], -_m[0][0]);
+    _e.m_beta = std::atan2(-_m[2][0], std::sqrt(_m[2][1]*_m[2][1] + _m[2][2]*_m[2][2]));
+    if(std::cos(_e.m_beta) > 0) {
+      _e.m_alpha = std::atan2(_m[1][0], _m[0][0]);
+      _e.m_gamma = std::atan2(_m[2][1], _m[2][2]);
+    } else {	
+      _e.m_alpha = std::atan2(-_m[1][0], -_m[0][0]);
+      _e.m_gamma = std::atan2(-_m[2][1], -_m[2][2]);
     }
     return _e;
   }
@@ -35,23 +34,23 @@ namespace mathtool {
   // Conversions to Matrix3x3
   //////////////////////////////////////////////////////////////////////////////
 
-  //assignment from Euler
+  //assignment from EulerZYX
   inline Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e) {
-    double sa = sin(_e.m_alpha);
-    double ca = cos(_e.m_alpha);
-    double sb = sin(_e.m_beta);
-    double cb = cos(_e.m_beta);
-    double sg = sin(_e.m_gamma);
-    double cg = cos(_e.m_gamma);
-    _m[0][0] = cb*cg;
-    _m[0][1] = -cb*sg;
-    _m[0][2] = sb;
-    _m[1][0] = sa*sb*cg + ca*sg;
-    _m[1][1] = -sa*sb*sg + ca*cg;
-    _m[1][2] = -sa*cb;
-    _m[2][0] = -ca*sb*cg + sa*sg;
-    _m[2][1] = ca*sb*sg + sa*cg;
-    _m[2][2] = ca*cb;
+    double sa = std::sin(_e.m_alpha);
+    double ca = std::cos(_e.m_alpha);
+    double sb = std::sin(_e.m_beta);
+    double cb = std::cos(_e.m_beta);
+    double sg = std::sin(_e.m_gamma);
+    double cg = std::cos(_e.m_gamma);
+    _m[0][0] = ca*cb;
+    _m[0][1] = ca*sb*sg - sa*cg;
+    _m[0][2] = ca*sb*cg + sa*sg;
+    _m[1][0] = sa*cb;
+    _m[1][1] = sa*sb*sg + ca*cg;
+    _m[1][2] = sa*sb*cg - ca*sg;
+    _m[2][0] = -sb;
+    _m[2][1] = cb*sg;
+    _m[2][2] = cb*cg;
     return _m;
   }
   //assignment from Quaternion
@@ -61,17 +60,17 @@ namespace mathtool {
     double  y = _q.m_v[1];
     double  z = _q.m_v[2];
 
-    _m[0][0] = 1.0 - 2.0*y*y - 2.0*z*z;
-    _m[1][0] = 2.0*x*y - 2.0*w*z;
-    _m[2][0] = 2.0*x*z + 2.0*w*y;
+    _m[0][0] = 1.0 - 2.0*(y*y + z*z);
+    _m[1][0] = 2.0*(x*y - w*z);
+    _m[2][0] = 2.0*(x*z + w*y);
 
-    _m[0][1] = 2.0*x*y + 2.0*w*z;
-    _m[1][1] = 1.0 - 2.0*x*x - 2.0*z*z;
-    _m[2][1] = 2.0*y*z - 2.0*w*x;
+    _m[0][1] = 2.0*(x*y + w*z);
+    _m[1][1] = 1.0 - 2.0*(x*x + z*z);
+    _m[2][1] = 2.0*(y*z - w*x);
 
-    _m[0][2] = 2.0*x*z - 2.0*w*y;
-    _m[1][2] = 2.0*y*z + 2.0*w*x;
-    _m[2][2] = 1.0 - 2.0*x*x - 2.0*y*y;
+    _m[0][2] = 2.0*(x*z - w*y);
+    _m[1][2] = 2.0*(y*z + w*x);
+    _m[2][2] = 1.0 - 2.0*(x*x + y*y);
     return _m;
   }
 
@@ -87,39 +86,46 @@ namespace mathtool {
   }
   //assignment from 3x3 rotation matrix
   inline Quaternion& convertFromMatrix(Quaternion& _q, const Matrix3x3& _m) {
-    double  w, x, y, z;
+    double t = 1 + _m[0][0] + _m[1][1] + _m[2][2]; //trace of the matrix
+    double s, x, y, z, w;
 
-    double wSquare = 0.25*(1.0 + _m[0][0] + _m[1][1] + _m[2][2]);
-    if (wSquare > 1e-6){
-      w = sqrt(wSquare);
-      x = (_m[1][2] - _m[2][1]) / 4.0*w;
-      y = (_m[2][0] - _m[0][3]) / 4.0*w;
-      z = (_m[0][1] - _m[1][0]) / 4.0*w;
+    if(t > 0.00000001){
+      s = 0.5 / std::sqrt(t);
+      x = (_m[2][1] - _m[1][2]) * s;
+      y = (_m[0][2] - _m[2][0]) * s;
+      z = (_m[1][0] - _m[0][1]) * s;
+      w = 0.25 / s;
     }
-    else {
-      w = 0.0;
-      double xSquare = -0.5*(_m[1][1] + _m[2][2]);
-      if (xSquare > 1e-6){
-        x = sqrt(xSquare);
-        y = _m[0][1] / 2.0*x;
-        z = _m[0][2] / 2.0*x;
+    else{ //if(t <= 0)
+      //column 0
+      if(_m[0][0] > _m[1][1] && _m[0][0] > _m[2][2]) {
+        s = std::sqrt(1.0 + _m[0][0] - _m[1][1] - _m[2][2]) * 2;
+        x = 0.25 * s;
+        y = (_m[0][1] + _m[1][0]) / s;
+        z = (_m[2][0] + _m[0][2]) / s;
+        w = (_m[1][2] - _m[2][1]) / s;
       }
-      else{
-        x = 0.0;
-        double ySquare = 0.5*(1.0 - _m[2][2]);
-        if (ySquare > 1e-6){
-          y = sqrt(ySquare);
-          z = _m[1][2] / 2.0*y;
-        }
-        else{
-          y = 0.0;
-          z = 1.0;
-        }
+      //column 1
+      else if (_m[1][1] > _m[2][2]) {
+        s = std::sqrt(1.0 + _m[1][1] - _m[0][0] - _m[2][2]) * 2;
+        x = (_m[0][1] + _m[1][0]) / s;
+        y = 0.25 * s;
+        z = (_m[1][2] + _m[2][1]) / s;
+        w = (_m[2][0] - _m[0][2]) / s;
+      }
+      //column 2
+      else {
+        s = std::sqrt(1.0 + _m[2][2] - _m[0][0] - _m[1][1]) * 2;
+        x = (_m[2][0] + _m[0][2]) / s;
+        y = (_m[1][2] + _m[2][1]) / s;
+        z = 0.25 * s;
+        w = (_m[0][1] - _m[1][0]) / s;
       }
     }
 
+    //The quaternion is then defined as: Q = | W X Y Z |
     _q.m_s = w;
-    _q.m_v = Vector3d(x,y,z);
+    _q.m_v(x, y, z);
     return _q;
   }
 

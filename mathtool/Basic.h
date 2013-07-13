@@ -29,9 +29,21 @@ namespace mathtool {
 
   inline double radToDeg(double x) {return x*180/PI;}
 
-  // computes sqrt(a^2 + b^2) without destructive underflow or overflow
-  // prerequisite: a and b are positive real numbers
-  inline double pythag(double a, double b) {return a * std::sqrt(1. + sqr(b/a));}
+  // Degree Trig functions
+  inline double sind(double x){return std::sin(degToRad(x));}
+
+  inline double cosd(double x){return std::cos(degToRad(x));}
+
+  inline double tand(double x){return std::tan(degToRad(x));}
+
+  inline double asind(double x){return radToDeg(std::asin(x));}
+
+  inline double acosd(double x){return radToDeg(std::acos(x));}
+
+  inline double atand(double x){return radToDeg(std::atan(x));}
+
+  inline double atan2d(double x, double y){return radToDeg(std::atan2(x,y));}
+
 }
 
 #endif
