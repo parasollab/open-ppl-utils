@@ -33,6 +33,9 @@ namespace mathtool {
       //Constructor for Quaternions
       MatrixOrientation(const Quaternion& _q) {convertFromQuaternion(m_matrix, _q);}
 
+      //access
+      const Matrix3x3& matrix() const {return m_matrix;}
+
       //equality - if they aren't the same type: convert _o to type of *this and
       //compare
       bool operator==(const MatrixOrientation& _o) const {
