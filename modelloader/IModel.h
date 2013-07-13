@@ -6,8 +6,9 @@
 //  polygonal data. For example, deformable object, sculpture deformer
 //  and evene model loader
 //////////////////////////////////////////////////////////////////////
+#include <vector>
+using namespace std;
 
-#include <Point.h>
 #include <Vector.h>
 using namespace mathtool;
 
