@@ -45,14 +45,16 @@ namespace mathtool {
 
       //self addition
       EulerAngle& operator+=(const EulerAngle& _e) {
-        for(int i=0;i<3;++i)
-          m_v[i] = fmod(_e.m_v[i] + m_v[i], TWOPI);
+        m_alpha = fmod(_e.m_alpha + m_alpha, TWOPI);
+        m_beta = fmod(_e.m_beta + m_beta, TWOPI);
+        m_gamma = fmod(_e.m_gamma + m_gamma, TWOPI);
         return *this;
       }
       //self subtraction
       EulerAngle& operator-=(const EulerAngle& _e) {
-        for(int i=0;i<3;++i)
-          m_v[i] = fmod(_e.m_v[i] - m_v[i], TWOPI);
+        m_alpha = fmod(_e.m_alpha - m_alpha, TWOPI);
+        m_beta = fmod(_e.m_beta - m_beta, TWOPI);
+        m_gamma = fmod(_e.m_gamma - m_gamma, TWOPI);
         return *this;
       }
 
