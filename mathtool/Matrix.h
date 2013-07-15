@@ -9,60 +9,36 @@ namespace mathtool {
   template<size_t N, size_t M = N>
     class Matrix {
       public:
-        //internal class row to control access for [][] operations
-        class Row {
-          public:
-            Row() {
-              for(size_t i = 0; i<M; ++i)
-                m_r[i] = 0.0;
-            }
-            Row(const double _r[M]){
-              for(size_t i = 0; i<M; ++i)
-                m_r[i] = _r[i];
-            }
-            Row(const Row& _r) {
-              for(size_t i = 0; i<M; ++i)
-                m_r = _r.m_r;
-            }
-
-            //assignment
-            Row& operator=(const Row& _r) {
-              for(size_t i = 0; i<M; ++i)
-                m_r[i] = _r.m_r[i];
-              return *this;
-            }
-
-            //access
-            double& operator[](size_t _i) {return m_r[_i];}
-            const double& operator[](size_t _i) const {return m_r[_i];}
-
-          private:
-            double m_r[M];
-        };
-
         Matrix() {
           for(size_t i = 0; i<N; ++i)
-            m_m[i] = Row();
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] = 0.0;
         }
         Matrix(const double _m[N][M]){
           for(size_t i = 0; i<N; ++i)
-            m_m[i] = _m[i];
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] = _m[i][j];
         }
         Matrix(const Matrix& _m) {
           for(size_t i = 0; i<N; ++i)
-            m_m[i] = _m.m_m[i];
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] = _m[i][j];
         }
 
         //assignment
         Matrix& operator=(const Matrix& _m) {
           for(size_t i = 0; i<N; ++i)
-            m_m[i] = _m.m_m[i];
+            for(size_t j = 0; j<M; ++j)
+              m_m[i][j] = _m[i][j];
           return *this;
         }
 
         //access
-        Row& operator[](size_t _i) {return m_m[_i];}
-        const Row& operator[](size_t _i) const {return m_m[_i];}
+        typedef double (&mat)[N][M];
+        operator mat() {return m_m;}
+        operator const mat() const {return m_m;}
+        double* operator[](size_t _i) {return m_m[_i];}
+        const double* operator[](size_t _i) const {return m_m[_i];}
 
         //equality
         bool operator==(const Matrix& _m) const {
@@ -140,7 +116,7 @@ namespace mathtool {
         }
 
       private:
-        Row m_m[N];
+        double m_m[N][M];
     };
 
   //////////////////////////////////////////////////////////////////////////////

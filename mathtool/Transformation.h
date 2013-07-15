@@ -20,7 +20,9 @@ namespace mathtool {
         m_translation(_position), m_rotation(_orientation) {}
 
       //access
+      Vector3d& translation() {return m_translation;}
       const Vector3d& translation() const {return m_translation;}
+      Orientation& rotation() {return m_rotation;}
       const Orientation& rotation() const {return m_rotation;}
 
       //equality
