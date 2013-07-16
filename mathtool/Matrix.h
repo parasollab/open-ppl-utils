@@ -150,7 +150,7 @@ namespace mathtool {
     _m[2][0] = _m20; _m[2][1] = _m21; _m[2][2] = _m22;
   }
 
-  //get a 3x3 matrix from 9 doubles
+  //get a 4x4 matrix from 16 doubles
   inline void getMatrix4x4(Matrix<4>& _m,
       double _m00, double _m01, double _m02, double _m03,
       double _m10, double _m11, double _m12, double _m13,
