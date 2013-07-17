@@ -112,8 +112,11 @@ bool CObjLoader::FirstPass(istream& in)
     //CObjGroup& group = AddGroup("default");
     
     numvertices = numnormals = numtexcoords = numtriP = 0;
-    while( !in.eof() ) {
+    while(true) {
         in>>c1;
+        if(in.eof())
+          break;
+
         switch(c1) {
         case '#':               //* comment 
             //* eat up rest of line
@@ -205,8 +208,11 @@ bool CObjLoader::SecondPass(istream& in)
     
     /* on the second pass through the file, read all the data into the
     allocated arrays */
-    while(!in.eof()) {
+    while(true) {
         in>>c1;
+        if(in.eof())
+          break;
+
         switch(c1) {
         case '#':               // comment 
             // eat up rest of line 
