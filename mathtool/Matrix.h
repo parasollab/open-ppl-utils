@@ -35,10 +35,9 @@ namespace mathtool {
 
         //access
         typedef double (&mat)[N][M];
+        typedef const double (&cmat)[N][M];
         operator mat() {return m_m;}
-        operator const mat() const {return m_m;}
-        double* operator[](size_t _i) {return m_m[_i];}
-        const double* operator[](size_t _i) const {return m_m[_i];}
+        operator cmat() const {return m_m;}
 
         //equality
         bool operator==(const Matrix& _m) const {

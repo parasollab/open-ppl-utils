@@ -34,10 +34,10 @@ namespace mathtool{
         }
 
         //access
-        operator T*() {return m_v;}
-        operator const T*() const {return m_v;}
-        T& operator[](size_t _i) {return m_v[_i];}
-        const T& operator[](size_t _i) const{return m_v[_i];}
+        typedef T (&arr)[D];
+        typedef const T (&carr)[D];
+        operator arr() {return m_v;}
+        operator carr() const {return m_v;}
         const T* begin() const {return m_v;}
         const T* end() const {return begin()+D;}
         T* begin() {return m_v;}
@@ -127,10 +127,16 @@ namespace mathtool{
         }
         //normalized vector
         Vector& normalize() {
-          return *this /= norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this /= n;
         }
         Vector normalized() const {
-          return *this / norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this / n;
         }
 
       private:
@@ -169,10 +175,10 @@ namespace mathtool{
         }
 
         //access
-        operator T*() {return m_v;}
-        operator const T*() const {return m_v;}
-        T& operator[](size_t _i) {return m_v[_i];}
-        const T& operator[](size_t _i) const{return m_v[_i];}
+        typedef T (&arr)[2];
+        typedef const T (&carr)[2];
+        operator arr() {return m_v;}
+        operator carr() const {return m_v;}
         const T* begin() const {return &m_v[0];}
         const T* end() const {return begin()+2;}
         T* begin() {return &m_v[0];}
@@ -256,10 +262,16 @@ namespace mathtool{
         }
         //normalized vector
         Vector& normalize() {
-          return *this /= norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this /= n;
         }
         Vector normalized() const {
-          return *this / norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this / n;
         }
 
       private:
@@ -299,10 +311,10 @@ namespace mathtool{
         }
 
         //access
-        operator T*() {return m_v;}
-        operator const T*() const {return m_v;}
-        T& operator[](size_t _i) {return m_v[_i];}
-        const T& operator[](size_t _i) const{return m_v[_i];}
+        typedef T (&arr)[3];
+        typedef const T (&carr)[3];
+        operator arr() {return m_v;}
+        operator carr() const {return m_v;}
         const T* begin() const {return &m_v[0];}
         const T* end() const {return begin()+3;}
         T* begin() {return &m_v[0];}
@@ -395,10 +407,16 @@ namespace mathtool{
         }
         //normalized vector
         Vector& normalize() {
-          return *this /= norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this /= n;
         }
         Vector normalized() const {
-          return *this / norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this / n;
         }
 
       private:
@@ -438,10 +456,10 @@ namespace mathtool{
         }
 
         //access
-        operator T*() {return m_v;}
-        operator const T*() const {return m_v;}
-        T& operator[](size_t _i) {return m_v[_i];}
-        const T& operator[](size_t _i) const{return m_v[_i];}
+        typedef T (&arr)[4];
+        typedef const T (&carr)[4];
+        operator arr() {return m_v;}
+        operator carr() const {return m_v;}
         const T* begin() const {return &m_v[0];}
         const T* end() const {return begin()+4;}
         T* begin() {return &m_v[0];}
@@ -519,11 +537,18 @@ namespace mathtool{
           return (*this)*(*this);
         }
         //normalized vector
+        //normalized vector
         Vector& normalize() {
-          return *this /= norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this /= n;
         }
         Vector normalized() const {
-          return *this / norm();
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this / n;
         }
 
       private:
