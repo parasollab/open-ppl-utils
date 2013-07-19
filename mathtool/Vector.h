@@ -126,13 +126,13 @@ namespace mathtool{
           return (*this)*(*this);
         }
         //normalized vector
-        Vector& normalize() {
+        Vector& selfNormalize() {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return *this = Vector();
           return *this /= n;
         }
-        Vector normalized() const {
+        Vector normalize() const {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
@@ -261,13 +261,13 @@ namespace mathtool{
           return (*this)*(*this);
         }
         //normalized vector
-        Vector& normalize() {
+        Vector& selfNormalize() {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return *this = Vector();
           return *this /= n;
         }
-        Vector normalized() const {
+        Vector normalize() const {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
@@ -406,13 +406,13 @@ namespace mathtool{
           return (*this)*(*this);
         }
         //normalized vector
-        Vector& normalize() {
+        Vector& selfNormalize() {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return *this = Vector();
           return *this /= n;
         }
-        Vector normalized() const {
+        Vector normalize() const {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
@@ -537,14 +537,13 @@ namespace mathtool{
           return (*this)*(*this);
         }
         //normalized vector
-        //normalized vector
-        Vector& normalize() {
+        Vector& selfNormalize() {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return *this = Vector();
           return *this /= n;
         }
-        Vector normalized() const {
+        Vector normalize() const {
           T n = norm();
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
