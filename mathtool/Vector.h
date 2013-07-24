@@ -172,7 +172,8 @@ namespace mathtool{
         }
         Vector& operator=(const T _t[2]) {
           m_v[0] = _t[0]; m_v[1] = _t[1];
-        }
+	  return *this;
+	}
 
         //access
         typedef T (&arr)[2];
@@ -273,7 +274,17 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
-
+	
+	//vector angle
+	double getAngle() const {return atan2(m_v[1],m_v[0]);}
+	double getAngled() const{return radToRad(getAngle());}
+	//rotate vector
+	Vector rotate(double _rad) const{ 
+	  const double c=cos(_rad), s=sin(_rad);
+	  return Vector(m_v[0]*c-m_v[1]*s,m_v[0]*s+m_v[1]*c);
+	}
+	Vector rotated(double _deg) const {return rotate(degToRad(_deg));}
+      
       private:
         T m_v[2];
     };
