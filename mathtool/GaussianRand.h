@@ -24,7 +24,7 @@ namespace mathtool {
 
         double fac = sqrt(-2.0*log(rsq)/rsq);
 
-        //Generates two gaussians and returns one and stores the other for another call 
+        //Generates two gaussians and returns one and stores the other for another call
         hasNext = true;
         gset = v1*fac;
         gr = v2*fac;

@@ -1,6 +1,6 @@
 /* Defines 3D orientations through rotation matrices. Handles conversion between
- * types of rotations. Input and output is in Euler Angles. 
- * 
+ * types of rotations. Input and output is in Euler Angles.
+ *
  * Many kinds of representation are implemented here, such as
  * - Euler Angle
  * - Matrix
@@ -106,7 +106,7 @@ namespace mathtool {
   class QuaternionOrientation {
     public:
 
-      // The type of Orientation instance. 
+      // The type of Orientation instance.
       enum OrientationType {
         EULER,
         MATRIX,
@@ -164,7 +164,7 @@ namespace mathtool {
       friend std::ostream& operator<<(std::ostream& _os, const QuaternionOrientation& _o);
 
     private:
-      
+
       Quaternion m_quaternion;
   };
 

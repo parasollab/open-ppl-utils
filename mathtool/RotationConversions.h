@@ -16,7 +16,7 @@ namespace mathtool {
     if(std::cos(_e.m_beta) > 0) {
       _e.m_alpha = std::atan2(_m[1][0], _m[0][0]);
       _e.m_gamma = std::atan2(_m[2][1], _m[2][2]);
-    } else {	
+    } else {
       _e.m_alpha = std::atan2(-_m[1][0], -_m[0][0]);
       _e.m_gamma = std::atan2(-_m[2][1], -_m[2][2]);
     }

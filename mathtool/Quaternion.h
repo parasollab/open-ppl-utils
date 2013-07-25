@@ -97,10 +97,10 @@ namespace mathtool{
       //magnitude squared
       double normsqr() const {return m_s*m_s + m_v.normsqr();}
       //Normalization
-      Quaternion& normalize() { 
+      Quaternion& normalize() {
         return *this /= norm();
       }
-      Quaternion normalized() const { 
+      Quaternion normalized() const {
         return *this / norm();
       }
 

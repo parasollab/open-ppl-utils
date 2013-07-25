@@ -35,7 +35,7 @@ namespace mathtool {
       }
 
       //self multiplication
-      //  Refer to Craig Eq 2.45 
+      //  Refer to Craig Eq 2.45
       Transformation& operator*=(const Transformation& _t) {
         m_translation = m_rotation * _t.m_translation + m_translation;
         m_rotation = m_rotation * _t.m_rotation;
@@ -56,7 +56,7 @@ namespace mathtool {
 
       //inversion
       //  Creates the reverse transformation of "this"
-      //  Refer to Craig Eq 2.45 
+      //  Refer to Craig Eq 2.45
       Transformation operator-() const {
         Orientation inverse = -m_rotation;
         return Transformation(-(inverse * m_translation), inverse);

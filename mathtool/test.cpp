@@ -341,14 +341,14 @@ TestPoint(size_t _iter){
   Clock tot;
   tot.Start();
 
-  cout 
+  cout
     << setw(10) << "Test"
     << setw(10) << "="
-    << setw(10) << "==" 
+    << setw(10) << "=="
     << setw(10) << "+"
-    << setw(10) << "-" 
+    << setw(10) << "-"
     << setw(10) << "+="
-    << setw(10) << "-=" 
+    << setw(10) << "-="
     << endl;
 
   //test rand
@@ -399,10 +399,10 @@ TestVector(size_t _iter){
   Clock tot;
   tot.Start();
 
-  cout 
+  cout
     << setw(10) << "rand"
     << setw(10) << "="
-    << setw(10) << "==" 
+    << setw(10) << "=="
     << endl;
 
   //test rand

@@ -16,9 +16,9 @@ namespace mathtool {
     public:
 
       EulerAngle(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) {
-        operator()(_alpha, _beta, _gamma); 
+        operator()(_alpha, _beta, _gamma);
       }
-      
+
       //assignment
       EulerAngle& operator=(const EulerAngle& _e){
         return operator()(_e.m_alpha, _e.m_beta, _e.m_gamma);
@@ -28,7 +28,7 @@ namespace mathtool {
         m_alpha = _alpha; m_beta = _beta; m_gamma = _gamma;
         return *this;
       }
-      
+
       //access
       double alpha() const {return m_alpha;}
       double beta() const {return m_beta;}
@@ -77,18 +77,18 @@ namespace mathtool {
 
       friend std::istream& operator>>(std::istream& _is, EulerAngle& _e);
       friend std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e);
-      
+
       friend EulerAngle& convertFromMatrix(EulerAngle& _e, const Matrix3x3& _m);
       friend Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e);
-      
+
     private:
-      double m_alpha, m_beta, m_gamma;      
+      double m_alpha, m_beta, m_gamma;
   };
 
   //input EulerAngle from degrees
   inline std::istream& operator>>(std::istream& _is, EulerAngle& _e) {
     double a, b, g;
-    _is >> a >> b >> g;
+    _is >> g >> b >> a;
     _e.m_alpha = fmod(degToRad(a), TWOPI);
     _e.m_beta = fmod(degToRad(b), TWOPI);
     _e.m_gamma = fmod(degToRad(g), TWOPI);
@@ -98,9 +98,9 @@ namespace mathtool {
   //output EulerAngle to degrees
   inline std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e) {
     return _os << std::fixed
-      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI)) << " " 
-      << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " " 
-      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI)); 
+      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI)) << " "
+      << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " "
+      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI));
   }
 }
 

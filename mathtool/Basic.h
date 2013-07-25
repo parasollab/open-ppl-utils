@@ -22,7 +22,7 @@ namespace mathtool {
   template<typename T>
     inline T sqr(const T& a) {return a*a;}
 
-  // Return sign of x 
+  // Return sign of x
   inline int sign(double x) {return x >=0 ? 1: -1;}
 
   // Angle conversions
