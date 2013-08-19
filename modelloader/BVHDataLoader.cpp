@@ -9,8 +9,8 @@ void CBVHDataLoader::load(ifstream& infile) {
 
    string first;
    int itmp;
-   string stmp; 
-   
+   string stmp;
+
    int keyframenum;
    if( infile >> keyframenum ) { cout << " Reading KF: " << keyframenum << endl; }
    else { cout << " Problem reading keyframe NUM." << endl; exit(-1); }
@@ -19,13 +19,13 @@ void CBVHDataLoader::load(ifstream& infile) {
 	 infile >>itmp;
 	 infile>>stmp;
 	 Point3d p1,p2;
-	 if( stmp=="p1" ) { 
+	 if( stmp=="p1" ) {
 	    if(infile>>p1) {
 	    }
 	    else { cout << "Problem reading p1"<<endl; }
 	 }
 	 infile>>stmp;
-	 if( stmp=="p2" ) { 
+	 if( stmp=="p2" ) {
 	    if(infile>>p2) {
 	    }
 	    else { cout << "Problem reading p2"<<endl; }
@@ -46,7 +46,7 @@ void CBVHDataLoader::load(ifstream& infile) {
 
 }
 
-bool 
+bool
 CBVHDataLoader::ParseFile(bool silent)
 {
    cout << " CBVHDataLoader::ParseFile --> does not ParseFile the way the other loaders do..." << endl;
@@ -70,8 +70,8 @@ void CBVHDataInstance::load(string file, double radius, double height) {
       exit(0);
    }
    string first;
-   string stmp; 
-   //load all models from same file (bvh_data) 
+   string stmp;
+   //load all models from same file (bvh_data)
    while( infile >> first ) {
       if( first == "keyframe" ) { //load keyframe
 	 ILoadable * model=NULL;
@@ -84,12 +84,12 @@ void CBVHDataInstance::load(string file, double radius, double height) {
 	 }
 	 string ext=file.substr(pos+1);
 	 model=new CBVHDataLoader();
-	 ((CBVHDataLoader*)model)->load(infile);
-	 model->skelBBX( ((CBVHDataLoader*)model)->GetEdgeList() );
 	 if( model==NULL ) {
 	    cout << " mode eq NULL(in bvh_data)...exit!"<<endl;
 	    exit(0);
 	 }
+	 ((CBVHDataLoader*)model)->load(infile);
+	 model->skelBBX( ((CBVHDataLoader*)model)->GetEdgeList() );
 	 m_Models.push_back( model );
       }//endif
       else {
@@ -126,7 +126,7 @@ void CBVHDataInstance::load(string file, double radius, double height) {
 	 //cout << "Dir: " << i << "\tdirection: \t" << model_i->m_Dir <<"\t2d dir: "<< dir2d<<" theta: " << theta_deg << endl;
       }
    }//endfor
-   
+
    // transform
    for(int i=0; i<(int)m_Models.size(); i++) {
       IModel* model_i = m_Models[i];

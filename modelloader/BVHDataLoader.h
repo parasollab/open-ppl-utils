@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 // This file defines a BVH data loader
-// the data is broken up into edges per keyframe 
+// the data is broken up into edges per keyframe
 
 
 #ifndef _BVHDATLOADER_H_
@@ -30,14 +30,14 @@ public:
     // Implemetation of IModel interface
     //////////////////////////////////////////////////////////////////////////////////////
     const PtVector & GetVertices() const{ return points; }
-    const TriVector & GetTriP() const{ return triP; } 
+    const TriVector & GetTriP() const{ return triP; }
     const TriVector & GetTriN() const{ return triN; }  //triangle normals
     const TriVector & GetTriT() const{ return triT; }  //triangle texture
     const V2Vcetor & GetTextureCoords() const { return textures; }
     const V3Vcetor & GetNormals() const { return normals; }
 
     PtVector & GetVertices() { return points; }
-    TriVector & GetTriP(){ return triP; } 
+    TriVector & GetTriP(){ return triP; }
     TriVector & GetTriN(){ return triN; }  //triangle normals
     TriVector & GetTriT(){ return triT; }  //triangle texture
     V2Vcetor & GetTextureCoords() { return textures; }
@@ -81,13 +81,13 @@ private:
 
 class CBVHDataInstance {
  public:
-   CBVHDataInstance() { }
+   CBVHDataInstance() : m_InstanceID(-1) { }
    string getFileName() { return m_FileName; }
    void setFileName(string fn) { m_FileName = fn; }
    void setInstanceID(int ii) { m_InstanceID = ii; }
    int getInstanceID() { return m_InstanceID; }
    vector<IModel*>& getModels() { return m_Models; }
-   void load(string file, double radius, double height); 
+   void load(string file, double radius, double height);
 
    std::string m_FileName;
    vector<IModel*> m_Models;

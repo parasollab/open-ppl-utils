@@ -6,7 +6,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////
 // Implemetation of ILoadable interface
 //////////////////////////////////////////////////////////////////////////////////////
-bool 
+bool
 CMovieBYULoader::ParseFile(bool silent)
 {
     if( CheckCurrentStatus(silent)==false )
@@ -65,7 +65,7 @@ bool CMovieBYULoader::ParseSection1(ifstream & in)
     in>>m_PartsSize>>m_VertexSize>>m_PolygonSize>>m_EdgeSize;
     parts.reserve(m_PartsSize);
 
-    for(int i=0;i<m_PartsSize;i++)
+    for(int i=0;i<m_PartsSize && in;i++)
     {
         pair<int,int> range;
         in>>range.first>>range.second;
@@ -78,7 +78,7 @@ bool CMovieBYULoader::ParseSection2(ifstream & in)
 {
     points.reserve(m_VertexSize);
 
-    for(int i=0;i<m_VertexSize;i++)
+    for(int i=0;i<m_VertexSize && in;i++)
     {
         Point3d pt;
         in>>pt;
@@ -89,7 +89,7 @@ bool CMovieBYULoader::ParseSection2(ifstream & in)
 
 bool CMovieBYULoader::ParseSection3(ifstream & in)
 {
-    
+
     /////////////////////////////////////////////////////////////////////////////////////
     for(int i=0;i<m_PolygonSize;i++)
     {
