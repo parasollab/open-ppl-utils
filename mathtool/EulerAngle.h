@@ -97,10 +97,13 @@ namespace mathtool {
 
   //output EulerAngle to degrees
   inline std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e) {
-    return _os << std::fixed
+    std::ios::fmtflags f(_os.flags());
+    _os << std::fixed
       << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI)) << " "
       << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " "
       << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI));
+    _os.flags(f);
+    return _os;
   }
 }
 
