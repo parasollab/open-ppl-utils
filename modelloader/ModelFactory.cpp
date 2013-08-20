@@ -7,7 +7,7 @@ IModel * CreateModelLoader(const string& file, bool silent)
 {
     ILoadable * model=NULL;
     //get extension
-    unsigned int pos=file.rfind('.');
+    size_t pos=file.rfind('.');
     if( pos==string::npos ){
         if(!silent) cerr<<"! Error : Can't Recognize file :"<<file<<endl<<flush;
         return NULL;
@@ -26,7 +26,7 @@ IModel * CreateModelLoader(const string& file, bool silent)
         delete model;
         return NULL;
     }
-    
+
     return model;
 }
 

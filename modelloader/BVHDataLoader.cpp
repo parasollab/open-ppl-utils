@@ -76,7 +76,7 @@ void CBVHDataInstance::load(string file, double radius, double height) {
       if( first == "keyframe" ) { //load keyframe
 	 ILoadable * model=NULL;
 	 //get extension
-	 unsigned int pos=file.rfind('.');
+	 size_t pos=file.rfind('.');
 	 if( pos==string::npos ){
 	    cerr<<"! Error : Can't Recognize file :"<<file<<endl;
 	    exit(0);
