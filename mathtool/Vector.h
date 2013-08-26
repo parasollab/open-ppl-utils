@@ -274,17 +274,17 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
-	
+
 	//vector angle
-	double getAngle() const {return atan2(m_v[1],m_v[0]);}
-	double getAngled() const{return radToRad(getAngle());}
+	double getAngle() const {return atan2(m_v[1], m_v[0]);}
+	double getAngled() const {return radToDeg(getAngle());}
 	//rotate vector
-	Vector rotate(double _rad) const{ 
-	  const double c=cos(_rad), s=sin(_rad);
-	  return Vector(m_v[0]*c-m_v[1]*s,m_v[0]*s+m_v[1]*c);
+	Vector& rotate(double _rad) {
+	  double c = cos(_rad), s = sin(_rad);
+	  return operator()(m_v[0]*c - m_v[1]*s, m_v[0]*s + m_v[1]*c);
 	}
-	Vector rotated(double _deg) const {return rotate(degToRad(_deg));}
-      
+	Vector& rotated(double _deg) {return rotate(degToRad(_deg));}
+
       private:
         T m_v[2];
     };
@@ -429,6 +429,23 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+
+        //rotate vector
+	Vector& rotateX(double _rad) {
+	  double c = cos(_rad), s = sin(_rad);
+	  return operator()(m_v[0], m_v[1]*c - m_v[2]*s, m_v[1]*s + m_v[2]*c);
+	}
+	Vector& rotateXd(double _deg) {return rotateX(degToRad(_deg));}
+	Vector& rotateY(double _rad) {
+	  double c = cos(_rad), s = sin(_rad);
+	  return operator()(m_v[0]*c + m_v[2]*s, m_v[1], -m_v[0]*s + m_v[2]*c);
+	}
+	Vector& rotateYd(double _deg) {return rotateY(degToRad(_deg));}
+	Vector& rotateZ(double _rad) {
+	  double c = cos(_rad), s = sin(_rad);
+	  return operator()(m_v[0]*c - m_v[1]*s, m_v[0]*s + m_v[1]*c, m_v[2]);
+	}
+	Vector& rotateZd(double _deg) {return rotateZ(degToRad(_deg));}
 
       private:
         T m_v[3];
