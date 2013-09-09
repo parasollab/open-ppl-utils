@@ -17,7 +17,7 @@
 //
 // $URL: svn+ssh://scm.gforge.inria.fr/svn/cgal/branches/CGAL-3.3-branch/HalfedgeDS/include/CGAL/HalfedgeDS_decorator.h $
 // $Id: HalfedgeDS_decorator.h 35787 2007-01-24 17:16:05Z spion $
-// 
+//
 //
 // Author(s)     : Lutz Kettner  <kettner@mpi-sb.mpg.de>
 
@@ -288,13 +288,13 @@ public:
         // `g' around the vertex.
         Halfedge_handle hnew = hds->edges_push_back( Halfedge(),
                                                      Halfedge());
-        Vertex_handle vnew = vertices_push_back( get_vertex(h));
-        insert_halfedge( hnew, g);
-        insert_halfedge( hnew->opposite(), h);
-        set_vertex( hnew, get_vertex(h));
-        set_vertex_in_vertex_loop( hnew->opposite(), vnew);
-        set_vertex_halfedge( hnew);
-        set_vertex_halfedge( hnew->opposite());
+        Vertex_handle vnew = vertices_push_back(this->get_vertex(h));
+        this->insert_halfedge( hnew, g);
+        this->insert_halfedge( hnew->opposite(), h);
+        this->set_vertex( hnew, this->get_vertex(h));
+        this->set_vertex_in_vertex_loop( hnew->opposite(), vnew);
+        this->set_vertex_halfedge( hnew);
+        this->set_vertex_halfedge( hnew->opposite());
         return hnew;
     }
 
@@ -551,16 +551,16 @@ public:
         CGAL_precondition( h != Halfedge_handle());
         CGAL_precondition( h->is_border());
         Face_handle f = faces_push_back( Face());
-        set_face_in_face_loop( h, f);
-        set_face_halfedge( h);
+        this->set_face_in_face_loop( h, f);
+        this->set_face_halfedge( h);
     }
 
     void fill_hole( Halfedge_handle h, const Face& f, Tag_true) {
         CGAL_precondition( h != Halfedge_handle());
         CGAL_precondition( h->is_border());
         Face_handle fh = faces_push_back( f);
-        set_face_in_face_loop( h, fh);
-        set_face_halfedge( h);
+        this->set_face_in_face_loop( h, fh);
+        this->set_face_halfedge( h);
     }
 
   public:
@@ -603,9 +603,9 @@ public:
         CGAL_precondition( h->is_border());
         CGAL_precondition( g->is_border());
         Halfedge_handle hh = hds->edges_push_back( Halfedge(), Halfedge());
-        insert_tip( hh, h);
-        insert_tip( hh->opposite(), g);
-        fill_hole( g, f);
+        this->insert_tip( hh, h);
+        this->insert_tip( hh->opposite(), g);
+        this->fill_hole( g, f);
         return hh;
     }
 
@@ -636,22 +636,22 @@ public:
         Halfedge_handle end = h;
         do {
             CGAL_assertion( ++termination_count != 0);
-            set_face( h, Face_handle());
+            this->set_face( h, Face_handle());
             Halfedge_handle g = h->next();
             bool h_tag = h->opposite()->is_border();
             bool g_tag = g->opposite()->is_border();
             if ( h_tag && g_tag && g->opposite()->next() == h->opposite()){
-                vertices_erase( get_vertex(h));
+                vertices_erase( this->get_vertex(h));
                 if ( h != end)
                     hds->edges_erase( h);
             } else {
                 if ( g_tag) {
-                    set_vertex_halfedge(g->opposite()->next()->opposite());
-                    remove_tip(h);
+                    this->set_vertex_halfedge(g->opposite()->next()->opposite());
+                    this->remove_tip(h);
                 }
                 if ( h_tag) {
-                    set_vertex_halfedge(h->next()->opposite());
-                    remove_tip( find_prev_around_vertex( h->opposite()));
+                    this->set_vertex_halfedge(h->next()->opposite());
+                    this->remove_tip( this->find_prev_around_vertex( h->opposite()));
                     if ( h != end)
                         hds->edges_erase(h);
                 }
