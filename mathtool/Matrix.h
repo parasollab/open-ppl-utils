@@ -199,6 +199,14 @@ namespace mathtool {
           m[i][j] = _v1[i]*_v2[j];
       return m;
     }
+  
+  template<size_t N>
+    double trace(const Matrix<N,N>& _m){
+      double t = 0;
+      for(size_t i = 0; i<N; ++i)
+        t += _m[i][i];
+      return t;
+    }
 
   //output a NxM matrix
   template<size_t N, size_t M>

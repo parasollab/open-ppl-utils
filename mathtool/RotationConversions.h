@@ -86,7 +86,7 @@ namespace mathtool {
   }
   //assignment from 3x3 rotation matrix
   inline Quaternion& convertFromMatrix(Quaternion& _q, const Matrix3x3& _m) {
-    double t = 1 + _m[0][0] + _m[1][1] + _m[2][2]; //trace of the matrix
+    double t = 1 + trace(_m); //trace of the matrix
     double s, x, y, z, w;
 
     if(t > 0.00000001){
