@@ -138,6 +138,19 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+        //scale vector
+        Vector& selfScale(const T& _l) {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this *= (_l/n);
+        }
+        Vector scale(const T& _l) const {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this * (_l/n);
+        }
 
       private:
         T m_v[D];
@@ -273,6 +286,19 @@ namespace mathtool{
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
           return *this / n;
+        }
+        //scale vector
+        Vector& selfScale(const T& _l) {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this *= (_l/n);
+        }
+        Vector scale(const T& _l) const {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this * (_l/n);
         }
 
 	//vector angle
@@ -429,6 +455,19 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+        //scale vector
+        Vector& selfScale(const T& _l) {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this *= (_l/n);
+        }
+        Vector scale(const T& _l) const {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this * (_l/n);
+        }
 
         //rotate vector
 	Vector& rotateX(double _rad) {
@@ -577,6 +616,19 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+        //scale vector
+        Vector& selfScale(const T& _l) {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return *this = Vector();
+          return *this *= (_l/n);
+        }
+        Vector scale(const T& _l) const {
+          T n = norm();
+          if(n < std::numeric_limits<T>::epsilon())
+            return Vector();
+          return *this * (_l/n);
+        }
 
       private:
         T m_v[4];
@@ -601,6 +653,15 @@ namespace mathtool{
     inline std::istream& operator>>(std::istream& _is, Vector<T,D>& _v) {
       for(size_t i=0; i<D; ++i) _is >> _v[i];
       return _is;
+    }
+
+  template<class T>
+    inline Vector<T,2> unitVector(double _dirRads){
+      return Vector<T,2>(cos(_dirRads), sin(_dirRads));
+    }
+  template<class T>
+    inline Vector<T,2> unitVectord(double _dirDeg){
+      return unitVector<T>(degToRad(_dirDeg));
     }
 
   //////////////////////////////////////////////////////////////////////////////
