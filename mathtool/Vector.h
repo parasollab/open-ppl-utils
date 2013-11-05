@@ -193,9 +193,9 @@ namespace mathtool{
         typedef const T (&carr)[2];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return &m_v[0];}
+        const T* begin() const {return m_v;}
         const T* end() const {return begin()+2;}
-        T* begin() {return &m_v[0];}
+        T* begin() {return m_v;}
         T* end() {return begin()+2;}
 
         //equality
@@ -305,11 +305,13 @@ namespace mathtool{
 	double getAngle() const {return atan2(m_v[1], m_v[0]);}
 	double getAngled() const {return radToDeg(getAngle());}
 	//rotate vector
-	Vector& rotate(double _rad) {
+	Vector& selfRotate(double _rad){
 	  double c = cos(_rad), s = sin(_rad);
 	  return operator()(m_v[0]*c - m_v[1]*s, m_v[0]*s + m_v[1]*c);
 	}
-	Vector& rotated(double _deg) {return rotate(degToRad(_deg));}
+	Vector& selfRotated(double _deg){return selfRotate(degToRad(_deg));}
+	Vector& rotate(double _rad) const{ return Vector(*this).selfRotate(_rad);  }
+	Vector& rotated(double _deg) const{ return Vector(*this).selfRotated(_deg);  }
 
       private:
         T m_v[2];
@@ -352,9 +354,9 @@ namespace mathtool{
         typedef const T (&carr)[3];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return &m_v[0];}
+        const T* begin() const {return m_v;}
         const T* end() const {return begin()+3;}
-        T* begin() {return &m_v[0];}
+        T* begin() {return m_v;}
         T* end() {return begin()+3;}
 
         //equality
@@ -527,9 +529,9 @@ namespace mathtool{
         typedef const T (&carr)[4];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return &m_v[0];}
+        const T* begin() const {return m_v;}
         const T* end() const {return begin()+4;}
-        T* begin() {return &m_v[0];}
+        T* begin() {return m_v;}
         T* end() {return begin()+4;}
 
         //equality
