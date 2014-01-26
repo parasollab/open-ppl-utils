@@ -141,6 +141,19 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+        //Projections
+        //find |component| of this along _v's direction
+        T comp(const Vector& _v) {
+          return (*this) * _v.normalize();
+        }
+        //find vector component of this in _v's direction
+        Vector proj(const Vector& _v) {
+          return comp(_v) * _v.normalize();
+        }
+        //find vector component of this orthogonal to _v's direction
+        Vector orth(const Vector& _v) {
+          return *this - proj(_v);
+        }
         //scale vector
         Vector& selfScale(const T& _l) {
           T n = norm();
@@ -292,6 +305,19 @@ namespace mathtool{
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
           return *this / n;
+        }
+        //Projections
+        //find |component| of this along _v's direction
+        T comp(const Vector& _v) {
+          return (*this) * _v.normalize();
+        }
+        //find vector component of this in _v's direction
+        Vector proj(const Vector& _v) {
+          return comp(_v) * _v.normalize();
+        }
+        //find vector component of this orthogonal to _v's direction
+        Vector orth(const Vector& _v) {
+          return *this - proj(_v);
         }
         //scale vector
         Vector& selfScale(const T& _l) {
@@ -466,6 +492,19 @@ namespace mathtool{
             return Vector();
           return *this / n;
         }
+        //Projections
+        //find |component| of this along _v's direction
+        T comp(const Vector& _v) {
+          return (*this) * _v.normalize();
+        }
+        //find vector component of this in _v's direction
+        Vector proj(const Vector& _v) {
+          return comp(_v) * _v.normalize();
+        }
+        //find vector component of this orthogonal to _v's direction
+        Vector orth(const Vector& _v) {
+          return *this - proj(_v);
+        }
         //scale vector
         Vector& selfScale(const T& _l) {
           T n = norm();
@@ -629,6 +668,19 @@ namespace mathtool{
           if(n < std::numeric_limits<T>::epsilon())
             return Vector();
           return *this / n;
+        }
+        //Projections
+        //find |component| of this along _v's direction
+        T comp(const Vector& _v) {
+          return (*this) * _v.normalize();
+        }
+        //find vector component of this in _v's direction
+        Vector proj(const Vector& _v) {
+          return comp(_v) * _v.normalize();
+        }
+        //find vector component of this orthogonal to _v's direction
+        Vector orth(const Vector& _v) {
+          return *this - proj(_v);
         }
         //scale vector
         Vector& selfScale(const T& _l) {
