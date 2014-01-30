@@ -148,7 +148,7 @@ namespace mathtool{
         }
         //find vector component of this in _v's direction
         Vector proj(const Vector& _v) {
-          return comp(_v) * _v.normalize();
+         return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
         Vector orth(const Vector& _v) {
@@ -313,7 +313,7 @@ namespace mathtool{
         }
         //find vector component of this in _v's direction
         Vector proj(const Vector& _v) {
-          return comp(_v) * _v.normalize();
+          return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
         Vector orth(const Vector& _v) {
@@ -499,7 +499,7 @@ namespace mathtool{
         }
         //find vector component of this in _v's direction
         Vector proj(const Vector& _v) {
-          return comp(_v) * _v.normalize();
+          return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
         Vector orth(const Vector& _v) {
@@ -676,7 +676,7 @@ namespace mathtool{
         }
         //find vector component of this in _v's direction
         Vector proj(const Vector& _v) {
-          return comp(_v) * _v.normalize();
+          return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
         Vector orth(const Vector& _v) {
