@@ -143,15 +143,15 @@ namespace mathtool{
         }
         //Projections
         //find |component| of this along _v's direction
-        T comp(const Vector& _v) {
+        T comp(const Vector& _v) const {
           return (*this) * _v.normalize();
         }
         //find vector component of this in _v's direction
-        Vector proj(const Vector& _v) {
+        Vector proj(const Vector& _v) const {
          return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
-        Vector orth(const Vector& _v) {
+        Vector orth(const Vector& _v) const {
           return *this - proj(_v);
         }
         //scale vector
@@ -308,15 +308,15 @@ namespace mathtool{
         }
         //Projections
         //find |component| of this along _v's direction
-        T comp(const Vector& _v) {
+        T comp(const Vector& _v) const {
           return (*this) * _v.normalize();
         }
         //find vector component of this in _v's direction
-        Vector proj(const Vector& _v) {
+        Vector proj(const Vector& _v) const {
           return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
-        Vector orth(const Vector& _v) {
+        Vector orth(const Vector& _v) const {
           return *this - proj(_v);
         }
         //scale vector
@@ -494,15 +494,15 @@ namespace mathtool{
         }
         //Projections
         //find |component| of this along _v's direction
-        T comp(const Vector& _v) {
+        T comp(const Vector& _v) const {
           return (*this) * _v.normalize();
         }
         //find vector component of this in _v's direction
-        Vector proj(const Vector& _v) {
+        Vector proj(const Vector& _v) const {
           return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
-        Vector orth(const Vector& _v) {
+        Vector orth(const Vector& _v) const {
           return *this - proj(_v);
         }
         //scale vector
@@ -671,15 +671,15 @@ namespace mathtool{
         }
         //Projections
         //find |component| of this along _v's direction
-        T comp(const Vector& _v) {
+        T comp(const Vector& _v) const {
           return (*this) * _v.normalize();
         }
         //find vector component of this in _v's direction
-        Vector proj(const Vector& _v) {
+        Vector proj(const Vector& _v) const {
           return (*this * _v)/(_v * _v) * _v;
         }
         //find vector component of this orthogonal to _v's direction
-        Vector orth(const Vector& _v) {
+        Vector orth(const Vector& _v) const {
           return *this - proj(_v);
         }
         //scale vector
