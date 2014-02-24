@@ -63,17 +63,17 @@ public:
    
   Aff_transformationC2()
   {
-    initialize_with(Aff_transformation_repC2<R>(FT(1), FT(0), FT(0), FT(1)));
+    this->initialize_with(Aff_transformation_repC2<R>(FT(1), FT(0), FT(0), FT(1)));
   }
 
   Aff_transformationC2(const Identity_transformation)
   {
-    initialize_with(Aff_transformation_repC2<R>(FT(1), FT(0), FT(0), FT(1)));
+    this->initialize_with(Aff_transformation_repC2<R>(FT(1), FT(0), FT(0), FT(1)));
   }
 
   Aff_transformationC2(const Translation, const Vector_2 &v)
   {
-    initialize_with(Translation_repC2<R>(v));
+    this->initialize_with(Translation_repC2<R>(v));
   }
 
   // Rational Rotation:
@@ -82,7 +82,7 @@ public:
                        const FT &num,
                        const FT &den = FT(1))
   {
-    initialize_with(Rotation_repC2<R>(d, num, den));
+    this->initialize_with(Rotation_repC2<R>(d, num, den));
   }
 
   Aff_transformationC2(const Rotation,
@@ -91,17 +91,17 @@ public:
                        const FT &w = FT(1))
   {
     if (w != FT(1))
-      initialize_with(Rotation_repC2<R>(sine/w, cosine/w));
+      this->initialize_with(Rotation_repC2<R>(sine/w, cosine/w));
     else
-      initialize_with(Rotation_repC2<R>(sine, cosine));
+      this->initialize_with(Rotation_repC2<R>(sine, cosine));
   }
 
   Aff_transformationC2(const Scaling, const FT &s, const FT &w = FT(1))
   {
     if (w != FT(1))
-      initialize_with(Scaling_repC2<R>(s/w));
+      this->initialize_with(Scaling_repC2<R>(s/w));
     else
-      initialize_with(Scaling_repC2<R>(s));
+      this->initialize_with(Scaling_repC2<R>(s));
   }
 
   // The general case:
@@ -111,10 +111,10 @@ public:
                        const FT &w = FT(1))
   {
     if (w != FT(1))
-      initialize_with(Aff_transformation_repC2<R>(m11/w, m12/w, m13/w,
+      this->initialize_with(Aff_transformation_repC2<R>(m11/w, m12/w, m13/w,
                                                   m21/w, m22/w, m23/w));
     else
-      initialize_with(Aff_transformation_repC2<R>(m11, m12, m13,
+      this->initialize_with(Aff_transformation_repC2<R>(m11, m12, m13,
                                                   m21, m22, m23));
   }
 
@@ -122,7 +122,7 @@ public:
                        const FT & m21, const FT & m22,
                        const FT &w = FT(1))
   {
-    initialize_with(Aff_transformation_repC2<R>(m11/w, m12/w, m21/w, m22/w));
+    this->initialize_with(Aff_transformation_repC2<R>(m11/w, m12/w, m21/w, m22/w));
   }
 
   Point_2

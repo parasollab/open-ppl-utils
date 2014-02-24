@@ -676,7 +676,7 @@ _create_intersection_point(const Point_2& xp,
 {
    // insert the event and check if an event at this point already exists.   
     const std::pair<Event*, bool>& pair_res = 
-      push_event(xp, Base_event::DEFAULT);
+      this->push_event(xp, Base_event::DEFAULT);
     
     Event *e = pair_res.first;
     if(pair_res.second)    
@@ -860,7 +860,7 @@ _handle_overlap(Event* event,
         this->m_traits->construct_max_vertex_2_object()(overlap_cv);
 
       const std::pair<Event*, bool>& pair_res =
-        push_event(end_overlap, Base_event::OVERLAP);
+        this->push_event(end_overlap, Base_event::OVERLAP);
       right_end = pair_res.first;
     }
 
