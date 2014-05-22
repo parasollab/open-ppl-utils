@@ -16,16 +16,16 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimers.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimers in 
-//       the documentation and/or other materials provided with the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimers in
+//       the documentation and/or other materials provided with the
 //       distribution.
 //     * Neither the names of the Motion Strategy Laboratory, University
-//       of Illinois, nor the names of its contributors may be used to 
-//       endorse or promote products derived from this Software without 
+//       of Illinois, nor the names of its contributors may be used to
+//       endorse or promote products derived from this Software without
 //       specific prior written permission.
 //
 // The software is provided "as is", without warranty of any kind,
@@ -48,16 +48,16 @@
 //----------------------------------------------------------------------
 // Copyright (c) 1997-1998 University of Maryland and Sunil Arya and David
 // Mount.  All Rights Reserved.
-// 
-// This software and related documentation is part of the 
+//
+// This software and related documentation is part of the
 // Approximate Nearest Neighbor Library (ANN).
-// 
-// Permission to use, copy, and distribute this software and its 
-// documentation is hereby granted free of charge, provided that 
-// (1) it is not a component of a commercial product, and 
+//
+// Permission to use, copy, and distribute this software and its
+// documentation is hereby granted free of charge, provided that
+// (1) it is not a component of a commercial product, and
 // (2) this notice appears in all copies of the software and
-//     related documentation. 
-// 
+//     related documentation.
+//
 // The University of Maryland (U.M.) and the authors make no representations
 // about the suitability or fitness of this software for any purpose.  It is
 // provided "as is" without express or implied warranty.
@@ -156,7 +156,7 @@ ANNkd_tree::ANNkd_tree(			// basic constructor
 //
 //	One of the arguments is a pointer to a splitting routine,
 //	whose prototype is:
-//	
+//
 //		void split(
 //			ANNpointArray pa,  // complete point array
 //			ANNidxArray pidx,  // point array (permuted on return)
@@ -185,7 +185,7 @@ ANNkd_ptr rkd_tree(		// recursive construction of kd-tree
 	if (n == 0)			// empty leaf node
 	    return KD_TRIVIAL;		// return (canonical) empty leaf
 	else				// construct the node and return
-	    return new ANNkd_leaf(n, pidx); 
+	    return new ANNkd_leaf(n, pidx);
     }
     else {				// n large, make a splitting node
 	int cd;				// cutting dimension
@@ -212,32 +212,32 @@ ANNkd_ptr rkd_tree(		// recursive construction of kd-tree
 	bnd_box.lo[cd] = lv;		// restore bounds
 
 					// create the splitting node
-	ANNkd_split *ptr;
+	ANNkd_split *ptr = NULL;
 	if (TreeTopology[cd] == 3) {
 	   if (TreeP3Topology[cd] == 0)
 	     ptr = new ANNkd_split(cd, cv, lv, hv, cd + 1, cd + 2, cd + 3,
 				  bnd_box.lo[cd + 1], bnd_box.hi[cd + 1],
 				  bnd_box.lo[cd + 2], bnd_box.hi[cd + 2],
 				  bnd_box.lo[cd + 3], bnd_box.hi[cd + 3],
-				  lo, hi);  
+				  lo, hi);
 	  if (TreeP3Topology[cd] == 1)
 	    ptr = new ANNkd_split(cd, cv, lv, hv, cd - 1, cd + 1, cd + 2,
 				  bnd_box.lo[cd - 1], bnd_box.hi[cd - 1],
 				  bnd_box.lo[cd + 1], bnd_box.hi[cd + 1],
 				  bnd_box.lo[cd + 2], bnd_box.hi[cd + 2],
-				  lo, hi);  
+				  lo, hi);
 	  if (TreeP3Topology[cd] == 2)
 	    ptr = new ANNkd_split(cd, cv, lv, hv, cd - 2, cd - 1, cd + 1,
 				  bnd_box.lo[cd - 2], bnd_box.hi[cd - 2],
 				  bnd_box.lo[cd - 1], bnd_box.hi[cd - 1],
 				  bnd_box.lo[cd + 1], bnd_box.hi[cd + 1],
-				  lo, hi);  
+				  lo, hi);
 	  if (TreeP3Topology[cd] == 3)
 	    ptr = new ANNkd_split(cd, cv, lv, hv, cd - 3, cd - 2, cd - 1,
 				  bnd_box.lo[cd - 3], bnd_box.hi[cd - 3],
 				  bnd_box.lo[cd - 2], bnd_box.hi[cd - 2],
 				  bnd_box.lo[cd - 1], bnd_box.hi[cd - 1],
-				  lo, hi);  
+				  lo, hi);
 	  }
 	else {
 	  ptr = new ANNkd_split(cd, cv, lv, hv, lo, hi);
@@ -245,7 +245,7 @@ ANNkd_ptr rkd_tree(		// recursive construction of kd-tree
 
 	return ptr;			// return pointer to this node
     }
-} 
+}
 
 //----------------------------------------------------------------------
 // kd-tree constructor
@@ -260,7 +260,7 @@ ANNkd_tree::ANNkd_tree(			// construct from point array
     int			n,		// number of points
     int			dd,		// dimension
     double     		*ss,		// scaling coefficient
-    int			*tt,		// topology of space 
+    int			*tt,		// topology of space
     int			bs,		// bucket size
     ANNsplitRule	split)		// splitting method
 {

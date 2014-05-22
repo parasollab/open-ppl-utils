@@ -59,9 +59,9 @@ int
 RAPID_model::BeginModel()
 {
   int bs = build_state;
-  
+
   if (!RAPID_initialized) RAPID_initialize();
-  
+
   // free whatever storage we had.  Remember, it's okay to delete null
   // pointers in C++, so we don't have to check them first.
   delete [] b;   b = 0;
@@ -71,15 +71,15 @@ RAPID_model::BeginModel()
   num_tris_alloced = 0;
 
   build_state = RAPID_BUILD_STATE_BEGIN;
-  
+
   if (bs == RAPID_BUILD_STATE_CONST) return RAPID_OK;
 
   if (bs == RAPID_BUILD_STATE_PROCESSED) return RAPID_OK;
 
-  if (bs == RAPID_BUILD_STATE_BEGIN) 
+  if (bs == RAPID_BUILD_STATE_BEGIN)
     return RAPID_ERR_BUILD_OUT_OF_SEQUENCE;
-  
-  if (bs == RAPID_BUILD_STATE_ADDTRI) 
+
+  if (bs == RAPID_BUILD_STATE_ADDTRI)
     return RAPID_ERR_BUILD_OUT_OF_SEQUENCE;
 
   return RAPID_OK;
@@ -118,14 +118,14 @@ RAPID_model::AddTri(const double *p1, const double *p2, const double *p3, int id
       // client forgot to call BeginModel() before calling AddTri().
       return RAPID_ERR_BUILD_OUT_OF_SEQUENCE;
     }
-  
+
   // first make sure that we haven't filled up our allocation.
   // if we have, allocate a new array of twice the size, and copy
   // the old data to it.
 
   if (num_tris == num_tris_alloced)
     {
-      // decide on new size -- accounting for first time, where none are 
+      // decide on new size -- accounting for first time, where none are
       // allocated
       int n = num_tris_alloced*2;
       if (n == 0) n = 1;
@@ -139,14 +139,14 @@ RAPID_model::AddTri(const double *p1, const double *p2, const double *p3, int id
 	  // we are leaving the model unchanged.
 	  return RAPID_ERR_MODEL_OUT_OF_MEMORY;
 	}
-      
-      int i;
-      for(i=0; i<num_tris; i++) t[i] = tris[i]; 
 
-      // free the old array and reassign.  
+      int i;
+      for(i=0; i<num_tris; i++) t[i] = tris[i];
+
+      // free the old array and reassign.
       delete [] tris;
       tris = t;
-      
+
       // update the allocation counter.
       num_tris_alloced = n;
     }
@@ -176,37 +176,37 @@ int
 eigen_and_sort1(double evecs[3][3], double cov[3][3])
 {
   double t;
-  double evals[3];
+  double evals[3] = {0.0, 0.0, 0.0};
   int n;
 
   n = Meigen(evecs, evals, cov);
-  
+
   if (evals[2] > evals[0])
     {
       if (evals[2] > evals[1])
 	{
 	  // 2 is largest, swap with column 0
-	  t = evecs[0][2]; 
-	  evecs[0][2] = evecs[0][0]; 
+	  t = evecs[0][2];
+	  evecs[0][2] = evecs[0][0];
 	  evecs[0][0] = t;
-	  t = evecs[1][2]; 
-	  evecs[1][2] = evecs[1][0]; 
+	  t = evecs[1][2];
+	  evecs[1][2] = evecs[1][0];
 	  evecs[1][0] = t;
-	  t = evecs[2][2]; 
-	  evecs[2][2] = evecs[2][0]; 
+	  t = evecs[2][2];
+	  evecs[2][2] = evecs[2][0];
 	  evecs[2][0] = t;
 	}
       else
 	{
 	  // 1 is largest, swap with column 0
-	  t = evecs[0][1]; 
-	  evecs[0][1] = evecs[0][0]; 
+	  t = evecs[0][1];
+	  evecs[0][1] = evecs[0][0];
 	  evecs[0][0] = t;
-	  t = evecs[1][1]; 
-	  evecs[1][1] = evecs[1][0]; 
+	  t = evecs[1][1];
+	  evecs[1][1] = evecs[1][0];
 	  evecs[1][0] = t;
-	  t = evecs[2][1]; 
-	  evecs[2][1] = evecs[2][0]; 
+	  t = evecs[2][1];
+	  evecs[2][1] = evecs[2][0];
 	  evecs[2][0] = t;
 	}
     }
@@ -219,21 +219,21 @@ eigen_and_sort1(double evecs[3][3], double cov[3][3])
       else
 	{
   	  // 1 is largest
-	  t = evecs[0][1]; 
-	  evecs[0][1] = evecs[0][0]; 
+	  t = evecs[0][1];
+	  evecs[0][1] = evecs[0][0];
 	  evecs[0][0] = t;
-	  t = evecs[1][1]; 
-	  evecs[1][1] = evecs[1][0]; 
+	  t = evecs[1][1];
+	  evecs[1][1] = evecs[1][0];
 	  evecs[1][0] = t;
-	  t = evecs[2][1]; 
-	  evecs[2][1] = evecs[2][0]; 
+	  t = evecs[2][1];
+	  evecs[2][1] = evecs[2][0];
 	  evecs[2][0] = t;
 	}
     }
 
   // we are returning the number of iterations Meigen took.
   // too many iterations means our chosen orientation is bad.
-  return n; 
+  return n;
 }
 
 
@@ -255,9 +255,9 @@ static int RAPID_boxes_inited = 0;
 /*
 
   There are <n> tri structures in an array starting at <t>.
-  
+
   We are told that the mean point is <mp> and the orientation
-  for the parent box will be <or>.  The split axis is to be the 
+  for the parent box will be <or>.  The split axis is to be the
   vector given by <ax>.
 
   <or>, <ax>, and <mp> are model space coordinates.
@@ -276,17 +276,17 @@ RAPID_model::build_hierarchy()
   if (b == 0) return RAPID_ERR_MODEL_OUT_OF_MEMORY;
   RAPID_boxes = b;
   RAPID_boxes_inited = 1;   // we are in process of initializing b[0].
-  
+
   // Determine initial orientation, mean point, and splitting axis.
 
-  int i; 
+  int i;
   accum M;
-  
+
   //  double F1[3];
   //  double S1[6];
   double C[3][3];
-  
-  RAPID_moment = new moment[num_tris]; 
+
+  RAPID_moment = new moment[num_tris];
   if (RAPID_moment == 0)
     {
       delete [] b;
@@ -294,13 +294,13 @@ RAPID_model::build_hierarchy()
     }
   compute_moments(RAPID_moment, tris, num_tris);
 
-  clear_accum(M);  
+  clear_accum(M);
   for(i=0; i<num_tris; i++)
     accum_moment(M, RAPID_moment[i]);
-  
+
   mean_from_accum(b[0].pT, M);
   covariance_from_accum(C, M);
-  
+
   eigen_and_sort1(b[0].pR, C);
 
   // create the index list
@@ -315,7 +315,7 @@ RAPID_model::build_hierarchy()
 
   // set the tri pointer
   RAPID_tri = tris;
-  
+
   // do the build
   int rc = b[0].split_recurse(t, num_tris);
   if (rc != RAPID_OK)
@@ -325,13 +325,13 @@ RAPID_model::build_hierarchy()
       delete [] t;
       return RAPID_ERR_MODEL_OUT_OF_MEMORY;
     }
-  
+
   // free the moment list
   delete [] RAPID_moment;  RAPID_moment = 0;
 
   // null the tri pointer
   RAPID_tri = 0;
-  
+
   // free the index list
   delete [] t;
 
@@ -365,7 +365,7 @@ box::split_recurse(int *t, int n)
     {
       return split_recurse(t);
     }
-  
+
   // walk along the tris for the box, and do the following:
   //   1. collect the max and min of the vertices along the axes of <or>.
   //   2. decide which group the triangle goes in, performing appropriate swap.
@@ -381,7 +381,7 @@ box::split_recurse(int *t, int n)
   tri *ptr;
   int i;
   double axdmp;
-  int n1 = 0;  // The number of tris in group 1.  
+  int n1 = 0;  // The number of tris in group 1.
   // Group 2 will have n - n1 tris.
 
   // project approximate mean point onto splitting axis, and get coord.
@@ -398,7 +398,7 @@ box::split_recurse(int *t, int n)
     {
       in = t[i];
       ptr = RAPID_tri + in;
-      
+
       MTxV(c, pR, ptr->p1);
       minmax(minval[0], maxval[0], c[0]);
       minmax(minval[1], maxval[1], c[1]);
@@ -418,9 +418,9 @@ box::split_recurse(int *t, int n)
       // it onto the splitting axis (1st column of pR) and
       // see where it lies with respect to axdmp.
       mean_from_moment(c, RAPID_moment[in]);
-      
+
       if (((pR[0][0]*c[0] + pR[1][0]*c[1] + pR[2][0]*c[2]) < axdmp)
-	  && (((n!=2)) || ((n==2) && (i==0))))    
+	  && (((n!=2)) || ((n==2) && (i==0))))
 	{
 	  // accumulate first and second order moments for group 1
 	  accum_moment(M1, RAPID_moment[in]);
@@ -452,7 +452,7 @@ box::split_recurse(int *t, int n)
       // equal parts, and proceed.
 
       n1 = n/2;
-      
+
       // now recompute accumulated stuff
       reaccum_moments(M1, t, n1);
       reaccum_moments(M2, t + n1, n - n1);
@@ -479,9 +479,9 @@ box::split_recurse(int *t, int n)
   // Compute the orienations for the child boxes (eigenvectors of
   // covariance matrix).  Select the direction of maximum spread to be
   // the split axis for each child.
-  
+
   double tR[3][3];
-  
+
   if (n1 > 1)
     {
       mean_from_accum(P->pT, M1);
@@ -502,9 +502,9 @@ box::split_recurse(int *t, int n)
     }
   McM(C, P->pR);  MTxM(P->pR, pR, C);   // and F1
   VmV(c, P->pT, pT);  MTxV(P->pT, pR, c);
-  
+
   if ((n-n1) > 1)
-    {      
+    {
       mean_from_accum(N->pT, M2);
       covariance_from_accum (C, M2);
 
@@ -513,7 +513,7 @@ box::split_recurse(int *t, int n)
 	  // unable to find an orientation.  We'll just pick identity.
 	  Midentity(tR);
 	}
-      
+
       McM(N->pR, tR);
       if ((rc = N->split_recurse(t + n1, n - n1)) != RAPID_OK) return rc;
     }
@@ -522,7 +522,7 @@ box::split_recurse(int *t, int n)
       if ((rc = N->split_recurse(t+n1)) != RAPID_OK) return rc;
     }
   McM(C, N->pR); MTxM(N->pR, pR, C);
-  VmV(c, N->pT, pT);  MTxV(N->pT, pR, c);  
+  VmV(c, N->pT, pT);  MTxV(N->pT, pR, c);
 
   return RAPID_OK;
 }
@@ -544,27 +544,27 @@ box::split_recurse(int *t)
   double u12[3], u23[3], u31[3];
 
   // First compute the squared-lengths of each edge
-  VmV(u12, ptr->p1, ptr->p2);  
+  VmV(u12, ptr->p1, ptr->p2);
   double d12 = VdotV(u12,u12);
-  VmV(u23, ptr->p2, ptr->p3);  
+  VmV(u23, ptr->p2, ptr->p3);
   double d23 = VdotV(u23,u23);
-  VmV(u31, ptr->p3, ptr->p1);  
+  VmV(u31, ptr->p3, ptr->p1);
   double d31 = VdotV(u31,u31);
 
   // Find the edge of longest squared-length, normalize it to
   // unit length, and put result into a0.
   double a0[3];
-  double l;  
+  double l;
   if (d12 > d23)
     {
       if (d12 > d31)
 	{
-	  l = 1.0 / sqrt(d12); 
-	  a0[0] = u12[0] * l; 
+	  l = 1.0 / sqrt(d12);
+	  a0[0] = u12[0] * l;
 	  a0[1] = u12[1] * l;
 	  a0[2] = u12[2] * l;
 	}
-      else 
+      else
 	{
 	  l = 1.0 / sqrt(d31);
 	  a0[0] = u31[0] * l;
@@ -572,7 +572,7 @@ box::split_recurse(int *t)
 	  a0[2] = u31[2] * l;
 	}
     }
-  else 
+  else
     {
       if (d23 > d31)
 	{
@@ -603,13 +603,13 @@ box::split_recurse(int *t)
   pR[0][0] = a0[0];  pR[0][1] = a1[0];  pR[0][2] = a2[0];
   pR[1][0] = a0[1];  pR[1][1] = a1[1];  pR[1][2] = a2[1];
   pR[2][0] = a0[2];  pR[2][1] = a1[2];  pR[2][2] = a2[2];
-  
-  // Now compute the maximum and minimum extents of each vertex 
-  // along each of the box axes.  From this we will compute the 
+
+  // Now compute the maximum and minimum extents of each vertex
+  // along each of the box axes.  From this we will compute the
   // box center and box dimensions.
   double minval[3], maxval[3];
   double c[3];
-  
+
   MTxV(c, pR, ptr->p1);
   minval[0] = maxval[0] = c[0];
   minval[1] = maxval[1] = c[1];
@@ -619,12 +619,12 @@ box::split_recurse(int *t)
   minmax(minval[0], maxval[0], c[0]);
   minmax(minval[1], maxval[1], c[1]);
   minmax(minval[2], maxval[2], c[2]);
-  
+
   MTxV(c, pR, ptr->p3);
   minmax(minval[0], maxval[0], c[0]);
   minmax(minval[1], maxval[1], c[1]);
   minmax(minval[2], maxval[2], c[2]);
-  
+
   // With the max and min data, determine the center point and dimensions
   // of the box
   c[0] = (minval[0] + maxval[0])*0.5;
@@ -638,7 +638,7 @@ box::split_recurse(int *t)
   d[0] = (maxval[0] - minval[0])*0.5;
   d[1] = (maxval[1] - minval[1])*0.5;
   d[2] = (maxval[2] - minval[2])*0.5;
-  
+
   // Assign the one triangle to this box
   trp = ptr;
 

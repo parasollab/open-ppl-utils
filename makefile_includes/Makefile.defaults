@@ -35,10 +35,11 @@ ifndef debug
 endif
 
 ifeq (${debug}, 0)
-  OPTS = -O3 -w
+  OPTS = -O3
 else
-  OPTS = -g -Wall -Wno-unused-local-typedefs
+  OPTS = -g
 endif
+OPTS += -Wall -Werror -Wno-unused-local-typedefs
 
 # set platform-specific variables
 FOUNDPLAT = 0

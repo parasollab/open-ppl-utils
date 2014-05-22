@@ -79,7 +79,7 @@ if ((xg).feat != (e)) { \
 ///////////////////////////////////////////////////////////////////////////////
 
 
-int Polyhedron::vertVertTest(const Feature *&v1, const Feature *&v2, 
+int Polyhedron::vertVertTest(const Feature *&v1, const Feature *&v2,
 			     XformedGeom &xv1, XformedGeom &xv2,
 			     const VclipPose &X12, const VclipPose &X21,
 			     Vect3 &cp1, Vect3 &cp2, Real &dist)
@@ -113,8 +113,8 @@ int Polyhedron::vertVertTest(const Feature *&v1, const Feature *&v2,
 }
 
 
-int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f, 
-			     XformedGeom &xv, 
+int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f,
+			     XformedGeom &xv,
 			     const VclipPose &Xvf, const std::list<Face> &allFaces,
 			     Vect3 &cpv, Vect3 &cpf, Real &dist)
 {
@@ -134,7 +134,7 @@ int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f,
   update = 0;
   dmin = 0.0;
   fcone = &F(f)->cone;
-  FOR_EACH(*fcone, fcni) 
+  FOR_EACH(*fcone, fcni)
     if ((d = fcni->plane->dist(xv.coords)) < dmin) {
       f = fcni->nbr;
       dmin = d;
@@ -159,7 +159,7 @@ int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f,
       else {xv.tail = xother; xv.head = xv.coords;}
       xv.seg.sub(xv.head, xv.tail);
       xv.feat = e;
-      v = e; 
+      v = e;
       return CONTINUE;
     }
   }
@@ -184,7 +184,7 @@ int Polyhedron::vertFaceTest(const Feature *&v, const Feature *&f,
 }
 
 
-int Polyhedron::vertEdgeTest(const Feature *&v, const Feature *&e, 
+int Polyhedron::vertEdgeTest(const Feature *&v, const Feature *&e,
 			     XformedGeom &xv, XformedGeom &xe,
 			     const VclipPose &Xve, const VclipPose &Xev,
 			     Vect3 &cpv, Vect3 &cpe, Real &dist)
@@ -267,7 +267,7 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
   int i;
   const Feature *nbr, *minNbr, *maxNbr, *vminNbr, *vmaxNbr;
   const Plane *plane;
-  Real dt, dh, lambda, min, max, vmin, vmax, dmin, dmax;
+  Real dt, dh, lambda, min, max, vmin = 0.0, vmax, dmin, dmax;
   Vect3 seg, point, minPoint, maxPoint;
 
   min = 0;
@@ -365,7 +365,7 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
   }
 
   // edge intersects V-region; analyze derivs
-  
+
   if (minNbr) {
     if (minNbr->type() == Feature::FACE) {
       dt = F(minNbr)->plane.dist(xe.tail);
@@ -373,7 +373,7 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
       dmin =             dt + min * (dh - dt);
       dmax = (maxNbr) ? (dt + max * (dh - dt)) : dh;
       if (dmin == 0) {cp.displace(xe.tail, xe.seg, min); return PENETRATION;}
-      if ((dmin > 0 && dmin < dmax) || (dmin < 0 && dmin > dmax)) 
+      if ((dmin > 0 && dmin < dmax) || (dmin < 0 && dmin > dmax))
 	{e = minNbr; return CONTINUE;}
     }
     else {
@@ -391,7 +391,7 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
       dmin = (minNbr) ? (dt + min * (dh - dt)) : dt;
       dmax =             dt + max * (dh - dt);
       if (dmax == 0) {cp.displace(xe.tail, xe.seg, max); return PENETRATION;}
-      if ((dmax > 0 && dmax < dmin) || (dmax < 0 && dmax > dmin)) 
+      if ((dmax > 0 && dmax < dmin) || (dmax < 0 && dmax > dmin))
 	{e = maxNbr; return CONTINUE;}
     }
     else {
@@ -406,7 +406,7 @@ int Polyhedron::edgeEdgeSubtest(const Feature *&e, XformedGeom &xe, Vect3 &cp)
 }
 
 
-int Polyhedron::edgeEdgeTest(const Feature *&e1, const Feature *&e2, 
+int Polyhedron::edgeEdgeTest(const Feature *&e1, const Feature *&e2,
 			     XformedGeom &xe1, XformedGeom &xe2,
 			     const VclipPose &X12, const VclipPose &X21,
 			     Vect3 &cp1, Vect3 &cp2, Real &dist)
@@ -427,7 +427,7 @@ int Polyhedron::edgeEdgeTest(const Feature *&e1, const Feature *&e2,
   if (res != DISJOINT) return res;
 
   // disjoint - compute closest points & distance
-  
+
   X21.xformVect(E(e2)->dir, xdir);
   k = xdir.dot(E(e1)->dir);
   h.sub(xe2.tail, E(e1)->tail->coords_);
@@ -455,8 +455,8 @@ int Polyhedron::edgeEdgeTest(const Feature *&e1, const Feature *&e2,
 }
 
 
-int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f, 
-			     XformedGeom &xe, const VclipPose &Xef, 
+int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
+			     XformedGeom &xe, const VclipPose &Xef,
 			     Vect3 &cpe, Vect3 &cpf, Real &dist)
 {
   enum Code {INSIDE, OUTSIDE, MIN, MAX};
@@ -464,7 +464,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   int i, intersect;
   std::list<FaceConeNode>::const_iterator cni;
   const FaceConeNode *cn, *prev, *next, *maxCn, *minCn, *chopCn;
-  const Edge *s;
+  const Edge *s = NULL;
   const Vertex *minv, *maxv;
   Real lambda, min, max, dt, dh, dmin, dmax;
   Vect3 point;
@@ -484,7 +484,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   min = 0;
   max = 1;
   minCn = maxCn = chopCn = NULL;
-  for (cni = F(f)->cone.begin(), l = lam.begin(), c = code.begin(); 
+  for (cni = F(f)->cone.begin(), l = lam.begin(), c = code.begin();
        cni != F(f)->cone.end(); ++cni, ++l, ++c) {
     dt = cni->plane->dist(xe.tail);
     dh = cni->plane->dist(xe.head);
@@ -511,7 +511,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
     // heuristic:  choose minCn or maxCn, based on which
     // corresponding region contains more of edge being clipped.
     else cn = (min + max > 1.0) ? minCn : maxCn;
-    
+
     prev = NULL; next = cn;
     intersect = 0;
     while (next != prev) {
@@ -533,10 +533,10 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
       if (dt >= 0) {
 	if (dh < 0)
 	  if ((lambda = dt / (dt - dh)) < max) {
-	    max = lambda; maxv = s->tail; 
+	    max = lambda; maxv = s->tail;
 	    if (min > max) {
-	      if (intersect) break; 
-	      next = (s->left == f) ? cn->cw : cn->ccw; 
+	      if (intersect) break;
+	      next = (s->left == f) ? cn->cw : cn->ccw;
 	      continue;
 	    }
 	  }
@@ -544,10 +544,10 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
       else { // dt < 0
 	if (dh < 0) {next = (s->left == f) ? cn->cw  : cn->ccw; continue;}
 	if ((lambda = dt / (dt - dh)) > min) {
-	  min = lambda; minv = s->tail; 
+	  min = lambda; minv = s->tail;
 	  if (min > max) {
-	    if (intersect) break; 
-	    next = (s->left == f) ? cn->cw : cn->ccw; 
+	    if (intersect) break;
+	    next = (s->left == f) ? cn->cw : cn->ccw;
 	    continue;
 	  }
 	}
@@ -559,10 +559,10 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
       if (dt >= 0) {
 	if (dh < 0)
 	  if ((lambda = dt / (dt - dh)) < max) {
-	    max = lambda; maxv = s->head; 
+	    max = lambda; maxv = s->head;
 	    if (min > max) {
-	      if (intersect) break; 
-	      next = (s->left == f) ? cn->ccw : cn->cw; 
+	      if (intersect) break;
+	      next = (s->left == f) ? cn->ccw : cn->cw;
 	      continue;
 	    }
 	  }
@@ -572,8 +572,8 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
 	if ((lambda = dt / (dt - dh)) > min) {
 	  min = lambda; minv = s->head;
 	  if (min > max) {
-	    if (intersect) break; 
-	    next = (s->left == f) ? cn->ccw : cn->cw; 
+	    if (intersect) break;
+	    next = (s->left == f) ? cn->ccw : cn->cw;
 	    continue;
 	  }
 	}
@@ -618,7 +618,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
   dmax = (maxCn) ? (dt + max * (dh - dt)) : dh;
   if (dmin <= 0) {
     if (dmax >= 0) {
-      dist = dmin; 
+      dist = dmin;
       cpe.displace(E(e)->tail->coords_, E(e)->dir, min * E(e)->len);
       cpf.displace(xe.tail, xe.seg, min);
       cpf.displace(F(f)->plane.normal(), -dmin);
@@ -626,7 +626,7 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
     }
   }
   else if (dmax <= 0) {
-    dist = dmax; 
+    dist = dmax;
     cpe.displace(E(e)->tail->coords_, E(e)->dir, max * E(e)->len);
     cpf.displace(xe.tail, xe.seg, max);
     cpf.displace(F(f)->plane.normal(), -dmax);
@@ -635,18 +635,18 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
 
   // at this point, dmin & dmax are both +ve or both -ve
   if ((dmin > 0 && dt <= dh) || (dmin < 0 && dt >= dh))
-    if (minCn) f = minCn->nbr; 
+    if (minCn) f = minCn->nbr;
     else {
       xe.coords = xe.tail;
       xe.feat = e = E(e)->tail;
     }
   else
-    if (maxCn) f = maxCn->nbr; 
+    if (maxCn) f = maxCn->nbr;
     else {
       xe.coords = xe.head;
       xe.feat = e = E(e)->head;
     }
-  
+
   return CONTINUE;
 }
 
@@ -661,9 +661,9 @@ int Polyhedron::edgeFaceTest(const Feature *&e, const Feature *&f,
 
 const char *ptree1name, *ptree2name;
 
-Real Polyhedron::vclip(const Polyhedron *const poly1, 
-		       const Polyhedron *const poly2, 
-		       const VclipPose &X12, const VclipPose &X21, 
+Real Polyhedron::vclip(const Polyhedron *const poly1,
+		       const Polyhedron *const poly2,
+		       const VclipPose &X12, const VclipPose &X21,
 		       const Feature *&feat1, const Feature *&feat2,
 		       Vect3 &cp1, Vect3 &cp2, int oneStep)
 {
@@ -680,33 +680,33 @@ Real Polyhedron::vclip(const Polyhedron *const poly1,
 
     switch ((feat1->type() << 2) + feat2->type()) {
 
-    case (Feature::VERTEX<<2)+Feature::VERTEX: 
+    case (Feature::VERTEX<<2)+Feature::VERTEX:
       result = vertVertTest(feat1,feat2,xg1,xg2,X12,X21,cp1,cp2,dist); break;
 
-    case (Feature::VERTEX<<2)+Feature::EDGE:   
+    case (Feature::VERTEX<<2)+Feature::EDGE:
       result = vertEdgeTest(feat1,feat2,xg1,xg2,X12,X21,cp1,cp2,dist); break;
 
-    case (Feature::EDGE  <<2)+Feature::VERTEX: 
+    case (Feature::EDGE  <<2)+Feature::VERTEX:
       result = vertEdgeTest(feat2,feat1,xg2,xg1,X21,X12,cp2,cp1,dist); break;
 
-    case (Feature::VERTEX<<2)+Feature::FACE:   
-      result = vertFaceTest(feat1,feat2,xg1,X12,poly2->faces_,cp1,cp2,dist); 
+    case (Feature::VERTEX<<2)+Feature::FACE:
+      result = vertFaceTest(feat1,feat2,xg1,X12,poly2->faces_,cp1,cp2,dist);
       break;
 
-    case (Feature::FACE  <<2)+Feature::VERTEX: 
-      result = vertFaceTest(feat2,feat1,xg2,X21,poly1->faces_,cp2,cp1,dist); 
+    case (Feature::FACE  <<2)+Feature::VERTEX:
+      result = vertFaceTest(feat2,feat1,xg2,X21,poly1->faces_,cp2,cp1,dist);
       break;
 
-    case (Feature::EDGE  <<2)+Feature::EDGE:   
+    case (Feature::EDGE  <<2)+Feature::EDGE:
       result = edgeEdgeTest(feat1,feat2,xg1,xg2,X12,X21,cp1,cp2,dist); break;
 
-    case (Feature::EDGE  <<2)+Feature::FACE: 
+    case (Feature::EDGE  <<2)+Feature::FACE:
       result = edgeFaceTest(feat1,feat2,xg1,X12,cp1,cp2,dist); break;
 
-    case (Feature::FACE  <<2)+Feature::EDGE:   
+    case (Feature::FACE  <<2)+Feature::EDGE:
       result = edgeFaceTest(feat2,feat1,xg2,X21,cp2,cp1,dist); break;
 
-    default: 
+    default:
       cerr << "\ninvalid feature pair combination in vclip" << endl;
       exit(1);
     }
@@ -739,7 +739,7 @@ Real Polyhedron::vclip(const Polyhedron *const poly1,
 ///////////////////////////////////////////////////////////////////////////////
 
 
-Real PolyTree::vclip_(const PolyTree *const ptree1, 
+Real PolyTree::vclip_(const PolyTree *const ptree1,
 		      const PolyTree *const ptree2,
 		      const VclipPose &Xr1r2, const VclipPose &Xr2r1,
 		      ClosestFeaturesHT &ht,
@@ -773,7 +773,7 @@ Real PolyTree::vclip_(const PolyTree *const ptree1,
   Xp1p2.premult(ptree2-> REF_TO_POLY);
   Xp2p1.invert(Xp1p2);
   ptree1name = ptree1->name; ptree2name = ptree2->name;
-  dist = Polyhedron::vclip(&*ptree1->poly_, &*ptree2->poly_, Xp1p2, Xp2p1, 
+  dist = Polyhedron::vclip(&*ptree1->poly_, &*ptree2->poly_, Xp1p2, Xp2p1,
 			   features.first, features.second, cp1, cp2);
   ptree1-> POLY_TO_REF .xformPoint(cp1);  // xform cp's to reference frames
   ptree2-> POLY_TO_REF .xformPoint(cp2);
@@ -781,8 +781,8 @@ Real PolyTree::vclip_(const PolyTree *const ptree1,
 #undef REF_TO_POLY
 
   if (dist > 0) return dist;  // disjoint
-  
-  if (ptree1->components.empty() && ptree2->components.empty())  
+
+  if (ptree1->components.empty() && ptree2->components.empty())
     return dist;  // penetration
 
   dist = HUGE_VAL;
@@ -812,7 +812,7 @@ Real PolyTree::vclip_(const PolyTree *const ptree1,
 }
 
 
-void PolyTree::vclipFeatures(const PolyTree *const ptree1, 
+void PolyTree::vclipFeatures(const PolyTree *const ptree1,
 			     const PolyTree *const ptree2,
 			     ClosestFeaturesHT &ht,
 			     const Feature *&feat1, const Feature *&feat2)

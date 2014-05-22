@@ -4,7 +4,7 @@ include ../../../../makefile_includes/Makefile.defaults
 #
 #       see README.txt
 #       the Unix distribution contains a configure Makefile
-#       
+#
 #       make           to produce qhull qconvex qdelaunay qhalf qvoronoi rbox
 #       make qvoronoi  to produce qvoronoi (etc.)
 #       make qhullx    to produce qhull qconvex etc.  w/o using libqhull.a
@@ -49,7 +49,7 @@ PRINTC = enscript -2r
 
 #for Gnu's gcc compiler -O2 for optimization, -g for debugging, -Wall for check
 #   -fno-strict-aliasing not needed for gcc 4.4+ (segfault in qset.c)
-#CCOPTS1 = ${OPTS} 
+#CCOPTS1 = ${OPTS}
 
 # for Sun's cc compiler, -fast or O2 for optimization, -g for debugging, -Xc for ANSI
 #CC = cc
@@ -70,7 +70,7 @@ CCOPTS2 = $(CCOPTS1)
 OBJS = rboxlib.o user.o global.o stat.o io.o geom2.o poly2.o merge.o \
        libqhull.o geom.o poly.o qset.o mem.o usermem.o userprintf.o random.o
 
-# CFILES ordered alphabetically after libqhull.c 
+# CFILES ordered alphabetically after libqhull.c
 CFILES= unix.c libqhull.c geom.c geom2.c global.c io.c mem.c merge.c poly.c \
 		poly2.c random.c qset.c stat.c user.c qconvex.c qdelaun.c qhalf.c qvoronoi.c usermem.c userprintf.c rboxlib.c
 HFILES= user.h libqhull.h qhull_a.h geom.h io.h mem.h merge.h poly.h random.h qset.h stat.h
@@ -83,7 +83,7 @@ HTMFILES= qhull.man rbox.man qh-code.htm qh-optg.htm qh-optt.htm qh-optp.htm \
 		qh-c.htm qh-faq.htm qhull.htm qconvex.htm qdelaun.htm \
 		qh-geom.htm qh-globa.htm qh-io.htm qh-mem.htm qh-merge.htm \
 		qh-poly.htm qh-qhull.htm qh-set.htm qh-stat.htm qh-user.htm \
-		qdelau_f.htm qhalf.htm qvoronoi.htm qvoron_f.htm rbox.htm 
+		qdelau_f.htm qhalf.htm qvoronoi.htm qvoron_f.htm rbox.htm
 
 all: rbox qconvex qdelaunay qhalf qvoronoi qhull
 
@@ -97,19 +97,19 @@ geom.o:	    $(HFILES)
 geom2.o:    $(HFILES)
 global.o:   $(HFILES)
 io.o:	    $(HFILES)
-mem.o:	    mem.h 
+mem.o:	    mem.h
 merge.o:    $(HFILES)
 poly.o:	    $(HFILES)
 poly2.o:    $(HFILES)
 random.o:   libqhull.h random.h
-qset.o:	    qset.h mem.h 
+qset.o:	    qset.h mem.h
 stat.o:	    $(HFILES)
 user.o:	    $(HFILES)
 
 #.c.o:
 #	$(CC) -c $(CCOPTS1) $<
 
-CLEAN = $(OBJS) ../core qconvex qdelauney qhalf qvoronoi qhull libqhull.a *.exe 
+CLEAN = $(OBJS) ../core rbox qconvex qdelaunay qhalf qvoronoi qhull libqhull.a *.exe
 #clean:
 #	rm -f *.o ../core qconvex qdelaunay qhalf qvoronoi qhull libqhull.a \
              *.exe
@@ -118,10 +118,10 @@ cleanall: clean
 	rm -f *~ ../rbox ../qhull ../qhalf ../qconvex ../qdelaunay ../qhalf\
 		../qvoronoi ../user_eg ../user_eg2 ../*.exe >/dev/null
 
-doc: 
+doc:
 	$(PRINTMAN) $(TXTFILES) $(DOCFILES)
 
-install:  
+install:
 	cp ../qconvex $(BINDIR)/qconvex
 	cp ../qdelaunay $(BINDIR)/qdelaunay
 	cp ../qhalf $(BINDIR)/qhalf
@@ -142,7 +142,7 @@ printc:
 	$(PRINTC) $(CFILES)
 
 printf:
-	$(PRINTC) $(FILES) 
+	$(PRINTC) $(FILES)
 
 libqhull.a: $(OBJS)
 	@echo if 'ar' or 'ranlib' fails, try 'make qhullx'
@@ -152,35 +152,35 @@ libqhull.a: $(OBJS)
 
 # don't use ../qconvex.	 Does not work on Red Hat Linux
 qconvex: qconvex.o libqhull.a
-	$(CC) -o qconvex $(CCOPTS2) qconvex.o -L. -lqhull -lm 
+	$(CC) -o qconvex $(CCOPTS2) qconvex.o -L. -lqhull -lm
 	cp qconvex ..
 
 qdelaunay: qdelaun.o libqhull.a
-	$(CC) -o qdelaunay $(CCOPTS2) qdelaun.o -L. -lqhull -lm 
+	$(CC) -o qdelaunay $(CCOPTS2) qdelaun.o -L. -lqhull -lm
 	cp qdelaunay ..
 
 qhalf: qhalf.o libqhull.a
-	$(CC) -o qhalf $(CCOPTS2) qhalf.o -L. -lqhull -lm 
+	$(CC) -o qhalf $(CCOPTS2) qhalf.o -L. -lqhull -lm
 	cp qhalf ..
 
 qvoronoi: qvoronoi.o libqhull.a
-	$(CC) -o qvoronoi $(CCOPTS2) qvoronoi.o -L. -lqhull -lm 
+	$(CC) -o qvoronoi $(CCOPTS2) qvoronoi.o -L. -lqhull -lm
 	cp qvoronoi ..
 
 qhull: unix.o libqhull.a
-	$(CC) -o qhull $(CCOPTS2) unix.o -L. -lqhull -lm 
+	$(CC) -o qhull $(CCOPTS2) unix.o -L. -lqhull -lm
 	cp qhull ..
 	-chmod +x ../eg/q_test ../eg/q_eg ../eg/q_egtest
 	-cd ..; ./rbox D4 | ./qhull
 
 # compile qhull without using libqhull.a
 qhullx: qconvex.o qdelaun.o qhalf.o qvoronoi.o unix.o rbox.o $(OBJS)
-	$(CC) -o qconvex $(CCOPTS2) qconvex.o $(OBJS) -lm 
-	$(CC) -o qdelaunay $(CCOPTS2) qdelaun.o $(OBJS) -lm 
-	$(CC) -o qhalf $(CCOPTS2) qhalf.o $(OBJS) -lm 
-	$(CC) -o qvoronoi $(CCOPTS2) qvoronoi.o $(OBJS) -lm 
-	$(CC) -o qhull $(CCOPTS2) unix.o $(OBJS) -lm 
-	$(CC) -o rbox $(CCOPTS2) rbox.o $(OBJS) -lm 
+	$(CC) -o qconvex $(CCOPTS2) qconvex.o $(OBJS) -lm
+	$(CC) -o qdelaunay $(CCOPTS2) qdelaun.o $(OBJS) -lm
+	$(CC) -o qhalf $(CCOPTS2) qhalf.o $(OBJS) -lm
+	$(CC) -o qvoronoi $(CCOPTS2) qvoronoi.o $(OBJS) -lm
+	$(CC) -o qhull $(CCOPTS2) unix.o $(OBJS) -lm
+	$(CC) -o rbox $(CCOPTS2) rbox.o $(OBJS) -lm
 	cp qconvex qdelaunay qhalf qvoronoi qhull rbox ..
 	-chmod +x ../eg/q_test ../eg/q_eg ../eg/q_egtest
 	-cd ..; ./rbox D4 | ./qhull
@@ -189,12 +189,12 @@ rbox: rbox.o libqhull.a
 	$(CC) -o rbox rbox.o -L. -lqhull $(CCOPTS2) -lm
 	cp rbox ..
 
-user_eg: user_eg.o libqhull.a 
-	$(CC)  -o user_eg $(CCOPTS2) user_eg.o	-L. -lqhull -lm 
+user_eg: user_eg.o libqhull.a
+	$(CC)  -o user_eg $(CCOPTS2) user_eg.o	-L. -lqhull -lm
 	cp user_eg ..
 
-user_eg2: user_eg2.o libqhull.a 
-	$(CC)  -o user_eg2 $(CCOPTS2) user_eg2.o  -L. -lqhull -lm 
+user_eg2: user_eg2.o libqhull.a
+	$(CC)  -o user_eg2 $(CCOPTS2) user_eg2.o  -L. -lqhull -lm
 	cp user_eg2 ..
 
 # end of Makefile
