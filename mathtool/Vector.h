@@ -12,6 +12,9 @@ namespace mathtool{
     class Vector {
       public:
 
+        typedef T* iterator;
+        typedef const T* const_iterator;
+
         //construction
         Vector() {
           for(size_t i = 0; i<D; ++i) m_v[i] = T();
@@ -41,10 +44,10 @@ namespace mathtool{
         typedef const T (&carr)[D];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return m_v;}
-        const T* end() const {return begin()+D;}
-        T* begin() {return m_v;}
-        T* end() {return begin()+D;}
+        const_iterator begin() const {return m_v;}
+        const_iterator end() const {return begin()+D;}
+        iterator begin() {return m_v;}
+        iterator end() {return begin()+D;}
 
         //equality
         bool operator==(const Vector& _v) const {
@@ -179,6 +182,9 @@ namespace mathtool{
     class Vector<T,2> {
       public:
 
+        typedef T* iterator;
+        typedef const T* const_iterator;
+
         //construction
         Vector(const T& _x = T(), const T& _y = T()) {
           m_v[0] = _x; m_v[1] = _y;
@@ -212,10 +218,10 @@ namespace mathtool{
         typedef const T (&carr)[2];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return m_v;}
-        const T* end() const {return begin()+2;}
-        T* begin() {return m_v;}
-        T* end() {return begin()+2;}
+        const_iterator begin() const {return m_v;}
+        const_iterator end() const {return begin()+2;}
+        iterator begin() {return m_v;}
+        iterator end() {return begin()+2;}
 
         //equality
         bool operator==(const Vector& _v) const {
@@ -356,6 +362,9 @@ namespace mathtool{
     class Vector<T,3> {
       public:
 
+        typedef T* iterator;
+        typedef const T* const_iterator;
+
         //construction
         Vector(const T& _x = T(), const T& _y = T(), const T& _z = T()) {
           m_v[0] = _x; m_v[1] = _y; m_v[2] = _z;
@@ -389,10 +398,10 @@ namespace mathtool{
         typedef const T (&carr)[3];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return m_v;}
-        const T* end() const {return begin()+3;}
-        T* begin() {return m_v;}
-        T* end() {return begin()+3;}
+        const_iterator begin() const {return m_v;}
+        const_iterator end() const {return begin()+3;}
+        iterator begin() {return m_v;}
+        iterator end() {return begin()+3;}
 
         //equality
         bool operator==(const Vector& _v) const {
@@ -547,6 +556,9 @@ namespace mathtool{
     class Vector<T,4> {
       public:
 
+        typedef T* iterator;
+        typedef const T* const_iterator;
+
         //construction
         Vector(const T& _x = T(), const T& _y = T(), const T& _z = T(), const T& _w=T()) {
           m_v[0] = _x; m_v[1] = _y; m_v[2] = _z; m_v[3] = _w;
@@ -580,10 +592,10 @@ namespace mathtool{
         typedef const T (&carr)[4];
         operator arr() {return m_v;}
         operator carr() const {return m_v;}
-        const T* begin() const {return m_v;}
-        const T* end() const {return begin()+4;}
-        T* begin() {return m_v;}
-        T* end() {return begin()+4;}
+        const_iterator begin() const {return m_v;}
+        const_iterator end() const {return begin()+4;}
+        iterator begin() {return m_v;}
+        iterator end() {return begin()+4;}
 
         //equality
         bool operator==(const Vector& _v) const {
