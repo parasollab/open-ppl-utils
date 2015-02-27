@@ -42,7 +42,7 @@
 
 #include "RAPID_version.H"
 
-static char rapidtag_data[] = "RAPIDTAG  file: "__FILE__"    date: "__DATE__"    time: "__TIME__;
+static char rapidtag_data[] = "RAPIDTAG  file: " __FILE__ "    date: " __DATE__ "    time: " __TIME__;
 
 // to silence the compiler's complaints about unreferenced identifiers.
 static void r1(char *f){  r1(f);  r1(rapidtag_data);  r1(rapid_version);}
@@ -84,7 +84,7 @@ tri_contact(box *b1, box *b2)
   double i2[3];
   double i3[3];
   int rc;  // return code
-  
+
   sMxVpV(i1, RAPID_ms, RAPID_mR, b1->trp->p1, RAPID_mT);
   sMxVpV(i2, RAPID_ms, RAPID_mR, b1->trp->p2, RAPID_mT);
   sMxVpV(i3, RAPID_ms, RAPID_mR, b1->trp->p3, RAPID_mT);
@@ -93,25 +93,25 @@ tri_contact(box *b1, box *b2)
 
   int f = tri_contact(i1, i2, i3, b2->trp->p1,b2->trp->p2, b2->trp->p3);
 
-  if (f) 
+  if (f)
     {
       // add_collision may be unable to allocate enough memory,
       // so be prepared to pass along an OUT_OF_MEMORY return code.
       if ((rc = add_collision(b1->trp->id, b2->trp->id)) != RAPID_OK)
 	return rc;
     }
-  
+
   return RAPID_OK;
 }
 
 
 
-int 
+int
 collide_recursive(box *b1, box *b2, double R[3][3], double T[3], double s)
 {
   double d[3]; // temp storage for scaled dimensions of box b2.
   int rc;      // return codes
-  
+
   if (1)
     {
 #if TRACE1
@@ -121,15 +121,15 @@ collide_recursive(box *b1, box *b2, double R[3][3], double T[3], double s)
       Vprint(T);
       printf("%lf\n", s);
 #endif
-      
+
       if (RAPID_first_contact && (RAPID_num_contacts > 0)) return RAPID_OK;
 
       // test top level
 
       RAPID_num_box_tests++;
-  
+
       int f1;
-  
+
       d[0] = s * b2->d[0];
       d[1] = s * b2->d[1];
       d[2] = s * b2->d[2];
@@ -144,16 +144,16 @@ collide_recursive(box *b1, box *b2, double R[3][3], double T[3], double s)
 	{
 	  printf("BOX TEST %d OVERLAP! (code %d)\n", RAPID_num_box_tests, f1);
 	}
-      
+
 #endif
 
-      if (f1 != 0) 
+      if (f1 != 0)
 	{
 	  return RAPID_OK;  // stop processing this test, go to top of loop
 	}
 
       // contact between boxes
-      if (b1->leaf() && b2->leaf()) 
+      if (b1->leaf() && b2->leaf())
 	{
 	  // it is a leaf pair - compare the polygons therein
           // tri_contact uses the model-to-model transforms stored in
@@ -167,7 +167,7 @@ collide_recursive(box *b1, box *b2, double R[3][3], double T[3], double s)
       double U[3];
 
       double cR[3][3], cT[3], cs;
-      
+
       // Currently, the transform from model 2 to model 1 space is
       // given by [B T s], where y = [B T s].x = s.B.x + T.
 
@@ -183,48 +183,48 @@ collide_recursive(box *b1, box *b2, double R[3][3], double T[3], double s)
 	  // for each child, and store the transform into the collision
 	  // test queue.
 
-	  MTxM(cR, b1->N->pR, R); 
+	  MTxM(cR, b1->N->pR, R);
 	  VmV(U, T, b1->N->pT); MTxV(cT, b1->N->pR, U);
 	  cs = s;
 
 	  if ((rc = collide_recursive(b1->N, b2, cR, cT, cs)) != RAPID_OK)
 	    return rc;
-	  
-	  MTxM(cR, b1->P->pR, R); 
+
+	  MTxM(cR, b1->P->pR, R);
 	  VmV(U, T, b1->P->pT); MTxV(cT, b1->P->pR, U);
 	  cs = s;
 
 	  if ((rc = collide_recursive(b1->P, b2, cR, cT, cs)) != RAPID_OK)
 	    return rc;
-	  
+
 	  return RAPID_OK;
 	}
-      else 
+      else
 	{
 	  // here we descend to the children of b2.  See comments for
 	  // other 'if' clause for explanation.
 
 	  MxM(cR, R, b2->N->pR); sMxVpV(cT, s, R, b2->N->pT, T);
 	  cs = s;
-	  
+
 	  if ((rc = collide_recursive(b1, b2->N, cR, cT, cs)) != RAPID_OK)
 	    return rc;
-	  
+
 	  MxM(cR, R, b2->P->pR); sMxVpV(cT, s, R, b2->P->pT, T);
 	  cs = s;
 
 	  if ((rc = collide_recursive(b1, b2->P, cR, cT, cs)) != RAPID_OK)
 	    return rc;
-	  
-	  return RAPID_OK; 
+
+	  return RAPID_OK;
 	}
-  
+
     }
-  
+
   return RAPID_OK;
-} 
-  
-int 
+}
+
+int
 RAPID_Collide(double R1[3][3], double T1[3], RAPID_model *RAPID_model1,
    	      double R2[3][3], double T2[3], RAPID_model *RAPID_model2,
 	      int flag)
@@ -233,7 +233,7 @@ RAPID_Collide(double R1[3][3], double T1[3], RAPID_model *RAPID_model1,
 }
 
 
-int 
+int
 RAPID_Collide(double R1[3][3], double T1[3], double s1, RAPID_model *RAPID_model1,
 	      double R2[3][3], double T2[3], double s2, RAPID_model *RAPID_model2,
 	      int flag)
@@ -248,30 +248,30 @@ RAPID_Collide(double R1[3][3], double T1[3], double s1, RAPID_model *RAPID_model
 
   box *b1 = RAPID_model1->b;
   box *b2 = RAPID_model2->b;
-  
-  RAPID_first_contact = 0; 
+
+  RAPID_first_contact = 0;
   if (flag == RAPID_FIRST_CONTACT) RAPID_first_contact = 1;
-  
+
   double tR1[3][3], tR2[3][3], R[3][3];
   double tT1[3], tT2[3], T[3], U[3];
   double s;
-  
+
   // [R1,T1,s1] and [R2,T2,s2] are how the two triangle sets
   // (i.e. models) are positioned in world space.  [tR1,tT1,s1] and
   // [tR2,tT2,s2] are how the top level boxes are positioned in world
   // space
-  
+
   MxM(tR1, R1, b1->pR);                  // tR1 = R1 * b1->pR;
   sMxVpV(tT1, s1, R1, b1->pT, T1);       // tT1 = s1 * R1 * b1->pT + T1;
   MxM(tR2, R2, b2->pR);                  // tR2 = R2 * b2->pR;
   sMxVpV(tT2, s2, R2, b2->pT, T2);       // tT2 = s2 * R2 * b2->pT + T2;
-  
+
   // (R,T,s) is the placement of b2's top level box within
   // the coordinate system of b1's top level box.
 
   MTxM(R, tR1, tR2);                            // R = tR1.T()*tR2;
   VmV(U, tT2, tT1);  sMTxV(T, 1.0/s1, tR1, U);  // T = tR1.T()*(tT2-tT1)/s1;
-  
+
   s = s2/s1;
 
   // To transform tri's from model1's CS to model2's CS use this:
@@ -282,7 +282,7 @@ RAPID_Collide(double R1[3][3], double T1[3], double s1, RAPID_model *RAPID_model
     VmV(U, T1, T2);  sMTxV(RAPID_mT, 1.0/s2, R2, U);
     RAPID_ms = s1/s2;
   }
-  
+
 
   // reset the report fields
   RAPID_num_box_tests = 0;
@@ -299,14 +299,14 @@ add_collision(int id1, int id2)
   if (!RAPID_contact)
     {
       RAPID_contact = new collision_pair[10];
-      if (!RAPID_contact) 
+      if (!RAPID_contact)
 	{
 	  return RAPID_ERR_COLLIDE_OUT_OF_MEMORY;
 	}
       RAPID_num_cols_alloced = 10;
       RAPID_num_contacts = 0;
     }
-  
+
   if (RAPID_num_contacts == RAPID_num_cols_alloced)
     {
       collision_pair *t = new collision_pair[RAPID_num_cols_alloced*2];
@@ -315,12 +315,12 @@ add_collision(int id1, int id2)
 	  return RAPID_ERR_COLLIDE_OUT_OF_MEMORY;
 	}
       RAPID_num_cols_alloced *= 2;
-      
+
       for(int i=0; i<RAPID_num_contacts; i++) t[i] = RAPID_contact[i];
       delete [] RAPID_contact;
       RAPID_contact = t;
     }
-  
+
   RAPID_contact[RAPID_num_contacts].id1 = id1;
   RAPID_contact[RAPID_num_contacts].id2 = id2;
   RAPID_num_contacts++;

@@ -277,15 +277,9 @@ struct FeaturePair
 struct PolyTreePairHasher : unary_function<PolyTreePair, size_t> {
   size_t operator() (const PolyTreePair &ptrees) const
     {
-#ifndef _64_BIT
-      return ((size_t) ptrees.first)
-       ^ (((unsigned int) ptrees.second) << 16)
-       ^ (((unsigned int) ptrees.second) >> 16);
-#else
       return ((size_t) ptrees.first)
        ^ (((unsigned long) ptrees.second) << 16)
        ^ (((unsigned long) ptrees.second) >> 16);
-#endif
     }
 };
 

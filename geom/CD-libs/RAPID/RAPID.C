@@ -40,7 +40,7 @@
 
 #include "RAPID_version.H"
 
-static char rapidtag_data[] = "RAPIDTAG  file: "__FILE__"    date: "__DATE__"    time: "__TIME__;
+static char rapidtag_data[] = "RAPIDTAG  file: " __FILE__ "    date: " __DATE__ "    time: " __TIME__;
 
 // to silence the compiler's complaints about unreferenced identifiers.
 static void r1(char *f){  r1(f);  r1(rapidtag_data);  r1(rapid_version);}
@@ -55,7 +55,7 @@ static void r1(char *f){  r1(f);  r1(rapidtag_data);  r1(rapid_version);}
 extern int RAPID_initialized;
 void RAPID_initialize();
 
-RAPID_model::RAPID_model() 
+RAPID_model::RAPID_model()
 {
   if (!RAPID_initialized) RAPID_initialize();
 
@@ -65,7 +65,7 @@ RAPID_model::RAPID_model()
   tris = 0;
   num_tris = 0;
   num_tris_alloced = 0;
-  build_state = RAPID_BUILD_STATE_CONST;  
+  build_state = RAPID_BUILD_STATE_CONST;
 }
 
 RAPID_model::~RAPID_model()
@@ -89,5 +89,5 @@ RAPID_initialize()
   RAPID_contact = 0;
 
   RAPID_initialized = 1;
-}             
+}
 

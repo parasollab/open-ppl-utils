@@ -41,7 +41,7 @@
 
 #include "RAPID_version.H"
 
-static char rapidtag_data[] = "RAPIDTAG  file: "__FILE__"    date: "__DATE__"    time: "__TIME__;
+static char rapidtag_data[] = "RAPIDTAG  file: " __FILE__ "    date: " __DATE__ "    time: " __TIME__;
 
 // to silence the compiler's complaints about unreferenced identifiers.
 static void r1(char *f){  r1(f);  r1(rapidtag_data);  r1(rapid_version);}
@@ -70,8 +70,8 @@ min(double a, double b, double c)
 
 
 int
-project6(double *ax, 
-	 double *p1, double *p2, double *p3, 
+project6(double *ax,
+	 double *p1, double *p2, double *p3,
 	 double *q1, double *q2, double *q3)
 {
   double P1 = VdotV(ax, p1);
@@ -80,7 +80,7 @@ project6(double *ax,
   double Q1 = VdotV(ax, q1);
   double Q2 = VdotV(ax, q2);
   double Q3 = VdotV(ax, q3);
-  
+
   double mx1 = max(P1, P2, P3);
   double mn1 = min(P1, P2, P3);
   double mx2 = max(Q1, Q2, Q3);
@@ -96,9 +96,9 @@ project6(double *ax,
 // uses no divisions
 // works on coplanar triangles
 
-int 
+int
 tri_contact (double *P1, double *P2, double *P3,
-		    double *Q1, double *Q2, double *Q3) 
+		    double *Q1, double *Q2, double *Q3)
 {
 
   /*
@@ -124,15 +124,15 @@ tri_contact (double *P1, double *P2, double *P3,
   double ef11[3], ef12[3], ef13[3];
   double ef21[3], ef22[3], ef23[3];
   double ef31[3], ef32[3], ef33[3];
-  
+
   p1[0] = P1[0] - P1[0];  p1[1] = P1[1] - P1[1];  p1[2] = P1[2] - P1[2];
   p2[0] = P2[0] - P1[0];  p2[1] = P2[1] - P1[1];  p2[2] = P2[2] - P1[2];
   p3[0] = P3[0] - P1[0];  p3[1] = P3[1] - P1[1];  p3[2] = P3[2] - P1[2];
-  
+
   q1[0] = Q1[0] - P1[0];  q1[1] = Q1[1] - P1[1];  q1[2] = Q1[2] - P1[2];
   q2[0] = Q2[0] - P1[0];  q2[1] = Q2[1] - P1[1];  q2[2] = Q2[2] - P1[2];
   q3[0] = Q3[0] - P1[0];  q3[1] = Q3[1] - P1[1];  q3[2] = Q3[2] - P1[2];
-  
+
   e1[0] = p2[0] - p1[0];  e1[1] = p2[1] - p1[1];  e1[2] = p2[2] - p1[2];
   e2[0] = p3[0] - p2[0];  e2[1] = p3[1] - p2[1];  e2[2] = p3[2] - p2[2];
   e3[0] = p1[0] - p3[0];  e3[1] = p1[1] - p3[1];  e3[2] = p1[2] - p3[2];
@@ -140,7 +140,7 @@ tri_contact (double *P1, double *P2, double *P3,
   f1[0] = q2[0] - q1[0];  f1[1] = q2[1] - q1[1];  f1[2] = q2[2] - q1[2];
   f2[0] = q3[0] - q2[0];  f2[1] = q3[1] - q2[1];  f2[2] = q3[2] - q2[2];
   f3[0] = q1[0] - q3[0];  f3[1] = q1[1] - q3[1];  f3[2] = q1[2] - q3[2];
-  
+
   VcrossV(n1, e1, e2);
   VcrossV(m1, f1, f2);
 
@@ -160,12 +160,12 @@ tri_contact (double *P1, double *P2, double *P3,
   VcrossV(ef31, e3, f1);
   VcrossV(ef32, e3, f2);
   VcrossV(ef33, e3, f3);
-  
+
   // now begin the series of tests
 
   if (!project6(n1, p1, p2, p3, q1, q2, q3)) return 0;
   if (!project6(m1, p1, p2, p3, q1, q2, q3)) return 0;
-  
+
   if (!project6(ef11, p1, p2, p3, q1, q2, q3)) return 0;
   if (!project6(ef12, p1, p2, p3, q1, q2, q3)) return 0;
   if (!project6(ef13, p1, p2, p3, q1, q2, q3)) return 0;
@@ -205,7 +205,7 @@ dimensions of box A are given in array a.
 
 This test operates in two modes, depending on how the library is
 compiled.  It indicates whether the two boxes are overlapping, by
-returning a boolean.  
+returning a boolean.
 
 The second version of the routine will return a conservative bounds on
 the distance between the polygon sets which the boxes enclose.  It is
@@ -222,7 +222,7 @@ obb_disjoint(double B[3][3], double T[3], double a[3], double b[3])
   register int r;
   double Bf[3][3];
   const double reps = 1e-6;
-  
+
   // Bf = fabs(B)
   Bf[0][0] = myfabs(B[0][0]);  Bf[0][0] += reps;
   Bf[0][1] = myfabs(B[0][1]);  Bf[0][1] += reps;
@@ -234,7 +234,7 @@ obb_disjoint(double B[3][3], double T[3], double a[3], double b[3])
   Bf[2][1] = myfabs(B[2][1]);  Bf[2][1] += reps;
   Bf[2][2] = myfabs(B[2][2]);  Bf[2][2] += reps;
 
-  
+
 #if TRACE1
   printf("Box test: Bf[3][3], B[3][3], T[3], a[3], b[3]\n");
   Mprintg(Bf);
@@ -243,17 +243,17 @@ obb_disjoint(double B[3][3], double T[3], double a[3], double b[3])
   Vprintg(a);
   Vprintg(b);
 #endif
-  
+
   // if any of these tests are one-sided, then the polyhedra are disjoint
   r = 1;
 
   // A1 x A2 = A0
   t = myfabs(T[0]);
-  
-  r &= (t <= 
+
+  r &= (t <=
 	  (a[0] + b[0] * Bf[0][0] + b[1] * Bf[0][1] + b[2] * Bf[0][2]));
   if (!r) return 1;
-  
+
   // B1 x B2 = B0
   s = T[0]*B[0][0] + T[1]*B[1][0] + T[2]*B[2][0];
   t = myfabs(s);
@@ -261,18 +261,18 @@ obb_disjoint(double B[3][3], double T[3], double a[3], double b[3])
   r &= ( t <=
 	  (b[0] + a[0] * Bf[0][0] + a[1] * Bf[1][0] + a[2] * Bf[2][0]));
   if (!r) return 2;
-    
+
   // A2 x A0 = A1
   t = myfabs(T[1]);
-  
-  r &= ( t <= 
+
+  r &= ( t <=
 	  (a[1] + b[0] * Bf[1][0] + b[1] * Bf[1][1] + b[2] * Bf[1][2]));
   if (!r) return 3;
 
   // A0 x A1 = A2
   t = myfabs(T[2]);
 
-  r &= ( t <= 
+  r &= ( t <=
 	  (a[2] + b[0] * Bf[2][0] + b[1] * Bf[2][1] + b[2] * Bf[2][2]));
   if (!r) return 4;
 
@@ -295,12 +295,12 @@ obb_disjoint(double B[3][3], double T[3], double a[3], double b[3])
   // A0 x B0
   s = T[2] * B[1][0] - T[1] * B[2][0];
   t = myfabs(s);
-  
-  r &= ( t <= 
+
+  r &= ( t <=
 	(a[1] * Bf[2][0] + a[2] * Bf[1][0] +
 	 b[1] * Bf[0][2] + b[2] * Bf[0][1]));
   if (!r) return 7;
-  
+
   // A0 x B1
   s = T[2] * B[1][1] - T[1] * B[2][1];
   t = myfabs(s);
