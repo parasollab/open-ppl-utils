@@ -27,7 +27,7 @@
 
 
 # available platforms
-PLATFORMS = "LINUX_gcc LINUX_gcc_mh LINUX_32_gcc MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc64 LINUX_gcc_brazos LINUX_gcc_hopper CRAY_gcc"
+PLATFORMS = "LINUX_gcc LINUX_gcc_mh MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc_brazos LINUX_gcc_hopper CRAY_gcc"
 
 
 ifndef debug
@@ -39,17 +39,21 @@ ifeq (${debug}, 0)
 else
   OPTS = -g
 endif
-OPTS += -Wall -Werror -Wno-unused-local-typedefs
+OPTS +=
+CFLAGS = -Wall -Werror #_64_BIT define used by VCLIP
+CXXFLAGS := -std=c++11 ${CFLAGS} -Wno-unused-local-typedefs -Wno-unknown-pragmas
 
 # set platform-specific variables
 FOUNDPLAT = 0
 
-ifeq (${platform}, LINUX_32_gcc)
+ifeq (${platform}, $(filter ${platform}, LINUX_gcc MACOS_gcc CRAY_gcc))
   FOUNDPLAT = 1
   CC  = gcc
-  CXX = g++
-  CFLAGS =
-  CXXFLAGS := ${CFLAGS}
+  ifeq (${parallel}, 1)
+    CXX = mpic++
+  else
+    CXX = g++
+  endif
   AR = ar rc
 endif
 
@@ -57,21 +61,6 @@ ifeq (${platform}, LINUX_gcc_mh)
   FOUNDPLAT = 1
   CC  = gcc
   CXX = mpiCC
-  CFLAGS =
-  CXXFLAGS := ${CFLAGS}
-  AR = ar rc
-endif
-
-ifeq (${platform}, LINUX_gcc)
-  FOUNDPLAT = 1
-  CC  = gcc
-  ifeq (${parallel}, 1)
-    CXX = mpic++
-  else
-    CXX = g++
-  endif
-  CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
-  CXXFLAGS := ${CFLAGS}
   AR = ar rc
 endif
 
@@ -79,8 +68,6 @@ ifeq (${platform}, LINUX_gcc_brazos)
   FOUNDPLAT = 1
   CC  = gcc
   CXX = mpiCC
-  CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
-  CXXFLAGS := ${CFLAGS}
   AR = ar rc
 endif
 
@@ -88,17 +75,6 @@ ifeq (${platform}, LINUX_gcc_hopper)
   FOUNDPLAT = 1
   CC  = cc
   CXX = CC
-  CFLAGS = -D_64_BIT
-  CXXFLAGS := ${CFLAGS}
-  AR = ar rc
-endif
-
-ifeq (${platform}, MACOS_gcc)
-  FOUNDPLAT = 1
-  CC  = gcc
-  CXX = g++
-  CFLAGS = -D_64_BIT
-  CXXFLAGS := ${CFLAGS}
   AR = ar rc
 endif
 
@@ -106,8 +82,7 @@ ifeq (${platform}, AIX_64_gcc)
   FOUNDPLAT = 1
   CC  = /usr/local/bin/gcc
   CXX = /usr/local/bin/g++
-  CFLAGS = -maix64 -D_64_BIT #_64_BIT define used by VCLIP
-  CXXFLAGS := ${CFLAGS}
+  CFLAGS += -maix64
   AR = ld -b64 -r -o
 endif
 
@@ -115,8 +90,7 @@ ifeq (${platform}, AIX_64_xlC)
   FOUNDPLAT = 1
   CC  = xlc
   CXX = xlc++
-  CFLAGS = -q64 -qarch=auto -D_64_BIT #_64_BIT define used by VCLIP
-  CXXFLAGS := ${CFLAGS}
+  CFLAGS += -q64 -qarch=auto
   ifeq (${debug}, 0)
     OPTS = -O4 -qstrict -w
   else
@@ -124,20 +98,6 @@ ifeq (${platform}, AIX_64_xlC)
   endif
   AR = ar -X64 rc
 endif
-
-ifeq (${platform}, CRAY_gcc)
-  FOUNDPLAT = 1
-  CC  = gcc
-  ifeq (${parallel}, 1)
-    CXX = mpic++
-  else
-    CXX = g++
-  endif
-  CFLAGS = -D_64_BIT #_64_BIT define used by VCLIP
-  CXXFLAGS := ${CFLAGS}
-  AR = ar rc
-endif
-
 
 # default target
 default: default_target
