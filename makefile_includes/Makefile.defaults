@@ -37,7 +37,7 @@ endif
 ifeq (${debug}, 0)
   OPTS = -O3
 else
-  OPTS = -g
+  OPTS = -g -O0
 endif
 OPTS +=
 CFLAGS = -Wall -Werror #_64_BIT define used by VCLIP
