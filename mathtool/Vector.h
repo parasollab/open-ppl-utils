@@ -343,6 +343,7 @@ namespace mathtool{
 	double getAngle() const {return atan2(m_v[1], m_v[0]);}
 	double getAngled() const {return radToDeg(getAngle());}
 	//rotate vector
+        //TODO: make 2d rotations match 3d rotations
 	Vector& selfRotate(double _rad){
 	  double c = cos(_rad), s = sin(_rad);
 	  return operator()(m_v[0]*c - m_v[1]*s, m_v[0]*s + m_v[1]*c);
@@ -529,6 +530,23 @@ namespace mathtool{
         }
 
         //rotate vector
+        //TODO: make 2d rotations match 3d rotations
+        ////////////////////////////////////////////////////////////////////////
+        /// \brief Rotate \c this counter-clockwise about a reference axis.
+        /// \param[in] _axis The reference axis.
+        /// \param[in] _rad  The angle of rotation, with positive values
+        ///                  corresponding to counter-clockwise rotation.
+        /// \return          A self-reference after rotation.
+        Vector& rotate(const Vector& _axis, const T& _rad) {
+          Vector pivot  = this->proj(_axis);
+          Vector arm    = *this - pivot;
+          Vector xPrime = cos(_rad) * arm;
+          Vector yPrime = sin(_rad) * (_axis.normalize() % arm);
+          return *this = pivot + xPrime + yPrime;
+        }
+        Vector& rotated(const Vector& _axis, const T& _deg) {
+          return rotate(_axis, degToRad(_deg));
+        }
 	Vector& rotateX(double _rad) {
 	  double c = cos(_rad), s = sin(_rad);
 	  return operator()(m_v[0], m_v[1]*c - m_v[2]*s, m_v[1]*s + m_v[2]*c);
