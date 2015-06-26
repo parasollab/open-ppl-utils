@@ -22,7 +22,7 @@ namespace mathtool{
         Vector(const Vector& _v) {
           for(size_t i = 0; i<D; ++i) m_v[i] = _v[i];
         }
-        Vector(const T (&_t)[D]) {
+        Vector(const T _t[D]) {
           for(size_t i = 0; i<D; ++i) m_v[i] = _t[i];
         }
         template <class Generator> Vector(const Generator& g){
@@ -192,7 +192,7 @@ namespace mathtool{
         Vector(const Vector& _v) {
           m_v[0] = _v[0]; m_v[1] = _v[1];
         }
-        Vector(const T (&_t)[2]) {
+        Vector(const T _t[2]) {
           m_v[0] = _t[0]; m_v[1] = _t[1];
         }
         template <class Generator> Vector(const Generator& g){
@@ -373,7 +373,7 @@ namespace mathtool{
         Vector(const Vector& _v) {
           m_v[0] = _v[0]; m_v[1] = _v[1]; m_v[2] = _v[2];
         }
-        Vector(const T (&_t)[3]) {
+        Vector(const T _t[3]) {
           m_v[0] = _t[0]; m_v[1] = _t[1]; m_v[2] = _t[2];
         }
         template <class Generator> Vector(const Generator& g){
@@ -584,7 +584,7 @@ namespace mathtool{
         Vector(const Vector& _v) {
           m_v[0] = _v[0]; m_v[1] = _v[1]; m_v[2] = _v[2]; m_v[3] = _v[3];
         }
-        Vector(const T (&_t)[4]) {
+        Vector(const T _t[4]) {
           m_v[0] = _t[0]; m_v[1] = _t[1]; m_v[2] = _t[2]; m_v[3] = _t[3];
         }
         template <class Generator> Vector(const Generator& g){
