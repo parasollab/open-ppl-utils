@@ -199,7 +199,7 @@ namespace mathtool {
           m[i][j] = _v1[i]*_v2[j];
       return m;
     }
-  
+
   template<size_t N>
     double trace(const Matrix<N,N>& _m){
       double t = 0;
@@ -228,6 +228,25 @@ namespace mathtool {
   typedef Matrix<2> Matrix2x2;
   typedef Matrix<3> Matrix3x3;
   typedef Matrix<4> Matrix4x4;
+
+  //matrix inverse for 3x3
+  inline Matrix3x3 inverse(const Matrix3x3& _m) {
+    Matrix3x3 m;
+    float det = _m[0][0]*(_m[1][1]*_m[2][2] - _m[2][1]*_m[1][2])
+      -_m[0][1]*(_m[1][0]*_m[2][2]-_m[1][2]*_m[2][0])
+      +_m[0][2]*(_m[1][0]*_m[2][1]-_m[1][1]*_m[2][0]);
+    float invdet = 1.0/det;
+    m[0][0] =  (_m[1][1]*_m[2][2] - _m[2][1]*_m[1][2]) * invdet;
+    m[1][0] = -(_m[0][1]*_m[2][2] - _m[0][2]*_m[2][1]) * invdet;
+    m[2][0] =  (_m[0][1]*_m[1][2] - _m[0][2]*_m[1][1]) * invdet;
+    m[0][1] = -(_m[1][0]*_m[2][2] - _m[1][2]*_m[2][0]) * invdet;
+    m[1][1] =  (_m[0][0]*_m[2][2] - _m[0][2]*_m[2][0]) * invdet;
+    m[2][1] = -(_m[0][0]*_m[1][2] - _m[1][0]*_m[0][2]) * invdet;
+    m[0][2] =  (_m[1][0]*_m[2][1] - _m[2][0]*_m[1][1]) * invdet;
+    m[1][2] = -(_m[0][0]*_m[2][1] - _m[2][0]*_m[0][1]) * invdet;
+    m[2][2] =  (_m[0][0]*_m[1][1] - _m[1][0]*_m[0][1]) * invdet;
+    return m;
+  };
 }
 
 #endif
