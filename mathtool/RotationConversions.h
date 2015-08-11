@@ -61,15 +61,15 @@ namespace mathtool {
     double  z = _q.m_v[2];
 
     _m[0][0] = 1.0 - 2.0*(y*y + z*z);
-    _m[1][0] = 2.0*(x*y - w*z);
-    _m[2][0] = 2.0*(x*z + w*y);
+    _m[0][1] = 2.0*(x*y - w*z);
+    _m[0][2] = 2.0*(x*z + w*y);
 
-    _m[0][1] = 2.0*(x*y + w*z);
+    _m[1][0] = 2.0*(x*y + w*z);
     _m[1][1] = 1.0 - 2.0*(x*x + z*z);
-    _m[2][1] = 2.0*(y*z - w*x);
+    _m[1][2] = 2.0*(y*z - w*x);
 
-    _m[0][2] = 2.0*(x*z - w*y);
-    _m[1][2] = 2.0*(y*z + w*x);
+    _m[2][0] = 2.0*(x*z - w*y);
+    _m[2][1] = 2.0*(y*z + w*x);
     _m[2][2] = 1.0 - 2.0*(x*x + y*y);
     return _m;
   }
@@ -86,40 +86,40 @@ namespace mathtool {
   }
   //assignment from 3x3 rotation matrix
   inline Quaternion& convertFromMatrix(Quaternion& _q, const Matrix3x3& _m) {
-    double t = 1 + trace(_m); //trace of the matrix
+    double t = trace(_m); //trace of the matrix
     double s, x, y, z, w;
 
-    if(t > 0.00000001){
-      s = 0.5 / std::sqrt(t);
+    if(t > 0) {
+      s = 0.5 / std::sqrt(1 + t);
+      w = 0.25 / s;
       x = (_m[2][1] - _m[1][2]) * s;
       y = (_m[0][2] - _m[2][0]) * s;
       z = (_m[1][0] - _m[0][1]) * s;
-      w = 0.25 / s;
     }
     else{ //if(t <= 0)
       //column 0
       if(_m[0][0] > _m[1][1] && _m[0][0] > _m[2][2]) {
         s = std::sqrt(1.0 + _m[0][0] - _m[1][1] - _m[2][2]) * 2;
+        w = (_m[2][1] - _m[1][2]) / s;
         x = 0.25 * s;
         y = (_m[0][1] + _m[1][0]) / s;
-        z = (_m[2][0] + _m[0][2]) / s;
-        w = (_m[1][2] - _m[2][1]) / s;
+        z = (_m[0][2] + _m[2][0]) / s;
       }
       //column 1
       else if (_m[1][1] > _m[2][2]) {
         s = std::sqrt(1.0 + _m[1][1] - _m[0][0] - _m[2][2]) * 2;
+        w = (_m[0][2] - _m[2][0]) / s;
         x = (_m[0][1] + _m[1][0]) / s;
         y = 0.25 * s;
         z = (_m[1][2] + _m[2][1]) / s;
-        w = (_m[2][0] - _m[0][2]) / s;
       }
       //column 2
       else {
         s = std::sqrt(1.0 + _m[2][2] - _m[0][0] - _m[1][1]) * 2;
-        x = (_m[2][0] + _m[0][2]) / s;
+        w = (_m[1][0] - _m[0][1]) / s;
+        x = (_m[0][2] + _m[2][0]) / s;
         y = (_m[1][2] + _m[2][1]) / s;
         z = 0.25 * s;
-        w = (_m[0][1] - _m[1][0]) / s;
       }
     }
 
