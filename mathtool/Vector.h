@@ -5,6 +5,11 @@
 
 namespace mathtool{
 
+  template<class T, class Func> using CanEvaluateTo =
+    typename std::enable_if<
+        std::is_convertible<decltype(std::declval<Func>()()), T>::value
+    >::type;
+
   //////////////////////////////////////////////////////////////////////////////
   // General D-dimensional Vector
   //////////////////////////////////////////////////////////////////////////////
@@ -25,7 +30,8 @@ namespace mathtool{
         Vector(const T _t[D]) {
           for(size_t i = 0; i<D; ++i) m_v[i] = _t[i];
         }
-        template <class Generator> Vector(const Generator& g){
+        template<class Generator, class = CanEvaluateTo<T, Generator>>
+        Vector(const Generator& g){
           for(size_t i = 0; i<D; ++i) m_v[i] = g();
         }
 
@@ -195,7 +201,8 @@ namespace mathtool{
         Vector(const T _t[2]) {
           m_v[0] = _t[0]; m_v[1] = _t[1];
         }
-        template <class Generator> Vector(const Generator& g){
+        template <class Generator, class = CanEvaluateTo<T, Generator>>
+        Vector(const Generator& g){
           m_v[0] = g(); m_v[1] = g();
         }
 
@@ -376,7 +383,8 @@ namespace mathtool{
         Vector(const T _t[3]) {
           m_v[0] = _t[0]; m_v[1] = _t[1]; m_v[2] = _t[2];
         }
-        template <class Generator> Vector(const Generator& g){
+        template<class Generator, class = CanEvaluateTo<T, Generator>>
+        Vector(const Generator& g){
           m_v[0] = g(); m_v[1] = g(); m_v[2] = g();
         }
 
@@ -587,7 +595,8 @@ namespace mathtool{
         Vector(const T _t[4]) {
           m_v[0] = _t[0]; m_v[1] = _t[1]; m_v[2] = _t[2]; m_v[3] = _t[3];
         }
-        template <class Generator> Vector(const Generator& g){
+        template<class Generator, class = CanEvaluateTo<T, Generator>>
+        Vector(const Generator& g){
           m_v[0] = g(); m_v[1] = g(); m_v[2] = g(); m_v[3] = g();
         }
 
