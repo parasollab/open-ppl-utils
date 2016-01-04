@@ -40,7 +40,7 @@ else
   OPTS = -g -O0
 endif
 OPTS +=
-CFLAGS = -Wall -Werror #_64_BIT define used by VCLIP
+CFLAGS = -Wall -Werror -Wno-error=deprecated-declarations
 CXXFLAGS := -std=c++11 ${CFLAGS} -Wno-unused-local-typedefs -Wno-unknown-pragmas
 
 # set platform-specific variables
