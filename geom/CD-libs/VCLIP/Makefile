@@ -1,4 +1,4 @@
-include ../../../makefile_includes/Makefile.defaults
+include ../../makefile_includes/Makefile.defaults
 
 QHULL_DIR  = ../qhull-2010.1/src
 

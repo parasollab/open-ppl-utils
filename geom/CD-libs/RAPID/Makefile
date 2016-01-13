@@ -1,8 +1,8 @@
-include ../../../makefile_includes/Makefile.defaults
+include ../../makefile_includes/Makefile.defaults
 
 INCL = -I. -I..
 
-OBJECTS	= RAPID.o build.o collide.o overlap.o 
+OBJECTS	= RAPID.o build.o collide.o overlap.o
 
 CLEAN = sample_client ${OBJECTS} *.a *.o *~ *.so
 

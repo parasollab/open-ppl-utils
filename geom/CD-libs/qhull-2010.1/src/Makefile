@@ -1,4 +1,4 @@
-include ../../../../makefile_includes/Makefile.defaults
+include ../../../makefile_includes/Makefile.defaults
 
 # Unix Makefile for qhull and rbox
 #
