@@ -99,6 +99,8 @@
 #include <iostream>			// I/O streams
 #include <math.h>			// math includes
 #include <values.h>			// special values
+#include <limits>
+#include <cstddef>
 
 #define ANNversion	"0.1"		// ANN version number
 
@@ -154,7 +156,7 @@ typedef	double	ANNdist;		// distance data type
 typedef int	ANNidx;			// point index
 
 					// largest possible distance
-const ANNdist	ANN_DIST_INF	=  MAXDOUBLE;
+const ANNdist	ANN_DIST_INF	=  std::numeric_limits<double>::max();
 
 //----------------------------------------------------------------------
 // Self match?
