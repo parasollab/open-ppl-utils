@@ -1,115 +1,85 @@
-#include "MovieBYULoader.h"
-#include "ModelTool.h"
 #include <iostream>
+
+#include "MovieBYULoader.h"
+
 using namespace std;
 
-//////////////////////////////////////////////////////////////////////////////////////
-// Implemetation of ILoadable interface
-//////////////////////////////////////////////////////////////////////////////////////
+
 bool
-CMovieBYULoader::ParseFile(bool silent)
-{
-    if( CheckCurrentStatus(silent)==false )
-        return false;
+CMovieBYULoader::
+ParseFile(bool _silent) {
+  if(m_filename == "")
+    return false;
 
-    //Open file for reading datat
-    ifstream fin(m_strFileName, ios::in);
+  ifstream fin(m_filename);
+  if(!fin.good()) {
+    if(!_silent)
+      cerr << "File " << m_filename << " not found" << endl;
+    return false;
+  }
 
-    if( ParseSection1(fin)==false )
-        return false;
-    if( ParseSection2(fin)==false )
-        return false;
-    if( ParseSection3(fin)==false )
-        return false;
-    fin.close();
+  if(ParseSection1(fin) == false)
+    return false;
+  if(ParseSection2(fin) == false)
+    return false;
+  if(ParseSection3(fin) == false)
+    return false;
+  fin.close();
 
-    //compute normal
-    ComputeFaceNormal(*this);
-    return true;
+  ComputeFaceNormal();
+  return true;
 }
 
 
+bool
+CMovieBYULoader::
+ParseSection1(ifstream& _in) {
+  _in >> m_partsSize >> m_vertexSize >> m_polygonSize >> m_edgeSize;
+  m_parts.reserve(m_partsSize);
 
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//
-//  Protected Member Functions
-//
-//
-//////////////////////////////////////////////////////////////////////////////////////
-bool CMovieBYULoader::CheckCurrentStatus(bool silent)
-{
-    if( m_strFileName==NULL )
-        return false;
+  for(int i = 0; i < m_partsSize && _in; ++i) {
+    pair<int,int> range;
+    _in >> range.first >> range.second;
+    m_parts.push_back(range);
+  }
+  return true;
+}
 
-    //Check if file exist
-    ifstream fin(m_strFileName, ios::in);
-    if( !fin.good() )
-    {   //not good. file not found
-        if(!silent) cerr<<"File "<< m_strFileName <<" not found"<<endl;
-        return false;
+
+bool
+CMovieBYULoader::
+ParseSection2(ifstream& _in) {
+  m_points.reserve(m_vertexSize);
+
+  for(int i = 0; i < m_vertexSize && _in; ++i) {
+    Point3d pt;
+    _in >> pt;
+    m_points.push_back(pt);
+  }
+  return true;
+}
+
+
+bool
+CMovieBYULoader::
+ParseSection3(ifstream& _in) {
+  for(int i = 0; i < m_polygonSize; ++i) {
+    int id = 0;
+    vector<int> index;
+    do {
+      _in >> id;
+      index.push_back(id);
+    } while(id >= 0);
+
+    if(index.size() != 3) {
+      cerr << "Please trianglate model first" << endl;
+      exit(1);
     }
 
-    fin.close();
+    index[2] = -index[2];
+    Tri tri(index[0] - 1, index[1] - 1, index[2] - 1);
+    m_triP.push_back(tri);
+  }
 
-    return true;
+  return true;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Private Methods
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-bool CMovieBYULoader::ParseSection1(ifstream & in)
-{
-    in>>m_PartsSize>>m_VertexSize>>m_PolygonSize>>m_EdgeSize;
-    parts.reserve(m_PartsSize);
-
-    for(int i=0;i<m_PartsSize && in;i++)
-    {
-        pair<int,int> range;
-        in>>range.first>>range.second;
-        parts.push_back(range);
-    }
-    return true;
-}
-
-bool CMovieBYULoader::ParseSection2(ifstream & in)
-{
-    points.reserve(m_VertexSize);
-
-    for(int i=0;i<m_VertexSize && in;i++)
-    {
-        Point3d pt;
-        in>>pt;
-        points.push_back(pt);
-    }
-    return true;
-}
-
-bool CMovieBYULoader::ParseSection3(ifstream & in)
-{
-
-    /////////////////////////////////////////////////////////////////////////////////////
-    for(int i=0;i<m_PolygonSize;i++)
-    {
-        int id=0;
-        vector<int> index;
-        do{
-            in>>id; index.push_back(id);
-        }while(id>=0);
-        int size=index.size();
-        if( size!=3 ){
-            cerr<<"Please trianglate model first"<<endl;
-            exit(1);
-        }
-
-        index[2]=-index[2];
-        Tri tri(index[0]-1,index[1]-1,index[2]-1);
-        triP.push_back(tri);
-    }
-
-    return true;
-}
-
-

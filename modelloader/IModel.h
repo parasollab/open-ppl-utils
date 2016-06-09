@@ -1,82 +1,143 @@
-#ifndef _IPOLYGONAL_H_
-#define _IPOLYGONAL_H_
+#ifndef I_MODEL_H_
+#define I_MODEL_H_
 
-//////////////////////////////////////////////////////////////////////
-//  This is an interface for all classes which constians
-//  polygonal data. For example, deformable object, sculpture deformer
-//  and evene model loader
-//////////////////////////////////////////////////////////////////////
+#include <utility>
 #include <vector>
-using namespace std;
+#include "Vector.h"
 
-#include <Vector.h>
-using namespace mathtool;
 
-class IModel
-{
-public:
+////////////////////////////////////////////////////////////////////////////////
+/// \brief An interface for all classes which contain polygonal data.
+////////////////////////////////////////////////////////////////////////////////
+class IModel {
 
-    virtual ~IModel() {}
-//////////////////////////////////////////////////////////////////////
-//  Interface for Retrive general polgons
-//////////////////////////////////////////////////////////////////////
-    typedef Vector<int, 3> Tri;
+  public:
 
-    typedef vector<Point3d>  PtVector;
-    typedef vector<Tri>      TriVector;
-    typedef vector<Vector3d> V3Vcetor;
-    typedef vector<Vector2d> V2Vcetor;
-//////////////////////////////////////////////////////////////////////
-    virtual const PtVector & GetVertices() const =0;
-    virtual const TriVector & GetTriP() const =0;  //triangle points
-    virtual const TriVector & GetTriN() const =0;  //triangle normals
-    virtual const TriVector & GetTriT() const =0;  //triangle texture
+    ///\name Local Types
+    ///@{
 
-    virtual const V2Vcetor & GetTextureCoords() const =0;
-    virtual const V3Vcetor & GetNormals() const =0;
-//////////////////////////////////////////////////////////////////////
-    virtual PtVector & GetVertices() =0;
-    virtual TriVector & GetTriP() =0;  //triangle points
-    virtual TriVector & GetTriN() =0;  //triangle normals
-    virtual TriVector & GetTriT() =0;  //triangle texture
+    using Point3d = mathtool::Point3d;
+    using Vector2d = mathtool::Vector2d;
+    using Vector3d = mathtool::Vector3d;
 
-    virtual V2Vcetor & GetTextureCoords() =0;
-    virtual V3Vcetor & GetNormals() =0;
+    typedef mathtool::Vector<int, 3>   Tri;
 
-//////////////////////////////////////////////////////////////////////
-//  Skeleton data, typedefs, etc
-//////////////////////////////////////////////////////////////////////
-    typedef pair<Point3d,Point3d> Edge;
-    typedef vector<Edge> EdgeList;
-    PtVector m_UniquePts;
-    EdgeList& GetEdgeList() { return edgeList; }
+    typedef std::vector<Tri>           TriVector;
+    typedef std::vector<Point3d>       PtVector;
+    typedef std::vector<Vector2d>      PtVector2;
+
+    typedef std::pair<Point3d,Point3d> Edge;
+    typedef std::vector<Edge>          EdgeList;
+
+    ///@}
+    ///\name Construction
+    ///@{
+
+    virtual ~IModel() = default;
+
+    ///@}
+    ///\name Derived Class Interface
+    ///@{
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Parse the model file.
+    /// \param[in] _silent Display error messages?
+    /// \return True on success, false otherwise.
+    virtual bool ParseFile(bool _silent = false) = 0;
+
+    ///@}
+    ///\name Accessors
+    ///@{
+
+    virtual void SetDataFileName(const std::string& _fn) {m_filename = _fn;}
+
+    const PtVector& GetVertices() const {return m_points;}
+    const PtVector& GetNormals() const {return m_normals;}
+    const PtVector2& GetTextureCoords() const {return m_textures;}
+    const TriVector& GetTriP() const {return m_triP;}
+    const TriVector& GetTriN() const {return m_triN;}
+    const TriVector& GetTriT() const {return m_triT;}
+
+    PtVector& GetVertices() {return m_points;}
+    PtVector& GetNormals() {return m_normals;}
+    PtVector2& GetTextureCoords() {return m_textures;}
+    TriVector& GetTriP() {return m_triP;}
+    TriVector& GetTriN() {return m_triN;}
+    TriVector& GetTriT() {return m_triT;}
+
+    PtVector& GetUniquePts() {return m_uniquePts;}
+    EdgeList& GetEdgeList() {return m_edgeList;}
+
+    void setRotRAD(double _rotR) {m_rot = _rotR;}
+    double getRotRAD() const {return m_rot;}
+
+    const Vector3d& GetDir() const {return m_dir;}
+    Vector3d& GetDir() {return m_dir;}
+
+    double getDistanceChange() const {return m_distanceChange;}
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Get the radius to a joint in the xz-plane.
+    /// \param[in] _el The edge list holding the joint of interest.
+    /// \param[in] _jointIndex The joint's index in the edge list.
+    /// \param[in] _useFirst Use the first or second point on the edge?
+    /// \return The distance from m_center to the checked endpoint.
+    double getRadiusToJoint(const EdgeList& _el, int _jointIndex, bool _useFirst)
+        const;
+
+    double getBBXRadius() const; ///< Get the xz-plane bbx radius.
+
+    ///@}
+    ///\name Model Computations
+    ///@{
+
+    void resetBBX();                   ///< Initialize an empty bounding box.
+    void updateBBX(const Point3d& _p); ///< Expand the bbx to contain _p.
+    void skelBBX(const EdgeList& _el); ///< Create the bbx around points in _el.
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Compute m_uniquePts by filtering out vertices that are closer
+    ///        than m_tolerance to eachother.
     void genUniquePts();
-    PtVector& GetUniquePts() { return m_UniquePts; }
-    EdgeList edgeList;
-    bool m_DoSkel;
-    void setDoSkel(bool sk) { m_DoSkel = sk; }
-    bool getDoSkel() { return m_DoSkel; }
-    vector<double> m_BBX;
-    double getBBXRadius();
-    double getRadiusToJoint(EdgeList& el, int jointIndex, bool useFirst);
-    Point3d m_Center;
-    Vector3d m_Dir;
-    Vector3d m_DirectionChange;
-    double m_DistanceChange;
-    double getDistanceChange() { return m_DistanceChange; }
-    double m_RotRAD;
-    void setRotRAD(double _rotR) { m_RotRAD = _rotR; }
-    double getRotRAD() { return m_RotRAD; }
-    void resetBBX();
-    void updateBBX(Point3d& p);
-    void skelBBX(EdgeList& el);
-    void genDir(EdgeList& el1, IModel* m, EdgeList& el2, int index);
-    void transform(EdgeList& el, double radius, double height);
-    int m_GLID;
-    int getGLID() { return m_GLID; }
-    void setGLID(int glid) { m_GLID=glid; }
 
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Compute m_dir, m_directionChange, and m_distanceChange from the
+    ///        _index-th elements of _el1 and _el2.
+    void genDir(EdgeList& _el1, EdgeList& _el2, size_t _index);
+
+    void ComputeFaceNormal();
+
+    ///@}
+
+    //void transform(EdgeList& el, double radius, double height);
+
+  protected:
+
+    ///\name Internal State
+    ///@{
+
+    PtVector m_uniquePts;       ///< A filtered point list, excluding nearby pts.
+    EdgeList m_edgeList;        ///< ?
+    std::vector<double> m_bbx;  ///< The maximum xyz ranges for this model.
+    Point3d m_center;           ///< The model center.
+    Vector3d m_dir;             ///< ?
+    Vector3d m_directionChange; ///< ?
+    double m_distanceChange;    ///< ?
+    double m_rot;               ///< Rotation in radians.
+
+    std::string m_filename;     ///< The filename from which the model was loaded.
+
+    PtVector m_points;          ///< Model vertices.
+    PtVector m_normals;         ///< Model normals.
+    PtVector2 m_textures;       ///< Model textures.
+
+    TriVector m_triP;           ///< Triangle points indexes.
+    TriVector m_triN;           ///< Triangle normal indexes.
+    TriVector m_triT;           ///< Triangle texture indexes.
+
+    static constexpr double m_tolerance{.1}; ///< Uniqueness tolerance.
+
+    ///@}
 };
 
-#endif // !defined(_IPOLYGONAL_H_)
-
+#endif

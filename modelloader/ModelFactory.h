@@ -1,18 +1,22 @@
 #ifndef _MODEL_FACTORY_H_
 #define _MODEL_FACTORY_H_
 
-//#include <string>
-#include "InclDefines.h"
+#include <string>
+#include <vector>
 
-//using namespace std;
-
-#include "BVHDataLoader.h"
+#include "Vector.h"
 
 class IModel;
-IModel * CreateModelLoader(const std::string& file, bool silent=false);
+class CBVHDataModelFactory;
 
-vector<IModel*>& CreateModelLoaderVec(CBVHDataModelFactory* modelFactory, const std::string& file, double radius, double height);
+IModel*
+CreateModelLoader(const std::string& _filename, bool _silent = false);
 
-IModel * CreateModelLoaderFromPts( vector<Point2d>& boundary ); 
-#endif //_MODEL_FACTORY_H_
+std::vector<IModel*>&
+CreateModelLoaderVec(CBVHDataModelFactory* _modelFactory,
+    const std::string& _filename, double _radius, double _height);
 
+IModel*
+CreateModelLoaderFromPts(std::vector<mathtool::Point2d>& boundary);
+
+#endif

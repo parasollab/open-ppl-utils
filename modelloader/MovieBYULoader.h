@@ -1,76 +1,38 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-// This file defines a Movie.BYU format fileloader
+#ifndef MOVIE_BYU_LOADER_H_
+#define MOVIE_BYU_LOADER_H_
 
+#include <fstream>
+#include <utility>
+#include <vector>
 
-#ifndef _MOVIEBYULOADER_H_
-#define _MOVIEBYULOADER_H_
+#include "IModel.h"
 
-#include "ILoadable.h"
-//#include <fstream>
-#include "InclDefines.h"
-//using namespace std;
+////////////////////////////////////////////////////////////////////////////////
+/// \brief A loader for Movie.BYU files.
+////////////////////////////////////////////////////////////////////////////////
+class CMovieBYULoader : public IModel {
 
-class CMovieBYULoader : public ILoadable
-{
-public:
+  public:
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    CMovieBYULoader()
-    {
-        m_PartsSize=m_VertexSize=m_PolygonSize=m_EdgeSize=0;
-    }
+    ///\name IModel Overriedes
+    ///@{
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Implemetation of ILoadable interface
-    //////////////////////////////////////////////////////////////////////////////////////
-    virtual bool ParseFile(bool silent=false);
+    virtual bool ParseFile(bool _silent = false) override;
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Implemetation of IModel interface
-    //////////////////////////////////////////////////////////////////////////////////////
-    const PtVector & GetVertices() const{ return points; }
-    const TriVector & GetTriP() const{ return triP; } 
-    const TriVector & GetTriN() const{ return triN; }  //triangle normals
-    const TriVector & GetTriT() const{ return triT; }  //triangle texture
-    const V2Vcetor & GetTextureCoords() const { return textures; }
-    const V3Vcetor & GetNormals() const { return normals; }
+    ///@}
 
-    PtVector & GetVertices() { return points; }
-    TriVector & GetTriP(){ return triP; }
-    TriVector & GetTriN(){ return triN; }
-    TriVector & GetTriT(){ return triT; }
-    V2Vcetor & GetTextureCoords() { return textures; }
-    V3Vcetor & GetNormals() { return normals; }
+  private:
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Protected Methods and data members
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-protected:
-    virtual bool CheckCurrentStatus(bool silent=false);
+    bool ParseSection1(std::ifstream& _in);
+    bool ParseSection2(std::ifstream& _in);
+    bool ParseSection3(std::ifstream& _in);
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Private Methods and data members
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-private:
-    bool ParseSection1(ifstream & in);
-    bool ParseSection2(ifstream & in);
-    bool ParseSection3(ifstream & in);
+    int m_partsSize{0};
+    int m_vertexSize{0};
+    int m_polygonSize{0};
+    int m_edgeSize{0};
 
-    int m_PartsSize,m_VertexSize,m_PolygonSize,
-        m_EdgeSize;
-
-    vector< pair<int,int> > parts;
-    PtVector points;
-    TriVector triP;
-    TriVector triN;    //not support
-    TriVector triT;    //not support
-    V2Vcetor  textures; //not support
-    V3Vcetor  normals;  //not support
+    std::vector<std::pair<int,int>> m_parts;
 };
 
 #endif
-

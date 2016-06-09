@@ -1,110 +1,106 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-// This file defines a BVH data loader
-// the data is broken up into edges per keyframe
+#ifndef BVH_DATA_LOADER_H_
+#define BVH_DATA_LOADER_H_
+
+#include <fstream>
+#include <string>
+#include <vector>
+
+#include "IModel.h"
 
 
-#ifndef _BVHDATLOADER_H_
-#define _BVHDATLOADER_H_
+////////////////////////////////////////////////////////////////////////////////
+/// \brief A BVH data loader. The data is broken up into edges per keyframe.
+////////////////////////////////////////////////////////////////////////////////
+class CBVHDataLoader : public IModel {
 
-#include "ILoadable.h"
-//#include <fstream>
-#include "InclDefines.h"
+  public:
 
+    void load(std::ifstream& _in);
 
-class CBVHDataLoader : public ILoadable
-{
-public:
+    ///\name IModel Overrides
+    ///@{
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    CBVHDataLoader() {
-       m_GLID = -1;
-    }
-    void load(ifstream& infile);
+    virtual bool ParseFile(bool) override;
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Implemetation of ILoadable interface
-    //////////////////////////////////////////////////////////////////////////////////////
-    virtual bool ParseFile(bool silent=false);
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Implemetation of IModel interface
-    //////////////////////////////////////////////////////////////////////////////////////
-    const PtVector & GetVertices() const{ return points; }
-    const TriVector & GetTriP() const{ return triP; }
-    const TriVector & GetTriN() const{ return triN; }  //triangle normals
-    const TriVector & GetTriT() const{ return triT; }  //triangle texture
-    const V2Vcetor & GetTextureCoords() const { return textures; }
-    const V3Vcetor & GetNormals() const { return normals; }
-
-    PtVector & GetVertices() { return points; }
-    TriVector & GetTriP(){ return triP; }
-    TriVector & GetTriN(){ return triN; }  //triangle normals
-    TriVector & GetTriT(){ return triT; }  //triangle texture
-    V2Vcetor & GetTextureCoords() { return textures; }
-    V3Vcetor & GetNormals() { return normals; }
-
-    //EdgeList& GetEdgeList() { return edgeList; }
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Protected Methods and data members
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-protected:
-/*
-    virtual bool CheckCurrentStatus(bool silent=false);
-
-    bool ReadOBJ(istream& in);
-    bool FirstPass(istream& in);
-    bool SecondPass(istream& in);
-    //CObjGroup& FindGroup(const string& name);
-    //CObjGroup& AddGroup(const string& name);
-*/
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Private Methods and data members
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-private:
-
-    PtVector points;
-    TriVector triP;  //points index
-    TriVector triN;  //normal index
-    TriVector triT;  //texture index
-
-    V2Vcetor  textures;
-    V3Vcetor  normals;
-    ///////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////
-    //EdgeList edgeList;
+    ///@}
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+/// \brief ?
+////////////////////////////////////////////////////////////////////////////////
 class CBVHDataInstance {
- public:
-   CBVHDataInstance() : m_InstanceID(-1) { }
-   string getFileName() { return m_FileName; }
-   void setFileName(string fn) { m_FileName = fn; }
-   void setInstanceID(int ii) { m_InstanceID = ii; }
-   int getInstanceID() { return m_InstanceID; }
-   vector<IModel*>& getModels() { return m_Models; }
-   void load(string file, double radius, double height);
 
-   std::string m_FileName;
-   vector<IModel*> m_Models;
-   int m_InstanceID;
+  public:
+
+    ///\name Construction
+    ///@{
+
+    CBVHDataInstance() : m_id(-1) { }
+
+    ///@}
+    ///\name Accessors
+    ///@{
+
+    std::string getFileName() {return m_filename;}
+    void setFileName(const std::string& _fn) {m_filename = _fn;}
+
+    void setInstanceID(int _id) {m_id = _id;}
+    int getInstanceID() {return m_id;}
+
+    std::vector<IModel*>& getModels() {return m_models;}
+
+    ///@}
+    ///\name Loading Function
+    ///@{
+
+    void load(std::string file, double radius, double height);
+
+    ///@}
+    ///\name Internal State
+    ///@{
+
+    std::string m_filename;
+    std::vector<IModel*> m_models;
+    int m_id;
+
+    ///@}
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+/// \brief ?
+////////////////////////////////////////////////////////////////////////////////
 class CBVHDataModelFactory {
- public:
-   CBVHDataModelFactory() { }
-   void addInstance(CBVHDataInstance* bvhd_ins) { m_BVHDataInstances.push_back( bvhd_ins ); }
 
-   int numInstances() { return m_BVHDataInstances.size(); }
-   bool hasBVHDataInstance(string filename, int& index);
-   CBVHDataInstance* getInstance(int instIndex) { return m_BVHDataInstances[instIndex]; }
+  public:
 
-   vector<CBVHDataInstance*> m_BVHDataInstances;
+    ///\name Instance Accessors
+    ///@{
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Get the number of instances.
+    size_t numInstances();
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Add an instance to the factory's instance set.
+    void addInstance(CBVHDataInstance* _i);
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief Get an instance from the factory's instance set.
+    CBVHDataInstance* getInstance(size_t _index);
+
+    ////////////////////////////////////////////////////////////////////////////
+    /// \brief
+    bool hasBVHDataInstance(const std::string& _filename, int& _index);
+
+    ///@}
+    ///\name Internal State
+    ///@{
+
+    std::vector<CBVHDataInstance*> m_BVHDataInstances;
+
+    ///@}
 };
 
 #endif
-
