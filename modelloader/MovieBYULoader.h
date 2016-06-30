@@ -8,7 +8,7 @@
 #include "IModel.h"
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \brief A loader for Movie.BYU files.
+/// \brief A loader for .BYU files. Requires the polygons to be triangles.
 ////////////////////////////////////////////////////////////////////////////////
 class CMovieBYULoader : public IModel {
 
@@ -23,16 +23,26 @@ class CMovieBYULoader : public IModel {
 
   private:
 
-    bool ParseSection1(std::ifstream& _in);
-    bool ParseSection2(std::ifstream& _in);
-    bool ParseSection3(std::ifstream& _in);
+    ///\name Parsing Helpers
+    ///@{
 
-    int m_partsSize{0};
-    int m_vertexSize{0};
-    int m_polygonSize{0};
-    int m_edgeSize{0};
+    bool ParseHeader(std::ifstream& _in);   ///< Parse the header section.
+    bool ParseVertices(std::ifstream& _in); ///< Parse the vertex section.
+    bool ParsePolygons(std::ifstream& _in); ///< Parse the polygon section.
 
-    std::vector<std::pair<int,int>> m_parts;
+    ///@}
+    ///\name Internal State
+    ///@{
+
+    int m_partsSize{0};   ///< The number of parts in the model.
+    int m_vertexSize{0};  ///< The number of vertices in the model.
+    int m_polygonSize{0}; ///< The number of polygons in the model.
+    int m_edgeSize{0};    ///< The number of edges in the model.
+
+    std::vector<std::pair<int,int>> m_parts; ///< Start/end polygon indexes for
+                                             ///< each part.
+
+    ///@}
 };
 
 #endif

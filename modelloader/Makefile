@@ -14,6 +14,6 @@ default_target: library
 library: $(TARGET)
 
 $(TARGET): $(OBJS)
-	ar ruv $@  $(OBJS)
+	ar rUuv $@  $(OBJS)
 
 CLEAN = $(TARGET) $(OBJECTS) *.a *.o *~ *.so

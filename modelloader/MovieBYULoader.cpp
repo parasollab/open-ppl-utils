@@ -1,4 +1,7 @@
+#include <exception>
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "MovieBYULoader.h"
 
@@ -18,13 +21,8 @@ ParseFile(bool _silent) {
     return false;
   }
 
-  if(ParseSection1(fin) == false)
+  if(!ParseHeader(fin) || !ParseVertices(fin) || !ParsePolygons(fin))
     return false;
-  if(ParseSection2(fin) == false)
-    return false;
-  if(ParseSection3(fin) == false)
-    return false;
-  fin.close();
 
   ComputeFaceNormal();
   return true;
@@ -33,7 +31,7 @@ ParseFile(bool _silent) {
 
 bool
 CMovieBYULoader::
-ParseSection1(ifstream& _in) {
+ParseHeader(ifstream& _in) {
   _in >> m_partsSize >> m_vertexSize >> m_polygonSize >> m_edgeSize;
   m_parts.reserve(m_partsSize);
 
@@ -48,12 +46,22 @@ ParseSection1(ifstream& _in) {
 
 bool
 CMovieBYULoader::
-ParseSection2(ifstream& _in) {
+ParseVertices(ifstream& _in) {
   m_points.reserve(m_vertexSize);
+  m_cgalPoints.reserve(m_vertexSize);
+
+  string buf;
+  getline(_in, buf); // Clear out left-over endline from part specification.
 
   for(int i = 0; i < m_vertexSize && _in; ++i) {
+    getline(_in, buf);
+    istringstream is(buf + " " + buf);
+
+    CGALPoint cp;
     Point3d pt;
-    _in >> pt;
+
+    is >> cp >> pt;
+    m_cgalPoints.push_back(cp);
     m_points.push_back(pt);
   }
   return true;
@@ -62,7 +70,7 @@ ParseSection2(ifstream& _in) {
 
 bool
 CMovieBYULoader::
-ParseSection3(ifstream& _in) {
+ParsePolygons(ifstream& _in) {
   for(int i = 0; i < m_polygonSize; ++i) {
     int id = 0;
     vector<int> index;
@@ -72,8 +80,12 @@ ParseSection3(ifstream& _in) {
     } while(id >= 0);
 
     if(index.size() != 3) {
-      cerr << "Please trianglate model first" << endl;
-      exit(1);
+      ostringstream oss;
+      oss << "BYU Loader error: when trying to read " << m_filename
+          << ", found triangle with " << index.size() << " points on line "
+          << 2 + m_partsSize + m_vertexSize + i
+          << ". Please trianglate model." << endl;
+      throw runtime_error(oss.str());
     }
 
     index[2] = -index[2];

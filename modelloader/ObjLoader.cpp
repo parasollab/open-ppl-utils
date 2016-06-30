@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <fstream>
+#include <sstream>
 
 #include "ObjLoader.h"
 
@@ -157,11 +158,12 @@ FirstPass(istream& _in) {
   }
 
   m_points.reserve(numvertices);
+  m_textures.reserve(numtexcoords);
+  m_normals.reserve(numnormals);
   m_triP.reserve(numtriP);
   m_triN.reserve(numtriN);
   m_triT.reserve(numtriT);
-  m_textures.reserve(numtexcoords);
-  m_normals.reserve(numnormals);
+  m_cgalPoints.reserve(numvertices);
   return true;
 }
 
@@ -187,8 +189,12 @@ SecondPass(istream& _in) {
           switch(c2) {
             case ' ': /* vertex */
               {
+                getline(_in, buf);
+                istringstream is(buf + " " + buf);
+                CGALPoint cp;
                 Point3d pt;
-                _in >> pt;
+                is >> cp >> pt;
+                m_cgalPoints.push_back(cp);
                 m_points.push_back(pt);
                 break;
               }

@@ -3,11 +3,14 @@
 
 #include <utility>
 #include <vector>
+
 #include "Vector.h"
+
+#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \brief An interface for all classes which contain polygonal data.
+/// \brief A loading interface for all classes which contain polygonal data.
 ////////////////////////////////////////////////////////////////////////////////
 class IModel {
 
@@ -19,12 +22,14 @@ class IModel {
     using Point3d = mathtool::Point3d;
     using Vector2d = mathtool::Vector2d;
     using Vector3d = mathtool::Vector3d;
+    using CGALPoint = CGAL::Exact_predicates_exact_constructions_kernel::Point_3;
 
     typedef mathtool::Vector<int, 3>   Tri;
 
     typedef std::vector<Tri>           TriVector;
     typedef std::vector<Point3d>       PtVector;
     typedef std::vector<Vector2d>      PtVector2;
+    typedef std::vector<CGALPoint>     CGALPtVector;
 
     typedef std::pair<Point3d,Point3d> Edge;
     typedef std::vector<Edge>          EdgeList;
@@ -57,6 +62,7 @@ class IModel {
     const TriVector& GetTriP() const {return m_triP;}
     const TriVector& GetTriN() const {return m_triN;}
     const TriVector& GetTriT() const {return m_triT;}
+    const CGALPtVector& GetCGALVertices() const {return m_cgalPoints;}
 
     PtVector& GetVertices() {return m_points;}
     PtVector& GetNormals() {return m_normals;}
@@ -64,6 +70,7 @@ class IModel {
     TriVector& GetTriP() {return m_triP;}
     TriVector& GetTriN() {return m_triN;}
     TriVector& GetTriT() {return m_triT;}
+    CGALPtVector& GetCGALVertices() {return m_cgalPoints;}
 
     PtVector& GetUniquePts() {return m_uniquePts;}
     EdgeList& GetEdgeList() {return m_edgeList;}
@@ -117,7 +124,7 @@ class IModel {
     ///@{
 
     PtVector m_uniquePts;       ///< A filtered point list, excluding nearby pts.
-    EdgeList m_edgeList;        ///< ?
+    EdgeList m_edgeList;        ///< The list of edges between points.
     std::vector<double> m_bbx;  ///< The maximum xyz ranges for this model.
     Point3d m_center;           ///< The model center.
     Vector3d m_dir;             ///< ?
@@ -134,6 +141,8 @@ class IModel {
     TriVector m_triP;           ///< Triangle points indexes.
     TriVector m_triN;           ///< Triangle normal indexes.
     TriVector m_triT;           ///< Triangle texture indexes.
+
+    CGALPtVector m_cgalPoints;  ///< Exact model points using CGAL.
 
     static constexpr double m_tolerance{.1}; ///< Uniqueness tolerance.
 

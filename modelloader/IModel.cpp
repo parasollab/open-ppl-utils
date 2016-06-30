@@ -44,11 +44,6 @@ IModel::
 resetBBX() {
   m_bbx.clear();
   m_bbx = {1e10, -1e10, 1e10, -1e10, 1e10, -1e10};
-//  for(int i = 0; i < 6; ++i)
-//    m_bbx.push_back(1e10);
-//  m_bbx[1] *= -1.0;
-//  m_bbx[3] *= -1.0;
-//  m_bbx[5] *= -1.0;
 }
 
 
