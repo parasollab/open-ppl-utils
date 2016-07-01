@@ -173,7 +173,7 @@ namespace dlib
             typename in_sample_vector_type,
             typename in_scalar_vector_type
             >
-        pair<const decision_function<kernel_type>,
+        std::pair<const decision_function<kernel_type>,
              const typename decision_function<K>::scalar_vector_type> train (
             const in_sample_vector_type& x,
             const in_scalar_vector_type& y
@@ -201,7 +201,7 @@ namespace dlib
             typename in_sample_vector_type,
             typename in_scalar_vector_type
             >
-        pair<const decision_function<kernel_type>,
+        std::pair<const decision_function<kernel_type>,
              const typename decision_function<K>::scalar_vector_type> do_train (
             const in_sample_vector_type& x,
             const in_scalar_vector_type& y
@@ -265,7 +265,7 @@ namespace dlib
 
             // now return the decision function
             // modified: first has just sv's, second has all inputs
-            return make_pair(decision_function<K>(sv_alpha, b, kernel_function, support_vectors), alpha);
+            return std::make_pair(decision_function<K>(sv_alpha, b, kernel_function, support_vectors), alpha);
         }
 
     // ------------------------------------------------------------------------------------
