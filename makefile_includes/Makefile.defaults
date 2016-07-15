@@ -99,7 +99,7 @@ ifeq (${platform}, AIX_64_xlC)
   AR = ar -X64 rc
 endif
 
-ifeq (${platform}, cray_GCC)
+ifeq (${platform}, CRAY_gcc)
   CXX = CC
 endif
 # default target
