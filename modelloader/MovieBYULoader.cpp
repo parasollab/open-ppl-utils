@@ -47,22 +47,16 @@ ParseHeader(ifstream& _in) {
 bool
 CMovieBYULoader::
 ParseVertices(ifstream& _in) {
+  using CGAL::to_double;
   m_points.reserve(m_vertexSize);
   m_cgalPoints.reserve(m_vertexSize);
 
-  string buf;
-  getline(_in, buf); // Clear out left-over endline from part specification.
-
   for(int i = 0; i < m_vertexSize && _in; ++i) {
-    getline(_in, buf);
-    istringstream is(buf + " " + buf);
-
     CGALPoint cp;
-    Point3d pt;
+    _in >> cp;
 
-    is >> cp >> pt;
     m_cgalPoints.push_back(cp);
-    m_points.push_back(pt);
+    m_points.emplace_back(to_double(cp[0]), to_double(cp[1]), to_double(cp[2]));
   }
   return true;
 }

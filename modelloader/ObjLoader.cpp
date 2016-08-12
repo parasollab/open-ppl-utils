@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <fstream>
-#include <sstream>
 
 #include "ObjLoader.h"
 
@@ -189,13 +188,12 @@ SecondPass(istream& _in) {
           switch(c2) {
             case ' ': /* vertex */
               {
-                getline(_in, buf);
-                istringstream is(buf + " " + buf);
                 CGALPoint cp;
-                Point3d pt;
-                is >> cp >> pt;
+                _in >> cp;
                 m_cgalPoints.push_back(cp);
-                m_points.push_back(pt);
+                using CGAL::to_double;
+                m_points.emplace_back(to_double(cp[0]), to_double(cp[1]),
+                    to_double(cp[2]));
                 break;
               }
             case 'n': /* normal */
