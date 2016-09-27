@@ -18,33 +18,54 @@ namespace mathtool {
 #define TWOPI 6.2831853071794
 #endif
 
-  // Return the square of a.
   template<typename T>
-    inline T sqr(const T& a) {return a*a;}
+  inline T sqr(const T& x) {return x * x;} ///< Return the square of x.
 
-  // Return sign of x
-  inline int sign(double x) {return x >=0 ? 1: -1;}
+  inline int sign(double x) {return x >= 0 ? 1 : -1;} ///< Return the sign of x.
 
-  // Angle conversions
-  inline double degToRad(double x) {return x*PI/180;}
+  ///@name Angle conversions
+  ///@{
 
-  inline double radToDeg(double x) {return x*180/PI;}
+  inline double degToRad(double x) {return x * PI / 180;}
 
-  // Degree Trig functions
-  inline double sind(double x){return std::sin(degToRad(x));}
+  inline double radToDeg(double x) {return x * 180 / PI;}
 
-  inline double cosd(double x){return std::cos(degToRad(x));}
+  ///@}
+  ///@name Degree Trig functions
+  ///@{
 
-  inline double tand(double x){return std::tan(degToRad(x));}
+  inline double sind(double x) {return std::sin(degToRad(x));}
 
-  inline double asind(double x){return radToDeg(std::asin(x));}
+  inline double cosd(double x) {return std::cos(degToRad(x));}
 
-  inline double acosd(double x){return radToDeg(std::acos(x));}
+  inline double tand(double x) {return std::tan(degToRad(x));}
 
-  inline double atand(double x){return radToDeg(std::atan(x));}
+  inline double asind(double x) {return radToDeg(std::asin(x));}
 
-  inline double atan2d(double x, double y){return radToDeg(std::atan2(x,y));}
+  inline double acosd(double x) {return radToDeg(std::acos(x));}
 
+  inline double atand(double x) {return radToDeg(std::atan(x));}
+
+  inline double atan2d(double x, double y) {return radToDeg(std::atan2(x,y));}
+
+  ///@}
+  ///@name Approximate Equality
+  ///@{
+
+  //////////////////////////////////////////////////////////////////////////////
+  /// @brief Check if two numeric values are within a tolerance of each other.
+  /// @param[in] _a The first value.
+  /// @param[in] _b The second value.
+  /// @param[in] _tolerance The tolerance to use (10 * eps by default).
+  /// @return Is _a within _tolerance of _b?
+  template <typename NumericType>
+  inline const bool approx(const NumericType _a, const NumericType _b,
+      const NumericType _tolerance =
+      10 * std::numeric_limits<NumericType>::epsilon()) {
+    return std::fabs(_a - _b) <= _tolerance;
+  }
+
+  ///@}
 }
 
 #endif

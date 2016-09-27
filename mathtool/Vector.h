@@ -56,7 +56,8 @@ namespace mathtool{
 
       //equality
       bool operator==(const Vector& _v) const {
-        for(size_t i = 0; i<D; ++i) if(m_v[i] != _v[i]) return false;
+        for(size_t i = 0; i < D; ++i)
+          if(!approx(m_v[i], _v[i])) return false;
         return true;
       }
       //inequality
@@ -231,7 +232,7 @@ namespace mathtool{
 
       //equality
       bool operator==(const Vector& _v) const {
-        return m_v[0] == _v[0] && m_v[1] == _v[1];
+        return approx(m_v[0], _v[0]) && approx(m_v[1], _v[1]);
       }
       //inequality
       bool operator!=(const Vector& _v) const {
@@ -413,7 +414,8 @@ namespace mathtool{
 
       //equality
       bool operator==(const Vector& _v) const {
-        return m_v[0] == _v[0] && m_v[1] == _v[1] && m_v[2] == _v[2];
+        return approx(m_v[0], _v[0]) && approx(m_v[1], _v[1]) &&
+            approx(m_v[2], _v[2]);
       }
       //inequality
       bool operator!=(const Vector& _v) const {
@@ -625,7 +627,10 @@ namespace mathtool{
 
       //equality
       bool operator==(const Vector& _v) const {
-        return m_v[0] == _v[0] && m_v[1] == _v[1] && m_v[2] == _v[2] && m_v[3] == _v[3];
+        return approx(m_v[0], _v[0])
+            && approx(m_v[1], _v[1])
+            && approx(m_v[2], _v[2])
+            && approx(m_v[3], _v[3]);
       }
       //inequality
       bool operator!=(const Vector& _v) const {
