@@ -1,25 +1,21 @@
 include ../makefile_includes/Makefile.defaults
 
-DEFS = -DTETLIBRARY
-INCL =
+FLAGS := -std=c++11 -O2
+DEFS  := -DTETLIBRARY
 
 OBJECTS	= predicates.o tetgen.o
 
-CLEAN = ${OBJECTS} *.a *.o *~ *.so
+CLEAN = ${OBJECTS} *.a *.o *~
 
-#default target
+# Recipies
+
 default_target: library
 
 library: libtet.a
 
 libtet.a: ${OBJECTS}
-	/bin/rm -f libtet.a
 	${AR} libtet.a ${OBJECTS}
 
-tetgen: ${OBJECTS}
-	${CXX} ${CXXFLAGS} ${OPTS} ${LIBS} ${OBJECTS} -o $@ -lm
-
-.SUFFIXES: .o .cxx
-.cxx.o:
+%.o: %.cxx
 	@${MAKE} -s check_platform
-	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
+	${CXX} -c ${FLAGS} ${DEFS} $< -o $@
