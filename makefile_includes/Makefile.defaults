@@ -40,8 +40,9 @@ else
   OPTS = -g -O0
 endif
 OPTS +=
-CFLAGS = -Wall -Werror -Wno-error=deprecated-declarations
-CXXFLAGS := -std=c++11 ${CFLAGS} -Wno-unused-local-typedefs -Wno-unknown-pragmas
+CFLAGS = -Wall -Werror -Wno-misleading-indentation -Wno-unused-local-typedefs \
+	 -Wno-unknown-pragmas -Wno-error=deprecated-declarations
+CXXFLAGS := -std=c++11 ${CFLAGS}
 
 # set platform-specific variables
 FOUNDPLAT = 0
