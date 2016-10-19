@@ -41,7 +41,8 @@ else
 endif
 OPTS +=
 CFLAGS = -Wall -Werror -Wno-misleading-indentation -Wno-unused-local-typedefs \
-	 -Wno-unknown-pragmas -Wno-error=deprecated-declarations
+	 -Wno-unknown-pragmas -Wno-error=deprecated-declarations \
+	 -Wno-comment
 CXXFLAGS := -std=c++11 ${CFLAGS}
 
 # set platform-specific variables
