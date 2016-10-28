@@ -13,7 +13,8 @@ rm -rf ${build_dir} ${install_dir}
 # Create the build and install directories, and generate the makefile.
 mkdir ${build_dir} ${install_dir}
 cd ${build_dir}
-cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${install_dir} ../
+cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${install_dir} \
+  -DINSTALL_EXTRA_LIBS=TRUE ../
 
 # Bullet takes a while to build, so use parallel make with max number of
 # processors.
