@@ -68,7 +68,6 @@ namespace glutils {
       file << "f " << (*f)[0] + 1 << " " << (*f)[1] + 1
            << " "  << (*f)[2] + 1 << std::endl;
 
-    m_message = std::ostringstream();
     return *this;
   }
 

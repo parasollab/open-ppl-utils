@@ -1,5 +1,7 @@
 #include "glutils/call_list_set.h"
 
+#include <stdexcept>
+
 namespace glutils {
 
   /*------------------------------ Construction ------------------------------*/
