@@ -27,45 +27,46 @@ struct base_visualization
   glutils::selector* m_highlighter{nullptr};   ///< Highlight helper.
 
   ///@}
+  ///@name Construction
+  ///@{
 
-  public:
+  base_visualization();
+  virtual ~base_visualization();
 
-    ///@name Construction
-    ///@{
+  ///@}
+  ///@name Required Interface
+  ///@{
 
-    base_visualization();
-    virtual ~base_visualization();
+  /// Update the transforms for all drawable objects. This is not done in
+  /// render to give more flexibility for multi-threaded visualizations.
+  virtual void update();
 
-    ///@}
-    ///@name Required Interface
-    ///@{
+  /// Define any instructions needed to render this visualization.
+  virtual void render();
 
-    /// Define any instructions needed to render this visualization.
-    virtual void render();
+  /// Define any instructions to be executed when a selection takes place.
+  /// @param _x The x coordinate of the picking box's center.
+  /// @param _y The y coordinate of the picking box's center.
+  /// @param _w The picking box width.
+  /// @param _h The picking box height.
+  virtual void render_select(const size_t _x, const size_t _y, const size_t _w,
+      const size_t _h);
 
-    /// Define any instructions to be executed when a selection takes place.
-    /// @param _x The x coordinate of the picking box's center.
-    /// @param _y The y coordinate of the picking box's center.
-    /// @param _w The picking box width.
-    /// @param _h The picking box height.
-    virtual void render_select(const size_t _x, const size_t _y, const size_t _w,
-        const size_t _h);
+  /// Define any instructions to be executed when a hover event takes place.
+  /// @param _x The x coordinate of the picking box's center.
+  /// @param _y The y coordinate of the picking box's center.
+  /// @param _w The picking box width.
+  /// @param _h The picking box height.
+  virtual void render_hover(const size_t _x, const size_t _y, const size_t _w,
+      const size_t _h);
 
-    /// Define any instructions to be executed when a hover event takes place.
-    /// @param _x The x coordinate of the picking box's center.
-    /// @param _y The y coordinate of the picking box's center.
-    /// @param _w The picking box width.
-    /// @param _h The picking box height.
-    virtual void render_hover(const size_t _x, const size_t _y, const size_t _w,
-        const size_t _h);
+  /// Define any instructions to be executed at the start of the visualization.
+  virtual void start() {}
 
-    /// Define any instructions to be executed at the start of the visualization.
-    virtual void start() {}
+  /// Define how to reset the visualization to it's initial state.
+  virtual void reset() {}
 
-    /// Define how to reset the visualization to it's initial state.
-    virtual void reset() {}
-
-    ///@}
+  ///@}
 
 };
 

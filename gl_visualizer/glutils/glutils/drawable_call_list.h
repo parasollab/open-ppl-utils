@@ -35,11 +35,9 @@ namespace glutils {
       ///@name Construction
       ///@{
 
-      //////////////////////////////////////////////////////////////////////////
       /// Create a new drawable with a new call list.
       drawable_call_list();
 
-      //////////////////////////////////////////////////////////////////////////
       /// Create a drawable from an existing call list.
       /// @param _cl A shared pointer to the call
       drawable_call_list(call_list_ptr _cl) noexcept;
@@ -55,31 +53,30 @@ namespace glutils {
       /// These functions should be defined by subclasses to specify the
       /// appropriate rendering instructions.
 
-      //////////////////////////////////////////////////////////////////////////
       /// Instructions for drawing this object at the origin, from the standard
       /// OpenGL perspective.
       virtual void build() = 0;
 
-      //////////////////////////////////////////////////////////////////////////
       /// Additional instructions for drawing the selection decorations on the
       /// object. These will be drawn over the object when it is selected.
       virtual void build_selected() {}
 
-      //////////////////////////////////////////////////////////////////////////
       /// Additional instructions for drawing the highlight decorations on the
       /// object. These will be drawn over the object when it is highlighted,
       /// after any decorations for selection.
       virtual void build_highlighted() {}
 
+    private:
+
       ///@}
       ///@name drawable Overrides
       ///@{
 
-      virtual void initialize() override; ///< Compile the call lists.
+      virtual void initialize() override final; ///< Compile the call lists.
 
-      virtual void draw() override;
-      virtual void draw_selected() override;
-      virtual void draw_highlighted() override;
+      virtual void draw() override final;
+      virtual void draw_selected() override final;
+      virtual void draw_highlighted() override final;
 
       ///@}
   };

@@ -22,6 +22,15 @@ base_visualization::
 
 void
 base_visualization::
+update()
+{
+  for(auto& d : m_drawables)
+    d->update_transform();
+}
+
+
+void
+base_visualization::
 render()
 {
   for(const auto& d : m_drawables)
