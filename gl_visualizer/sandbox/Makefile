@@ -30,9 +30,9 @@ INCL := -I. $(QT_INCL) $(NONSTD_INCL) $(GLUTILS_INCL)
 
 LIBS := $(QT_LIBS) $(GLUTILS_LIBS) $(GL_LIBS) $(NONSTD_LIBS)
 
-# Qt MOC configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Qt4 MOC configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-MOC := /usr/lib64/qt4/bin/moc
+MOC := moc
 
 # Directory Layout ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -54,7 +54,7 @@ vpath moc_%.cpp $(MOC_DIR)
 # Source file configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 SRCS     := $(patsubst ./%,%, $(shell find . -type f -name '*.cpp' \
-		    ! -name 'moc_*.cpp' -printf "%f "))
+		    ! -name 'moc_*.cpp' ! -name 'main.cpp' -printf "%f "))
 MOC_SRCS := $(patsubst ./%.h,moc_%.cpp, $(shell find . -type f \
 		    -name '*.h' -execdir grep -rl Q_OBJECT \{} + ))
 
@@ -80,25 +80,48 @@ $(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 	      \(no associated header\)...
 	@$(CXX) $(FLAGS) $(WARN) $(INCL) -c $< -o $@
 
+# Libraries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+NAME   := glsandbox
+SHARED := lib$(NAME).o
+STATIC := lib$(NAME).a
+
+.PHONY: shared
+shared: $(SHARED)
+$(SHARED): $(OBJS) $(MOC_OBJS) $(patsubst %,$(MOC_DIR)/%,$(MOC_SRCS))
+	@echo Linking shared library $(SHARED)...
+	@$(CXX) -shared $^ -o $@
+
+.PHONY: static
+static: $(STATIC)
+$(STATIC): $(OBJS) $(MOC_OBJS) $(patsubst %,$(MOC_DIR)/%,$(MOC_SRCS))
+	@echo Linking static library $(STATIC)...
+	@ar rcs $@ $^
+
 # Executable ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 EXECUTABLE := sandbox
 
 .DEFAULT_GOAL := $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJS) $(MOC_OBJS) $(patsubst %,$(MOC_DIR)/%,$(MOC_SRCS))
+# Use the static library to build the executable.
+$(EXECUTABLE): $(OBJ_DIR)/main.o $(STATIC)
 	@cd $(NONSTD_DIR) ; make
 	@cd $(GLUTILS_DIR) ; make
 	@echo Linking $@...
-	@$(CXX) $(OBJS) $(MOC_OBJS) $(LIBS) -o $@
+	@$(CXX) $< -L. -l$(NAME) $(LIBS) -o $@
 
 # Clean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 .PHONY: clean
-clean:
-	@rm -rf $(EXECUTABLE) $(OBJ_DIR) $(DOC_DIR)/html
+clean: cleandocs
+	@rm -rf $(EXECUTABLE) $(OBJ_DIR) $(STATIC) $(SHARED)
 	@cd $(GLUTILS_DIR) ; make clean
 	@cd $(NONSTD_DIR) ; make clean
+
+.PHONY: cleandocs
+cleandocs:
+	@rm -rf $(DOC_DIR)/html
 
 # Docs ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 

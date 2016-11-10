@@ -22,6 +22,16 @@ base_visualization::
 
 void
 base_visualization::
+add_drawable(glutils::drawable* _d)
+{
+  m_drawables.push_back(_d);
+  m_selector->add_drawable(_d);
+  m_highlighter->add_drawable(_d);
+}
+
+
+void
+base_visualization::
 update()
 {
   for(auto& d : m_drawables)

@@ -1,9 +1,10 @@
 #ifndef GLUTILS_GLTRAITS_H_
 #define GLUTILS_GLTRAITS_H_
 
+#include <array>
+
 #include <GL/gl.h>
 
-#include "nonstd/transform.h"
 #include "nonstd/vector.h"
 
 namespace glutils {
@@ -30,12 +31,45 @@ namespace glutils {
   ///@name Transforms
   ///@{
 
-  typedef nonstd::transform_type<GLfloat> transform;
+  /// An OpenGL transform matrix. The convention for glutils is opposite of
+  /// OpenGL because C/C++ are designed for row-major order. Thus, the transform
+  /// matrix is stored in row-major order with the translation elements in the
+  /// right-most column.
+  typedef std::array<GLfloat, 16> transform;
 
+  /// Apply an OpenGL transform matrix to the current GL stack.
+  /// @param[in] _t The transform to apply.
   void apply_transform(const transform& _t) noexcept;
+
+  /// Generate an identity transform.
+  transform identity_transform() noexcept;
 
   ///@}
 
 }
+
+/*-------------------------- Inlined Functions -------------------------------*/
+
+inline
+void
+glutils::
+apply_transform(const glutils::transform& _t) noexcept
+{
+  glMultTransposeMatrixf(_t.data());
+}
+
+
+inline
+glutils::transform
+glutils::
+identity_transform() noexcept
+{
+  return glutils::transform{1, 0, 0, 0,
+                            0, 1, 0, 0,
+                            0, 0, 1, 0,
+                            0, 0, 0, 1};
+}
+
+/*----------------------------------------------------------------------------*/
 
 #endif

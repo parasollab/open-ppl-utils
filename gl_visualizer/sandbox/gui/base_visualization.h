@@ -34,8 +34,12 @@ struct base_visualization
   virtual ~base_visualization();
 
   ///@}
-  ///@name Required Interface
+  ///@name Visualization Interface
   ///@{
+
+  /// Add a drawable to the visualization.
+  /// @param[in] _d The drawable to add.
+  virtual void add_drawable(glutils::drawable* _d);
 
   /// Update the transforms for all drawable objects. This is not done in
   /// render to give more flexibility for multi-threaded visualizations.
@@ -63,7 +67,7 @@ struct base_visualization
   /// Define any instructions to be executed at the start of the visualization.
   virtual void start() {}
 
-  /// Define how to reset the visualization to it's initial state.
+  /// Define how to reset the visualization to its initial state.
   virtual void reset() {}
 
   ///@}

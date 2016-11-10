@@ -40,26 +40,20 @@ example_visualization::
 example_visualization()
 {
   glutils::drawable* sphere = new drawable_sphere;
-  m_drawables.push_back(sphere);
+  add_drawable(sphere);
 
   sphere = new drawable_sphere;
-  glutils::transform t;
-  t.translation() = glutils::vector3f{-5, 0, 0};
+  glutils::transform t(std::move(glutils::identity_transform()));
+  t[3] = -5;
   sphere->push_transform(t);
   sphere->update_transform();
-  m_drawables.push_back(sphere);
+  add_drawable(sphere);
 
   sphere = new drawable_sphere;
-  t.translation() = glutils::vector3f{5, 0, 0};
+  t[3] = 5;
   sphere->push_transform(t);
   sphere->update_transform();
-  m_drawables.push_back(sphere);
-
-  // Base class will delete the drawables on destruction.
-  for(auto d : m_drawables) {
-    m_selector->add_drawable(d);
-    m_highlighter->add_drawable(d);
-  }
+  add_drawable(sphere);
 }
 
 /*----------------------------------------------------------------------------*/

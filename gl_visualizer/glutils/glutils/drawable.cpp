@@ -8,7 +8,7 @@ namespace glutils {
   drawable() noexcept :
       m_selection_id(generate_selection_id())
   {
-    push_transform(transform());
+    push_transform(identity_transform());
   }
 
 
@@ -16,7 +16,7 @@ namespace glutils {
   drawable(const drawable& _d) noexcept :
       m_selection_id(generate_selection_id())
   {
-    push_transform(transform());
+    push_transform(identity_transform());
   }
 
 
