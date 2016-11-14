@@ -100,7 +100,7 @@ void test_generators() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_instantiation();
   test_arithmetic();
   test_arithmetic_assignment();

@@ -58,7 +58,7 @@ void test_tokenize() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_tokenize();
   cerr << "\ttest_string passed" << endl;
 }

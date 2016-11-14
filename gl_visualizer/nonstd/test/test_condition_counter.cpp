@@ -56,7 +56,7 @@ void test_non_consecutive() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_consecutive();
   test_non_consecutive();
 

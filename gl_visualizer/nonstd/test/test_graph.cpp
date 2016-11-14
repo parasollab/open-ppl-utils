@@ -60,7 +60,7 @@ reverse_edge_iterate(graph& g, const string& expected) {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   using graph = graph_type<char, string>;
   graph g;
   const graph& G = g;

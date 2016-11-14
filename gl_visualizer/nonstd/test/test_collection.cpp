@@ -112,7 +112,7 @@ void test_indexing() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_add();
   test_get();
   test_get_all();

@@ -139,7 +139,7 @@ std_input_manager::
 tabletEvent(QTabletEvent*)
 { }
 
-/*----------------------------------------------------------------------------*/
+/*------------------------------ Mouse Actors --------------------------------*/
 
 void
 std_input_manager::
@@ -211,7 +211,7 @@ drag_left(QMouseEvent* _e, const QPoint& _delta)
 
 void
 std_input_manager::
-drag_middle(QMouseEvent* _e, const QPoint& _delta)
+drag_middle(QMouseEvent* /*_e*/, const QPoint& _delta)
 {
   m_middle.drag += _delta.manhattanLength();
 

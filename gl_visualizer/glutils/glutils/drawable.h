@@ -75,6 +75,9 @@ namespace glutils {
       /// Update to the next queued transform.
       void update_transform() noexcept;
 
+      /// Replace the current transform queue with a single identity transform.
+      void clear_transform() noexcept;
+
       ///@}
       ///@name Highlighting and Selection
       ///@{
@@ -86,7 +89,7 @@ namespace glutils {
       /// effect occurs.
 
       /// Is this object selected?
-      const bool selected() const noexcept;
+      bool selected() const noexcept;
 
       /// Enable drawing this object's 'selected' decorations.
       virtual void select() noexcept;
@@ -96,7 +99,7 @@ namespace glutils {
 
 
       /// Is this object highlighted?
-      const bool highlighted() const noexcept;
+      bool highlighted() const noexcept;
 
       /// Enable drawing this object's 'highlighted' components.
       virtual void highlight() noexcept;
@@ -135,7 +138,7 @@ namespace glutils {
 
       //////////////////////////////////////////////////////////////////////////
       /// Generate a unique selection id.
-      static const GLuint generate_selection_id() noexcept;
+      static GLuint generate_selection_id() noexcept;
 
       ///@}
 
@@ -143,7 +146,8 @@ namespace glutils {
 
   /*------------------- Inlined Highlighting and Selection -------------------*/
 
-  inline const bool
+  inline
+  bool
   drawable::
   selected() const noexcept
   {
@@ -151,7 +155,8 @@ namespace glutils {
   }
 
 
-  inline void
+  inline
+  void
   drawable::
   select() noexcept
   {
@@ -159,7 +164,8 @@ namespace glutils {
   }
 
 
-  inline void
+  inline
+  void
   drawable::
   deselect() noexcept
   {
@@ -167,7 +173,8 @@ namespace glutils {
   }
 
 
-  inline const bool
+  inline
+  bool
   drawable::
   highlighted() const noexcept
   {
@@ -175,7 +182,8 @@ namespace glutils {
   }
 
 
-  inline void
+  inline
+  void
   drawable::
   highlight() noexcept
   {
@@ -183,7 +191,8 @@ namespace glutils {
   }
 
 
-  inline void
+  inline
+  void
   drawable::
   unhighlight() noexcept
   {

@@ -8,6 +8,55 @@ namespace glutils {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangle Facet ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+  triangle_facet::
+  triangle_facet(const index _i1, const index _i2, const index _i3,
+      const point_list& _pl)
+    : m_indexes{_i1, _i2, _i3}, m_points(_pl)
+  {
+    compute_normal();
+  }
+
+
+  triangle_facet::iterator
+  triangle_facet::
+  begin() const noexcept
+  {
+    return m_indexes.begin();
+  }
+
+
+  triangle_facet::iterator
+  triangle_facet::
+  end() const noexcept
+  {
+    return m_indexes.end();
+  }
+
+
+  triangle_facet::index
+  triangle_facet::
+  operator[](const size_t _i) const noexcept
+  {
+    return m_indexes[_i];
+  }
+
+
+  const triangle_facet::point&
+  triangle_facet::
+  get_point(const size_t _i) const noexcept
+  {
+    return m_points[_i];
+  }
+
+
+  const vector3f&
+  triangle_facet::
+  get_normal() const noexcept
+  {
+    return m_normal;
+  }
+
+
   void
   triangle_facet::
   compute_normal() noexcept
@@ -19,7 +68,7 @@ namespace glutils {
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangulated Model ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /*--------------------------- Creation Interface ---------------------------*/
 
-  const size_t
+  size_t
   triangulated_model::
   add_point(const point& _p, const bool _duplicates)
   {
@@ -33,7 +82,7 @@ namespace glutils {
   }
 
 
-  const size_t
+  size_t
   triangulated_model::
   add_facet(const size_t _i1, const size_t _i2, const size_t _i3)
   {
@@ -42,22 +91,6 @@ namespace glutils {
   }
 
   /*------------------------------- Accessors --------------------------------*/
-
-  const size_t
-  triangulated_model::
-  num_points() const noexcept
-  {
-    return m_points.size();
-  }
-
-
-  const size_t
-  triangulated_model::
-  num_facets() const noexcept
-  {
-    return m_facets.size();
-  }
-
 
   const triangulated_model::point&
   triangulated_model::
@@ -72,6 +105,55 @@ namespace glutils {
   get_facet(const size_t _i) const noexcept
   {
     return m_facets[_i];
+  }
+
+
+  triangulated_model::point_iterator
+  triangulated_model::
+  points_begin() const noexcept
+  {
+    return m_points.begin();
+  }
+
+
+  triangulated_model::point_iterator
+  triangulated_model::
+  points_end() const noexcept
+  {
+    return m_points.end();
+  }
+
+
+  triangulated_model::facet_iterator
+  triangulated_model::
+  facets_begin() const noexcept
+  {
+    return m_facets.begin();
+  }
+
+
+  triangulated_model::facet_iterator
+  triangulated_model::
+  facets_end() const noexcept
+  {
+    return m_facets.end();
+  }
+
+  /*------------------------------- Queries ----------------------------------*/
+
+  size_t
+  triangulated_model::
+  num_points() const noexcept
+  {
+    return m_points.size();
+  }
+
+
+  size_t
+  triangulated_model::
+  num_facets() const noexcept
+  {
+    return m_facets.size();
   }
 
 

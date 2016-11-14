@@ -52,8 +52,8 @@ namespace nonstd {
       ///@name Equality
       ///@}
 
-      const bool operator==(const transform_type&) const noexcept;
-      const bool operator!=(const transform_type&) const noexcept;
+      bool operator==(const transform_type&) const noexcept;
+      bool operator!=(const transform_type&) const noexcept;
 
       ///@}
       ///@name Arithmetic
@@ -145,7 +145,7 @@ namespace nonstd {
 
   template <typename numeric_type>
   inline
-  const bool
+  bool
   transform_type<numeric_type>::
   operator==(const transform_type& _t) const noexcept
   {
@@ -155,7 +155,7 @@ namespace nonstd {
 
   template <typename numeric_type>
   inline
-  const bool
+  bool
   transform_type<numeric_type>::
   operator!=(const transform_type& _t) const noexcept
   {

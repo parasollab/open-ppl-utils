@@ -114,14 +114,14 @@ namespace nonstd {
       /// @param[in] _server The server IP address.
       /// @param[in] _port The port to use.
       /// @return True if the connection was successful.
-      const bool connect(const std::string& _server, const std::string& _port);
+      bool connect(const std::string& _server, const std::string& _port);
 
       /// Listen for incoming client connections on the designated port.
       /// @param[in] _port The port to listen on.
       /// @param[in] _backlog The number of backlogged connections to allow.
       /// @param[in] _concurrent Use separate thread? Blocking listen if false.
       /// @return A bool indicating success or failure.
-      const bool listen(const std::string& _port, int _backlog = 12,
+      bool listen(const std::string& _port, int _backlog = 12,
           bool _concurrent = true);
 
       /// Set the handler function to use on incoming connections.

@@ -81,7 +81,7 @@ void test_entropy() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_binomial_distribution();
   test_entropy();
 

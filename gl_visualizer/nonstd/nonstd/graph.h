@@ -105,7 +105,7 @@ namespace nonstd {
       /// Add a node to the graph.
       /// @param[in] _n The property for the new node.
       /// @return    A pointer to the new node.
-      node* const add_node(node_property&& _p);
+      node* add_node(node_property&& _p);
 
       /// Remove a node from the graph.
       /// @param[in] _v The identifier of the node to remove.
@@ -119,7 +119,7 @@ namespace nonstd {
       /// @param[in] _s A pointer to the source node.
       /// @param[in] _t A pointer to the target node.
       /// @param[in] _p The edge property.
-      edge* const add_edge(node* const _s, node* const _t,
+      edge* add_edge(node* const _s, node* const _t,
           const edge_property& _p = edge_property());
 
       /// Remove all edges between two nodes.
@@ -218,8 +218,8 @@ namespace nonstd {
           char& label() noexcept;
           const char& label() const noexcept;
 
-          edge* const get_edge_to(node* const _n) const noexcept;
-          edge* const get_edge_from(node* const _n) const noexcept;
+          edge* get_edge_to(node* const _n) const noexcept;
+          edge* get_edge_from(node* const _n) const noexcept;
 
           ///@}
           ///@name Iteration
@@ -315,12 +315,12 @@ namespace nonstd {
           /// All comparators check edge properties. Source/target vertices are
           /// not considered.
 
-          const bool operator==(const edge& _e) const noexcept;
-          const bool operator!=(const edge& _e) const noexcept;
-          const bool operator<(const edge& _e) const noexcept;
-          const bool operator<=(const edge& _e) const noexcept;
-          const bool operator>(const edge& _e) const noexcept;
-          const bool operator>=(const edge& _e) const noexcept;
+          bool operator==(const edge& _e) const noexcept;
+          bool operator!=(const edge& _e) const noexcept;
+          bool operator<(const edge& _e) const noexcept;
+          bool operator<=(const edge& _e) const noexcept;
+          bool operator>(const edge& _e) const noexcept;
+          bool operator>=(const edge& _e) const noexcept;
 
           ///@}
           ///@name Queries
@@ -329,10 +329,10 @@ namespace nonstd {
           edge_property& property() noexcept;
           const edge_property& property() const noexcept;
 
-          node* const source() const noexcept;
-          node* const target() const noexcept;
+          node* source() const noexcept;
+          node* target() const noexcept;
 
-          node* const opposite(node* const _o) const noexcept;
+          node* opposite(node* const _o) const noexcept;
 
           char& label() noexcept;
           const char& label() const noexcept;
@@ -386,8 +386,8 @@ namespace nonstd {
           edge& operator*() noexcept;
           const edge& operator*() const noexcept;
 
-          edge* const operator->() noexcept;
-          const edge* const operator->() const noexcept;
+          edge* operator->() noexcept;
+          const edge* operator->() const noexcept;
 
           edge_iterator_type& operator++();
           edge_iterator_type operator++(int);
@@ -399,8 +399,8 @@ namespace nonstd {
           ///@name Comparison
           ///@{
 
-          const bool operator==(const edge_iterator_type& _o) const noexcept;
-          const bool operator!=(const edge_iterator_type& _o) const noexcept;
+          bool operator==(const edge_iterator_type& _o) const noexcept;
+          bool operator!=(const edge_iterator_type& _o) const noexcept;
 
           ///@}
 
@@ -439,6 +439,7 @@ namespace nonstd {
   /*------------------------------ Accessors ---------------------------------*/
 
   template <typename N, typename E>
+  inline
   size_t
   graph_type<N, E>::
   num_nodes() const noexcept
@@ -448,6 +449,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   size_t
   graph_type<N, E>::
   num_edges() const noexcept
@@ -458,6 +460,7 @@ namespace nonstd {
   /*------------------------------ Iteration ---------------------------------*/
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::node_iterator
   graph_type<N, E>::
   begin() noexcept
@@ -467,6 +470,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::node_iterator
   graph_type<N, E>::
   end() noexcept
@@ -476,6 +480,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::node_iterator
   graph_type<N, E>::
   nodes_begin() noexcept
@@ -485,6 +490,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::node_iterator
   graph_type<N, E>::
   nodes_end() noexcept
@@ -494,6 +500,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_node_iterator
   graph_type<N, E>::
   begin() const noexcept
@@ -503,6 +510,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_node_iterator
   graph_type<N, E>::
   end() const noexcept
@@ -512,6 +520,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_node_iterator
   graph_type<N, E>::
   nodes_begin() const noexcept
@@ -521,6 +530,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_node_iterator
   graph_type<N, E>::
   nodes_end() const noexcept
@@ -530,6 +540,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::edge_iterator
   graph_type<N, E>::
   edges_begin() noexcept
@@ -540,6 +551,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::edge_iterator
   graph_type<N, E>::
   edges_end() noexcept
@@ -550,6 +562,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_edge_iterator
   graph_type<N, E>::
   edges_begin() const noexcept
@@ -560,6 +573,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_edge_iterator
   graph_type<N, E>::
   edges_end() const noexcept
@@ -571,7 +585,8 @@ namespace nonstd {
   /*-------------------------- Node Modifiers --------------------------------*/
 
   template <typename N, typename E>
-  typename graph_type<N, E>::node* const
+  inline
+  typename graph_type<N, E>::node*
   graph_type<N, E>::
   add_node(node_property&& _p)
   {
@@ -582,6 +597,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   void
   graph_type<N, E>::
   delete_node(node* const _n)
@@ -592,7 +608,8 @@ namespace nonstd {
   /*------------------------- Edge Modifiers ---------------------------------*/
 
   template <typename N, typename E>
-  typename graph_type<N, E>::edge* const
+  inline
+  typename graph_type<N, E>::edge*
   graph_type<N, E>::
   add_edge(node* const _s, node* const _t, const edge_property& _p)
   {
@@ -617,6 +634,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   void
   graph_type<N, E>::
   delete_edge(edge* const _e)
@@ -725,6 +743,7 @@ namespace nonstd {
   /*------------------------------- Queries ----------------------------------*/
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::node_property&
   graph_type<N, E>::node::
   property() noexcept
@@ -734,6 +753,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   const typename graph_type<N, E>::node_property&
   graph_type<N, E>::node::
   property() const noexcept
@@ -743,6 +763,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   size_t
   graph_type<N, E>::node::
   in_degree() const noexcept
@@ -752,6 +773,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   size_t
   graph_type<N, E>::node::
   out_degree() const noexcept
@@ -761,6 +783,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   size_t
   graph_type<N, E>::node::
   degree() const noexcept
@@ -770,6 +793,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   char&
   graph_type<N, E>::node::
   label() noexcept
@@ -779,6 +803,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   const char&
   graph_type<N, E>::node::
   label() const noexcept
@@ -788,7 +813,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  typename graph_type<N, E>::edge* const
+  inline
+  typename graph_type<N, E>::edge*
   graph_type<N, E>::node::
   get_edge_to(node* const _n) const noexcept
   {
@@ -799,7 +825,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  typename graph_type<N, E>::edge* const
+  inline
+  typename graph_type<N, E>::edge*
   graph_type<N, E>::node::
   get_edge_from(node* const _n) const noexcept
   {
@@ -811,6 +838,7 @@ namespace nonstd {
   /*----------------------------- Iteration ----------------------------------*/
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::adj_iterator
   graph_type<N, E>::node::
   begin() noexcept
@@ -820,6 +848,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::adj_iterator
   graph_type<N, E>::node::
   end() noexcept
@@ -829,6 +858,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_adj_iterator
   graph_type<N, E>::node::
   begin() const noexcept
@@ -838,6 +868,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_adj_iterator
   graph_type<N, E>::node::
   end() const noexcept
@@ -847,6 +878,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::adj_iterator
   graph_type<N, E>::node::
   in_edges_begin() noexcept
@@ -856,6 +888,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::adj_iterator
   graph_type<N, E>::node::
   in_edges_end() noexcept
@@ -865,6 +898,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_adj_iterator
   graph_type<N, E>::node::
   in_edges_begin() const noexcept
@@ -874,6 +908,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::const_adj_iterator
   graph_type<N, E>::node::
   in_edges_end() const noexcept
@@ -884,6 +919,7 @@ namespace nonstd {
   /*------------------------- Edge Modifiers ---------------------------------*/
 
   template <typename N, typename E>
+  inline
   void
   graph_type<N, E>::node::
   remove_edges_with(const node* const _n) noexcept
@@ -900,8 +936,10 @@ namespace nonstd {
   {
     adj_list to_del;
     for(const auto& e : m_edges_in)
-      if(e->source() == _n) to_del.push_back(e);
-    for(auto& e : to_del) delete e;
+      if(e->source() == _n)
+        to_del.push_back(e);
+    for(auto& e : to_del)
+      delete e;
   }
 
 
@@ -912,8 +950,10 @@ namespace nonstd {
   {
     adj_list to_del;
     for(const auto& e : m_edges_out)
-      if(e->target() == _n) to_del.push_back(e);
-    for(auto& e : to_del) delete e;
+      if(e->target() == _n)
+        to_del.push_back(e);
+    for(auto& e : to_del)
+      delete e;
   }
 
 
@@ -922,8 +962,10 @@ namespace nonstd {
   graph_type<N, E>::node::
   clear_edges() noexcept
   {
-    while(!m_edges_in.empty()) delete m_edges_in.front();
-    while(!m_edges_out.empty()) delete m_edges_out.front();
+    while(!m_edges_in.empty())
+      delete m_edges_in.front();
+    while(!m_edges_out.empty())
+      delete m_edges_out.front();
   }
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Edge ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -952,7 +994,8 @@ namespace nonstd {
   /*-------------------------- Comparators -----------------------------------*/
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator==(const edge& _e) const noexcept
   {
@@ -961,7 +1004,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator!=(const edge& _e) const noexcept
   {
@@ -970,7 +1014,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator<(const edge& _e) const noexcept
   {
@@ -979,7 +1024,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator<=(const edge& _e) const noexcept
   {
@@ -988,7 +1034,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator>(const edge& _e) const noexcept
   {
@@ -997,7 +1044,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge::
   operator>=(const edge& _e) const noexcept
   {
@@ -1007,6 +1055,7 @@ namespace nonstd {
   /*---------------------------- Queries -------------------------------------*/
 
   template <typename N, typename E>
+  inline
   typename graph_type<N, E>::edge_property&
   graph_type<N, E>::edge::
   property() noexcept
@@ -1016,6 +1065,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   const typename graph_type<N, E>::edge_property&
   graph_type<N, E>::edge::
   property() const noexcept
@@ -1025,7 +1075,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  typename graph_type<N, E>::node* const
+  inline
+  typename graph_type<N, E>::node*
   graph_type<N, E>::edge::
   source() const noexcept
   {
@@ -1034,7 +1085,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  typename graph_type<N, E>::node* const
+  inline
+  typename graph_type<N, E>::node*
   graph_type<N, E>::edge::
   target() const noexcept
   {
@@ -1043,7 +1095,8 @@ namespace nonstd {
 
 
   template <typename N, typename E>
-  typename graph_type<N, E>::node* const
+  inline
+  typename graph_type<N, E>::node*
   graph_type<N, E>::edge::
   opposite(node* const _o) const noexcept
   {
@@ -1052,6 +1105,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   char&
   graph_type<N, E>::edge::
   label() noexcept
@@ -1061,6 +1115,7 @@ namespace nonstd {
 
 
   template <typename N, typename E>
+  inline
   const char&
   graph_type<N, E>::edge::
   label() const noexcept
@@ -1074,26 +1129,29 @@ namespace nonstd {
   template <typename N, typename E>
   template <typename NI, typename EI>
   graph_type<N, E>::edge_iterator_type<NI, EI>::
-  edge_iterator_type(node_iter _n) :
-      m_node(_n), m_edge(_n->begin())
+  edge_iterator_type(node_iter _n)
+    : m_node(_n), m_edge(_n->begin())
   {
-    if(_n->m_sentinel == 'n') validate_forward();
+    if(_n->m_sentinel == 'n')
+      validate_forward();
   }
 
 
   template <typename N, typename E>
   template <typename NI, typename EI>
   graph_type<N, E>::edge_iterator_type<NI, EI>::
-  edge_iterator_type(node_iter _n, adj_iter _e) :
-      m_node(_n), m_edge(_e)
+  edge_iterator_type(node_iter _n, adj_iter _e)
+    : m_node(_n), m_edge(_e)
   {
-    if(_n->m_sentinel == 'n') validate_forward();
+    if(_n->m_sentinel == 'n')
+      validate_forward();
   }
 
   /*------------------------- Conversion to Const ----------------------------*/
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator const_edge_iterator() const noexcept
   {
@@ -1104,6 +1162,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   typename graph_type<N, E>::edge&
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator*() noexcept
@@ -1114,6 +1173,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   const typename graph_type<N, E>::edge&
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator*() const noexcept
@@ -1124,7 +1184,8 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
-  typename graph_type<N, E>::edge* const
+  inline
+  typename graph_type<N, E>::edge*
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator->() noexcept
   {
@@ -1134,7 +1195,8 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
-  const typename graph_type<N, E>::edge* const
+  inline
+  const typename graph_type<N, E>::edge*
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator->() const noexcept
   {
@@ -1144,6 +1206,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   graph_type<N, E>::edge_iterator_type<NI, EI>&
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator++()
@@ -1158,6 +1221,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   graph_type<N, E>::edge_iterator_type<NI, EI>
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator++(int)
@@ -1170,6 +1234,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   graph_type<N, E>::edge_iterator_type<NI, EI>&
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator--()
@@ -1184,6 +1249,7 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
+  inline
   graph_type<N, E>::edge_iterator_type<NI, EI>
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator--(int)
@@ -1197,7 +1263,8 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator==(const edge_iterator_type& _o) const noexcept
   {
@@ -1207,7 +1274,8 @@ namespace nonstd {
 
   template <typename N, typename E>
   template <typename NI, typename EI>
-  const bool
+  inline
+  bool
   graph_type<N, E>::edge_iterator_type<NI, EI>::
   operator!=(const edge_iterator_type& _o) const noexcept
   {

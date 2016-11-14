@@ -1,6 +1,7 @@
 #ifndef NONSTD_IO_H_
 #define NONSTD_IO_H_
 
+#include <array>
 #include <iostream>
 #include <list>
 #include <map>
@@ -23,17 +24,21 @@ namespace nonstd {
   std::vector<std::string> read_file(const std::string& _filename);
 
 
-  /// Print the contents of a container to a std::string.
+  /// Print the contents of a container to a std::string. The container must
+  /// bi-directional iterators.
   /// @param _c The container to print.
   /// @return A string representation of _c's contents.
-  template <template <typename...> class ContainerType, typename... Args>
+  template <typename ContainerType>
   std::string
-  print_container(const ContainerType<Args...>& _c)
+  print_container(const ContainerType& _c)
   {
     std::ostringstream os;
     os << "{";
-    for(auto i = _c.begin(); i != _c.end(); ++i)
-      os << *i << (i == --_c.end() ? "}" : ", ");
+    auto last = _c.end();
+    --last;
+    for(auto i = _c.begin(); i != last; ++i)
+      os << *i << ", ";
+    os << *last << "}";
     return os.str();
   }
 
@@ -100,6 +105,14 @@ namespace std {
   operator<<(ostream& _os, const vector<T...>& _v)
   {
     return _os << nonstd::print_container(_v);
+  }
+
+
+  template <typename T, size_t N>
+  ostream&
+  operator<<(ostream& _os, const array<T, N>& _a)
+  {
+    return _os << nonstd::print_container(_a);
   }
 
 }

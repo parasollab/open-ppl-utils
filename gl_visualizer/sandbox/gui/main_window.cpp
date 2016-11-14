@@ -50,6 +50,23 @@ gl() const
   return m_gl_widget;
 }
 
+/*--------------------------- Visualization Interface ------------------------*/
+
+void
+main_window::
+visualization(base_visualization* const _v)
+{
+  m_gl_widget->visualization(_v);
+}
+
+
+base_visualization*
+main_window::
+visualization()
+{
+  return m_gl_widget->visualization();
+}
+
 /*---------------------------- Window Controls -------------------------------*/
 
 void

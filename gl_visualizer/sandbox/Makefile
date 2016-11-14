@@ -21,8 +21,8 @@ GLUTILS_LIBS := -L$(GLUTILS_DIR) -lglutils
 # Compiler configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 CXX   := g++
-FLAGS := -std=c++11 -g3 -O2
-WARN  := -Wall -Werror
+FLAGS := -std=c++11 -fPIC -g3 -O3
+WARN  := -Wall -Werror -Wextra
 
 INCL := -I. $(QT_INCL) $(NONSTD_INCL) $(GLUTILS_INCL)
 
@@ -30,7 +30,7 @@ INCL := -I. $(QT_INCL) $(NONSTD_INCL) $(GLUTILS_INCL)
 
 LIBS := $(QT_LIBS) $(GLUTILS_LIBS) $(GL_LIBS) $(NONSTD_LIBS)
 
-# Qt4 MOC configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Qt MOC configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 MOC := moc
 
@@ -106,8 +106,8 @@ EXECUTABLE := sandbox
 
 # Use the static library to build the executable.
 $(EXECUTABLE): $(OBJ_DIR)/main.o $(STATIC)
-	@cd $(NONSTD_DIR) ; make
-	@cd $(GLUTILS_DIR) ; make
+	@+cd $(NONSTD_DIR) ; make
+	@+cd $(GLUTILS_DIR) ; make
 	@echo Linking $@...
 	@$(CXX) $< -L. -l$(NAME) $(LIBS) -o $@
 

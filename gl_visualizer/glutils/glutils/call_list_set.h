@@ -51,7 +51,7 @@ namespace glutils {
 
       //////////////////////////////////////////////////////////////////////////
       /// Are the call lists initialized?
-      const bool ready() const noexcept;
+      bool ready() const noexcept;
 
       //////////////////////////////////////////////////////////////////////////
       /// Generate the call lists.
@@ -63,14 +63,14 @@ namespace glutils {
 
       //////////////////////////////////////////////////////////////////////////
       /// Get the number of stored call lists.
-      const size_t size() const noexcept;
+      size_t size() const noexcept;
 
       //////////////////////////////////////////////////////////////////////////
       /// Access a stored call list.
       ///
       /// @warning It is assumed that clients will NOT request a non-existant
-      ///          index in order to benefit from noexcept..
-      const GLuint operator[](const size_t _i) const noexcept;
+      ///          index in order to benefit from noexcept.
+      GLuint operator[](const size_t _i) const noexcept;
 
       ///@}
 
@@ -78,7 +78,8 @@ namespace glutils {
 
   /*---------------------------- Inlined Accessors ---------------------------*/
 
-  inline const bool
+  inline
+  bool
   call_list_set::
   ready() const noexcept
   {
@@ -86,7 +87,8 @@ namespace glutils {
   }
 
 
-  inline const size_t
+  inline
+  size_t
   call_list_set::
   size() const noexcept
   {
@@ -94,7 +96,8 @@ namespace glutils {
   }
 
 
-  inline const GLuint
+  inline
+  GLuint
   call_list_set::
   operator[](const size_t _i) const noexcept
   {

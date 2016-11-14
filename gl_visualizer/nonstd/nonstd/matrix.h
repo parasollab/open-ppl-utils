@@ -76,10 +76,10 @@ namespace nonstd {
       ///@name Accessors
       ///@{
 
-      constexpr const size_t size() const noexcept;
+      constexpr size_t size() const noexcept;
 
-      constexpr const size_t rows() const noexcept;
-      constexpr const size_t cols() const noexcept;
+      constexpr size_t rows() const noexcept;
+      constexpr size_t cols() const noexcept;
 
       T& operator()(const size_t, const size_t) noexcept;
       const T& operator()(const size_t, const size_t) const noexcept;
@@ -166,10 +166,10 @@ namespace nonstd {
       ///@{
 
       /// Element-wise equality.
-      const bool operator==(const matrix_type& _other) const noexcept;
+      bool operator==(const matrix_type& _other) const noexcept;
 
       /// Element-wise inequality.
-      const bool operator!=(const matrix_type& _other) const noexcept;
+      bool operator!=(const matrix_type& _other) const noexcept;
 
       ///@}
       ///@name Display
@@ -273,7 +273,7 @@ namespace nonstd {
 
   template <typename T, size_t Rows, size_t Cols>
   inline constexpr
-  const size_t
+  size_t
   matrix_type<T, Rows, Cols>::
   size() const noexcept
   {
@@ -283,7 +283,7 @@ namespace nonstd {
 
   template <typename T, size_t Rows, size_t Cols>
   inline constexpr
-  const size_t
+  size_t
   matrix_type<T, Rows, Cols>::
   rows() const noexcept
   {
@@ -293,7 +293,7 @@ namespace nonstd {
 
   template <typename T, size_t Rows, size_t Cols>
   inline constexpr
-  const size_t
+  size_t
   matrix_type<T, Rows, Cols>::
   cols() const noexcept
   {
@@ -558,7 +558,7 @@ namespace nonstd {
   /*------------------------------- Equality ---------------------------------*/
 
   template <typename T, size_t Rows, size_t Cols>
-  const bool
+  bool
   matrix_type<T, Rows, Cols>::
   operator==(const matrix_type& _other) const noexcept
   {
@@ -570,7 +570,7 @@ namespace nonstd {
 
 
   template <typename T, size_t Rows, size_t Cols>
-  const bool
+  bool
   matrix_type<T, Rows, Cols>::
   operator!=(const matrix_type& _other) const noexcept
   {

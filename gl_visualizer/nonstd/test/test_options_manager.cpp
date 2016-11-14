@@ -22,7 +22,7 @@ class example_manager : public options_manager {
 };
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
 
   char* args[6] = {(char*)"./executable-name",
                    (char*)"-e", (char*)"asdf",

@@ -13,7 +13,7 @@ using namespace nonstd;
 static const string er = "\ttest_timing error: ";
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   timer t;
 
   assert_msg(approx(t.elapsed(), 0.), er + "expected initial duration ~= 0, but "

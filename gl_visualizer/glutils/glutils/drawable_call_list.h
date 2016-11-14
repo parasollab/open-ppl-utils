@@ -39,7 +39,8 @@ namespace glutils {
       drawable_call_list();
 
       /// Create a drawable from an existing call list.
-      /// @param _cl A shared pointer to the call
+      /// @param[in] _cl A shared pointer to an existing call list set, which
+      ///                will be used in place of generating a new call list.
       drawable_call_list(call_list_ptr _cl) noexcept;
 
       virtual ~drawable_call_list() = default;

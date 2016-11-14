@@ -2,7 +2,6 @@
 #include <QApplication>
 
 #include "gui/base_visualization.h"
-#include "gui/gl_widget.h"
 #include "gui/main_window.h"
 
 #include "example_visualization.h"
@@ -13,7 +12,7 @@ int main(int _argc, char* _argv[]) {
   main_window window;
 
   example_visualization sim;
-  window.gl()->visualization(&sim);
+  window.visualization(&sim);
 
   // Show window and execute app.
   window.show();

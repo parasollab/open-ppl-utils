@@ -48,7 +48,7 @@ namespace glutils {
   drawable_call_list::
   initialize()
   {
-    m_initialized = true;
+    drawable::initialize();
 
     // If the lists are already compiled, there is nothing to do.
     if(m_lists->ready())

@@ -57,7 +57,7 @@ namespace nonstd {
   }
 
 
-  const bool
+  bool
   tcp_socket::
   connect(const string& _server, const string& _port)
   {
@@ -118,7 +118,7 @@ namespace nonstd {
   }
 
 
-  const bool
+  bool
   tcp_socket::
   listen(const string& _port, int _backlog, bool _concurrent)
   {

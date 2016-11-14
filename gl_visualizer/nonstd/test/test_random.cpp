@@ -34,7 +34,7 @@ void test_grand() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_drand();
 
   cerr << "\ttest_random passed" << endl;

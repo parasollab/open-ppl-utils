@@ -62,7 +62,8 @@ render_select(const size_t _x, const size_t _y, const size_t _w, const size_t _h
 
 void
 base_visualization::
-render_hover(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
+render_hover(const size_t, const size_t, const size_t, const size_t)
+//render_hover(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
 {
   /// @TODO Hover rendering is presently disabled because the performance sucks.
   ///       Need to find a better way to achieve this.

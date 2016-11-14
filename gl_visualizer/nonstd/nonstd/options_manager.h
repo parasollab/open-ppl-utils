@@ -36,7 +36,7 @@ namespace nonstd {
       /// Check if a given flag was provided.
       /// @param[in] _flag The flag to check.
       /// @return True if the flag was specified on the command line.
-      const bool has_flag(const std::string& _flag) const;
+      bool has_flag(const std::string& _flag) const;
 
       /// Get the parsed flags.
       /// @return A listing of all flags that were specified on the command line.
@@ -87,7 +87,7 @@ namespace nonstd {
       /// Test whether a given token is a posix-style flag.
       /// @param[in] _s The token to check.
       /// @return True if _s is a posix-style flag.
-      const bool is_flag(const std::string& _s) const;
+      bool is_flag(const std::string& _s) const;
 
       /// Parse the tokenized options into flag/argument pairs.
       /// @param[in] _opts The tokenized argument list.

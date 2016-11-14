@@ -157,10 +157,10 @@ namespace nonstd {
       ///@{
 
       /// Element-wise equality with 10-epsilon tolerance.
-      const bool operator==(const vector_type& _v) const noexcept;
+      bool operator==(const vector_type& _v) const noexcept;
 
       /// Element-wise inequality with 10-epsilon tolerance.
-      const bool operator!=(const vector_type& _v) const noexcept;
+      bool operator!=(const vector_type& _v) const noexcept;
 
       ///@}
       ///@name Magnitude Functions
@@ -525,7 +525,7 @@ namespace nonstd {
   /*-------------------------------- Equality --------------------------------*/
 
   template <typename T, size_t N>
-  const bool
+  bool
   vector_type<T, N>::
   operator==(const vector_type& _v) const noexcept
   {
@@ -537,7 +537,7 @@ namespace nonstd {
 
 
   template <typename T, size_t N>
-  const bool
+  bool
   vector_type<T, N>::
   operator!=(const vector_type& _v) const noexcept
   {

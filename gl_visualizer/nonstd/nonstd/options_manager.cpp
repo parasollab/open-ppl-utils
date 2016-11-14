@@ -35,7 +35,7 @@ namespace nonstd {
 
   /*-------------------------- Public Interface ------------------------------*/
 
-  const bool
+  bool
   options_manager::
   has_flag(const std::string& _flag) const
   {
@@ -97,7 +97,7 @@ namespace nonstd {
 
   /*------------------------- Parsing Functions ------------------------------*/
 
-  const bool
+  bool
   options_manager::
   is_flag(const string& _s) const
   {

@@ -139,7 +139,7 @@ void test_stddev() {
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_sign();
   test_approx();
   test_in_bounds();

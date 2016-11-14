@@ -34,18 +34,20 @@ void test_std_ostream() {
 
   out << pair<int, char>(0, 'a') << endl
       << list<float>{0., 1.1, 2.2} << endl
-      << vector<int>{0, 1, 2, 3, 4} << endl;
+      << vector<int>{0, 1, 2, 3, 4} << endl
+      << array<short, 4>{0, 1, 2, 3} << endl;
 
   string expected = "(0, a)\n"
                     "{0, 1.1, 2.2}\n"
-                    "{0, 1, 2, 3, 4}\n";
+                    "{0, 1, 2, 3, 4}\n"
+                    "{0, 1, 2, 3}\n";
 
   assert_msg(out.str() == expected, er + "when testing std operator<< helpers, "
       "expected:\n" + expected + "...but got:\n" + out.str());
 }
 
 
-int main(int _argc, char* _argv[]) {
+int main() {
   test_read_file();
   test_std_ostream();
 

@@ -10,8 +10,8 @@ GL_LIBS     := -lGLU -lGL
 # Compiler configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 CXX   := g++
-FLAGS := -std=c++11 -fPIC -g3 -O2
-WARN  := -Wall -Werror -Wno-parentheses
+FLAGS := -std=c++11 -fPIC -g3 -O3
+WARN  := -Wall -Werror -Wextra -Wno-parentheses
 
 INCL  := -I. $(NONSTD_INCL) $(GL_INCL)
 

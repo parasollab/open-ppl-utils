@@ -5,16 +5,17 @@ namespace glutils {
   /*------------------------------ Construction ------------------------------*/
 
   drawable::
-  drawable() noexcept :
-      m_selection_id(generate_selection_id())
+  drawable() noexcept
+    : m_selection_id(generate_selection_id())
   {
     push_transform(identity_transform());
   }
 
 
   drawable::
-  drawable(const drawable& _d) noexcept :
-      m_selection_id(generate_selection_id())
+  drawable(const drawable& _d) noexcept
+    : m_selection_id(generate_selection_id()),
+      m_transforms(_d.m_transforms)
   {
     push_transform(identity_transform());
   }
@@ -87,6 +88,15 @@ namespace glutils {
       m_transforms.pop();
   }
 
+
+  void
+  drawable::
+  clear_transform() noexcept
+  {
+    m_transforms = std::queue<transform, std::list<transform>>();
+    m_transforms.push(identity_transform());
+  }
+
   /*-------------------------- Drawing Instructions --------------------------*/
 
   void
@@ -102,7 +112,7 @@ namespace glutils {
   drawable::m_selection_id_gate;
 
 
-  const GLuint
+  GLuint
   drawable::
   generate_selection_id() noexcept
   {

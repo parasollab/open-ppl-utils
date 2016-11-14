@@ -5,6 +5,7 @@
 
 #include <vector>
 
+class base_visualization;
 class gl_widget;
 class tool_bar;
 
@@ -42,6 +43,18 @@ class main_window
     ///@{
 
     gl_widget* gl() const;
+
+    ///@}
+    ///@name Visualization Interface
+    ///@{
+
+    /// Set the visualization.
+    /// @param[in] _v The visualization to use.
+    void visualization(base_visualization* const _v);
+
+    /// Get the visualization.
+    /// @return The current visualization.
+    base_visualization* visualization();
 
     ///@}
 

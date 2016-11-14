@@ -9,7 +9,7 @@ using namespace nonstd;
 
 static const string er = "\ttest_factory error: ";
 
-int main(int _argc, char* _argv[]) {
+int main() {
   // Create factories for integer and tuple
   factory<int> fac_i;
   factory<tuple<int, char, double>> fac_t;

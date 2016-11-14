@@ -12,9 +12,14 @@ namespace glutils {
   ///@name Constants
   ///@{
   /// Precision chosen based on numeric_limits<GLfloat>::digits10.
+  /// The constants PI and TWOPI can be overridden by a defining macro for them.
 
+#ifndef PI
   static constexpr GLfloat PI    = 3.14159;
+#endif
+#ifndef TWOPI
   static constexpr GLfloat TWOPI = 6.28319;
+#endif
   static constexpr GLfloat RadPerDeg = PI / 180;
   static constexpr GLfloat DegPerRad = 180 / PI;
 
