@@ -12,7 +12,7 @@ namespace glutils {
   //////////////////////////////////////////////////////////////////////////////
   /// A triangular, right-handed facet for a polygonal model.
   //////////////////////////////////////////////////////////////////////////////
-  class triangle_facet
+  class triangle_facet final
   {
 
     ///@name Local Types
@@ -72,6 +72,22 @@ namespace glutils {
       void compute_normal() noexcept;
 
       ///@}
+      ///@name Equality
+      ///@{
+      /// Determine whether two facets represent the same set of points in the
+      /// same order.
+
+      bool operator==(const triangle_facet& _t) const noexcept;
+      bool operator!=(const triangle_facet& _t) const noexcept;
+
+      ///@}
+      ///@name Ordering
+      ///@{
+
+      /// Defines a weak ordering to allow sorting.
+      bool operator<(const triangle_facet& _t) const noexcept;
+
+      ///@}
 
       friend class triangulated_model;
 
@@ -80,7 +96,7 @@ namespace glutils {
   //////////////////////////////////////////////////////////////////////////////
   /// A geometric model, represented by vertices and triangular faces.
   //////////////////////////////////////////////////////////////////////////////
-  class triangulated_model
+  class triangulated_model final
   {
 
     ///@name Local Types
@@ -158,6 +174,26 @@ namespace glutils {
 
       /// Remove duplicate vertices from the model.
       void clean() noexcept;
+
+      ///@}
+      ///@name Equality
+      ///@{
+      /// Determine whether two models contain the same facets and vertices.
+
+      bool operator==(const triangulated_model& _t) const noexcept;
+      bool operator!=(const triangulated_model& _t) const noexcept;
+
+      ///@}
+      ///@name Common Shapes
+      ///@{
+
+      /// Create a box model.
+      /// @param[in] _lenX The box length in the x direction.
+      /// @param[in] _lenY The box length in the y direction.
+      /// @param[in] _lenZ The box length in the z direction.
+      /// @return A triangulated box model of size _lenX x _lenY x _lenZ.
+      static triangulated_model make_box(GLfloat _lenX = 1, GLfloat _lenY = 1,
+          GLfloat _lenZ = 1);
 
       ///@}
 

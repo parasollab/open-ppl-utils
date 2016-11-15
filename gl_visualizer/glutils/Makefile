@@ -23,19 +23,22 @@ LIBS := $(NONSTD_LIBS) $(GL_LIBS)
 
 # Directory layout ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-OBJ_DIR := build
-SRC_DIR := glutils
-DOC_DIR := docs
+OBJ_DIR  := build
+SRC_DIR  := glutils
+TEST_DIR := test
+DOC_DIR  := docs
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
-vpath %.h   $(SRC_DIR)
-vpath %.cpp $(SRC_DIR)
+vpath %.h        $(SRC_DIR)
+vpath %.cpp      $(SRC_DIR)
+vpath test_%.cpp $(TEST_DIR)
 
 # Source file configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+SRCS      := $(shell find $(SRC_DIR) -name '*.cpp')
+TEST_SRCS := $(shell find $(TEST_DIR) -name 'test_*.cpp')
 
 # Object file configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -65,8 +68,20 @@ $(STATIC): $(OBJS)
 	@echo Linking static library...
 	@ar rcs $@ $^
 
-.PHONY: all
-all: $(SHARED) $(STATIC)
+# Test configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+TEST_OBJS := $(subst .cpp,.o, $(TEST_SRCS))
+
+$(TEST_DIR)/%.o: %.cpp $(.DEFAULT_GOAL)
+	@echo Building $(shell echo $< | sed s/.cpp// | sed 's|.*/||' )...
+	@$(COMPILE) $< -L. -l$(NAME) $(LIBS) -o $@
+
+# Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: tests
+tests: $(TEST_OBJS)
+	@echo Testing...
+	@for testobj in $(TEST_OBJS); do $$testobj; done
 
 # Docs ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -80,8 +95,12 @@ docs: $(SRCS) $(HEADERS)
 # Clean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 .PHONY: clean
-clean: cleandocs
+clean: cleandocs cleantests
 	@rm -rf $(SHARED) $(STATIC) $(OBJ_DIR)
+
+.PHONY: cleantests
+cleantests:
+	@rm -f $(TEST_OBJS)
 
 .PHONY: cleandocs
 cleandocs:

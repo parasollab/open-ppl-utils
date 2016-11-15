@@ -163,6 +163,13 @@ namespace nonstd {
       bool operator!=(const vector_type& _v) const noexcept;
 
       ///@}
+      ///@name Ordering
+      ///@{
+
+      /// Defines a weak ordering to allow sorting.
+      bool operator<(const vector_type& _v) const noexcept;
+
+      ///@}
       ///@name Magnitude Functions
       ///@{
 
@@ -542,6 +549,22 @@ namespace nonstd {
   operator!=(const vector_type& _v) const noexcept
   {
     return !(*this == _v);
+  }
+
+  /*-------------------------------- Ordering --------------------------------*/
+
+  template <typename T, size_t N>
+  bool
+  vector_type<T, N>::
+  operator<(const vector_type& _v) const noexcept
+  {
+    for(size_t i = 0; i < N; ++i) {
+      if(m_elements[i] < _v[i])
+        return true;
+      else if(_v[i] < m_elements[i])
+        return false;
+    }
+    return false;
   }
 
   /*--------------------------- Magnitude Functions --------------------------*/

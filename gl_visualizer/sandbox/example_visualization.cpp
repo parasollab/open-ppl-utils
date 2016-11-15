@@ -3,6 +3,7 @@
 #include "glutils/color.h"
 #include "glutils/draw.h"
 #include "glutils/drawable_call_list.h"
+#include "nonstd/io.h"
 
 
 /// Example of a drawable object.
@@ -39,21 +40,75 @@ class drawable_sphere :
 example_visualization::
 example_visualization()
 {
-  glutils::drawable* sphere = new drawable_sphere;
-  add_drawable(sphere);
+  add_drawable(new drawable_sphere);
+  add_drawable(new drawable_sphere);
+  add_drawable(new drawable_sphere);
 
-  sphere = new drawable_sphere;
-  glutils::transform t(std::move(glutils::identity_transform()));
-  t[3] = -5;
-  sphere->push_transform(t);
-  sphere->update_transform();
-  add_drawable(sphere);
+  reset();
+}
 
-  sphere = new drawable_sphere;
-  t[3] = 5;
-  sphere->push_transform(t);
-  sphere->update_transform();
-  add_drawable(sphere);
+/*-------------------------- Visualization Interface -------------------------*/
+
+void
+example_visualization::
+render()
+{
+  this->update();
+  base_visualization::render();
+}
+
+
+void
+example_visualization::
+start()
+{
+  std::cout << "calling start" << std::endl;
+
+  // Compute some movement for each sphere.
+  for(size_t i = 0; i < 3; ++i) {
+    // Start from the base transform.
+    auto t = glutils::identity_transform();
+    switch(i) {
+      case 1:
+        t[3] = -5;
+        break;
+      case 2:
+        t[3] = 5;
+      default:;
+    }
+
+    auto d = this->m_drawables[i];
+
+    // Push 6 seconds worth of sinusoidal movement onto the transform stack.
+    // At 30fps this is 180 frames.
+    for(size_t j = 0; j < 180; ++j) {
+      t[7] = 5 * std::sin((i * 10 + j) * glutils::TWOPI / 60);
+      d->push_transform(t);
+    }
+  }
+}
+
+
+void
+example_visualization::
+reset()
+{
+  for(size_t i = 0; i < 3; ++i) {
+    auto t = glutils::identity_transform();
+    switch(i) {
+      case 1:
+        t[3] = -5;
+        break;
+      case 2:
+        t[3] = 5;
+      default:;
+    }
+
+    auto d = this->m_drawables[i];
+    d->clear_transform();
+    d->push_transform(t);
+    d->update_transform();
+  }
 }
 
 /*----------------------------------------------------------------------------*/

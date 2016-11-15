@@ -16,6 +16,14 @@ class example_visualization : public base_visualization
     virtual ~example_visualization() = default;
 
     ///@}
+    ///@name Visualization Interface
+    ///@{
+
+    virtual void render() override;
+    virtual void start() override;
+    virtual void reset() override;
+
+    ///@}
 
 };
 

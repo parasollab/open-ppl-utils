@@ -1,4 +1,5 @@
 #include "glutils/obj_file.h"
+#include "glutils/triangulated_model.h"
 
 #include <exception>
 #include <fstream>

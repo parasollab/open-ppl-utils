@@ -85,8 +85,8 @@ void
 gl_widget::
 start()
 {
-  m_clock->start();
   m_visualization->start();
+  m_clock->start();
 }
 
 

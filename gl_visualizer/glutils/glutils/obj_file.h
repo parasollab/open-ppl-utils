@@ -4,9 +4,10 @@
 #include <sstream>
 #include <string>
 
-#include "glutils/triangulated_model.h"
 
 namespace glutils {
+
+  class triangulated_model;
 
   //////////////////////////////////////////////////////////////////////////////
   /// An IO interface between triangulated models and .OBJ files.

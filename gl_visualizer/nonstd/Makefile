@@ -36,22 +36,20 @@ $(OBJ_DIR)/%.o: %.cpp %.h | $(OBJ_DIR)
 
 # Libraries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-SHARED := libnonstd.so
-STATIC := libnonstd.a
+NAME   := nonstd
+SHARED := lib$(NAME).so
+STATIC := lib$(NAME).a
 
 .DEFAULT_GOAL := $(STATIC)
 
 .PHONY: shared
-.PHONY: static
-.PHONY: all
 shared: $(SHARED)
-static: $(STATIC)
-all: $(SHARED) $(STATIC)
-
 $(SHARED): $(OBJS)
 	@echo Linking shared library...
 	@$(CXX) -shared $^ -o $@
 
+.PHONY: static
+static: $(STATIC)
 $(STATIC): $(OBJS)
 	@echo Linking static library...
 	@ar rcs $@ $^
@@ -62,7 +60,7 @@ TEST_OBJS := $(subst .cpp,.o, $(TEST_SRCS))
 
 $(TEST_DIR)/%.o: %.cpp $(.DEFAULT_GOAL)
 	@echo Building $(shell echo $< | sed s/.cpp// | sed 's|.*/||' )...
-	@$(COMPILE) $< -L. -lnonstd -o $@
+	@$(COMPILE) $< -L. -l$(NAME) -o $@
 
 # Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -83,14 +81,14 @@ docs: $(SRCS) $(HEADERS)
 # Clean ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 .PHONY: clean
-.PHONY: cleantests
-.PHONY: cleandocs
 clean: cleandocs cleantests
 	@rm -rf $(SHARED) $(STATIC) $(OBJ_DIR)
 
+.PHONY: cleantests
 cleantests:
 	@rm -f $(TEST_OBJS)
 
+.PHONY: cleandocs
 cleandocs:
 	@rm -rf $(DOC_DIR)/html
 

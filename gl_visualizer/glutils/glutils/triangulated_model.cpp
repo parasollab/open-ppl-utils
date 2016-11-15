@@ -7,15 +7,21 @@
 namespace glutils {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangle Facet ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /*----------------------------- Construction -------------------------------*/
 
   triangle_facet::
   triangle_facet(const index _i1, const index _i2, const index _i3,
       const point_list& _pl)
     : m_indexes{_i1, _i2, _i3}, m_points(_pl)
   {
+    // Rotate the vertex list so that the lowest index is always first. This
+    // helps check for equality efficiently.
+    auto iter = std::min_element(m_indexes.begin(), m_indexes.end());
+    std::rotate(m_indexes.begin(), iter, m_indexes.end());
     compute_normal();
   }
 
+  /*----------------------------- Accessors ----------------------------------*/
 
   triangle_facet::iterator
   triangle_facet::
@@ -56,6 +62,7 @@ namespace glutils {
     return m_normal;
   }
 
+  /*------------------------------ Helpers -----------------------------------*/
 
   void
   triangle_facet::
@@ -63,6 +70,50 @@ namespace glutils {
   {
     m_normal = (get_point(1) - get_point(0)) % (get_point(2) - get_point(0));
     m_normal.normalize();
+  }
+
+  /*------------------------------ Equality ----------------------------------*/
+
+  bool
+  triangle_facet::
+  operator==(const triangle_facet& _t) const noexcept
+  {
+    // If both facets have the same point list, we can just check the indexes.
+    if(&m_points == &_t.m_points) {
+      for(size_t i = 0; i < 3; ++i)
+        if(m_indexes[i] != _t.m_indexes[i])
+          return false;
+    }
+    // Otherwise, we need to check the actual points.
+    else {
+      for(size_t i = 0; i < 3; ++i)
+        if(get_point(i) != _t.get_point(i))
+          return false;
+    }
+    return true;
+  }
+
+
+  bool
+  triangle_facet::
+  operator!=(const triangle_facet& _t) const noexcept
+  {
+    return !(*this == _t);
+  }
+
+  /*------------------------------ Ordering ----------------------------------*/
+
+  bool
+  triangle_facet::
+  operator<(const triangle_facet& _t) const noexcept
+  {
+    for(size_t i = 0; i < 3; ++i) {
+      if(m_indexes[0] < _t.m_indexes[0])
+        return true;
+      else if(_t.m_indexes[0] < m_indexes[0])
+        return false;
+    }
+    return false;
   }
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangulated Model ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -200,6 +251,8 @@ namespace glutils {
 
     // Remove unused vertices, starting from the back to avoid having to
     // recompute the indexes.
+    /// @TODO Fix this silly O(n^2) algorithm and replace with O(n) solution by
+    ///       re-writing a new point list and swapping.
     for(auto iter = index_map.rbegin(); iter != index_map.rend(); ++iter) {
       const bool unused = iter->second.empty();
       if(unused)
@@ -223,6 +276,78 @@ namespace glutils {
     for(auto iter = m_facets.begin(); iter != m_facets.end(); ++iter)
       for(auto& index : iter->m_indexes)
         index -= change_map.at(index);
+  }
+
+  /*------------------------------ Equality ----------------------------------*/
+
+  bool
+  triangulated_model::
+  operator==(const triangulated_model& _t) const noexcept
+  {
+    // First check that the number of points are the same.
+    if(num_points() != _t.num_points())
+      return false;
+
+    // If the number of points are the same, test facets.
+    // ARG facets can be in a different order @#$%
+    // ARG referenced points can be in a different order @#$%
+    return m_facets == _t.m_facets;
+  }
+
+
+  bool
+  triangulated_model::
+  operator!=(const triangulated_model& _t) const noexcept
+  {
+    return !(*this == _t);
+  }
+
+  /*---------------------------- Common Shapes -------------------------------*/
+
+  triangulated_model
+  triangulated_model::
+  make_box(GLfloat _lenX, GLfloat _lenY, GLfloat _lenZ)
+  {
+    // Get half-lengths.
+    _lenX /= 2;
+    _lenY /= 2;
+    _lenZ /= 2;
+
+    // Make vertices.
+    vector3f pts[8] = {{-_lenX,  _lenY,  _lenZ},
+                       {-_lenX, -_lenY,  _lenZ},
+                       { _lenX, -_lenY,  _lenZ},
+                       { _lenX,  _lenY,  _lenZ},
+                       {-_lenX,  _lenY, -_lenZ},
+                       {-_lenX, -_lenY, -_lenZ},
+                       { _lenX, -_lenY, -_lenZ},
+                       { _lenX,  _lenY, -_lenZ}};
+
+    // Add points to the model and get their indexes.
+    triangulated_model t;
+    size_t id[8];
+    for(size_t i = 0; i < 8; ++i)
+      id[i] = t.add_point(pts[i]);
+
+    // Make facets.
+    size_t facets[12][3] = {{id[0], id[1], id[2]},
+                            {id[0], id[2], id[3]},
+                            {id[3], id[2], id[6]},
+                            {id[3], id[6], id[7]},
+                            {id[7], id[6], id[5]},
+                            {id[7], id[5], id[4]},
+                            {id[4], id[5], id[1]},
+                            {id[4], id[1], id[0]},
+                            {id[0], id[3], id[7]},
+                            {id[0], id[7], id[4]},
+                            {id[1], id[5], id[6]},
+                            {id[1], id[6], id[2]}};
+
+    // Add facets.
+    for(size_t i = 0; i < 12; ++i)
+      t.add_facet(facets[i][0], facets[i][1], facets[i][2]);
+
+    return t;
   }
 
   /*--------------------------------------------------------------------------*/
