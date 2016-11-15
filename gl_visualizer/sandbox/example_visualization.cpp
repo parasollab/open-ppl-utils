@@ -62,18 +62,16 @@ void
 example_visualization::
 start()
 {
-  std::cout << "calling start" << std::endl;
-
   // Compute some movement for each sphere.
   for(size_t i = 0; i < 3; ++i) {
     // Start from the base transform.
     auto t = glutils::identity_transform();
     switch(i) {
       case 1:
-        t[3] = -5;
+        t[12] = -5;
         break;
       case 2:
-        t[3] = 5;
+        t[12] = 5;
       default:;
     }
 
@@ -82,7 +80,7 @@ start()
     // Push 6 seconds worth of sinusoidal movement onto the transform stack.
     // At 30fps this is 180 frames.
     for(size_t j = 0; j < 180; ++j) {
-      t[7] = 5 * std::sin((i * 10 + j) * glutils::TWOPI / 60);
+      t[13] = 5 * std::sin((i * 10 + j) * glutils::TWOPI / 60);
       d->push_transform(t);
     }
   }
@@ -97,10 +95,10 @@ reset()
     auto t = glutils::identity_transform();
     switch(i) {
       case 1:
-        t[3] = -5;
+        t[12] = -5;
         break;
       case 2:
-        t[3] = 5;
+        t[12] = 5;
       default:;
     }
 

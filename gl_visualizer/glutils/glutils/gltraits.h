@@ -36,10 +36,7 @@ namespace glutils {
   ///@name Transforms
   ///@{
 
-  /// An OpenGL transform matrix. The convention for glutils is opposite of
-  /// OpenGL because C/C++ are designed for row-major order. Thus, the transform
-  /// matrix is stored in row-major order with the translation elements in the
-  /// right-most column.
+  /// An OpenGL transform matrix in standard form (column major).
   typedef std::array<GLfloat, 16> transform;
 
   /// Apply an OpenGL transform matrix to the current GL stack.
@@ -60,7 +57,7 @@ void
 glutils::
 apply_transform(const glutils::transform& _t) noexcept
 {
-  glMultTransposeMatrixf(_t.data());
+  glMultMatrixf(_t.data());
 }
 
 
