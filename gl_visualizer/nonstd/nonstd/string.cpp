@@ -11,7 +11,7 @@ namespace nonstd {
   {
     // Create a regex for the trim pattern.
     static const regex r_t(R"(^\s*|\s*$)");
-    return regex_replace(_s, r_t, "");
+    return regex_replace(_s, r_t, string(""));
   }
 
 
