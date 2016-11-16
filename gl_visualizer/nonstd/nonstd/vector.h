@@ -7,6 +7,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <sstream>
 #include <utility>
 
 #include "nonstd/runtime.h"
