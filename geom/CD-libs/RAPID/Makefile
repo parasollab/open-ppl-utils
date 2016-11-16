@@ -1,27 +1,42 @@
+# External Makefiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 include ../../makefile_includes/Makefile.defaults
 
-INCL = -I. -I..
+# Compiler Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-OBJECTS	= RAPID.o build.o collide.o overlap.o
+INCL := -I. -I..
 
-CLEAN = sample_client ${OBJECTS} *.a *.o *~ *.so
+# Object File Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-#default target
-default_target: library
+OBJECTS := RAPID.o build.o collide.o overlap.o
 
-library: libRAPID.a
+%.o: %.C
+	@$(MAKE) -s check_platform
+	@echo "Compiling $@..."
+	@$(CXX) -c $(CXXFLAGS) $(OPTS) $(DEFS) $(INCL) $< -o $@
 
-install: library sample_client
+# Library Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-libRAPID.a: ${OBJECTS}
-	/bin/rm -f libRAPID.a
-	${AR} libRAPID.a ${OBJECTS}
+# The library is the default target.
+.DEFAULT_GOAL = $(LIBRARY)
 
-.SUFFIXES: .o .C
-.C.o:
-	@${MAKE} -s check_platform
-	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
+LIBRARY := libRAPID.a
+$(LIBRARY): $(OBJECTS)
+	@echo Linking RAPID library...
+	@rm -f $@
+	@$(AR) $@ $^
 
+# Extras ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Build the sample client included with the library.
 sample_client: sample_client.C
-	${CXX} ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@ -L. -lRAPID -lm
+	$(CXX) $(CXXFLAGS) $(OPTS) $(DEFS) $(INCL) $< -o $@ -L. -lRAPID -lm
 
+# Cleanup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: clean
+clean:
+	@echo Cleaning RAPID library...
+	@rm -f $(LIBRARY) $(OBJECTS) sample_client
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

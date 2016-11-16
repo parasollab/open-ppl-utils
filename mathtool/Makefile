@@ -1,13 +1,26 @@
-ifndef platform
-  platform = LINUX_gcc
-endif
+# Configuration Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Assume linux if platform isn't specified.
+platform ?= LINUX_gcc
+
+# External Makefiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 include ../makefile_includes/Makefile.defaults
 
-CLEAN = test example *~ 
+# Object File Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-example: example.cpp $(LIBFILE)
-	${CXX} ${CXXFLAGS} ${OPTS} $< -o $@
+OBJECTS := example.o test.o
 
-test: test.cpp $(LIBFILE)
-	${CXX} ${CXXFLAGS} ${OPTS} $< -o $@
+# Default is to build both objects.
+.DEFAULT_GOAL = all
+
+all: $(OBJECTS)
+
+# Cleanup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: clean
+clean:
+	@echo Cleaning mathtool library...
+	@rm -f $(OBJECTS)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

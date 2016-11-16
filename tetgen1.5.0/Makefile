@@ -1,21 +1,36 @@
+# External Makefiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 include ../makefile_includes/Makefile.defaults
+
+# Compiler Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 FLAGS := -std=c++11 -O2
 DEFS  := -DTETLIBRARY
 
-OBJECTS	= predicates.o tetgen.o
+# Object File Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-CLEAN = ${OBJECTS} *.a *.o *~
-
-# Recipies
-
-default_target: library
-
-library: libtet.a
-
-libtet.a: ${OBJECTS}
-	${AR} libtet.a ${OBJECTS}
+OBJECTS := predicates.o tetgen.o
 
 %.o: %.cxx
-	@${MAKE} -s check_platform
-	${CXX} -c ${FLAGS} ${DEFS} $< -o $@
+	@$(MAKE) -s check_platform
+	@echo Compiling $@...
+	@$(CXX) -c $(FLAGS) $(DEFS) $< -o $@
+
+# Library Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Default target is the tetgen library.
+.DEFAULT_GOAL = $(LIBRARY)
+
+LIBRARY := libtet.a
+$(LIBRARY): $(OBJECTS)
+	@echo Linking tetgen library...
+	@$(AR) $@ $^
+
+# Cleanup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: clean
+clean:
+	@echo Cleaning tetgen library...
+	@rm -f $(OBJECTS) $(LIBRARY)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

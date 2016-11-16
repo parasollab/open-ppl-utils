@@ -1,22 +1,36 @@
-#makefile for modelloader library
+# External Makefiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 include ../makefile_includes/Makefile.defaults
 
-#--------------------------------------------------------------------
-INCL = -I. -I/usr/local/include -I../mathtool/
+# Compiler Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+INCL := -I. -I../mathtool/
 ifeq (${platform}, CRAY_gcc)
+  # TODO Remove Matthew's personal directory from this include and replace with
+  #      a system copy. If one is not present, we should get it there or add a
+  #      version to our utilities.
   INCL += -I${BOOST_ROOT}/include -I/mnt/lustre/lus0/fourcow2/CGAL/include/
 endif
 
-OBJS = IModel.o ModelFactory.o MovieBYULoader.o ObjLoader.o BVHDataLoader.o
-TARGET = libmodloader.a
+# Object File Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-all: $(TARGET)
-#--------------------------------------------------------------------
-default_target: library
+OBJECTS := IModel.o ModelFactory.o MovieBYULoader.o ObjLoader.o BVHDataLoader.o
 
-library: $(TARGET)
+# Library Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-$(TARGET): $(OBJS)
-	ar rUuv $@  $(OBJS)
+# Default is to build the library.
+.DEFAULT_GOAL = $(LIBRARY)
 
-CLEAN = $(TARGET) $(OBJECTS) *.a *.o *~ *.so
+LIBRARY := libmodloader.a
+$(LIBRARY): $(OBJECTS)
+	@echo Linking modelloader library...
+	@$(AR) $@ $^
+
+# Cleanup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: clean
+clean:
+	@echo Cleaning modelloader library...
+	@rm -f $(LIBRARY) $(OBJECTS)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

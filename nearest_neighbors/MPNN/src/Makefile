@@ -1,34 +1,35 @@
-################################################################
-#
-# Makefile for the Nearest Neighbor Library for Motion Planning
-#
-# This is the non-configurable part of the Makefile.
-# See the file 'Makefile.config' for configuration switches.
-#
-#
-################################################################
-
+# External Makefiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 include ../../../makefile_includes/Makefile.defaults
 
-INCL = -I. -I../include
+# Compiler Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-OBJECTS = ANN.o kd_tree.o kd_util.o kd_split.o kd_search.o \
-	nn.o multiann.o
+INCL := -I. -I../include
 
-CLEAN = ${OBJECTS} *.a *.o *~ *.so
+# Object File Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-#default target
-default_target: library
+OBJECTS := ANN.o kd_tree.o kd_util.o kd_split.o kd_search.o nn.o multiann.o
 
-library: libMPNN.a
+%.o: %.C
+	@$(MAKE) -s check_platform
+	@echo Compiling $@...
+	@$(CXX) -c $(CXXFLAGS) $(OPTS) $(DEFS) $(INCL) $< -o $@
 
-install: library sample_client
+# Library Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-libMPNN.a: ${OBJECTS}
-	/bin/rm -f libMPNN.a
-	${AR} libMPNN.a ${OBJECTS}
+.DEFAULT_GOAL = $(LIBRARY)
 
-.SUFFIXES: .o .C
-.C.o:
-	${CXX} -c ${CXXFLAGS} ${OPTS} ${DEFS} ${INCL} $< -o $@
+LIBRARY := libMPNN.a
+$(LIBRARY): $(OBJECTS)
+	@echo Linking MPNN library...
+	@rm -f $@
+	@$(AR) $@ $^
+
+# Cleanup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+.PHONY: clean
+clean:
+	@echo Cleaning MPNN library...
+	@rm -f $(OBJECTS) $(LIBRARY)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
