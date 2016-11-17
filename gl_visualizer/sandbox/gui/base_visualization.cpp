@@ -1,5 +1,7 @@
 #include "base_visualization.h"
 
+#include <algorithm>
+
 /*----------------------------- Construction ---------------------------------*/
 
 base_visualization::
@@ -27,6 +29,21 @@ add_drawable(glutils::drawable* _d)
   m_drawables.push_back(_d);
   m_selector->add_drawable(_d);
   m_highlighter->add_drawable(_d);
+}
+
+
+void
+base_visualization::
+remove_drawable(glutils::drawable* _d)
+{
+  auto iter = std::find(m_drawables.begin(), m_drawables.end(), _d);
+  if(iter == m_drawables.end())
+    return;
+
+  m_drawables.erase(iter);
+  m_selector->remove_drawable(_d);
+  m_highlighter->remove_drawable(_d);
+  delete _d;
 }
 
 

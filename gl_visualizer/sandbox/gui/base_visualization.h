@@ -41,6 +41,10 @@ struct base_visualization
   /// @param[in] _d The drawable to add.
   virtual void add_drawable(glutils::drawable* _d);
 
+  /// Remove a drawable from the visualization and delete it.
+  /// @param[in] _d The drawable to remove.
+  virtual void remove_drawable(glutils::drawable* _d);
+
   /// Update the transforms for all drawable objects. This is not done in
   /// render to give more flexibility for multi-threaded visualizations.
   virtual void update();
