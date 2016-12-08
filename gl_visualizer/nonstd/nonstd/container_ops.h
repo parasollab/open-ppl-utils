@@ -7,6 +7,7 @@
 #include <type_traits>
 
 #include "nonstd/io.h"
+#include "nonstd/numerics.h"
 #include "nonstd/runtime.h"
 
 
@@ -86,7 +87,11 @@ unit(const Container& _c) noexcept
                       >::type
                     >::type;
 
+  // If the magnitude is nearly zero, just return the same vector instead of a
+  // container full of nan.
   auto mag = nonstd::magnitude<base_type, Container>(_c);
+  if(approx(mag, base_type(0)))
+    return _c;
 
   Container out = _c;
   for(auto it = out.begin(); it != out.end(); ++it)
