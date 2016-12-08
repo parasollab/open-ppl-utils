@@ -6,6 +6,8 @@
 #ifndef TRANSFORMATION_H_
 #define TRANSFORMATION_H_
 
+#include <vector>
+
 #include "Vector.h"
 #include "Orientation.h"
 
@@ -60,6 +62,18 @@ namespace mathtool {
       Transformation operator-() const {
         Orientation inverse = -m_rotation;
         return Transformation(-(inverse * m_translation), inverse);
+      }
+
+      /// Get a 6-dof configuration-space representation of this.
+      std::vector<double> GetCfg() const {
+        EulerAngle e;
+        convertFromMatrix(e, m_rotation.matrix());
+        return std::vector<double>{m_translation[0],
+                                   m_translation[1],
+                                   m_translation[2],
+                                   e.alpha(),
+                                   e.beta(),
+                                   e.gamma()};
       }
 
       friend std::istream& operator>>(std::istream& _is, Transformation& _t);
