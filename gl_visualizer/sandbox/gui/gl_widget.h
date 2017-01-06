@@ -87,6 +87,19 @@ class gl_widget
 
     ///@}
 
+  signals:
+
+    ///@name Signals
+    ///@{
+
+    /// Display a message on the status bar for some amount of time.
+    /// @param[in] _m The message to display.
+    /// @param[in] _ms The time in milli-seconds to show the message, or 0 for
+    ///                indefinite.
+    void status_message(const QString& _m, int _ms);
+
+    ///@}
+
   private:
 
     ///@name GL Functions

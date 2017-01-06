@@ -1,6 +1,7 @@
 #include "glutils/color.h"
 
 #include "nonstd/io.h"
+#include "nonstd/numerics.h"
 
 namespace glutils {
 
@@ -15,12 +16,33 @@ namespace glutils {
     m_rgba[3] = _a;
   }
 
-  /*--------------------- Converstion to OpenGL Format -----------------------*/
+  /*----------------- Implicit Conversions to OpenGL Arrays ------------------*/
+
+  color::
+  operator GLfloat*() noexcept
+  {
+    return m_rgba;
+  }
+
 
   color::
   operator const GLfloat*() const noexcept
   {
     return m_rgba;
+  }
+
+
+  color::
+  operator GLvoid*() noexcept
+  {
+    return static_cast<GLvoid*>(m_rgba);
+  }
+
+
+  color::
+  operator const GLvoid*() const noexcept
+  {
+    return static_cast<const GLvoid*>(m_rgba);
   }
 
   /*------------------------------ Accessors ---------------------------------*/
@@ -46,10 +68,10 @@ namespace glutils {
   color::
   operator==(const color& _c) const noexcept
   {
-    return m_rgba[0] == _c.m_rgba[0] &&
-           m_rgba[1] == _c.m_rgba[1] &&
-           m_rgba[2] == _c.m_rgba[2] &&
-           m_rgba[3] == _c.m_rgba[3];
+    return nonstd::approx(m_rgba[0], _c.m_rgba[0])
+        && nonstd::approx(m_rgba[1], _c.m_rgba[1])
+        && nonstd::approx(m_rgba[2], _c.m_rgba[2])
+        && nonstd::approx(m_rgba[3], _c.m_rgba[3]);
   }
 
 
@@ -58,6 +80,21 @@ namespace glutils {
   operator!=(const color& _c) const noexcept
   {
     return !(*this == _c);
+  }
+
+  /*------------------------------ Weak Ordering -----------------------------*/
+
+  bool
+  color::
+  operator<(const color& _c) const noexcept
+  {
+    for(size_t i = 0; i < 4; ++i) {
+      if(m_rgba[i] < _c.m_rgba[i])
+        return true;
+      else if(m_rgba[i] > _c.m_rgba[i])
+        return false;
+    }
+    return false;
   }
 
   /*----------------------------- Predefined ---------------------------------*/
@@ -104,6 +141,16 @@ operator<<(std::ostream& _os, const glutils::color& _c)
 {
   _os << "{" << _c[0] << ", " << _c[1] << ", " << _c[2] << ", " << _c[3] << "}";
   return _os;
+}
+
+/*---------------------------------- Hasher ----------------------------------*/
+
+size_t
+std::hash<glutils::color>::
+operator()(const glutils::color& _c) const noexcept
+{
+  std::hash<GLfloat> hasher;
+  return hasher(_c[0] * 1000 + _c[1] * 100 + _c[2] * 10 + _c[3]);
 }
 
 /*----------------------------------------------------------------------------*/

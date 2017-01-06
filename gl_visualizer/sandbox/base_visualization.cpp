@@ -69,7 +69,12 @@ void
 base_visualization::
 render_select(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
 {
-  m_selector->select(_x, _y, _w, _h);
+  // Use color-picking for point selection and gl selection for area selection.
+  if(_w < 2 && _h < 2)
+    m_selector->color_pick(_x, _y);
+  else
+    m_selector->select(_x, _y, _w, _h);
+
   for(auto hit : m_selector->hits())
     hit->select();
   for(auto unhit : m_selector->unhits())
@@ -79,16 +84,16 @@ render_select(const size_t _x, const size_t _y, const size_t _w, const size_t _h
 
 void
 base_visualization::
-render_hover(const size_t, const size_t, const size_t, const size_t)
-//render_hover(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
+//render_hover(const size_t, const size_t, const size_t, const size_t)
+render_hover(const size_t _x, const size_t _y, const size_t, const size_t)
 {
   /// @TODO Hover rendering is presently disabled because the performance sucks.
   ///       Need to find a better way to achieve this.
-  //m_highlighter->select(_x, _y, _w, _h);
-  //for(auto hit : m_highlighter->hits())
-  //  hit->highlight();
-  //for(auto unhit : m_highlighter->unhits())
-  //  unhit->unhighlight();
+  m_highlighter->color_pick(_x, _y);
+  for(auto hit : m_highlighter->hits())
+    hit->highlight();
+  for(auto unhit : m_highlighter->unhits())
+    unhit->unhighlight();
 }
 
 /*----------------------------------------------------------------------------*/

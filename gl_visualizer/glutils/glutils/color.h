@@ -21,10 +21,14 @@ namespace glutils {
       color(GLfloat _r = 0, GLfloat _g = 0, GLfloat _b = 0, GLfloat _a = 1);
 
       ///@}
-      ///@name Conversion to OpenGL format
+      ///@name Implicit Conversions to OpenGL Arrays
       ///@{
 
+      operator GLfloat*() noexcept;
       operator const GLfloat*() const noexcept;
+
+      operator GLvoid*() noexcept;
+      operator const GLvoid*() const noexcept;
 
       ///@}
       ///@name Accessors
@@ -47,6 +51,12 @@ namespace glutils {
 
       bool operator==(const color& _c) const noexcept;
       bool operator!=(const color& _c) const noexcept;
+
+      ///@}
+      ///@name Weak Ordering
+      ///@{
+
+      bool operator<(const color& _c) const noexcept;
 
       ///@}
       ///@name Predefined Colors
@@ -92,6 +102,22 @@ namespace glutils {
 /*---------------------------- ostream overloads -----------------------------*/
 
 std::ostream& operator<<(std::ostream& _os, const glutils::color& _c);
+
+/*---------------------------------- Hasher ----------------------------------*/
+
+namespace std {
+
+  template <>
+  struct hash<glutils::color> {
+
+    typedef size_t result_type;
+    typedef glutils::color argument_type;
+
+    size_t operator()(const glutils::color& _c) const noexcept;
+
+  };
+
+}
 
 /*----------------------------------------------------------------------------*/
 

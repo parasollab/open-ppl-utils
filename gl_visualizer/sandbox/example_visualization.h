@@ -1,7 +1,7 @@
 #ifndef EXAMPLE_SIMULATION_H_
 #define EXAMPLE_SIMULATION_H_
 
-#include "gui/base_visualization.h"
+#include "base_visualization.h"
 
 
 class example_visualization : public base_visualization

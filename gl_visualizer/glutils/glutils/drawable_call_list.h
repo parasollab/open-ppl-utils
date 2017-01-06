@@ -58,6 +58,9 @@ namespace glutils {
       /// OpenGL perspective.
       virtual void build() = 0;
 
+      /// As build, but purely geometry only (no colors, textures, etc).
+      virtual void build_select() = 0;
+
       /// Additional instructions for drawing the selection decorations on the
       /// object. These will be drawn over the object when it is selected.
       virtual void build_selected() {}
@@ -76,6 +79,7 @@ namespace glutils {
       virtual void initialize() override final; ///< Compile the call lists.
 
       virtual void draw() override final;
+      virtual void draw_select() override final;
       virtual void draw_selected() override final;
       virtual void draw_highlighted() override final;
 

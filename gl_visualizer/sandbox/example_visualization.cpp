@@ -19,6 +19,12 @@ class drawable_sphere :
     glutils::draw::sphere_frame(5);
   }
 
+  virtual void build_select() override
+  {
+    glLineWidth(1);
+    glutils::draw::sphere(5);
+  }
+
   virtual void build_selected() override
   {
     glColor4fv(glutils::color::yellow);

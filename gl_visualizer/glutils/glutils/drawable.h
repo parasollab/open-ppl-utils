@@ -6,14 +6,22 @@
 #include <mutex>
 #include <queue>
 
+#include "glutils/color.h"
 #include "glutils/gltraits.h"
+
 
 namespace glutils {
 
   //////////////////////////////////////////////////////////////////////////////
-  /// A base class for drawable objects. Derived classes must implement the
-  /// build function to describe the commands needed to l call list for drawing
-  /// the object. Selection and highlighting lists are optional.
+  /// An abstract interface class for drawable objects.
+  ///
+  /// @details Derived classes must implement the build function to describe the
+  ///          commands needed to draw the object. Selection and highlighting
+  ///          lists are optional. The object maintains a queue of transforms
+  ///          that allow one to store multiple pre-computed positions. On each
+  ///          render call, the front of the transform queue will be used for
+  ///          the modelview matrix. Use update_transform to move on to the next
+  ///          queued position (if available).
   //////////////////////////////////////////////////////////////////////////////
   class drawable
   {
@@ -24,6 +32,7 @@ namespace glutils {
       ///@{
 
       const GLuint m_selection_id;            ///< ID for selection rendering.
+      const color m_picking_color;            ///< Color for color-picking.
 
       std::atomic<bool> m_selected{false};    ///< Is selected?
       std::atomic<bool> m_highlighted{false}; ///< Is highlighted?
@@ -52,16 +61,14 @@ namespace glutils {
       ///@name Rendering
       ///@{
 
-      //////////////////////////////////////////////////////////////////////////
       /// Render this object in the scene.
-      ///
-      /// The default implementation is to render the call lists as appropriate.
-      /// It can be overriden by derived classes to use other drawing methods.
       void render();
 
-      //////////////////////////////////////////////////////////////////////////
       /// Render this object for gl selection.
       void render_select();
+
+      /// Render this object for color picking.
+      void render_color_pick();
 
       ///@}
       ///@name Transform
@@ -72,7 +79,8 @@ namespace glutils {
       /// Push a new transform onto the queue.
       void push_transform(const transform& _t) noexcept;
 
-      /// Update to the next queued transform.
+      /// Update to the next queued transform. If no queued transform is
+      /// available, the current one will be retained.
       void update_transform() noexcept;
 
       /// Replace the current transform queue with a single identity transform.
@@ -88,7 +96,15 @@ namespace glutils {
       /// base class method here should also be called to ensure the rendering
       /// effect occurs.
 
-      /// Is this object selected?
+      /// Get this object's selection name. Should only be needed by selector.
+      GLuint id() const noexcept;
+
+      /// Get this object's picking color. Should only be needed by color
+      /// picker.
+      const color& picking_color() const noexcept;
+
+
+      /// Is this object 'selected'?
       bool selected() const noexcept;
 
       /// Enable drawing this object's 'selected' decorations.
@@ -98,7 +114,7 @@ namespace glutils {
       virtual void deselect() noexcept;
 
 
-      /// Is this object highlighted?
+      /// Is this object 'highlighted'?
       bool highlighted() const noexcept;
 
       /// Enable drawing this object's 'highlighted' components.
@@ -106,9 +122,6 @@ namespace glutils {
 
       /// Disable drawing this object's 'highlighted' components.
       virtual void unhighlight() noexcept;
-
-      /// Get this object's selection name. Should only be needed by selector.
-      GLuint id() const noexcept;
 
       ///@}
 
@@ -124,6 +137,7 @@ namespace glutils {
       virtual void initialize(); ///< Init to perform on first draw.
 
       virtual void draw() = 0;           ///< Render the object.
+      virtual void draw_select() = 0;    ///< Render for selection (no colors).
       virtual void draw_selected() {}    ///< Render the selection decorations.
       virtual void draw_highlighted() {} ///< Render the highlight decorations.
 
@@ -136,79 +150,15 @@ namespace glutils {
 
       static std::mutex m_selection_id_gate; ///< Lock for the id function.
 
-      //////////////////////////////////////////////////////////////////////////
       /// Generate a unique selection id.
       static GLuint generate_selection_id() noexcept;
+
+      /// Generate a unique picking color.
+      static color generate_picking_color() noexcept;
 
       ///@}
 
   };
-
-  /*------------------- Inlined Highlighting and Selection -------------------*/
-
-  inline
-  bool
-  drawable::
-  selected() const noexcept
-  {
-    return m_selected.load();
-  }
-
-
-  inline
-  void
-  drawable::
-  select() noexcept
-  {
-    m_selected = true;
-  }
-
-
-  inline
-  void
-  drawable::
-  deselect() noexcept
-  {
-    m_selected = false;
-  }
-
-
-  inline
-  bool
-  drawable::
-  highlighted() const noexcept
-  {
-    return m_highlighted.load();
-  }
-
-
-  inline
-  void
-  drawable::
-  highlight() noexcept
-  {
-    m_highlighted = true;
-  }
-
-
-  inline
-  void
-  drawable::
-  unhighlight() noexcept
-  {
-    m_highlighted = false;
-  }
-
-
-  inline
-  GLuint
-  drawable::
-  id() const noexcept
-  {
-    return m_selection_id;
-  }
-
-  /*--------------------------------------------------------------------------*/
 
 }
 

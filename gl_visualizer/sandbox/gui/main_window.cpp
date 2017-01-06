@@ -39,6 +39,10 @@ main_window()
           m_gl_widget,  SLOT(start()));
   connect(m_tool_bar, SIGNAL(reset()),
           m_gl_widget,  SLOT(reset()));
+
+  // Connect the gl widget to the status bar.
+  connect(m_gl_widget, SIGNAL(status_message(const QString&, int)),
+          m_status_bar,  SLOT(showMessage(const QString&, int)));
 }
 
 /*------------------------------- Accessors ----------------------------------*/

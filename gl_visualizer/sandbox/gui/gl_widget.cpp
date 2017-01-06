@@ -85,6 +85,8 @@ void
 gl_widget::
 start()
 {
+  emit status_message(QString("Starting visualization..."), 2000);
+
   m_visualization->start();
   m_clock->start();
 }
@@ -94,6 +96,8 @@ void
 gl_widget::
 reset()
 {
+  emit status_message(QString("Stopping visualization..."), 2000);
+
   m_clock->stop();
   m_visualization->reset();
   m_camera->position(glutils::vector3f{0,0,10}, glutils::vector3f{0,0,0},
@@ -111,8 +115,8 @@ make_box(const QPoint& _p1, const QPoint& _p2)
 {
   const size_t x = static_cast<size_t>((_p1.x() + _p2.x()) / 2);
   const size_t y = static_cast<size_t>((_p1.y() + _p2.y()) / 2);
-  const size_t w = static_cast<size_t>(std::max(5, std::abs(_p1.x() - _p2.x())));
-  const size_t h = static_cast<size_t>(std::max(5, std::abs(_p1.y() - _p2.y())));
+  const size_t w = static_cast<size_t>(std::abs(_p1.x() - _p2.x()));
+  const size_t h = static_cast<size_t>(std::abs(_p1.y() - _p2.y()));
   return std::array<size_t, 4>{x, y, w, h};
 }
 
@@ -139,7 +143,7 @@ void
 gl_widget::
 select(QPoint _p)
 {
-  select(_p.rx(), _p.ry(), 5, 5);
+  select(_p.rx(), _p.ry(), 1, 1);
 }
 
 
@@ -165,7 +169,7 @@ void
 gl_widget::
 hover(QPoint _p)
 {
-  hover(_p.rx(), _p.ry(), 5, 5);
+  hover(_p.rx(), _p.ry(), 1, 1);
 }
 
 /*------------------------------- GL Functions -------------------------------*/
