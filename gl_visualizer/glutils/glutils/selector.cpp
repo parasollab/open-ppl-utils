@@ -228,7 +228,8 @@ namespace glutils {
       new_hits.insert(m_selection_map[nearest_id]);
     else
       for(const auto hit : hits)
-        new_hits.insert(m_selection_map[hit]);
+        if(m_selection_map.count(hit))
+          new_hits.insert(m_selection_map[hit]);
 
     update_hits(std::move(new_hits));
   }
