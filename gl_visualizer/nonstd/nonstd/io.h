@@ -32,6 +32,9 @@ namespace nonstd {
   std::string
   print_container(const ContainerType& _c)
   {
+    // Print empty containers.
+    if(_c.begin() == _c.end())
+      return "{}";
     std::ostringstream os;
     os << "{";
     auto last = _c.end();
