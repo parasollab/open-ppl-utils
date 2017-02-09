@@ -10845,21 +10845,7 @@ void tetgenmesh::brio_multiscale_sort(point* vertexarray, int arraysize,
 
 unsigned long tetgenmesh::randomnation(unsigned int choices)
 {
-  unsigned long newrandom;
-
-  if (choices >= 714025l) {
-    newrandom = (randomseed * 1366l + 150889l) % 714025l;
-    randomseed = (newrandom * 1366l + 150889l) % 714025l;
-    newrandom = newrandom * (choices / 714025l) + randomseed;
-    if (newrandom >= choices) {
-      return newrandom - choices;
-    } else {
-      return newrandom;
-    }
-  } else {
-    randomseed = (randomseed * 1366l + 150889l) % 714025l;
-    return randomseed % choices;
-  }
+  return rand() % choices;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -11562,9 +11548,8 @@ void tetgenmesh::incrementaldelaunay(clock_t& tv)
     if (b->verbose) {
       printf("  Permuting vertices.\n");
     }
-    srand(in->numberofpoints);
     for (i = 0; i < in->numberofpoints; i++) {
-      randindex = rand() % (i + 1); // randomnation(i + 1);
+      randindex = randomnation(i + 1);
       permutarray[i] = permutarray[randindex];
       permutarray[randindex] = (point) points->traverse();
     }
@@ -23460,9 +23445,8 @@ void tetgenmesh::insertconstrainedpoints(point *insertarray, int arylen,
     }
     point swappoint;
     int randindex;
-    srand(arylen);
     for (i = 0; i < arylen; i++) {
-      randindex = rand() % (i + 1);
+      randindex = randomnation(i + 1);
       swappoint = insertarray[i];
       insertarray[i] = insertarray[randindex];
       insertarray[randindex] = swappoint;
@@ -23764,9 +23748,8 @@ void tetgenmesh::collectremovepoints(arraypool *remptlist)
       // Sort the list of points randomly.
       point *parypt_i, swappt;
       int randindex, i;
-      srand(intptlist->objects);
       for (i = 0; i < intptlist->objects; i++) {
-        randindex = rand() % (i + 1); // randomnation(i + 1);
+        randindex = randomnation(i + 1);
         parypt_i = (point *) fastlookup(intptlist, i);
         parypt = (point *) fastlookup(intptlist, randindex);
         // Swap this two points.
