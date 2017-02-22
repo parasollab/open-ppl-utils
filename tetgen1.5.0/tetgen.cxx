@@ -14,6 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "tetgen.h"
+#include <random>
 
 //// io_cxx ///////////////////////////////////////////////////////////////////
 ////                                                                       ////
@@ -10845,7 +10846,9 @@ void tetgenmesh::brio_multiscale_sort(point* vertexarray, int arraysize,
 
 unsigned long tetgenmesh::randomnation(unsigned int choices)
 {
-  return rand() % choices;
+  // Use a private random generator to avoid interference with other stuff.
+  static std::mt19937 generator(98374298);
+  return generator() % choices;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
