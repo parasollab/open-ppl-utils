@@ -14,6 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "tetgen.h"
+#include <limits>
 #include <random>
 
 //// io_cxx ///////////////////////////////////////////////////////////////////
@@ -10848,7 +10849,9 @@ unsigned long tetgenmesh::randomnation(unsigned int choices)
 {
   // Use a private random generator to avoid interference with other stuff.
   static std::mt19937 generator(98374298);
-  return generator() % choices;
+  static std::uniform_int_distribution<unsigned long> dist(0,
+      std::numeric_limits<unsigned long>::max());
+  return dist(generator) % choices;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
