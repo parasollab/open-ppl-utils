@@ -71,9 +71,9 @@ namespace mathtool {
         return std::vector<double>{m_translation[0],
                                    m_translation[1],
                                    m_translation[2],
-                                   e.alpha(),
-                                   e.beta(),
-                                   e.gamma()};
+                                   e.gamma() / PI,
+                                   e.beta() / PI,
+                                   e.alpha() / PI};
       }
 
       friend std::istream& operator>>(std::istream& _is, Transformation& _t);
