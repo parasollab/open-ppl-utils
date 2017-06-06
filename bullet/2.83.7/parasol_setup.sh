@@ -17,6 +17,7 @@ cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${install_dir} \
   -DINSTALL_EXTRA_LIBS=TRUE \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-O2 -g3 -DNDEBUG" \
+  -DUSE_DOUBLE_PRECISION=TRUE \
   ../
 
 # Bullet takes a while to build, so use parallel make with max number of
