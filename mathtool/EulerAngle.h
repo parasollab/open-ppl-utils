@@ -85,7 +85,12 @@ namespace mathtool {
       double m_alpha, m_beta, m_gamma;
   };
 
-  //input EulerAngle from degrees
+
+  /// Read in an Euler angle specified in degrees.
+  /// @WARNING This reads the values backwards in the order {gamma, beta, alpha}
+  ///          which corresponds to the X, Y, and Z components. Before we can
+  ///          correct this we need a provide a script to fix old environment
+  ///          files automatically.
   inline std::istream& operator>>(std::istream& _is, EulerAngle& _e) {
     double a, b, g;
     _is >> g >> b >> a;
@@ -95,13 +100,17 @@ namespace mathtool {
     return _is;
   }
 
-  //output EulerAngle to degrees
+  /// Output an Euler angle in degrees.
+  /// @WARNING This writes the values backwards in the order {gamma, beta, alpha}
+  ///          which corresponds to the X, Y, and Z components. Before we can
+  ///          correct this we need a provide a script to fix old environment
+  ///          files automatically.
   inline std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e) {
     std::ios::fmtflags f(_os.flags());
     _os << std::fixed
-      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI)) << " "
+      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI)) << " "
       << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " "
-      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI));
+      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI));
     _os.flags(f);
     return _os;
   }
