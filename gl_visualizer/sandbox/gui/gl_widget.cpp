@@ -8,7 +8,7 @@
 #include "glutils/color.h"
 
 #include "base_visualization.h"
-#include "std_input_manager.h"
+#include "gl_input_manager.h"
 
 
 using namespace std;
@@ -31,7 +31,7 @@ gl_widget(QWidget* _parent) :
       glutils::vector3f{0,1,0});
 
   // Create controller manager.
-  m_input_manager = new std_input_manager(this);
+  m_input_manager = new gl_input_manager(this);
 
   // Set up rendering clock.
   m_clock = new QTimer(this);
@@ -105,6 +105,36 @@ reset()
   updateGL();
 }
 
+/*------------------------------ Camera Control ------------------------------*/
+
+void
+gl_widget::
+pan_camera(const double _x, const double _y) {
+  m_camera->pan(_x, _y);
+}
+
+
+void
+gl_widget::
+zoom_camera(const double _z) {
+  m_camera->zoom(_z);
+}
+
+
+void
+gl_widget::
+rotate_camera(const double _x, const double _y) {
+  m_camera->rotate(_x, m_camera->y());
+  m_camera->rotate(_y, m_camera->x());
+}
+
+
+void
+gl_widget::
+orbit_camera(const double _x, const double _y) {
+  m_camera->rotate(_x, m_camera->y(), glutils::vector3f());
+  m_camera->rotate(_y, m_camera->x(), glutils::vector3f());
+}
 
 /*-------------------------------- Selection ---------------------------------*/
 

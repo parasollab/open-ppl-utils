@@ -43,7 +43,9 @@ namespace glutils {
       ///                will be used in place of generating a new call list.
       drawable_call_list(call_list_ptr _cl) noexcept;
 
-      virtual ~drawable_call_list() = default;
+      virtual void rebuild() override;
+
+      virtual ~drawable_call_list();
 
       ///@}
 

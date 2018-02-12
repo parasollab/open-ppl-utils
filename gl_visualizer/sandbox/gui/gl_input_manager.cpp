@@ -1,4 +1,4 @@
-#include "std_input_manager.h"
+#include "gl_input_manager.h"
 
 #include "gl_widget.h"
 
@@ -11,7 +11,7 @@
 /*------------------------------ Button State --------------------------------*/
 
 void
-std_input_manager::
+gl_input_manager::
 button_state::
 reset() noexcept
 {
@@ -22,25 +22,41 @@ reset() noexcept
 
 /*------------------------------ Construction --------------------------------*/
 
-std_input_manager::
-std_input_manager(gl_widget* _gl) :
+gl_input_manager::
+gl_input_manager(gl_widget* const _gl) :
     QWidget(_gl), m_gl(_gl)
 {
+  // Mouse selection
   connect(this, SIGNAL(mouse_selection(QPoint)),
-          m_gl, SLOT(select(QPoint)));
+          m_gl,   SLOT(select(QPoint)));
   connect(this, SIGNAL(mouse_selection(QPoint, QPoint)),
-          m_gl, SLOT(select(QPoint, QPoint)));
+          m_gl,   SLOT(select(QPoint, QPoint)));
 
+  // Mouse hover
   connect(this, SIGNAL(mouse_hover(QPoint)),
-          m_gl, SLOT(hover(QPoint)));
+          m_gl,   SLOT(hover(QPoint)));
   connect(this, SIGNAL(mouse_hover(QPoint, QPoint)),
-          m_gl, SLOT(hover(QPoint, QPoint)));
+          m_gl,   SLOT(hover(QPoint, QPoint)));
+
+  // Camera control
+  connect(this, SIGNAL(pan_camera(double, double)),
+          m_gl, SLOT(pan_camera(const double, const double)));
+  connect(this, SIGNAL(rotate_camera(double, double)),
+          m_gl, SLOT(rotate_camera(const double, const double)));
+  connect(this, SIGNAL(orbit_camera(double, double)),
+          m_gl, SLOT(orbit_camera(const double, const double)));
+  connect(this, SIGNAL(zoom_camera(double)),
+          m_gl, SLOT(zoom_camera(const double)));
 }
+
+
+gl_input_manager::
+~gl_input_manager() = default;
 
 /*------------------------------ Input Events --------------------------------*/
 
 void
-std_input_manager::
+gl_input_manager::
 mousePressEvent(QMouseEvent* _e)
 {
   switch(_e->button()) {
@@ -59,7 +75,7 @@ mousePressEvent(QMouseEvent* _e)
 
 
 void
-std_input_manager::
+gl_input_manager::
 mouseReleaseEvent(QMouseEvent* _e)
 {
   switch(_e->button()) {
@@ -78,7 +94,7 @@ mouseReleaseEvent(QMouseEvent* _e)
 
 
 void
-std_input_manager::
+gl_input_manager::
 mouseMoveEvent(QMouseEvent* _e)
 {
   if(!_e->buttons()) {
@@ -106,43 +122,48 @@ mouseMoveEvent(QMouseEvent* _e)
 
 
 void
-std_input_manager::
+gl_input_manager::
 mouseDoubleClickEvent(QMouseEvent*)
 { }
 
 
 void
-std_input_manager::
+gl_input_manager::
 wheelEvent(QWheelEvent* _e)
 {
   // Scale wheel distance quadratically to make vigorous scrolling zoom faster.
-  int wheelDist = _e->delta() / 60.;
+  double wheelDist = _e->delta() / 60.;
   wheelDist *= wheelDist * nonstd::sign(wheelDist);
-  m_gl->camera()->zoom(wheelDist);
+
+  emit zoom_camera(wheelDist);
 }
 
 
 void
-std_input_manager::
-keyPressEvent(QKeyEvent*)
-{ }
+gl_input_manager::
+keyPressEvent(QKeyEvent* _e)
+{
+  _e->ignore();
+}
 
 
 void
-std_input_manager::
-keyReleaseEvent(QKeyEvent*)
-{ }
+gl_input_manager::
+keyReleaseEvent(QKeyEvent* _e)
+{
+  _e->ignore();
+}
 
 
 void
-std_input_manager::
+gl_input_manager::
 tabletEvent(QTabletEvent*)
 { }
 
 /*------------------------------ Mouse Actors --------------------------------*/
 
 void
-std_input_manager::
+gl_input_manager::
 click_left(QMouseEvent* _e, const bool _press)
 {
   if(_press) {
@@ -167,7 +188,7 @@ click_left(QMouseEvent* _e, const bool _press)
 
 
 void
-std_input_manager::
+gl_input_manager::
 click_middle(QMouseEvent* _e, const bool _press)
 {
   if(_press) {
@@ -182,7 +203,7 @@ click_middle(QMouseEvent* _e, const bool _press)
 
 
 void
-std_input_manager::
+gl_input_manager::
 click_right(QMouseEvent* _e, const bool _press)
 {
   if(_press) {
@@ -197,7 +218,7 @@ click_right(QMouseEvent* _e, const bool _press)
 
 
 void
-std_input_manager::
+gl_input_manager::
 drag_left(QMouseEvent* _e, const QPoint& _delta)
 {
   m_left.drag += _delta.manhattanLength();
@@ -210,36 +231,34 @@ drag_left(QMouseEvent* _e, const QPoint& _delta)
 
 
 void
-std_input_manager::
+gl_input_manager::
 drag_middle(QMouseEvent* /*_e*/, const QPoint& _delta)
 {
   m_middle.drag += _delta.manhattanLength();
 
   // Pan the camera view.
-  auto camera = m_gl->camera();
-  camera->pan(_delta.x() * m_sensitivity, -_delta.y() * m_sensitivity);
+  emit pan_camera(_delta.x() * m_sensitivity, -_delta.y() * m_sensitivity);
 }
 
 
 void
-std_input_manager::
+gl_input_manager::
 drag_right(QMouseEvent* _e, const QPoint& _delta)
 {
   m_right.drag += _delta.manhattanLength();
 
+  /// @TODO Currently we use pi/180 as an additional scaling factor compared
+  ///       with translation. The sensitivities should be made separate and
+  ///       user-configurable.
+  const double x = -_delta.x() * m_sensitivity * glutils::RadPerDeg,
+               y = -_delta.y() * m_sensitivity * glutils::RadPerDeg;
+
   // If the left mouse button is also held down, rotate the camera about itself.
   // Otherwise, orbit the camera about the origin.
-  auto camera = m_gl->camera();
-  if(_e->buttons() & Qt::LeftButton) {
-    camera->rotate(-_delta.x() * m_sensitivity * glutils::RadPerDeg, camera->y());
-    camera->rotate(-_delta.y() * m_sensitivity * glutils::RadPerDeg, camera->x());
-  }
-  else {
-    camera->rotate(-_delta.x() * m_sensitivity * glutils::RadPerDeg,
-        camera->y(), glutils::vector3f());
-    camera->rotate(-_delta.y() * m_sensitivity * glutils::RadPerDeg,
-        camera->x(), glutils::vector3f());
-  }
+  if(_e->buttons() & Qt::LeftButton)
+    emit rotate_camera(x, y);
+  else
+    emit orbit_camera(x, y);
 }
 
 /*----------------------------------------------------------------------------*/

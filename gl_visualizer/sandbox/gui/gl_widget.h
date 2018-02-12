@@ -4,7 +4,7 @@
 #include <QGLWidget>
 
 class base_visualization;
-class std_input_manager;
+class gl_input_manager;
 
 namespace glutils {
   class camera;
@@ -27,7 +27,7 @@ class gl_widget
   ///@{
 
   QTimer*             m_clock{nullptr};         ///< Rendering clock.
-  std_input_manager*  m_input_manager{nullptr}; ///< Manages user input.
+  gl_input_manager*   m_input_manager{nullptr}; ///< Manages user input.
   glutils::camera*    m_camera{nullptr};        ///< The current camera.
   base_visualization* m_visualization{nullptr}; ///< The current visualization.
 
@@ -58,6 +58,30 @@ class gl_widget
 
     void start();
     void reset();
+
+    ///@}
+    ///@name Camera Controls
+    ///@{
+
+    /// Translate the camera without changing the orientation.
+    /// @param _x The X translation.
+    /// @param _y The Y translation.
+    void pan_camera(const double _x, const double _y);
+
+    /// Zoom the camera in the screen-in direction (effectively a -Z
+    /// translation).
+    /// @param _z The ammount to zoom.
+    void zoom_camera(const double _z);
+
+    /// Rotate the camera about its own X and Y axis.
+    /// @param _x The X rotation.
+    /// @param _y The Y rotation.
+    void rotate_camera(const double _x, const double _y);
+
+    /// Orbit the camera about the origin.
+    /// @param _x The X rotation.
+    /// @param _y The Y rotation.
+    void orbit_camera(const double _x, const double _y);
 
     ///@}
     ///@name Selection

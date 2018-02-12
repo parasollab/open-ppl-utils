@@ -15,7 +15,7 @@ namespace glutils {
   //////////////////////////////////////////////////////////////////////////////
   /// An abstract interface class for drawable objects.
   ///
-  /// @details Derived classes must implement the build function to describe the
+  /// @details Derived classes must implement the draw function to describe the
   ///          commands needed to draw the object. Selection and highlighting
   ///          lists are optional. The object maintains a queue of transforms
   ///          that allow one to store multiple pre-computed positions. On each
@@ -55,7 +55,10 @@ namespace glutils {
       drawable(const drawable& _d) noexcept;
       drawable(drawable&& _d) noexcept;
 
-      virtual ~drawable() = default;
+      /// Uninitialize the drawable to force a re-build.
+      virtual void rebuild();
+
+      virtual ~drawable();
 
       ///@}
       ///@name Rendering
@@ -83,8 +86,9 @@ namespace glutils {
       /// available, the current one will be retained.
       void update_transform() noexcept;
 
-      /// Replace the current transform queue with a single identity transform.
-      void clear_transform() noexcept;
+      /// Replace the current transform queue with a single transform.
+      /// @param _t The remaining transform.
+      void clear_transform(const transform& _t = identity_transform()) noexcept;
 
       ///@}
       ///@name Highlighting and Selection

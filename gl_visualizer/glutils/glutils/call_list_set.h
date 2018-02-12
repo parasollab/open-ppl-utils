@@ -36,12 +36,10 @@ namespace glutils {
       ///@name Construction
       ///@{
 
-      //////////////////////////////////////////////////////////////////////////
       /// Create a set of call lists.
       /// @param _num The number of call lists to reserve.
       call_list_set(const size_t _num);
 
-      //////////////////////////////////////////////////////////////////////////
       /// Call lists are released on destruction.
       ~call_list_set();
 
@@ -49,23 +47,18 @@ namespace glutils {
       ///@name Accecssors
       ///@{
 
-      //////////////////////////////////////////////////////////////////////////
       /// Are the call lists initialized?
       bool ready() const noexcept;
 
-      //////////////////////////////////////////////////////////////////////////
       /// Generate the call lists.
-      ///
       /// @warning This isn't done during construction to allow for the
       ///          possibility of constructing the objects outside the rendering
       ///          thread.
       void initialize();
 
-      //////////////////////////////////////////////////////////////////////////
       /// Get the number of stored call lists.
       size_t size() const noexcept;
 
-      //////////////////////////////////////////////////////////////////////////
       /// Access a stored call list.
       ///
       /// @warning It is assumed that clients will NOT request a non-existant

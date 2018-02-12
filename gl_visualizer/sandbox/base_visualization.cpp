@@ -1,5 +1,7 @@
 #include "base_visualization.h"
 
+#include "glutils/selector.h"
+
 #include <algorithm>
 
 /*----------------------------- Construction ---------------------------------*/
@@ -20,7 +22,62 @@ base_visualization::
     delete d;
 }
 
-/*------------------------- Visualization Interface --------------------------*/
+/*-------------------------- Visualization Control ---------------------------*/
+
+void
+base_visualization::
+update()
+{
+  for(auto& d : m_drawables)
+    d->update_transform();
+}
+
+/*-------------------------------- Rendering ---------------------------------*/
+
+void
+base_visualization::
+render()
+{
+  for(const auto& d : m_drawables)
+    d->render();
+}
+
+
+void
+base_visualization::
+render_select(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
+{
+  std::lock_guard<std::mutex> lock(m_selector_guard);
+
+  // Use color-picking for point selection and gl selection for area selection.
+  //if(_w < 2 && _h < 2)
+  //  m_selector->color_pick(_x, _y);
+  //else
+  //  m_selector->select(_x, _y, _w, _h);
+  m_selector->select(_x, _y, _w, _h);
+
+  for(auto unhit : m_selector->unhits())
+    unhit->deselect();
+  for(auto hit : m_selector->hits())
+    hit->select();
+}
+
+
+void
+base_visualization::
+render_hover(const size_t _x, const size_t _y, const size_t, const size_t)
+{
+  std::lock_guard<std::mutex> lock(m_highlighter_guard);
+
+  m_highlighter->color_pick(_x, _y);
+  for(auto unhit : m_highlighter->unhits())
+    unhit->unhighlight();
+  for(auto hit : m_highlighter->hits())
+    hit->highlight();
+}
+
+
+/*-------------------------------- Drawables ---------------------------------*/
 
 void
 base_visualization::
@@ -46,55 +103,23 @@ remove_drawable(glutils::drawable* _d)
   delete _d;
 }
 
+/*------------------------ Highlighting and Selection ------------------------*/
 
-void
+std::set<glutils::drawable*>
 base_visualization::
-update()
+selected_drawables()
 {
-  for(auto& d : m_drawables)
-    d->update_transform();
+  std::lock_guard<std::mutex> lock(m_selector_guard);
+  return m_selector->hits();
 }
 
 
-void
+std::set<glutils::drawable*>
 base_visualization::
-render()
+highlighted_drawables()
 {
-  for(const auto& d : m_drawables)
-    d->render();
-}
-
-
-void
-base_visualization::
-render_select(const size_t _x, const size_t _y, const size_t _w, const size_t _h)
-{
-  // Use color-picking for point selection and gl selection for area selection.
-  //if(_w < 2 && _h < 2)
-  //  m_selector->color_pick(_x, _y);
-  //else
-  //  m_selector->select(_x, _y, _w, _h);
-  m_selector->select(_x, _y, _w, _h);
-
-  for(auto unhit : m_selector->unhits())
-    unhit->deselect();
-  for(auto hit : m_selector->hits())
-    hit->select();
-}
-
-
-void
-base_visualization::
-//render_hover(const size_t, const size_t, const size_t, const size_t)
-render_hover(const size_t _x, const size_t _y, const size_t, const size_t)
-{
-  /// @TODO Hover rendering is presently disabled because the performance sucks.
-  ///       Need to find a better way to achieve this.
-  m_highlighter->color_pick(_x, _y);
-  for(auto unhit : m_highlighter->unhits())
-    unhit->unhighlight();
-  for(auto hit : m_highlighter->hits())
-    hit->highlight();
+  std::lock_guard<std::mutex> lock(m_highlighter_guard);
+  return m_highlighter->hits();
 }
 
 /*----------------------------------------------------------------------------*/

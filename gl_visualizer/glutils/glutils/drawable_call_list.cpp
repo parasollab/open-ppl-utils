@@ -12,10 +12,24 @@ namespace glutils {
       m_lists(new call_list_set(4))
   { }
 
+
   drawable_call_list::
   drawable_call_list(call_list_ptr _cl) noexcept :
       m_lists(_cl)
   { }
+
+
+  void
+  drawable_call_list::
+  rebuild()
+  {
+    drawable::rebuild();
+    m_lists = call_list_ptr(new call_list_set(4));
+  }
+
+
+  drawable_call_list::
+  ~drawable_call_list() = default;
 
   /*-------------------------- drawable Overrides ----------------------------*/
 

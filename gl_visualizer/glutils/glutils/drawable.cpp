@@ -34,6 +34,18 @@ namespace glutils {
     _d.m_highlighted = false;
   }
 
+
+  void
+  drawable::
+  rebuild()
+  {
+    m_initialized = false;
+  }
+
+
+  drawable::
+  ~drawable() = default;
+
   /*-------------------------------- Rendering -------------------------------*/
 
   void
@@ -108,10 +120,10 @@ namespace glutils {
 
   void
   drawable::
-  clear_transform() noexcept
+  clear_transform(const transform& _t) noexcept
   {
     m_transforms = std::queue<transform, std::list<transform>>();
-    m_transforms.push(identity_transform());
+    m_transforms.push(_t);
   }
 
   /*---------------------- Highlighting and Selection ------------------------*/
