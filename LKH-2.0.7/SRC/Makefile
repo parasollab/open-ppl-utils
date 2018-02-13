@@ -62,9 +62,7 @@ STATIC := lib$(NAME).a
 
 .DEFAULT_GOAL := $(STATIC)
 
-.PHONY: static
-static: $(STATIC)
-$(STATIC): $(OBJS) | $(DEPS)
+$(STATIC): $(OBJ) | $(DEPS)
 	@echo Linking static library...
 	@ar rcs ../$@ $^
 
