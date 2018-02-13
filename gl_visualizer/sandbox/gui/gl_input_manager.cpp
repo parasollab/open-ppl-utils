@@ -102,17 +102,15 @@ mouseMoveEvent(QMouseEvent* _e)
     emit mouse_hover(_e->pos());
   }
   else {
-    // There is at least one button held down. Determine the displacement and
-    // whether the deadzone was exceeded.
+    // There is at least one button held down. Determine the displacement.
     const QPoint delta = _e->pos() - m_hover;
-    const bool deadzone_exceeded = delta.manhattanLength() >= m_deadzone;
 
     // Process the drag even for each button.
-    if(_e->buttons() & Qt::LeftButton && (m_left.drag || deadzone_exceeded))
+    if(_e->buttons() & Qt::LeftButton)
       drag_left(_e, delta);
-    if(_e->buttons() & Qt::MiddleButton && (m_middle.drag || deadzone_exceeded))
+    if(_e->buttons() & Qt::MiddleButton)
       drag_middle(_e, delta);
-    if(_e->buttons() & Qt::RightButton && (m_right.drag || deadzone_exceeded))
+    if(_e->buttons() & Qt::RightButton)
       drag_right(_e, delta);
   }
 
@@ -131,9 +129,13 @@ void
 gl_input_manager::
 wheelEvent(QWheelEvent* _e)
 {
+  // Do nothing if the middle button is pressed down.
+  if(_e->buttons() & Qt::MiddleButton)
+    return;
+
   // Scale wheel distance quadratically to make vigorous scrolling zoom faster.
   double wheelDist = _e->delta() / 60.;
-  wheelDist *= wheelDist * nonstd::sign(wheelDist);
+  wheelDist *= wheelDist * nonstd::sign(wheelDist) * m_sensitivity;
 
   emit zoom_camera(wheelDist);
 }
@@ -221,7 +223,12 @@ void
 gl_input_manager::
 drag_left(QMouseEvent* _e, const QPoint& _delta)
 {
+  // Add the drag distance.
   m_left.drag += _delta.manhattanLength();
+
+  // If we have not exceeded the deadzone, do nothing.
+  if(m_left.drag < m_deadzone)
+    return;
 
   // If the right mouse button is also down, do nothing. Otherwise, emit hover
   // signal for the box from the click point to here.
@@ -234,7 +241,12 @@ void
 gl_input_manager::
 drag_middle(QMouseEvent* /*_e*/, const QPoint& _delta)
 {
+  // Add the drag distance.
   m_middle.drag += _delta.manhattanLength();
+
+  // If we have not exceeded the deadzone, do nothing.
+  if(m_middle.drag < m_deadzone)
+    return;
 
   // Pan the camera view.
   emit pan_camera(_delta.x() * m_sensitivity, -_delta.y() * m_sensitivity);
@@ -245,7 +257,12 @@ void
 gl_input_manager::
 drag_right(QMouseEvent* _e, const QPoint& _delta)
 {
+  // Add the drag distance.
   m_right.drag += _delta.manhattanLength();
+
+  // If we have not exceeded the deadzone, do nothing.
+  if(m_right.drag < m_deadzone)
+    return;
 
   /// @TODO Currently we use pi/180 as an additional scaling factor compared
   ///       with translation. The sensitivities should be made separate and

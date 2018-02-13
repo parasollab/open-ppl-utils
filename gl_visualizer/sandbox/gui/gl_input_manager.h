@@ -43,7 +43,7 @@ class gl_input_manager
     button_state m_middle;     ///< The left-button state.
     button_state m_right;      ///< The left-button state.
 
-    int m_deadzone{5};         ///< Ignore drags shorter than this many pixels.
+    size_t m_deadzone{5};      ///< Ignore drags shorter than this many pixels.
     float m_sensitivity{.1};   ///< Higher values make the mouse more sensitive.
 
     ///@}

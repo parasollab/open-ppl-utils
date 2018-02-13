@@ -2,6 +2,7 @@
 
 #include <array>
 
+#include <GL/glu.h>
 #include <QtGui>
 
 #include "glutils/camera.h"
@@ -288,7 +289,7 @@ resizeGL(int _w, int _h)
   // Set the viewing volume
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glFrustum(-_w / 600., _w / 600., -_h / 600., _h / 600., 1, 10000);
+  gluPerspective(60, ((GLfloat)_w/(GLfloat)_h), .1, 10000);
 
   // Return to model view mode
   glMatrixMode(GL_MODELVIEW);
