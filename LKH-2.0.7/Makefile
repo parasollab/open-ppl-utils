@@ -1,4 +1,4 @@
 all:
-	$(MAKE) -C SRC all
+	$(MAKE) -C SRC
 clean:
 	$(MAKE) -C SRC clean

@@ -3,7 +3,7 @@ TREE_TYPE = TWO_LEVEL_TREE
 # TREE_TYPE = ONE_LEVEL_TREE
 
 # CC = gcc
-IDIR = INCLUDE
+IDIR = INCLUDE/LKHInclude
 ODIR = OBJ
 CFLAGS = -O3 -Wall -I$(IDIR) -D$(TREE_TYPE) -g
 
@@ -26,7 +26,7 @@ _OBJ = Activate.o AddCandidate.o AddExtraCandidates.o                  \
        fscanint.o Gain23.o GenerateCandidates.o Genetic.o              \
        GeoConversion.o GetTime.o GreedyTour.o Hashing.o Heap.o         \
        IsBackboneCandidate.o IsCandidate.o IsCommonEdge.o              \
-       IsPossibleCandidate.o KSwapKick.o LinKernighan.o LKHmain.o      \
+       IsPossibleCandidate.o KSwapKick.o LinKernighan.o                \
        Make2OptMove.o Make3OptMove.o Make4OptMove.o Make5OptMove.o     \
        MakeKOptMove.o MergeTourWithBestTour.o MergeWithTour.o          \
        Minimum1TreeCost.o MinimumSpanningTree.o NormalizeNodeList.o    \
@@ -50,15 +50,25 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-.PHONY: 
-	all clean
 
-all:
+standalone:
 	$(MAKE) LKH
 
 LKH: $(OBJ) $(DEPS)
 	$(CC) -o ../LKH $(OBJ) $(CFLAGS) -lm
 
+NAME   := LKH
+STATIC := lib$(NAME).a
+
+.DEFAULT_GOAL := $(STATIC)
+
+.PHONY: static
+static: $(STATIC)
+$(STATIC): $(OBJS) | $(DEPS)
+	@echo Linking static library...
+	@ar rcs ../$@ $^
+
+.PHONY: clean
 clean:
-	/bin/rm -f $(ODIR)/*.o ../LKH *~ ._* $(IDIR)/*~ $(IDIR)/._* 
+	/bin/rm -f $(ODIR)/*.o ../LKH *~ ._* $(IDIR)/*~ $(IDIR)/._* ../$(STATIC)
 
