@@ -300,8 +300,8 @@ extern int CandidateSetSymmetric, CandidateSetType,
 
 extern FILE *ParameterFile, *ProblemFile, *PiFile, *InputTourFile,
     *TourFile, *InitialTourFile, *SubproblemTourFile, **MergeTourFile;
-CostFunction Distance, D, C, c;
-MoveFunction BestMove, BacktrackMove, BestSubsequentMove;
+extern CostFunction Distance, D, C, c;
+extern MoveFunction BestMove, BacktrackMove, BestSubsequentMove;
 
 /* Function prototypes: */
 
