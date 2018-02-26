@@ -2,8 +2,8 @@
 #include "Delaunay.h"
 
 /*
- * The CreateDelaunayCandidateSet function determines for each node its set 
- * of incident candidate edges. The edges are found by Delaunay triangulation. 
+ * The CreateDelaunayCandidateSet function determines for each node its set
+ * of incident candidate edges. The edges are found by Delaunay triangulation.
  *
  * The function is called from CreateCandidateSet.
  */
@@ -52,8 +52,8 @@ void CreateDelaunayCandidateSet()
     }
     free_memory();
     if (Level == 0 &&
-        (WeightType == GEO || WeightType == GEOM ||
-         WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS)) {
+        (Weight_Type == GEO || Weight_Type == GEOM ||
+         Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS)) {
         if (TraceLevel >= 2)
             printff("done\n");
         From = FirstNode;
@@ -65,12 +65,12 @@ void CreateDelaunayCandidateSet()
             From = FirstNode;
             do {
                 From->Zc = From->Y;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 5.0 * (From->Y -
                                                (int) From->Y) / 3.0;
                 From->Y += From->Y > 0 ? -180 : 180;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 3.0 * (From->Y -
                                                (int) From->Y) / 5.0;
@@ -86,7 +86,7 @@ void CreateDelaunayCandidateSet()
     }
     if (Level == 0) {
         AddTourCandidates();
-        /* Add quadrant neighbors if any node has less than two candidates. 
+        /* Add quadrant neighbors if any node has less than two candidates.
            That is, if it should happen that delaunay_edges fails. */
         From = FirstNode;
         do {

@@ -2,7 +2,7 @@
 #include "Sequence.h"
 #include "Genetic.h"
 
-/*      
+/*
  * The FreeStructures function frees all allocated structures.
  */
 
@@ -31,7 +31,7 @@ void FreeStructures()
     Free(CacheVal);
     Free(Name);
     Free(Type);
-    Free(EdgeWeightType);
+    Free(EdgeWeight_Type);
     Free(EdgeWeightFormat);
     Free(EdgeDataFormat);
     Free(NodeCoordType);
@@ -48,7 +48,7 @@ void FreeStructures()
     FreePopulation();
 }
 
-/*      
+/*
    The FreeSegments function frees the segments.
  */
 
@@ -74,7 +74,7 @@ void FreeSegments()
     }
 }
 
-/*      
+/*
  * The FreeCandidateSets function frees the candidate sets.
  */
 

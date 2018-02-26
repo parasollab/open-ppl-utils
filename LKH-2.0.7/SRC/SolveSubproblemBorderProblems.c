@@ -3,18 +3,18 @@
 #include "GeoConversion.h"
 
 /*
- * Given a tour and a partitioning of the problem into subproblems, the 
- * SolveSubproblemBorderProblems function attempt to improve the tour by 
+ * Given a tour and a partitioning of the problem into subproblems, the
+ * SolveSubproblemBorderProblems function attempt to improve the tour by
  * means of a new partitioning given by the borders of these subproblems.
  *
  * For each of the original subproblems a new subproblem is defined by
  * the SubproblemSize points that are closest to its windowing border.
- * These border points together with the given tour induces a subproblem 
- * consisting of all border points, and with edges fixed between points 
- * that are connected by tour segments whose interior points are outside 
- * the border.  
- *  
- * If an improvement is found, the new tour is written to TourFile. 
+ * These border points together with the given tour induces a subproblem
+ * consisting of all border points, and with edges fixed between points
+ * that are connected by tour segments whose interior points are outside
+ * the border.
+ *
+ * If an improvement is found, the new tour is written to TourFile.
  * The original tour is given by the SubproblemSuc references of the nodes.
  *
  * The parameter Subproblems specifies the number of subproblems.
@@ -91,14 +91,14 @@ static void MarkBorderPoints(int CurrentSubproblem)
     assert(A = (Node **) malloc(DimensionSaved * sizeof(Node *)));
     Min[0] = Min[1] = Min[2] = DBL_MAX;
     Max[0] = Max[1] = Max[2] = -DBL_MAX;
-    if (WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->Xc = N->X;
             N->Yc = N->Y;
             N->Zc = N->Z;
-            if (WeightType == GEO || WeightType == GEO_MEEUS)
+            if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                 GEO2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
             else
                 GEOM2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
@@ -176,8 +176,8 @@ static void MarkBorderPoints(int CurrentSubproblem)
     for (Size = 0; Size < ActualSubproblemSize; Size++)
         A[Size]->Subproblem = CurrentSubproblem;
     free(A);
-    if (WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->X = N->Xc;
@@ -190,7 +190,7 @@ static void MarkBorderPoints(int CurrentSubproblem)
 
 #define SWAP(a, b) { temp = (a); (a) = (b); (b) = temp; }
 
-/* 
+/*
  * The QuickSelect function rearranges the array A[0..n-1] such that
  * A[0..k-1]->Rank are less than or equal to A[k]->Rank.
  */

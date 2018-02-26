@@ -3,15 +3,15 @@
 
 /*
  * The SolveDelaunaySubproblems function attempts to improve a given tour
- * by means of a partitioning scheme based on Delaunay clustering. 
+ * by means of a partitioning scheme based on Delaunay clustering.
  *
- * The set of nodes is subdivided into clusters, with at most SubproblemSize 
- * nodes in each one. Each cluster together with the given tour induces a 
- * subproblem consisting of all nodes in the cluster, and with edges fixed 
+ * The set of nodes is subdivided into clusters, with at most SubproblemSize
+ * nodes in each one. Each cluster together with the given tour induces a
+ * subproblem consisting of all nodes in the cluster, and with edges fixed
  * between nodes that are connected by tour segments whose interior points
- * do not belong the cluster.  
- *  
- * If an improvement is found, the new tour is written to TourFile. 
+ * do not belong the cluster.
+ *
+ * If an improvement is found, the new tour is written to TourFile.
  * The original tour is given by the SubproblemSuc references of the nodes.
  */
 
@@ -118,8 +118,8 @@ static int DelaunayClustering(int MaxClusterSize)
         } while ((e = Next(e, u)) != e_start);
     }
     free_memory();
-    if (WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         while ((N = N->Suc) != FirstNode)
             if ((N->Y > 0) != (FirstNode->Y > 0))
@@ -133,12 +133,12 @@ static int DelaunayClustering(int MaxClusterSize)
             From = FirstNode;
             do {
                 From->Zc = From->Y;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 5.0 * (From->Y -
                                                (int) From->Y) / 3.0;
                 From->Y += From->Y > 0 ? -180 : 180;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 3.0 * (From->Y -
                                                (int) From->Y) / 5.0;

@@ -3,15 +3,15 @@
 
 /*
  * The SolveKMeansSubproblems function attempts to improve a given tour
- * by means of a partitioning scheme based on K-means clustering. 
+ * by means of a partitioning scheme based on K-means clustering.
  *
  * The overall region containing the nodes is subdivided into K clusters,
- * where K = ceil(Dimension/SubproblemSize). Each cluster together with 
+ * where K = ceil(Dimension/SubproblemSize). Each cluster together with
  * the given tour induces a subproblem consisting of all nodes in the
- * cluster and with edges fixed between nodes that are connected by tour 
- * segments whose interior points do not belong to the cluster.  
- *  
- * If an improvement is found, the new tour is written to TourFile. 
+ * cluster and with edges fixed between nodes that are connected by tour
+ * segments whose interior points do not belong to the cluster.
+ *
+ * If an improvement is found, the new tour is written to TourFile.
  * The original tour is given by the SubproblemSuc references of the nodes.
  */
 
@@ -72,10 +72,10 @@ void SolveKMeansSubproblems()
  *
  * The algorithm is accellerated using ideas from
  *
- *     Dan Judd, Philip K. McKinley, Anil K. Jain: 
- *     Large-Scale Parallel Data Clustering. 
- *     IEEE Transactions on Pattern Analysis and 
- *     Machine Intelligence 20(8): 871-876 (1998)   
+ *     Dan Judd, Philip K. McKinley, Anil K. Jain:
+ *     Large-Scale Parallel Data Clustering.
+ *     IEEE Transactions on Pattern Analysis and
+ *     Machine Intelligence 20(8): 871-876 (1998)
  */
 
 static void KMeansClustering(int K)
@@ -115,9 +115,9 @@ static void KMeansClustering(int K)
     do {
         N->BestPi = N->Pi;
         N->Pi = 0;
-        if (WeightType == GEO || WeightType == GEO_MEEUS)
+        if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
             GEO2XYZ(N->X, N->Y, &N->Xc, &N->Yc, &N->Zc);
-        else if (WeightType == GEOM || WeightType == GEOM_MEEUS)
+        else if (Weight_Type == GEOM || Weight_Type == GEOM_MEEUS)
             GEOM2XYZ(N->X, N->Y, &N->Xc, &N->Yc, &N->Zc);
         else {
             N->Xc = N->X;
@@ -135,9 +135,9 @@ static void KMeansClustering(int K)
     Xc = Center[0].Xc = SumXc[0] / Count[0];
     Yc = Center[0].Yc = SumYc[0] / Count[0];
     Zc = Center[0].Zc = SumZc[0] / Count[0];
-    if (WeightType == GEO || WeightType == GEO_MEEUS)
+    if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
         XYZ2GEO(Xc, Yc, Zc, &Center[0].X, &Center[0].Y);
-    if (WeightType == GEOM || WeightType == GEOM_MEEUS)
+    if (Weight_Type == GEOM || Weight_Type == GEOM_MEEUS)
         XYZ2GEOM(Xc, Yc, Zc, &Center[0].X, &Center[0].Y);
     else {
         Center[0].X = Xc;
@@ -220,9 +220,9 @@ static void KMeansClustering(int K)
                 Xc = Center[i].Xc = SumXc[i] / Count[i];
                 Yc = Center[i].Yc = SumYc[i] / Count[i];
                 Zc = Center[i].Zc = SumZc[i] / Count[i];
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     XYZ2GEO(Xc, Yc, Zc, &Center[i].X, &Center[i].Y);
-                else if (WeightType == GEOM || WeightType == GEOM_MEEUS)
+                else if (Weight_Type == GEOM || Weight_Type == GEOM_MEEUS)
                     XYZ2GEOM(Xc, Yc, Zc, &Center[i].X, &Center[i].Y);
                 else {
                     Center[i].X = Xc;

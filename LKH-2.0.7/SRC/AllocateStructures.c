@@ -3,8 +3,8 @@
 #include "Heap.h"
 #include "Sequence.h"
 
-/*      
- * The AllocateStructures function allocates all necessary 
+/*
+ * The AllocateStructures function allocates all necessary
  * structures except nodes and candidates.
  */
 
@@ -40,7 +40,7 @@ void AllocateStructures()
     for (i = 1; i <= Dimension; i++)
         Rand[i] = Random();
     SRandom(Seed);
-    if (WeightType != EXPLICIT) {
+    if (Weight_Type != EXPLICIT) {
         for (i = 0; (1 << i) < (Dimension << 1); i++);
         i = 1 << i;
         assert(CacheSig = (int *) calloc(i, sizeof(int)));
@@ -63,7 +63,7 @@ void AllocateStructures()
            (SwapRecord *) malloc((MaxSwaps + 6 * K) * sizeof(SwapRecord)));
 }
 
-/*      
+/*
  * The AllocateSegments function allocates the segments of the two-level tree.
  */
 

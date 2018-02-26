@@ -24,12 +24,12 @@ static BoxOverlapsFunction BoxOverlaps;
 static int Level = 0;
 
 /*
- * The CreateQuadrantCandidateSet function creates for each node 
+ * The CreateQuadrantCandidateSet function creates for each node
  * a candidate set consisting of the K/L least costly neighbor edges
- * in each of the L geometric quadrants around the node, where L 
- * is 4 for 2-D instances, and 8 for 3-D instances. 
- * If these totals less than K nodes, the candidate set is 
- * augmented by the nearest remaining nodes overall to bring 
+ * in each of the L geometric quadrants around the node, where L
+ * is 4 for 2-D instances, and 8 for 3-D instances.
+ * If these totals less than K nodes, the candidate set is
+ * augmented by the nearest remaining nodes overall to bring
  * the total up to K.
  *
  * The function is called from the CreateCandidateSet function.
@@ -106,8 +106,8 @@ void CreateQuadrantCandidateSet(int K)
         free(ZMax);
     }
     if (Level == 0 &&
-        (WeightType == GEO || WeightType == GEOM ||
-         WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS)) {
+        (Weight_Type == GEO || Weight_Type == GEOM ||
+         Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS)) {
         Candidate **SavedCandidateSet;
         assert(SavedCandidateSet =
                (Candidate **) malloc((1 + DimensionSaved) *
@@ -125,12 +125,12 @@ void CreateQuadrantCandidateSet(int K)
                 SavedCandidateSet[From->Id] = From->CandidateSet;
                 From->CandidateSet = 0;
                 From->Zc = From->Y;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 5.0 * (From->Y -
                                                (int) From->Y) / 3.0;
                 From->Y += From->Y > 0 ? -180 : 180;
-                if (WeightType == GEO || WeightType == GEO_MEEUS)
+                if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                     From->Y =
                         (int) From->Y + 3.0 * (From->Y -
                                                (int) From->Y) / 5.0;
@@ -217,7 +217,7 @@ void CreateNearestNeighborCandidateSet(int K)
         free(ZMin);
         free(ZMax);
     }
-    if (Level == 0 && (WeightType == GEOM || WeightType == GEOM_MEEUS)) {
+    if (Level == 0 && (Weight_Type == GEOM || Weight_Type == GEOM_MEEUS)) {
         Candidate **SavedCandidateSet;
         assert(SavedCandidateSet =
                (Candidate **) malloc((1 + DimensionSaved) *
@@ -329,7 +329,7 @@ static int Contains2D(Node * T, int Q, Node * N)
 }
 
 /*
- * The Contains3D function returns 1 if T belongs to 3-D 
+ * The Contains3D function returns 1 if T belongs to 3-D
  * quadrant Q relative to N; otherwise 0.
  *
  *          Q = 2 | Q = 1
@@ -366,7 +366,7 @@ static int Contains3D(Node * T, int Q, Node * N)
 }
 
 /*
- * The BoxOverlaps2D function returns 1 if T's bounding box 
+ * The BoxOverlaps2D function returns 1 if T's bounding box
  * overlaps the 2-D quadrant Q relative to N; otherwise 0.
  */
 
@@ -387,7 +387,7 @@ static int BoxOverlaps2D(Node * T, int Q, Node * N)
 }
 
 /*
- * The BoxOverlaps3D function returns 1 if T's bounding box 
+ * The BoxOverlaps3D function returns 1 if T's bounding box
  * overlaps the 3-D quadrant Q relative to N; otherwise 0.
  */
 
@@ -424,16 +424,16 @@ static int BoxOverlaps3D(Node * T, int Q, Node * N)
 }
 
 /*
- * The Overlaps function returns 1 if High is zero and the half 
- * plane to the left of a point T overlaps quadrant Q relative 
+ * The Overlaps function returns 1 if High is zero and the half
+ * plane to the left of a point T overlaps quadrant Q relative
  * to a point N.
- * If High is not zero the Overlaps function returns 1 if the 
+ * If High is not zero the Overlaps function returns 1 if the
  * half plane to the right of T overlaps quadrant Q relative to N.
  * Otherwise the function returns 0.
  *
  * The directions are relative to the given coordinate axis.
- * The parameter diff is <= 0 if T is to the left of N, 
- * and >= 0 if T is to the right of N.   
+ * The parameter diff is <= 0 if T is to the left of N,
+ * and >= 0 if T is to the right of N.
  */
 
 static int Overlaps(int Q, double diff, int High, int axis)
@@ -471,7 +471,7 @@ static int InCandidateSet(Node * N, Node * T)
 
 /*
  * The NQN function searches KDTree[start:end] in an attempt to
- * find the K quad-nearest neighbors in quadrant Q relative to N. 
+ * find the K quad-nearest neighbors in quadrant Q relative to N.
  *
  * The function is called from the NearestQuadrantNeighbors function.
  */
@@ -523,8 +523,8 @@ static void NQN(Node * N, int Q, int start, int end, int K)
 }
 
 /*
- * The NearestQuadrantNeighbors function searches the K-d tree 
- * in an attempt to find the K quad-nearest neighbors in 
+ * The NearestQuadrantNeighbors function searches the K-d tree
+ * in an attempt to find the K quad-nearest neighbors in
  * quadrant Q relative to N.
  * If Q = 0, the funtion computes the K nearest neighbors to N.
  */

@@ -43,8 +43,8 @@ _OBJ = Activate.o AddCandidate.o AddExtraCandidates.o                  \
        SolveSubproblemBorderProblems.o SolveTourSegmentSubproblems.o   \
        Statistics.o StoreTour.o SymmetrizeCandidateSet.o               \
        TrimCandidateSet.o WriteCandidates.o WritePenalties.o           \
-       WriteTour.o
-             
+       WriteTour.o LKH.o
+
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.c $(DEPS)

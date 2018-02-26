@@ -2,16 +2,16 @@
 #include "GeoConversion.h"
 
 /*
- * The SolveKarpSubproblems function attempts to improve a given tour 
- * by means of Karp's partitioning scheme. 
+ * The SolveKarpSubproblems function attempts to improve a given tour
+ * by means of Karp's partitioning scheme.
  *
  * The overall region containing the nodes is subdivided into rectangles
- * with SubproblemSize nodes in each rectangle. Each rectangle together 
- * with the given tour induces a subproblem consisting of all nodes inside 
- * the rectangle, and with edges fixed between nodes that are connected 
- * by tour segments whose interior points are outside the rectangle.  
- *  
- * If an improvement is found, the new tour is written to TourFile. 
+ * with SubproblemSize nodes in each rectangle. Each rectangle together
+ * with the given tour induces a subproblem consisting of all nodes inside
+ * the rectangle, and with edges fixed between nodes that are connected
+ * by tour segments whose interior points are outside the rectangle.
+ *
+ * If an improvement is found, the new tour is written to TourFile.
  * The original tour is given by the SubproblemSuc references of the nodes.
  */
 
@@ -45,14 +45,14 @@ void SolveKarpSubproblems()
         printff("*** Karp partitioning *** [Cost = " GainFormat "]\n",
                 GlobalBestCost);
     }
-    if (WeightType == GEO || WeightType == GEOM || 
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->Xc = N->X;
             N->Yc = N->Y;
             N->Zc = N->Z;
-            if (WeightType == GEO || WeightType == GEO_MEEUS)
+            if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                 GEO2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
             else
                 GEOM2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
@@ -60,8 +60,8 @@ void SolveKarpSubproblems()
         CoordType = THREED_COORDS;
     }
     KDTree = BuildKDTree(SubproblemSize);
-    if (WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->X = N->Xc;
@@ -88,8 +88,8 @@ void SolveKarpSubproblems()
 }
 
 /*
- * The KarpPartition function subidivides the overall region into 
- * rectangles and attempts to solve the induced subproblems. 
+ * The KarpPartition function subidivides the overall region into
+ * rectangles and attempts to solve the induced subproblems.
  */
 
 static void KarpPartition(int start, int end)
@@ -112,7 +112,7 @@ static void KarpPartition(int start, int end)
 }
 
 /*
- * The CalculateSubproblems function is used to calculate the number of 
+ * The CalculateSubproblems function is used to calculate the number of
  * subproblems (Subproblems) created by the KarpPartition function.
  */
 

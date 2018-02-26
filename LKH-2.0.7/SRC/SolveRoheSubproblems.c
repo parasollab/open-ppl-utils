@@ -2,18 +2,18 @@
 #include "GeoConversion.h"
 
 /*
- * The SolveRoheSubproblems function attempts to improve a given tour by means 
- * of Rohe's random rectangle/box partitioning scheme. If an improvement is 
+ * The SolveRoheSubproblems function attempts to improve a given tour by means
+ * of Rohe's random rectangle/box partitioning scheme. If an improvement is
  * found, the new tour is written to TourFile.
- * 
- * The original tour is given by the SubproblemSuc references of the nodes. 
+ *
+ * The original tour is given by the SubproblemSuc references of the nodes.
  * The size of each segment is SubproblemSize.
  *
  * The algorithm is described on page 81 in
- *  
- *   A Rohe, 
- *   Parallele Heuristiken fur sehr grosse Traveling Salesman Probleme, 
- *   Diplomarbeit, Research Institute for Discrete Mathematics, 
+ *
+ *   A Rohe,
+ *   Parallele Heuristiken fur sehr grosse Traveling Salesman Probleme,
+ *   Diplomarbeit, Research Institute for Discrete Mathematics,
  *   Universitat Bonn (1997).
  */
 
@@ -55,14 +55,14 @@ void SolveRoheSubproblems()
         printff("*** Rohe partitioning *** [Cost = " GainFormat "]\n",
                 GlobalBestCost);
     }
-    if (WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->Xc = N->X;
             N->Yc = N->Y;
             N->Zc = N->Z;
-            if (WeightType == GEO || WeightType == GEO_MEEUS)
+            if (Weight_Type == GEO || Weight_Type == GEO_MEEUS)
                 GEO2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
             else
                 GEOM2XYZ(N->Xc, N->Yc, &N->X, &N->Y, &N->Z);
@@ -128,8 +128,8 @@ void SolveRoheSubproblems()
             N->Subproblem = Subproblems;
         while ((N = N->Suc) != FirstNode);
     }
-    if (WeightType == GEO || WeightType == GEOM || WeightType == GEO_MEEUS
-        || WeightType == GEOM_MEEUS) {
+    if (Weight_Type == GEO || Weight_Type == GEOM || Weight_Type == GEO_MEEUS
+        || Weight_Type == GEOM_MEEUS) {
         N = FirstNode;
         do {
             N->X = N->Xc;
@@ -159,7 +159,7 @@ void SolveRoheSubproblems()
 }
 
 /*
- * The WindowSize function computes the number of unused nodes that belong 
+ * The WindowSize function computes the number of unused nodes that belong
  * to a given box.
  */
 
@@ -196,7 +196,7 @@ static void WindowSize(double XMin, double XMax, double YMin, double YMax,
 }
 
 /*
- * The MakeSubproblem function associates each unused node belonging to 
+ * The MakeSubproblem function associates each unused node belonging to
  * a given box with a subproblem number. Each such node is removed
  * from the list of unused nodes.
  */

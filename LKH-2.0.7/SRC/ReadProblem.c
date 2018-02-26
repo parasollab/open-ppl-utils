@@ -1,33 +1,33 @@
 #include "LKH.h"
 #include "Heap.h"
 
-/*      
- * The ReadProblem function reads the problem data in TSPLIB format from the 
+/*
+ * The ReadProblem function reads the problem data in TSPLIB format from the
  * file specified in the parameter file (PROBLEM_FILE).
  *
- * The following description of the file format is extracted from the TSPLIB 
- * documentation.  
+ * The following description of the file format is extracted from the TSPLIB
+ * documentation.
  *
- * The file consists of a specification part and a data part. The specification 
- * part contains information on the file format and on its contents. The data 
+ * The file consists of a specification part and a data part. The specification
+ * part contains information on the file format and on its contents. The data
  * part contains explicit data.
  *
  * (1) The specification part
  *
- * All entries in this section are of the form <keyword> : <value>, where 
- * <keyword> denotes an alphanumerical keyword and <value> denotes 
- * alphanumerical or numerical data. The terms <string>, <integer> and <real> 
- * denote character string, integer or real data, respectively. The order of 
- * specification of the keywords in the data file is arbitrary (in principle), 
- * but must be consistent, i.e., whenever a keyword is specified, all 
- * necessary information for the correct interpretation of the keyword has to 
- * be known. 
+ * All entries in this section are of the form <keyword> : <value>, where
+ * <keyword> denotes an alphanumerical keyword and <value> denotes
+ * alphanumerical or numerical data. The terms <string>, <integer> and <real>
+ * denote character string, integer or real data, respectively. The order of
+ * specification of the keywords in the data file is arbitrary (in principle),
+ * but must be consistent, i.e., whenever a keyword is specified, all
+ * necessary information for the correct interpretation of the keyword has to
+ * be known.
  *
  * Below is given a list of all available keywords.
  *
  * NAME : <string>e
  * Identifies the data file.
- * 
+ *
  * TYPE : <string>
  * Specifies the type of data. Possible types are
  * TSP          Data for a symmetric traveling salesman problem
@@ -36,7 +36,7 @@
  * HPP          Hamiltonian path problem data (not available in TSPLIB)
  *
  * COMMENT : <string>
- * Additional comments (usually the name of the contributor or the creator of 
+ * Additional comments (usually the name of the contributor or the creator of
  * the problem instance is given here).
  *
  * DIMENSION : < integer>
@@ -53,70 +53,70 @@
  * GEO          Weights are geographical distances in kilometers (TSPLIB).
  *              Coordinates are given in the form DDD.MM where DDD are the
  *              degrees and MM the minutes
- * GEOM         Weights are geographical distances in meters (used for the 
- *              world TSP). Coordinates are given in decimal form    
- * GEO_MEEUS    Weights are geographical distances in kilometers, computed 
- *              according to Meeus' formula.  Coordinates are given in the 
+ * GEOM         Weights are geographical distances in meters (used for the
+ *              world TSP). Coordinates are given in decimal form
+ * GEO_MEEUS    Weights are geographical distances in kilometers, computed
+ *              according to Meeus' formula.  Coordinates are given in the
  *              form DDD.MM where DDD are the degrees and MM the minutes
- * GEOM_MEEUS   Weights are geographical distances, computed according to 
+ * GEOM_MEEUS   Weights are geographical distances, computed according to
  *              Meeus' formula. Coordinates are given in decimal form
  * MAN_2D       Weights are Manhattan distances in 2-D
  * MAN_3D       Weights are Manhattan distances in 3-D
- * MAX_2D       Weights are maximum distances in 2-D 
+ * MAX_2D       Weights are maximum distances in 2-D
  * MAX_3D       Weights are maximum distances in 3-D
  * XRAY1        Distance function for crystallography problems (Version 1)
  * XRAY2        Distance function for crystallography problems (Version 2)
- * SPECIAL      There is a special distance function implemented in 
+ * SPECIAL      There is a special distance function implemented in
  *              the Distance_SPECIAL function.
  *
  * EDGE-WEIGHT_FORMAT : <string>
- * Describes the format of the edge weights if they are given explicitly. 
+ * Describes the format of the edge weights if they are given explicitly.
  * The values are
  * FUNCTION         Weights are given by a function (see above)
  * FULL_MATRIX      Weights are given by a full matrix
- * UPPER_ROW        Upper triangular matrix 
+ * UPPER_ROW        Upper triangular matrix
  *                      (row-wise without diagonal entries)
- * LOWER_ROW        Lower triangular matrix 
- *                      (row-wise without diagonal entries)     
- * UPPER_DIAG_ROW   Upper triangular matrix 
+ * LOWER_ROW        Lower triangular matrix
+ *                      (row-wise without diagonal entries)
+ * UPPER_DIAG_ROW   Upper triangular matrix
  *                      (row-wise including diagonal entries)
- * LOWER_DIAG_ROW   Lower triangular matrix 
+ * LOWER_DIAG_ROW   Lower triangular matrix
  *                      (row-wise including diagonal entries)
- * UPPER_COL        Upper triangular matrix 
+ * UPPER_COL        Upper triangular matrix
  *                      (column-wise without diagonal entries)
- * LOWER_COL        Lower triangular matrix 
- *                      (column-wise without diagonal entries)  
- * UPPER_DIAG_COL   Upper triangular matrix 
+ * LOWER_COL        Lower triangular matrix
+ *                      (column-wise without diagonal entries)
+ * UPPER_DIAG_COL   Upper triangular matrix
  *                      (column-wise including diagonal entries)
- * LOWER_DIAG_COL   Lower triangular matrix 
+ * LOWER_DIAG_COL   Lower triangular matrix
  *                      (column-wise including diagonal entries)
  *
  * EDGE_DATA_FORMAT : <string>
- * Describes the format in which the edges of a graph are given, if the 
+ * Describes the format in which the edges of a graph are given, if the
  * graph is not complete. The values are
  * EDGE_LIST    The graph is given by an edge list
  * ADJ_LIST     The graph is given by an adjacency list
  *
  * NODE_COORD_TYPE : <string>
- * Specifies whether the coordinates are associated with each node 
- * (which, for example may be used for either graphical display or 
+ * Specifies whether the coordinates are associated with each node
+ * (which, for example may be used for either graphical display or
  * distance computations.
  * The values are
  * TWOD_COORDS      Nodes are specified by coordinates in 2-D
  * THREED_COORDS    Nodes are specified by coordinates in 3-D
  * NO_COORDS        The nodes do not have associated coordinates
- * The default value is NO_COORDS. In the current implementation, however, 
+ * The default value is NO_COORDS. In the current implementation, however,
  * the value has no significance.
  *
  * DISPLAY_DATA_TYPE : <string>
- * Specifies how a graphical display of the nodes can be obtained. 
+ * Specifies how a graphical display of the nodes can be obtained.
  * The values are
  * COORD_DISPLAY    Display is generated from the node coordinates
  * TWOD_DISPLAY     Explicit coordinates in 2-D are given
  * NO_DISPLAY       No graphical display is possible
  *
- * The default value is COORD_DISPLAY if node coordinates are specifies and 
- * NO_DISPLAY otherwise. In the current implementation, however, the value 
+ * The default value is COORD_DISPLAY if node coordinates are specifies and
+ * NO_DISPLAY otherwise. In the current implementation, however, the value
  * has no significance.
  *
  * EOF
@@ -124,74 +124,74 @@
  *
  * (2) The data part
  *
- * Depending on the choice of specifications some additional data may be 
- * required. These data are given corresponding data sections following the 
- * specification part. Each data section begins with the corresponding 
- * keyword. The length of the sectionis either explicitly known form the 
- * format specification, or the section is terminated by an appropriate 
+ * Depending on the choice of specifications some additional data may be
+ * required. These data are given corresponding data sections following the
+ * specification part. Each data section begins with the corresponding
+ * keyword. The length of the sectionis either explicitly known form the
+ * format specification, or the section is terminated by an appropriate
  * end-of-section identifier.
  *
  * NODE_COORD_SECTION :
  * Node coordinates are given in this section. Each line is of the form
- *  
+ *
  *      <integer> <real> <real>
- *       
+ *
  * if NODE_COORD_TYPE is TWOD_COORDS, or
- * 
+ *
  *      <integer> <real> <real> <real>
- *       
- * if NODE_COORD_TYPE is THREED_COORDS. The integers give the number of the 
+ *
+ * if NODE_COORD_TYPE is THREED_COORDS. The integers give the number of the
  * respective nodes. The real numbers are the associated coordinates.
  *
  * EDGE_DATA_SECTION :
- * Edges of the graph are specified in either of the two formats allowed in 
- * the EDGE_DATA_FORAT entry. If the type is EDGE_LIST, then the edges are given 
+ * Edges of the graph are specified in either of the two formats allowed in
+ * the EDGE_DATA_FORAT entry. If the type is EDGE_LIST, then the edges are given
  * as a sequence of lines of the form
- *  
+ *
  *      <integer> <integer>
- *       
- * each entry giving the terminal nodes of some edge. The list is terminated 
- * by a -1. If the type is ADJ_LIST, the section consists of adjacency lists 
+ *
+ * each entry giving the terminal nodes of some edge. The list is terminated
+ * by a -1. If the type is ADJ_LIST, the section consists of adjacency lists
  * for nodes.
  * The adjacency list of a node x is specified as
- * 
+ *
  *      <integer> <integer> ... <integer> -1
- *       
- * where the first integer gives the number of node x and the following 
- * integers (terminated by -1) the numbers of the nodes adjacent to x. 
+ *
+ * where the first integer gives the number of node x and the following
+ * integers (terminated by -1) the numbers of the nodes adjacent to x.
  * The list of adjacency lists are terminated by an additional -1.
  *
  * FIXED_EDGES_SECTION :
- * In this section, edges are listed that are required to appear in each 
- * solution to the problem. The edges to be fixed are given in the form 
+ * In this section, edges are listed that are required to appear in each
+ * solution to the problem. The edges to be fixed are given in the form
  * (per line)
- * 
+ *
  *      <integer> <integer>
- *       
- * meaning that the edge (arc) from the first node to the second node has 
+ *
+ * meaning that the edge (arc) from the first node to the second node has
  * to be contained in a solution. This section is terminated by a -1.
  *
  * DISPLAY_DATA_SECTION :
- * If DISPLAY_DATA_TYPE is TWOD_DISPLAY, the 2-dimensional coordinates from 
+ * If DISPLAY_DATA_TYPE is TWOD_DISPLAY, the 2-dimensional coordinates from
  * which a display can be generated are given in the form (per line)
- *  
+ *
  *      <integer> <real> <real>
- *       
- * The integers specify the respective nodes and the real numbers give the 
- * associated coordinates. The contents of this section, however, has no 
+ *
+ * The integers specify the respective nodes and the real numbers give the
+ * associated coordinates. The contents of this section, however, has no
  * significance in the current implementation.
  *
  * TOUR_SECTION :
- * A tour is specified in this section. The tour is given by a list of 
- * integers giving the sequence in which the nodes are visited in the tour. 
- * The tour is terminated by a -1. Note: In contrast to the TSPLIB format, 
- * only one tour can be given in this section. The tour is used to limit 
- * the search (the last edge to be excluded in a non-gainful move must not 
- * belong to the tour). In addition, the Alpha field of its edges is set to 
+ * A tour is specified in this section. The tour is given by a list of
+ * integers giving the sequence in which the nodes are visited in the tour.
+ * The tour is terminated by a -1. Note: In contrast to the TSPLIB format,
+ * only one tour can be given in this section. The tour is used to limit
+ * the search (the last edge to be excluded in a non-gainful move must not
+ * belong to the tour). In addition, the Alpha field of its edges is set to
  * -1.
  *
  * EDGE_WEIGHT_SECTION :
- * The edge weights are given in the format specifies by the EDGE_WEIGHT_FORMAT 
+ * The edge weights are given in the format specifies by the EDGE_WEIGHT_FORMAT
  * entry. At present, all explicit data are integral and is given in one of the
  * (self-explanatory) matrix formats, with explicitly known lengths.
  */
@@ -214,8 +214,8 @@ static void Read_NODE_COORD_SECTION(void);
 static void Read_NODE_COORD_TYPE(void);
 static void Read_TOUR_SECTION(FILE ** File);
 static void Read_TYPE(void);
-static int TwoDWeightType(void);
-static int ThreeDWeightType(void);
+static int TwoDWeight_Type(void);
+static int ThreeDWeight_Type(void);
 
 void ReadProblem()
 {
@@ -228,10 +228,10 @@ void ReadProblem()
         printff("Reading PROBLEM_FILE: \"%s\" ... ", ProblemFileName);
     FreeStructures();
     FirstNode = 0;
-    WeightType = WeightFormat = ProblemType = -1;
+    Weight_Type = WeightFormat = ProblemType = -1;
     CoordType = NO_COORDS;
     Name = Copy("Unnamed");
-    Type = EdgeWeightType = EdgeWeightFormat = 0;
+    Type = EdgeWeight_Type = EdgeWeightFormat = 0;
     EdgeDataFormat = NodeCoordType = DisplayDataType = 0;
     Distance = 0;
     C = 0;
@@ -314,8 +314,8 @@ void ReadProblem()
             MaxTrials = Dimension;
         MakeHeap(Dimension);
     }
-    if (CostMatrix == 0 && Dimension <= MaxMatrixDimension && 
-        Distance != 0 && Distance != Distance_1 && 
+    if (CostMatrix == 0 && Dimension <= MaxMatrixDimension &&
+        Distance != 0 && Distance != Distance_1 &&
         Distance != Distance_ATSP && Distance != Distance_SPECIAL) {
         Node *Ni, *Nj;
         assert(CostMatrix =
@@ -333,10 +333,10 @@ void ReadProblem()
                     Ni->C[Nj->Id] = 0;
         }
         while ((Ni = Ni->Suc) != FirstNode);
-        WeightType = EXPLICIT;
+        Weight_Type = EXPLICIT;
         c = 0;
     }
-    if (Precision > 1 && (WeightType == EXPLICIT || ProblemType == ATSP)) {
+    if (Precision > 1 && (Weight_Type == EXPLICIT || ProblemType == ATSP)) {
         int j, n = ProblemType == ATSP ? Dimension / 2 : Dimension;
         for (i = 2; i <= n; i++) {
             Node *N = &NodeSet[i];
@@ -345,8 +345,8 @@ void ReadProblem()
                     eprintf("PRECISION (= %d) is too large", Precision);
         }
     }
-    C = WeightType == EXPLICIT ? C_EXPLICIT : C_FUNCTION;
-    D = WeightType == EXPLICIT ? D_EXPLICIT : D_FUNCTION;
+    C = Weight_Type == EXPLICIT ? C_EXPLICIT : C_FUNCTION;
+    D = Weight_Type == EXPLICIT ? D_EXPLICIT : D_FUNCTION;
     if (SubsequentMoveType == 0)
         SubsequentMoveType = MoveType;
     K = MoveType >= SubsequentMoveType
@@ -401,22 +401,22 @@ void ReadProblem()
     LastLine = 0;
 }
 
-static int TwoDWeightType()
+static int TwoDWeight_Type()
 {
-    return WeightType == EUC_2D || WeightType == MAX_2D ||
-        WeightType == MAN_2D || WeightType == CEIL_2D ||
-        WeightType == GEO || WeightType == GEOM ||
-        WeightType == GEO_MEEUS || WeightType == GEOM_MEEUS ||
-        WeightType == ATT ||
-        (WeightType == SPECIAL && CoordType == TWOD_COORDS);
+    return Weight_Type == EUC_2D || Weight_Type == MAX_2D ||
+        Weight_Type == MAN_2D || Weight_Type == CEIL_2D ||
+        Weight_Type == GEO || Weight_Type == GEOM ||
+        Weight_Type == GEO_MEEUS || Weight_Type == GEOM_MEEUS ||
+        Weight_Type == ATT ||
+        (Weight_Type == SPECIAL && CoordType == TWOD_COORDS);
 }
 
-static int ThreeDWeightType()
+static int ThreeDWeight_Type()
 {
-    return WeightType == EUC_3D || WeightType == MAX_3D ||
-        WeightType == MAN_3D || WeightType == CEIL_3D ||
-        WeightType == XRAY1 || WeightType == XRAY2 ||
-        (WeightType == SPECIAL && CoordType == THREED_COORDS);
+    return Weight_Type == EUC_3D || Weight_Type == MAX_3D ||
+        Weight_Type == MAN_3D || Weight_Type == CEIL_3D ||
+        Weight_Type == XRAY1 || Weight_Type == XRAY2 ||
+        (Weight_Type == SPECIAL && CoordType == THREED_COORDS);
 }
 
 static void CheckSpecificationPart()
@@ -425,70 +425,70 @@ static void CheckSpecificationPart()
         eprintf("TYPE is missing");
     if (Dimension < 3)
         eprintf("DIMENSION < 3 or not specified");
-    if (WeightType == -1 && ProblemType != ATSP && ProblemType != HCP &&
+    if (Weight_Type == -1 && ProblemType != ATSP && ProblemType != HCP &&
         ProblemType != HPP)
         eprintf("EDGE_WEIGHT_TYPE is missing");
-    if (WeightType == EXPLICIT && WeightFormat == -1)
+    if (Weight_Type == EXPLICIT && WeightFormat == -1)
         eprintf("EDGE_WEIGHT_FORMAT is missing");
-    if (WeightType == EXPLICIT && WeightFormat == FUNCTION)
+    if (Weight_Type == EXPLICIT && WeightFormat == FUNCTION)
         eprintf("Conflicting EDGE_WEIGHT_TYPE and EDGE_WEIGHT_FORMAT");
-    if (WeightType != EXPLICIT
-        && (WeightType != SPECIAL || CoordType != NO_COORDS)
-        && WeightType != -1 && WeightFormat != -1
+    if (Weight_Type != EXPLICIT
+        && (Weight_Type != SPECIAL || CoordType != NO_COORDS)
+        && Weight_Type != -1 && WeightFormat != -1
         && WeightFormat != FUNCTION)
         eprintf("Conflicting EDGE_WEIGHT_TYPE and EDGE_WEIGHT_FORMAT");
-    if (ProblemType == ATSP && WeightType != EXPLICIT && WeightType != -1)
+    if (ProblemType == ATSP && Weight_Type != EXPLICIT && Weight_Type != -1)
         eprintf("Conflicting TYPE and EDGE_WEIGHT_TYPE");
     if (ProblemType == ATSP && WeightFormat != FULL_MATRIX)
         eprintf("Conflicting TYPE and EDGE_WEIGHT_FORMAT");
-    if (CandidateSetType == DELAUNAY && !TwoDWeightType()
+    if (CandidateSetType == DELAUNAY && !TwoDWeight_Type()
         && MaxCandidates > 0)
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for CANDIDATE_SET_TYPE = DELAUNAY");
-    if (CandidateSetType == NN && !TwoDWeightType()
-        && !ThreeDWeightType() && MaxCandidates > 0)
+    if (CandidateSetType == NN && !TwoDWeight_Type()
+        && !ThreeDWeight_Type() && MaxCandidates > 0)
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for CANDIDATE_SET_TYPE = "
              "NEAREST-NEIGHBOR");
-    if (CandidateSetType == QUADRANT && !TwoDWeightType()
-        && !ThreeDWeightType() && MaxCandidates + ExtraCandidates > 0)
+    if (CandidateSetType == QUADRANT && !TwoDWeight_Type()
+        && !ThreeDWeight_Type() && MaxCandidates + ExtraCandidates > 0)
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for CANDIDATE_SET_TYPE = QUADRANT");
-    if (ExtraCandidateSetType == NN && !TwoDWeightType()
-        && !ThreeDWeightType() && ExtraCandidates > 0)
+    if (ExtraCandidateSetType == NN && !TwoDWeight_Type()
+        && !ThreeDWeight_Type() && ExtraCandidates > 0)
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for EXTRA_CANDIDATE_SET_TYPE = "
              "NEAREST-NEIGHBOR");
-    if (ExtraCandidateSetType == QUADRANT && !TwoDWeightType()
-        && !ThreeDWeightType()
+    if (ExtraCandidateSetType == QUADRANT && !TwoDWeight_Type()
+        && !ThreeDWeight_Type()
         && ExtraCandidates > 0)
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for EXTRA_CANDIDATE_SET_TYPE = "
              "QUADRANT");
-    if (InitialTourAlgorithm == QUICK_BORUVKA && !TwoDWeightType()
-        && !ThreeDWeightType())
+    if (InitialTourAlgorithm == QUICK_BORUVKA && !TwoDWeight_Type()
+        && !ThreeDWeight_Type())
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for INITIAL_TOUR_ALGORITHM = "
              "QUICK-BORUVKA");
-    if (InitialTourAlgorithm == SIERPINSKI && !TwoDWeightType())
+    if (InitialTourAlgorithm == SIERPINSKI && !TwoDWeight_Type())
         eprintf
             ("Illegal EDGE_WEIGHT_TYPE for INITIAL_TOUR_ALGORITHM = "
              "SIERPINSKI");
-    if (DelaunayPartitioning && !TwoDWeightType())
+    if (DelaunayPartitioning && !TwoDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for DELAUNAY specification");
-    if (KarpPartitioning && !TwoDWeightType() && !ThreeDWeightType())
+    if (KarpPartitioning && !TwoDWeight_Type() && !ThreeDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for KARP specification");
-    if (KCenterPartitioning && !TwoDWeightType() && !ThreeDWeightType())
+    if (KCenterPartitioning && !TwoDWeight_Type() && !ThreeDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for K-CENTER specification");
-    if (KMeansPartitioning && !TwoDWeightType() && !ThreeDWeightType())
+    if (KMeansPartitioning && !TwoDWeight_Type() && !ThreeDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for K-MEANS specification");
-    if (MoorePartitioning && !TwoDWeightType())
+    if (MoorePartitioning && !TwoDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for MOORE specification");
-    if (RohePartitioning && !TwoDWeightType() && !ThreeDWeightType())
+    if (RohePartitioning && !TwoDWeight_Type() && !ThreeDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for ROHE specification");
-    if (SierpinskiPartitioning && !TwoDWeightType())
+    if (SierpinskiPartitioning && !TwoDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for SIERPINSKI specification");
-    if (SubproblemBorders && !TwoDWeightType() && !ThreeDWeightType())
+    if (SubproblemBorders && !TwoDWeight_Type() && !ThreeDWeight_Type())
         eprintf("Illegal EDGE_WEIGHT_TYPE for BORDERS specification");
 }
 
@@ -755,7 +755,7 @@ static void Read_EDGE_WEIGHT_SECTION()
                     Nj->FixedTo2 = Ni;
             }
             Distance = Distance_ATSP;
-            WeightType = -1;
+            Weight_Type = -1;
         } else
             for (i = 1, Ni = FirstNode; i <= Dimension; i++, Ni = Ni->Suc) {
                 for (j = 1; j <= Dimension; j++) {
@@ -869,87 +869,87 @@ static void Read_EDGE_WEIGHT_TYPE()
 {
     unsigned int i;
 
-    if (!(EdgeWeightType = Copy(strtok(0, Delimiters))))
+    if (!(EdgeWeight_Type = Copy(strtok(0, Delimiters))))
         eprintf("EDGE_WEIGHT_TYPE: string expected");
-    for (i = 0; i < strlen(EdgeWeightType); i++)
-        EdgeWeightType[i] = (char) toupper(EdgeWeightType[i]);
-    if (!strcmp(EdgeWeightType, "ATT")) {
-        WeightType = ATT;
+    for (i = 0; i < strlen(EdgeWeight_Type); i++)
+        EdgeWeight_Type[i] = (char) toupper(EdgeWeight_Type[i]);
+    if (!strcmp(EdgeWeight_Type, "ATT")) {
+        Weight_Type = ATT;
         Distance = Distance_ATT;
         c = c_ATT;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "CEIL_2D")) {
-        WeightType = CEIL_2D;
+    } else if (!strcmp(EdgeWeight_Type, "CEIL_2D")) {
+        Weight_Type = CEIL_2D;
         Distance = Distance_CEIL_2D;
         c = c_CEIL_2D;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "CEIL_3D")) {
-        WeightType = CEIL_3D;
+    } else if (!strcmp(EdgeWeight_Type, "CEIL_3D")) {
+        Weight_Type = CEIL_3D;
         Distance = Distance_CEIL_3D;
         c = c_CEIL_3D;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "EUC_2D")) {
-        WeightType = EUC_2D;
+    } else if (!strcmp(EdgeWeight_Type, "EUC_2D")) {
+        Weight_Type = EUC_2D;
         Distance = Distance_EUC_2D;
         c = c_EUC_2D;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "EUC_3D")) {
-        WeightType = EUC_3D;
+    } else if (!strcmp(EdgeWeight_Type, "EUC_3D")) {
+        Weight_Type = EUC_3D;
         Distance = Distance_EUC_3D;
         c = c_EUC_3D;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "EXPLICIT")) {
-        WeightType = EXPLICIT;
+    } else if (!strcmp(EdgeWeight_Type, "EXPLICIT")) {
+        Weight_Type = EXPLICIT;
         Distance = Distance_EXPLICIT;
-    } else if (!strcmp(EdgeWeightType, "MAN_2D")) {
-        WeightType = MAN_2D;
+    } else if (!strcmp(EdgeWeight_Type, "MAN_2D")) {
+        Weight_Type = MAN_2D;
         Distance = Distance_MAN_2D;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "MAN_3D")) {
-        WeightType = MAN_3D;
+    } else if (!strcmp(EdgeWeight_Type, "MAN_3D")) {
+        Weight_Type = MAN_3D;
         Distance = Distance_MAN_3D;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "MAX_2D")) {
-        WeightType = MAX_2D;
+    } else if (!strcmp(EdgeWeight_Type, "MAX_2D")) {
+        Weight_Type = MAX_2D;
         Distance = Distance_MAX_2D;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "MAX_3D")) {
-        WeightType = MAX_3D;
+    } else if (!strcmp(EdgeWeight_Type, "MAX_3D")) {
+        Weight_Type = MAX_3D;
         Distance = Distance_MAX_3D;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "GEO")) {
-        WeightType = GEO;
+    } else if (!strcmp(EdgeWeight_Type, "GEO")) {
+        Weight_Type = GEO;
         Distance = Distance_GEO;
         c = c_GEO;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "GEOM")) {
-        WeightType = GEOM;
+    } else if (!strcmp(EdgeWeight_Type, "GEOM")) {
+        Weight_Type = GEOM;
         Distance = Distance_GEOM;
         c = c_GEOM;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "GEO_MEEUS")) {
-        WeightType = GEO_MEEUS;
+    } else if (!strcmp(EdgeWeight_Type, "GEO_MEEUS")) {
+        Weight_Type = GEO_MEEUS;
         Distance = Distance_GEO_MEEUS;
         c = c_GEO_MEEUS;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "GEOM_MEEUS")) {
-        WeightType = GEOM_MEEUS;
+    } else if (!strcmp(EdgeWeight_Type, "GEOM_MEEUS")) {
+        Weight_Type = GEOM_MEEUS;
         Distance = Distance_GEOM_MEEUS;
         c = c_GEOM_MEEUS;
         CoordType = TWOD_COORDS;
-    } else if (!strcmp(EdgeWeightType, "XRAY1")) {
-        WeightType = XRAY1;
+    } else if (!strcmp(EdgeWeight_Type, "XRAY1")) {
+        Weight_Type = XRAY1;
         Distance = Distance_XRAY1;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "XRAY2")) {
-        WeightType = XRAY2;
+    } else if (!strcmp(EdgeWeight_Type, "XRAY2")) {
+        Weight_Type = XRAY2;
         Distance = Distance_XRAY2;
         CoordType = THREED_COORDS;
-    } else if (!strcmp(EdgeWeightType, "SPECIAL")) {
-        WeightType = SPECIAL;
+    } else if (!strcmp(EdgeWeight_Type, "SPECIAL")) {
+        Weight_Type = SPECIAL;
         Distance = Distance_SPECIAL;
     } else
-        eprintf("Unknown EDGE_WEIGHT_TYPE: %s", EdgeWeightType);
+        eprintf("Unknown EDGE_WEIGHT_TYPE: %s", EdgeWeight_Type);
 }
 
 static void Read_FIXED_EDGES_SECTION()
@@ -1224,22 +1224,22 @@ static void Read_TYPE()
 /*
    The ReadTour function reads a tour from a file.
 
-   The format is as follows: 
+   The format is as follows:
 
    OPTIMUM = <real>
-   Known optimal tour length. A run will be terminated as soon as a tour 
+   Known optimal tour length. A run will be terminated as soon as a tour
    length less than or equal to optimum is achieved.
    Default: MINUS_INFINITY.
 
    TOUR_SECTION :
    A tour is specified in this section. The tour is given by a list of integers
    giving the sequence in which the nodes are visited in the tour. The tour is
-   terminated by a -1. 
+   terminated by a -1.
 
    EOF
    Terminates the input data. The entry is optional.
 
-   Other keywords in TSPLIB format may be included in the file, but they are 
+   Other keywords in TSPLIB format may be included in the file, but they are
    ignored.
 */
 
