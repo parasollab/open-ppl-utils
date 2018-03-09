@@ -280,7 +280,8 @@ extern int Trial;      /* Ordinal number of the current trial */
 /* The following variables are read by the functions ReadParameters and
    ReadProblem: */
 
-extern char *ParameterFileName, *ProblemFileName, *PiFileName,
+extern const char *ParameterFileName;
+extern char *ProblemFileName, *PiFileName,
     *TourFileName, *OutputTourFileName, *InputTourFileName,
     **CandidateFileName, *InitialTourFileName,
     *SubproblemTourFileName, **MergeTourFileName;
