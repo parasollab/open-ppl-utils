@@ -157,7 +157,7 @@ namespace mathtool{
       }
       //find vector component of this in _v's direction
       Vector proj(const Vector& _v) const {
-       return (*this * _v)/(_v * _v) * _v;
+        return (*this * _v)/(_v * _v) * _v;
       }
       //find vector component of this orthogonal to _v's direction
       Vector orth(const Vector& _v) const {
@@ -538,6 +538,21 @@ namespace mathtool{
         return *this * (_l/n);
       }
 
+      /// Normalize this vector to the range [-pi,pi] by adjusting the magnitude
+      /// by some multiple of 2pi.
+      Vector eulerNormalize() {
+        const T magnitude  = norm(),
+                equivalent = std::fmod(magnitude + PI, TWOPI) - PI;
+        return *this * (equivalent / magnitude);
+      }
+      /// Normalize this vector to the range [-pi,pi] by adjusting the magnitude
+      /// by some multiple of 2pi.
+      Vector& eulerSelfNormalize() {
+        const T magnitude  = norm(),
+                equivalent = std::fmod(magnitude + PI, TWOPI) - PI;
+        return *this *= (equivalent / magnitude);
+      }
+
       //rotate vector
       //TODO: make 2d rotations match 3d rotations
       ////////////////////////////////////////////////////////////////////////
@@ -780,6 +795,7 @@ namespace mathtool{
   typedef Vector2d Point2d;
   typedef Vector<double,3> Vector3d;
   typedef Vector3d Point3d;
+  typedef Vector3d EulerVector;
   typedef Vector<double,4> Vector4d;
   typedef Vector4d Point4d;
 

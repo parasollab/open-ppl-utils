@@ -16,11 +16,15 @@ namespace mathtool{
   class Quaternion {
 
     public:
-      Quaternion(double _s = 1, const Vector3d& _v = Vector3d()) : m_s(_s), m_v(_v) {}
+
+      Quaternion(double _s = 1, const Vector3d& _v = Vector3d()) : m_s(_s),
+          m_v(_v) {}
 
       //access
-      const double& real() const {return m_s;}
-      const Vector3d& imaginary() const {return m_v;}
+      const double& real() const noexcept {return m_s;}
+      const Vector3d& imaginary() const noexcept {return m_v;}
+      double& real() noexcept {return m_s;}
+      Vector3d& imaginary() noexcept {return m_v;}
 
       //equality
       bool operator==(const Quaternion& _q) const {
@@ -104,12 +108,6 @@ namespace mathtool{
         return *this / norm();
       }
 
-      friend std::istream& operator>>(std::istream& _is, Quaternion& _q);
-      friend std::ostream& operator<<(std::ostream& _os, const Quaternion& _q);
-      friend Quaternion& convertFromMatrix(Quaternion& _q, const Matrix3x3& _m);
-      friend Matrix3x3& convertFromQuaternion(Matrix3x3& _m, const Quaternion& _q);
-      friend EulerAngle& convertFromQuaternion(EulerAngle& _m, const Quaternion& _q);
-
     private:
 
       double m_s; //real component of Quaternion
@@ -124,11 +122,11 @@ namespace mathtool{
   }
 
   inline std::istream& operator>>(std::istream& _is, Quaternion& _q) {
-    return _is >> _q.m_s >> _q.m_v;
+    return _is >> _q.real() >> _q.imaginary();
   }
 
   inline std::ostream& operator<<(std::ostream& _os, const Quaternion& _q) {
-    return _os << _q.m_s << " " << _q.m_v;
+    return _os << _q.real() << " " << _q.imaginary();
   }
 
 }

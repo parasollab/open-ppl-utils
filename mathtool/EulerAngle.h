@@ -1,6 +1,3 @@
-/* EulerAngle is expressed in EulerZYX or FixedXYZ rotation format
- */
-
 #ifndef EULERANGLE_H_
 #define EULERANGLE_H_
 
@@ -8,11 +5,15 @@
 
 namespace mathtool {
 
-  template<size_t N, size_t M> class Matrix;
-  typedef Matrix<3, 3> Matrix3x3;
-  class Quaternion;
-
+  //////////////////////////////////////////////////////////////////////////////
+  /// An Euler angle expressed in intrinsic ZYX format (also known as tait-bryan
+  /// angles or yaw-pitch-roll). Alpha is the first rotation about the original
+  /// Z axis, followed by beta about the new Y axis, and finally gamma about the
+  /// new X axis. As applied to aircraft this assumes that +x is the forward
+  /// direction and +z is up.
+  //////////////////////////////////////////////////////////////////////////////
   class EulerAngle {
+
     public:
 
       EulerAngle(double _alpha = 0.0, double _beta = 0.0, double _gamma = 0.0) {
@@ -30,9 +31,12 @@ namespace mathtool {
       }
 
       //access
-      double alpha() const {return m_alpha;}
-      double beta() const {return m_beta;}
-      double gamma() const {return m_gamma;}
+      double alpha() const noexcept {return m_alpha;}
+      double beta()  const noexcept {return m_beta;}
+      double gamma() const noexcept {return m_gamma;}
+      double& alpha() noexcept {return m_alpha;}
+      double& beta()  noexcept {return m_beta;}
+      double& gamma() noexcept {return m_gamma;}
 
       //equality
       bool operator==(const EulerAngle& _e) const {
@@ -75,13 +79,8 @@ namespace mathtool {
         return e;
       }
 
-      friend std::istream& operator>>(std::istream& _is, EulerAngle& _e);
-      friend std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e);
-
-      friend EulerAngle& convertFromMatrix(EulerAngle& _e, const Matrix3x3& _m);
-      friend Matrix3x3& convertFromEuler(Matrix3x3& _m, const EulerAngle& _e);
-
     private:
+
       double m_alpha, m_beta, m_gamma;
   };
 
@@ -94,9 +93,9 @@ namespace mathtool {
   inline std::istream& operator>>(std::istream& _is, EulerAngle& _e) {
     double a, b, g;
     _is >> g >> b >> a;
-    _e.m_alpha = fmod(degToRad(a), TWOPI);
-    _e.m_beta = fmod(degToRad(b), TWOPI);
-    _e.m_gamma = fmod(degToRad(g), TWOPI);
+    _e.alpha() = std::fmod(degToRad(a), TWOPI);
+    _e.beta()  = std::fmod(degToRad(b), TWOPI);
+    _e.gamma() = std::fmod(degToRad(g), TWOPI);
     return _is;
   }
 
@@ -108,9 +107,9 @@ namespace mathtool {
   inline std::ostream& operator<<(std::ostream& _os, const EulerAngle& _e) {
     std::ios::fmtflags f(_os.flags());
     _os << std::fixed
-      << std::setprecision(4) << radToDeg(fmod(_e.m_gamma, TWOPI)) << " "
-      << std::setprecision(4) << radToDeg(fmod(_e.m_beta, TWOPI)) << " "
-      << std::setprecision(4) << radToDeg(fmod(_e.m_alpha, TWOPI));
+        << std::setprecision(16) << radToDeg(std::fmod(_e.gamma(), TWOPI)) << " "
+        << std::setprecision(16) << radToDeg(std::fmod(_e.beta(),  TWOPI)) << " "
+        << std::setprecision(16) << radToDeg(std::fmod(_e.alpha(), TWOPI));
     _os.flags(f);
     return _os;
   }
