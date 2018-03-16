@@ -25,7 +25,7 @@ namespace mathtool {
 
       //Constructor for EulerAngles
       //Also default constructor
-      MatrixOrientation(const EulerAngle& _e = EulerAngle()) {convertFromEuler(m_matrix, _e);}
+      MatrixOrientation(const EulerAngle& _e = EulerAngle()) {convertFromEulerAngle(m_matrix, _e);}
 
       //Constructor for Matrix
       MatrixOrientation(const Matrix3x3& _m) : m_matrix(_m) {}
@@ -73,9 +73,6 @@ namespace mathtool {
         return o;
       }
 
-      friend std::istream& operator>>(std::istream& _is, MatrixOrientation& _o);
-      friend std::ostream& operator<<(std::ostream& _os, const MatrixOrientation& _o);
-
     private:
 
       Matrix3x3 m_matrix;
@@ -89,14 +86,14 @@ namespace mathtool {
     EulerAngle e;
     _is >> e;
     Matrix3x3 m;
-    convertFromEuler(m, e);
-    _o.m_matrix = m;
+    convertFromEulerAngle(m, e);
+    _o.matrix() = m;
     return _is;
   }
 
   inline std::ostream& operator<<(std::ostream& _os, const MatrixOrientation& _o) {
     EulerAngle e;
-    convertFromMatrix(e, _o.m_matrix);
+    convertFromMatrix(e, _o.matrix());
     return _os << e;
   }
 
@@ -115,13 +112,16 @@ namespace mathtool {
 
       //Constructor for EulerAngles
       //Also default constructor
-      QuaternionOrientation(const EulerAngle& _e = EulerAngle()) {convertFromEuler(m_quaternion, _e);}
+      QuaternionOrientation(const EulerAngle& _e = EulerAngle()) {convertFromEulerAngle(m_quaternion, _e);}
 
       //Constructor for Matrix
       QuaternionOrientation(const Matrix3x3& _m) {convertFromMatrix(m_quaternion, _m);}
 
       //Constructor for Quaternions
       QuaternionOrientation(const Quaternion& _q) : m_quaternion(_q) {}
+
+      Quaternion& quaternion() {return m_quaternion;}
+      const Quaternion& quaternion() const {return m_quaternion;}
 
       //equality - if they aren't the same type: convert _o to type of *this and
       //compare
@@ -160,9 +160,6 @@ namespace mathtool {
         return o;
       }
 
-      friend std::istream& operator>>(std::istream& _is, QuaternionOrientation& _o);
-      friend std::ostream& operator<<(std::ostream& _os, const QuaternionOrientation& _o);
-
     private:
 
       Quaternion m_quaternion;
@@ -176,14 +173,14 @@ namespace mathtool {
     EulerAngle e;
     _is >> e;
     Quaternion q;
-    convertFromEuler(q, e);
-    _o.m_quaternion = q;
+    convertFromEulerAngle(q, e);
+    _o.quaternion() = q;
     return _is;
   }
 
   inline std::ostream& operator<<(std::ostream& _os, const QuaternionOrientation& _o) {
     EulerAngle e;
-    convertFromQuaternion(e, _o.m_quaternion);
+    convertFromQuaternion(e, _o.quaternion());
     return _os << e;
   }
 
