@@ -7,6 +7,7 @@
 # Input Variables:
 #   platform (string specifing which platform you want to compile for)
 #   debug (debugging mode on/off, default is 0/off)
+#   asan  (use address sanitizer, default is 0/off).
 #
 # Options:
 #   CC       (name of the c compiler)
@@ -32,6 +33,11 @@ ifeq ($(debug), 0)
   OPTS := -O3
 else
   OPTS := -g -O0
+endif
+
+asan ?= 0
+ifneq ($(asan), 0)
+  OPTS += -fsanitize=address
 endif
 
 # Platform Detection ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
