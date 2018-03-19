@@ -10,6 +10,55 @@ using namespace nonstd;
 static const string er = "\ttest_stat error: ";
 
 
+void test_average() {
+  string when = "when testing average, ";
+
+  vector<int> x = {1, 2, 3, 4};
+
+  assert_msg(approx(average(x), 2.5), er + when + "expected average of "
+      "{1, 2, 3, 4} to be 2.5, but got " + to_string(average(x)) + "!");
+}
+
+
+void test_stddev() {
+  string when = "when testing stddev, ";
+
+  vector<int> x = {1, 2, 3, 4};
+
+  assert_msg(approx(sample_stddev(x), 1.29099, .0001), er + when +
+      "expected sample_stddev of {1, 2, 3, 4} to be 1.29099, but got " +
+      to_string(stddev(x)) + "!");
+}
+
+
+void test_entropy() {
+  const string when = "when testing entropy, ";
+
+  // Make test instances
+  vector<size_t> homogeneous = {2, 0};
+  vector<size_t> even = {1, 1};
+  vector<size_t> heterogeneous = {2, 1, 3, 4};
+
+  // Exercise tests
+  double test_hom = entropy(homogeneous);
+  double test_e   = entropy(even);
+  double test_het = entropy(heterogeneous);
+
+  // Check correctness
+  double tolerance = .000001;
+  bool passed_homogeneous   = approx(0., test_hom, tolerance);
+  bool passed_even          = approx(1., test_e,   tolerance);
+  bool passed_heterogeneous = approx(1.846439345, test_het, tolerance);
+
+  assert_msg(passed_homogeneous, er + when + "failed on homogeneous "
+      "set! Expected 0, got " + to_string(test_hom) + "!");
+  assert_msg(passed_even, er + when + "failed on even split "
+      "set! Expected 1, got " + to_string(test_e) + "!");
+  assert_msg(passed_heterogeneous, er + when + "failed on heterogeneous "
+      "set! Expected 1.846439345, got " + to_string(test_het) + "!");
+}
+
+
 void test_binomial_distribution() {
   const string when = "when testing binomial_distribution, ";
 
@@ -53,37 +102,13 @@ void test_binomial_distribution() {
 }
 
 
-void test_entropy() {
-  const string when = "when testing entropy, ";
-
-  // Make test instances
-  vector<size_t> homogeneous = {2, 0};
-  vector<size_t> even = {1, 1};
-  vector<size_t> heterogeneous = {2, 1, 3, 4};
-
-  // Exercise tests
-  double test_hom = entropy(homogeneous);
-  double test_e   = entropy(even);
-  double test_het = entropy(heterogeneous);
-
-  // Check correctness
-  double tolerance = .000001;
-  bool passed_homogeneous   = approx(0., test_hom, tolerance);
-  bool passed_even          = approx(1., test_e,   tolerance);
-  bool passed_heterogeneous = approx(1.846439345, test_het, tolerance);
-
-  assert_msg(passed_homogeneous, er + when + "failed on homogeneous "
-      "set! Expected 0, got " + to_string(test_hom) + "!");
-  assert_msg(passed_even, er + when + "failed on even split "
-      "set! Expected 1, got " + to_string(test_e) + "!");
-  assert_msg(passed_heterogeneous, er + when + "failed on heterogeneous "
-      "set! Expected 1.846439345, got " + to_string(test_het) + "!");
-}
-
-
 int main() {
+  cerr << "\ttesting stat..." << flush;
+
+  test_average();
+  test_stddev();
   test_binomial_distribution();
   test_entropy();
 
-  cerr << "\ttest_stat passed" << endl;
+  cerr << "passed" << endl;
 }

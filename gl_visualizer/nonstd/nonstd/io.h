@@ -25,16 +25,13 @@ namespace nonstd {
 
 
   /// Print the contents of a container to a std::string. The container must
-  /// bi-directional iterators.
+  /// support bi-directional iterators.
   /// @param _c The container to print.
   /// @return A string representation of _c's contents.
   template <typename ContainerType>
   std::string
   print_container(const ContainerType& _c)
   {
-    // Print empty containers.
-    if(_c.begin() == _c.end())
-      return "{}";
     std::ostringstream os;
     os << "{";
     auto last = _c.end();
@@ -58,8 +55,7 @@ namespace std {
   ostream&
   operator<<(ostream& _os, const pair<T1, T2>& _p)
   {
-    _os << "(" << _p.first << ", " << _p.second << ")";
-    return _os;
+    return _os << "(" << _p.first << ", " << _p.second << ")";
   }
 
 

@@ -8,7 +8,8 @@ using namespace nonstd;
 
 int main() {
   // If assert exits the program, the test worked.
-  assert_msg(false, "\ttest_runtime passed");
+  assert_msg(false, "\ttesting runtime...passed");
+
   // Otherwise not so much.
-  cerr << "\ttest_runtime failed" << endl;
+  cerr << "\ttesting runtime...failed" << endl;
 }

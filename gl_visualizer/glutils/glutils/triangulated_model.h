@@ -195,6 +195,30 @@ namespace glutils {
       static triangulated_model make_box(GLfloat _lenX = 1, GLfloat _lenY = 1,
           GLfloat _lenZ = 1);
 
+      /// Create a sphere centered at the origin with axis along the z direction.
+      /// @param[in] _radius The sphere radius.
+      /// @param[in] _segments The number of segments to use. The model will
+      ///                      have _segments rings of _segments squares, or
+      ///                      2 * _segments^2 triangles.
+      /// @return A triangulated sphere model of radius _radius.
+      static triangulated_model make_sphere(const GLfloat _radius = 1,
+          const size_t _segments = 16);
+
+      /// Draw a cone with the base centered at the origin and tip pointed away
+      /// from the camera.
+      /// @param[in] _radius The radius of the base.
+      /// @param[in] _height The height of the cone.
+      /// @param[in] _segments The number of segments to use for the sides.
+      static triangulated_model make_cone(const GLfloat _radius = 1,
+          const GLfloat _height = 1, const size_t _segments = 16);
+
+      /// Draw a cylinder centered at the origin and oriented along the z-axis.
+      /// @param[in] _radius The cylinder radius.
+      /// @param[in] _length The length perpendicular to the radius.
+      /// @param[in] _segments The number of segments to use for the side wall.
+      static triangulated_model make_cylinder(const GLfloat _radius = 1,
+          const GLfloat _length = 1, const size_t _segments = 16);
+
       ///@}
 
   };

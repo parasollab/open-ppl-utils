@@ -57,8 +57,10 @@ void test_non_consecutive() {
 
 
 int main() {
+  cerr << "\ttesting condition_counter..." << flush;
+
   test_consecutive();
   test_non_consecutive();
 
-  cerr << "\ttest_condition_counter passed" << endl;
+  cerr << "passed" << endl;
 }

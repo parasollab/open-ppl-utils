@@ -59,10 +59,13 @@ namespace glutils {
       throw std::runtime_error("glutils::obj_file::operator<<() error: could "
           "not open the file '" + m_filename + "'.");
 
-    file << m_message.str() << std::endl
-         << "# Vertices: " << _t.num_points() << std::endl
+    if(!m_message.str().empty())
+      file << m_message.str() << std::endl;
+
+    file << "# Vertices: " << _t.num_points() << std::endl
          << "# Facets: " << _t.num_facets() << std::endl;
 
+    file << std::fixed;
     for(auto p = _t.points_begin(); p != _t.points_end(); ++p)
       file << "v " << (*p)[0] << " " << (*p)[1] << " " << (*p)[2] << std::endl;
     for(auto f = _t.facets_begin(); f != _t.facets_end(); ++f)

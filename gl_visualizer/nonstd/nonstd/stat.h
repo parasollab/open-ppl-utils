@@ -1,8 +1,8 @@
 #ifndef NONSTD_STAT_H_
 #define NONSTD_STAT_H_
 
-#include <cmath>
 #include <cstddef>
+#include <ctgmath>
 #include <string>
 
 #include "nonstd/numerics.h"
@@ -12,6 +12,70 @@ namespace nonstd {
 
   ///@name Statistics
   ///@{
+
+  /// Compute the average of a container of values.
+  /// @param[in] _c The container.
+  /// @return       The average of _c's elements.
+  template <typename container_type>
+  double
+  average(const container_type& _c)
+  {
+    double total{0};
+    for(const auto& elem : _c)
+      total += elem;
+    return total / _c.size();
+  }
+
+
+  /// Compute the population variance of a container of values.
+  /// @param[in] _c The container.
+  /// @return       The population variance of _c's elements.
+  template <typename container_type>
+  double
+  variance(const container_type& _c)
+  {
+    double total{0}, avg = nonstd::average(_c);
+    for(const auto& elem : _c)
+      total += elem * elem;
+    return (total - _c.size() * avg * avg) / _c.size();
+  }
+
+
+  /// Compute the sample variance of a container of values.
+  /// @param[in] _c The container.
+  /// @return       The sample variance of _c's elements.
+  template <typename container_type>
+  double
+  sample_variance(const container_type& _c)
+  {
+    double total{0}, avg = nonstd::average(_c);
+    for(const auto& elem : _c)
+      total += elem * elem;
+    return (total - _c.size() * avg * avg) / (_c.size() - 1);
+  }
+
+
+  /// Compute the population standard deviation of a container of values.
+  /// @param[in] _c The container.
+  /// @return       The average of _c's elements.
+  template <typename container_type>
+  double
+  stddev(const container_type& _c)
+  {
+    return std::sqrt(nonstd::variance(_c));
+  }
+
+
+  /// Compute the sample standard deviation of a container of values.
+  /// @param[in] _c The container.
+  /// @return       The average of _c's elements.
+  template <typename container_type>
+  double
+  sample_stddev(const container_type& _c)
+  {
+    return std::sqrt(nonstd::sample_variance(_c));
+  }
+
 
   /// Compute the entropy of a container of outcomes. Each element in the
   /// must be either a frequency or a number of occurences of a given category.

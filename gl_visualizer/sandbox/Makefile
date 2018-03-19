@@ -106,8 +106,8 @@ EXECUTABLE := sandbox
 
 # Use the static library to build the executable.
 $(EXECUTABLE): $(OBJ_DIR)/main.o $(STATIC)
-	@+cd $(NONSTD_DIR) ; make
-	@+cd $(GLUTILS_DIR) ; make
+	@+cd $(NONSTD_DIR) && $(MAKE)
+	@+cd $(GLUTILS_DIR) && $(MAKE)
 	@echo Linking $@...
 	@$(CXX) $< -L. -l$(NAME) $(LIBS) -o $@
 
@@ -116,8 +116,8 @@ $(EXECUTABLE): $(OBJ_DIR)/main.o $(STATIC)
 .PHONY: clean
 clean: cleandocs
 	@rm -rf $(EXECUTABLE) $(OBJ_DIR) $(STATIC) $(SHARED)
-	@cd $(GLUTILS_DIR) ; make clean
-	@cd $(NONSTD_DIR) ; make clean
+	@cd $(GLUTILS_DIR) && $(MAKE) clean
+	@cd $(NONSTD_DIR) && $(MAKE) clean
 
 .PHONY: cleandocs
 cleandocs:

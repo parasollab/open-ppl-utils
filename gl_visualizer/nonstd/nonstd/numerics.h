@@ -9,7 +9,7 @@ namespace nonstd {
   ///@name Numerics
   ///@{
 
-  /// Tests the signum of a number.
+  /// Test the signum of a number.
   /// @param[in] _f The value to check.
   /// @return       +1 if _f is positive, -1 if it is negative, or 0 otherwise.
   template<typename numeric_type>
@@ -31,7 +31,7 @@ namespace nonstd {
   inline bool
   approx(const numeric_type& _n1, const numeric_type& _n2,
       const numeric_type& _tol =
-          std::numeric_limits<numeric_type>::epsilon() * 10)
+          std::numeric_limits<numeric_type>::epsilon() * numeric_type(10))
   {
     return std::abs(_n1 - _n2) <= _tol;
   }
@@ -65,7 +65,7 @@ namespace nonstd {
   approx_in_bounds(const numeric_type& _n, const numeric_type& _min,
       const numeric_type& _max,
       const numeric_type& _tol =
-          std::numeric_limits<numeric_type>::epsilon() * 10)
+          std::numeric_limits<numeric_type>::epsilon() * numeric_type(10))
   {
     return (_min - _tol) <= _n && _n <= (_max + _tol);
   }
@@ -103,7 +103,7 @@ namespace nonstd {
   inline double
   log_base(const double _x, const double _b) noexcept
   {
-    return log2(_x) / log2(_b);
+    return std::log2(_x) / std::log2(_b);
   }
 
 
@@ -113,40 +113,11 @@ namespace nonstd {
   inline double
   sigmoid(const double _x) noexcept
   {
-    return 1./(1. + exp(-_x));
-  }
-
-
-  /// Compute the average of a container of values.
-  /// @param[in] _c The container.
-  /// @return       The average of _c's elements.
-  template <typename container_type>
-  double
-  average(const container_type& _c)
-  {
-    double total{0};
-    for(const auto& elem : _c)
-      total += elem;
-    return total / _c.size();
-  }
-
-
-  /// Compute the standard deviation of a container of values.
-  /// @param[in] _c The container.
-  /// @return       The average of _c's elements.
-  template <typename container_type>
-  double
-  stddev(const container_type& _c)
-  {
-    double avg = average(_c), total{0}, temp{0};
-    for(const auto& elem : _c) {
-      temp = avg - elem;
-      total += temp * temp;
-    }
-    return sqrt(total / (_c.size() - 1));
+    return 1. / (1. + std::exp(-_x));
   }
 
   ///@}
+
 }
 
 #endif

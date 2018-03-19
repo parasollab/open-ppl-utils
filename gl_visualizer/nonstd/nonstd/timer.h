@@ -8,6 +8,9 @@ namespace nonstd {
   //////////////////////////////////////////////////////////////////////////////
   /// A stopwatch-like wrapper around chrono's high-resolution clock. The
   /// durations are measured in nanoseconds.
+  ///
+  /// @WARNING This object is not re-entrant: it should be called from only one
+  ///          thread at a time.
   //////////////////////////////////////////////////////////////////////////////
   class timer
   {

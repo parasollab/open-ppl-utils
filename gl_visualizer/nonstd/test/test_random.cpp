@@ -22,20 +22,10 @@ void test_drand() {
 }
 
 
-void test_grand() {
-  // Average 1000 calls to grand and check that its about .5
-  double check = 0.;
-  for(size_t i = 0; i < 1000; ++i)
-    check += grand();
-  check /= 1000.;
-
-  assert_msg(approx(check, .5, .03), er + "when testing grand, expected average "
-      "of 1000 trials to be ~= .5, but got " + to_string(check));
-}
-
-
 int main() {
+  cerr << "\ttesting random..." << flush;
+
   test_drand();
 
-  cerr << "\ttest_random passed" << endl;
+  cerr << "passed" << endl;
 }

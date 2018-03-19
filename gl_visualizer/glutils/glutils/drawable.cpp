@@ -18,8 +18,7 @@ namespace glutils {
     : m_selection_id(generate_selection_id())
     , m_picking_color(generate_picking_color())
     , m_transforms(_d.m_transforms)
-  {
-  }
+  { }
 
 
   drawable::

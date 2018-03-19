@@ -23,6 +23,7 @@ class example_manager : public options_manager {
 
 
 int main() {
+  cerr << "\ttesting options_manager..." << flush;
 
   char* args[6] = {(char*)"./executable-name",
                    (char*)"-e", (char*)"asdf",
@@ -40,5 +41,5 @@ int main() {
   assert_msg(om.get_arg("-r") == string("abcd.cpp"), er + "argument "
       "for flag '-r' was not 'abcd.cpp' as expected!");
 
-  cerr << "\ttest_options_manager passed" << endl;
+  cerr << "passed" << endl;
 }

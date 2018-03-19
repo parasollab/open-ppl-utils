@@ -14,6 +14,8 @@ static const string er = "\ttest_timing error: ";
 
 
 int main() {
+  cerr << "\ttesting timing..." << flush;
+
   timer t;
 
   assert_msg(approx(t.elapsed(), 0.), er + "expected initial duration ~= 0, but "
@@ -27,5 +29,5 @@ int main() {
       "usleep(22000), expected duration ~= 2.2e6, but got " +
       to_string(t.elapsed()) + "!");
 
-  cerr << "\ttest_timing passed" << endl;
+  cerr << "passed" << endl;
 }

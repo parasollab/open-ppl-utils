@@ -48,8 +48,10 @@ void test_std_ostream() {
 
 
 int main() {
+  cerr << "\ttesting io..." << flush;
+
   test_read_file();
   test_std_ostream();
 
-  cerr << "\ttest_io passed" << endl;
+  cerr << "passed" << endl;
 }

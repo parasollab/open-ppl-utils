@@ -113,11 +113,13 @@ void test_indexing() {
 
 
 int main() {
+  cerr << "\ttesting collection..." << flush;
+
   test_add();
   test_get();
   test_get_all();
   test_take();
   test_indexing();
 
-  cerr << "\ttest_collection passed" << endl;
+  cerr << "passed" << endl;
 }

@@ -61,6 +61,8 @@ reverse_edge_iterate(graph& g, const string& expected) {
 
 
 int main() {
+  cerr << "\ttesting graph..." << flush;
+
   using graph = graph_type<char, string>;
   graph g;
   const graph& G = g;
@@ -218,5 +220,5 @@ int main() {
   assert_msg(out.str() == expected, er + "when testing bfs_function, expected:\n"
       + expected + ", but got:\n" + out.str());
 
-  cerr << "\ttest_graph passed" << endl;
+  cerr << "passed" << endl;
 }

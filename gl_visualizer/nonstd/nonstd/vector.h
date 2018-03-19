@@ -692,7 +692,6 @@ namespace nonstd {
 
   /*------------------------- Non-member Functions ---------------------------*/
 
-  //////////////////////////////////////////////////////////////////////////////
   /// Scalar multiplication with the scalar first. _s is a long double instead
   /// of a template parameter to prevent MatrixType commutativity.
   template<typename T, size_t N>
@@ -710,7 +709,6 @@ namespace nonstd {
 
 namespace std {
 
-  //////////////////////////////////////////////////////////////////////////////
   /// Print _v in the format (x, y, z, ...).
   template<typename T, size_t N>
   inline
@@ -722,7 +720,6 @@ namespace std {
   }
 
 
-  //////////////////////////////////////////////////////////////////////////////
   /// Read in a vector from an istream.
   template<typename T, size_t N>
   inline
@@ -734,7 +731,6 @@ namespace std {
   }
 
 
-  //////////////////////////////////////////////////////////////////////////////
   /// Convert a vector to a std string.
   template <typename T, size_t N>
   string

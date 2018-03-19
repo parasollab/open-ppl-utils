@@ -14,7 +14,7 @@ namespace nonstd {
   double drand(); ///< Produce a random double in the range [0,1).
 
 
-  double grand(); ///< Produce a guassian-like random double in the range [-1, 1].
+  size_t lrand(); ///< Produce a random size_t.
 
   ///@}
 

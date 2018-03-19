@@ -71,8 +71,10 @@ void test_arithmetic() {
 
 
 int main() {
+  cerr << "\ttesting matrix..." << flush;
+
   test_instantiation();
   test_arithmetic();
 
-  cerr << "\ttest_matrix passed" << endl;
+  cerr << "passed" << endl;
 }

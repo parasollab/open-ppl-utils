@@ -57,8 +57,10 @@ void test_generators() {
 
 
 int main() {
+  cerr << "\ttesting transform..." << flush;
+
   test_identity();
   test_generators();
 
-  cerr << "\ttest_transform passed" << endl;
+  cerr << "passed" << endl;
 }

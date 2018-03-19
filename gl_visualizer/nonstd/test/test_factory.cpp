@@ -10,6 +10,8 @@ using namespace nonstd;
 static const string er = "\ttest_factory error: ";
 
 int main() {
+  cerr << "\ttesting factory..." << flush;
+
   // Create factories for integer and tuple
   factory<int> fac_i;
   factory<tuple<int, char, double>> fac_t;
@@ -28,5 +30,5 @@ int main() {
       to_string(get<0>(*t)) + ", " + to_string(get<1>(*t)) + ", " +
       to_string(get<2>(*t)) + "!");
 
-  cerr << "\ttest_factory passed" << endl;
+  cerr << "passed" << endl;
 }

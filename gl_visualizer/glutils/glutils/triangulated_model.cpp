@@ -125,8 +125,15 @@ namespace glutils {
   {
     if(!_duplicates) {
       auto iter = std::find(m_points.begin(), m_points.end(), _p);
-      if(iter != m_points.end())
+      if(iter != m_points.end()) {
+        std::cerr << "Added point " << _p << " should get index "
+                  << m_points.size()
+                  << ", but is duplicate of index "
+                  << std::distance(m_points.begin(), iter)
+                  << "\n\t= " << *iter
+                  << std::endl;
         return std::distance(m_points.begin(), iter);
+      }
     }
     m_points.push_back(_p);
     return m_points.size() - 1;
@@ -346,6 +353,212 @@ namespace glutils {
     // Add facets.
     for(size_t i = 0; i < 12; ++i)
       t.add_facet(facets[i][0], facets[i][1], facets[i][2]);
+
+    return t;
+  }
+
+
+  triangulated_model
+  triangulated_model::
+  make_sphere(const GLfloat _radius, const size_t _segments)
+  {
+    triangulated_model t;
+
+    const GLfloat zIncr = glutils::PI / _segments; // Angle increment for z.
+    const GLfloat oIncr = 2 * zIncr;               // Angle increment for x,y.
+
+    GLfloat x, y, z, r;
+
+    // Draw +zHat cap.
+    {
+      // Create the +zHat pole.
+      x = 0;
+      y = 0;
+      z = _radius;
+      const size_t capIndex = t.add_point({x, y, z});
+
+      // Create the ring of points beneath the pole.
+      std::vector<size_t> indexes;;
+
+      z = _radius * std::cos(zIncr);
+      r = _radius * std::sin(zIncr);
+      for(size_t i = 0; i < _segments; ++i) {
+        x = r * std::cos(oIncr * i);
+        y = r * std::sin(oIncr * i);
+        indexes.push_back(t.add_point({x, y, z}));
+      }
+
+      // Create the facets connecting the pole to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(capIndex, indexes[i], indexes[(i + 1) % _segments]);
+    }
+
+    // Draw main surface.
+    {
+      GLfloat z2, r2;
+
+      // Create a ring of segments following the previous.
+      std::vector<size_t> topIndexes, bottomIndexes;
+
+      for(size_t j = 1; j < _segments - 1; ++j) {
+        // The top and bottom point rings in this segment ring each require a
+        // different z and planar radius.
+        z  = _radius * std::cos(zIncr * j);
+        r  = _radius * std::sin(zIncr * j);
+        z2 = _radius * std::cos(zIncr * (j + 1));
+        r2 = _radius * std::sin(zIncr * (j + 1));
+
+        // Generate the points for this segment ring.
+        topIndexes.clear();
+        bottomIndexes.clear();
+        for(size_t i = 0; i < _segments; ++i) {
+          x = std::cos(oIncr * i);
+          y = std::sin(oIncr * i);
+          topIndexes.push_back(   t.add_point({x * r , y * r ,  z}));
+          bottomIndexes.push_back(t.add_point({x * r2, y * r2, z2}));
+        }
+
+        // Create facets to complete this segment ring.
+        for(size_t i = 0; i < _segments; ++i) {
+          const size_t i2 = (i + 1) % _segments;
+          t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
+          t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
+        }
+      }
+    }
+
+    // Draw -zHat cap.
+    {
+      // Create the +zHat pole.
+      x = 0;
+      y = 0;
+      z = -_radius;
+      const size_t capIndex = t.add_point({x, y, z});
+
+      // Create the ring of points above the pole.
+      std::vector<size_t> indexes;
+
+      z = _radius * std::cos(zIncr * (_segments - 1));
+      r = _radius * std::sin(zIncr * (_segments - 1));
+      for(size_t i = 0; i < _segments; ++i) {
+        x = r * std::cos(oIncr * i);
+        y = r * std::sin(oIncr * i);
+        indexes.push_back(t.add_point({x, y, z}));
+      }
+
+      // Create the facets connecting the pole to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(capIndex, indexes[(i + 1) % _segments], indexes[i]);
+    }
+
+    return t;
+  }
+
+
+  triangulated_model
+  triangulated_model::
+  make_cone(const GLfloat _radius, const GLfloat _height, const size_t _segments)
+  {
+    triangulated_model t;
+
+    const GLfloat incr = 2. * glutils::PI / _segments;
+    GLfloat x, y, z;
+
+    // Create the point ring.
+    z = 0;
+    std::vector<size_t> ringIndexes;
+    for(size_t i = 0; i < _segments; ++i) {
+      x = _radius * std::cos(incr * i);
+      y = _radius * std::sin(incr * i);
+      ringIndexes.push_back(t.add_point({x, y, z}));
+    }
+
+    // Create the circular base on the x-y plane.
+    {
+      // Create the cap.
+      x = 0;
+      y = 0;
+      z = 0;
+      const size_t capIndex = t.add_point({x, y, z});
+
+      // Create facets connecting the cap to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(capIndex, ringIndexes[i], ringIndexes[(i + 1) % _segments]);
+    }
+
+    // Create the conic cap on top of the circle.
+    {
+      // Create the cap.
+      x = 0;
+      y = 0;
+      z = -_height;
+      const size_t capIndex = t.add_point({x, y, z});
+
+      // Create facets connecting the cap to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(capIndex, ringIndexes[(i + 1) % _segments], ringIndexes[i]);
+    }
+
+    // Translate the model so that it is centered on its bounding box.
+    t.translate({0, 0, _height/2});
+    return t;
+  }
+
+
+  triangulated_model
+  triangulated_model::
+  make_cylinder(const GLfloat _radius, const GLfloat _length,
+      const size_t _segments)
+  {
+    triangulated_model t;
+
+    const GLfloat incr = 2. * glutils::PI / _segments,
+                  halfLength = _length / 2.;
+    GLfloat x, y, z;
+
+    // Draw top cap.
+    x = 0;
+    y = 0;
+    z = halfLength;
+    const size_t topCapIndex = t.add_point({x, y, z});
+
+    // Create the top point ring.
+    std::vector<size_t> topIndexes;
+    for(size_t i = 0; i < _segments; ++i) {
+      x = _radius * std::cos(incr * i);
+      y = _radius * std::sin(incr * i);
+      topIndexes.push_back(t.add_point({x, y, z}));
+    }
+
+    // Create facets connecting the cap to the point ring.
+    for(size_t i = 0; i < _segments; ++i)
+      t.add_facet(topCapIndex, topIndexes[i], topIndexes[(i + 1) % _segments]);
+
+    // Draw bottom cap.
+    x = 0;
+    y = 0;
+    z = -halfLength;
+    const size_t bottomCapIndex = t.add_point({x, y, z});
+
+    // Create the bottom point ring.
+    std::vector<size_t> bottomIndexes;
+    for(size_t i = 0; i < _segments; ++i) {
+      x = _radius * std::cos(incr * i);
+      y = _radius * std::sin(incr * i);
+      bottomIndexes.push_back(t.add_point({x, y, z}));
+    }
+
+    // Create facets connecting the cap to the point ring.
+    for(size_t i = 0; i < _segments; ++i)
+      t.add_facet(bottomCapIndex, bottomIndexes[(i + 1) % _segments],
+                  bottomIndexes[i]);
+
+    // Create facets connecting the top and bottom rings.
+    for(size_t i = 0; i < _segments; ++i) {
+      const size_t i2 = (i + 1) % _segments;
+      t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
+      t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
+    }
 
     return t;
   }

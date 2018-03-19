@@ -59,6 +59,9 @@ void test_tokenize() {
 
 
 int main() {
+  cerr << "\ttesting string..." << flush;
+
   test_tokenize();
-  cerr << "\ttest_string passed" << endl;
+
+  cerr << "passed" << endl;
 }

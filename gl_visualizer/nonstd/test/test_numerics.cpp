@@ -119,27 +119,9 @@ void test_log_base() {
 }
 
 
-void test_average() {
-  string when = "when testing average, ";
-
-  vector<int> x = {1, 2, 3, 4};
-
-  assert_msg(approx(average(x), 2.5), er + when + "expected average of "
-      "{1, 2, 3, 4} to be 2.5, but got " + to_string(average(x)) + "!");
-}
-
-
-void test_stddev() {
-  string when = "when testing stddev, ";
-
-  vector<int> x = {1, 2, 3, 4};
-
-  assert_msg(approx(stddev(x), 1.29099, .0001), er + when + "expected stddev of "
-      "{1, 2, 3, 4} to be 1.29099, but got " + to_string(stddev(x)) + "!");
-}
-
-
 int main() {
+  cerr << "\ttesting numerics..." << flush;
+
   test_sign();
   test_approx();
   test_in_bounds();
@@ -147,8 +129,6 @@ int main() {
   test_rescale();
   test_factorial();
   test_log_base();
-  test_average();
-  test_stddev();
 
-  cerr << "\ttest_numerics passed" << endl;
+  cerr << "passed" << endl;
 }

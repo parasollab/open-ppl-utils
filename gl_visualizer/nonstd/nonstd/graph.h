@@ -651,24 +651,35 @@ namespace nonstd {
   dfs_function(node* const _root,
       std::function<void(node* const, node* const)> _f, const bool _random)
   {
+    // Mark all nodes unvisited.
     for(auto& n : *this)
       n.m_label = ' ';
 
+    // Define the traversal function.
     std::function<void(node* const, node* const)> dfs =
         [&](node* const _n, node* const _p)
     {
+      // Mark this node visited and execute the function.
       _n->label() = 'v';
       _f(_n, _p);
 
-      if(!_random) {
+      if(!_random)
+      {
+        // This is an ordered traversal. Visit each edge in order.
         for(auto& e : *_n)
           if(e->target()->label() == ' ') dfs(e->target(), _n);
       }
-      else {
+      else
+      {
+        // This is a random traversal. Create a list of unvisited edges.
         std::vector<edge*> edges;
         edges.reserve(_n->out_degree());
         std::copy(_n->begin(), _n->end(), std::back_inserter(edges));
-        while(edges.size()) {
+
+        // While we still have unvisited edges, choose a random one and visit
+        // it.
+        while(edges.size())
+        {
           auto iter = edges.begin() + rand() % edges.size();
           edges.erase(iter);
           auto e = *iter;
@@ -678,7 +689,11 @@ namespace nonstd {
       }
     };
 
+    // Execute the traversal from the root node.
     dfs(_root, _root);
+
+    // Look for disconnected components that were not discovered in a prior
+    // traversal and start another traversal there.
     for(auto& n : *this)
       if(n.m_label == ' ') dfs(&n, &n);
   }
@@ -690,28 +705,46 @@ namespace nonstd {
   bfs_function(node* const _root,
       std::function<void(node* const, node* const)> _f)
   {
+    // Mark all nodes unvisited.
     for(auto& n : *this)
       n.m_label = ' ';
 
+    // Define the traversal function.
     auto bfs = [&](node* const _n)
     {
+      // Create a queue of frontier nodes and add the root to it.
       std::queue<node*> q;
       q.push(_n);
+
+      // Execute the function on the root node.
       _f(_n, _n);
 
-      while(q.size()) {
+      // Keep going while we still have frontier nodes.
+      while(q.size())
+      {
+        // Get the next node and mark it visited.
         node* n = q.front();
         q.pop();
         n->m_label = 'v';
+
+        // Visit each adjacent node.
         for(auto& e : *n)
-          if(e->target()->m_label == ' ') {
+        {
+          // If the node is unvisited, call _f on it and add it to the frontier.
+          if(e->target()->m_label == ' ')
+          {
             _f(e->target(), n);
             q.push(e->target());
           }
+        }
       }
     };
 
+    // Execute the traversal from the root node.
     bfs(_root);
+
+    // Look for disconnected components that were not discovered in a prior
+    // traversal and start another traversal there.
     for(auto& n : *this)
       if(n.m_label == ' ') bfs(&n);
   }

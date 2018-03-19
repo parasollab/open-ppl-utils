@@ -19,6 +19,7 @@ namespace nonstd {
     if(m_running)
       return;
     m_running = true;
+
     m_last = clock::now();
   }
 
@@ -30,6 +31,7 @@ namespace nonstd {
     if(!m_running)
       return;
     m_running = false;
+
     m_total += clock::now() - m_last;
   }
 

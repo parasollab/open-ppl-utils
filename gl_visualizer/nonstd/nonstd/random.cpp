@@ -18,12 +18,12 @@ namespace nonstd {
   }
 
 
-  double
-  grand()
+  size_t
+  lrand()
   {
-    double x = 2. * drand48() - 1.;
-    double y = 2. * drand48() - 1.;
-    return x / sqrt(x * x + y * y);
+    static uniform_int_distribution<size_t> distribution(0,
+        std::numeric_limits<size_t>::max());
+    return distribution(random_generator);
   }
 
 }
