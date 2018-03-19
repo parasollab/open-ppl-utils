@@ -125,15 +125,8 @@ namespace glutils {
   {
     if(!_duplicates) {
       auto iter = std::find(m_points.begin(), m_points.end(), _p);
-      if(iter != m_points.end()) {
-        std::cerr << "Added point " << _p << " should get index "
-                  << m_points.size()
-                  << ", but is duplicate of index "
-                  << std::distance(m_points.begin(), iter)
-                  << "\n\t= " << *iter
-                  << std::endl;
+      if(iter != m_points.end())
         return std::distance(m_points.begin(), iter);
-      }
     }
     m_points.push_back(_p);
     return m_points.size() - 1;
