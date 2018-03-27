@@ -32,12 +32,12 @@ debug ?= 0
 ifeq ($(debug), 0)
   OPTS := -O3
 else
-  OPTS := -g -O0
+  OPTS := -g3 -O0
 endif
 
 asan ?= 0
 ifneq ($(asan), 0)
-  OPTS += -fsanitize=address
+  OPTS += -fsanitize=address -g3
 endif
 
 # Platform Detection ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
