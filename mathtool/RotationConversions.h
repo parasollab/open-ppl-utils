@@ -249,7 +249,10 @@ namespace mathtool {
   EulerVector&
   convertFromQuaternion(EulerVector& _v, const Quaternion& _q)
   {
-    _v = (2. * std::acos(_q.real()) / _q.imaginary().norm()) * _q.imaginary();
+    const double norm = _q.imaginary().norm();
+    if(norm == 0)
+      return _v(0, 0, 0);
+    _v = (2. * std::acos(_q.real()) / norm) * _q.imaginary();
     return _v.eulerSelfNormalize();
   }
 
