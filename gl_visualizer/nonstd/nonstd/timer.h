@@ -7,7 +7,8 @@ namespace nonstd {
 
   //////////////////////////////////////////////////////////////////////////////
   /// A stopwatch-like wrapper around chrono's high-resolution clock. The
-  /// durations are measured in nanoseconds.
+  /// durations are internally measured in nanoseconds, and reported as seconds
+  /// by default.
   ///
   /// @WARNING This object is not re-entrant: it should be called from only one
   ///          thread at a time.
@@ -49,7 +50,7 @@ namespace nonstd {
       void reset() noexcept;   ///< Reset to initial state.
       void restart() noexcept; ///< Reset and start the timer.
 
-      double elapsed() const noexcept;  ///< Get the total elapsed time in ns.
+      double elapsed() const noexcept; ///< Get the total elapsed time in seconds.
 
       ///@}
   };

@@ -9,6 +9,8 @@ namespace nonstd { }
 
 #include "nonstd/collection.h"
 #include "nonstd/condition_counter.h"
+#include "nonstd/container_ops.h"
+#include "nonstd/exception.h"
 #include "nonstd/factory.h"
 #include "nonstd/graph.h"
 #include "nonstd/io.h"
@@ -21,6 +23,7 @@ namespace nonstd { }
 #include "nonstd/string.h"
 #include "nonstd/tcp_socket.h"
 #include "nonstd/timer.h"
+#include "nonstd/transform.h"
 #include "nonstd/vector.h"
 
 #endif

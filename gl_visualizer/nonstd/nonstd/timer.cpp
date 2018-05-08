@@ -58,8 +58,8 @@ namespace nonstd {
   timer::
   elapsed() const noexcept
   {
-    return m_running ? ((clock::now() - m_last) + m_total).count()
-                     : m_total.count();
+    return (m_running ? ((clock::now() - m_last) + m_total).count()
+                      : m_total.count()) / 1e9;
   }
 
   /*--------------------------------------------------------------------------*/

@@ -2,7 +2,7 @@
 #define NONSTD_COLLECTION_H_
 
 #include <cstdlib>
-#include <queue>
+#include <unordered_set>
 #include <vector>
 
 #include "nonstd/runtime.h"
@@ -14,7 +14,7 @@ namespace nonstd {
   /// serial number or index for every element.
   ///
   /// Removing elements does not change the indexes: instead, the now-free index
-  /// from the removed element is returned to a priority queue of available
+  /// from the removed element is returned to an unordered set of available
   /// indexes.
   /// @ingroup Containers
   //////////////////////////////////////////////////////////////////////////////
@@ -25,9 +25,8 @@ namespace nonstd {
     ///@name Internal State
     ///@{
 
-    size_t m_next_index{0};               ///< The next new index to be assigned.
-    std::priority_queue<size_t> m_free_indexes; ///< Indexes that can be reused.
-    std::vector<element_type*>  m_elements;     ///< The element pointers.
+    std::unordered_set<size_t> m_free_indexes;  ///< Indexes that can be reused.
+    std::vector<element_type*> m_elements;      ///< The element pointers.
 
     ///@}
 
@@ -37,6 +36,7 @@ namespace nonstd {
       ///@{
 
       collection() = default;
+
       virtual ~collection();
 
       ///@}
@@ -86,12 +86,13 @@ namespace nonstd {
     // Add _e at the next unused index.
     size_t index;
     if(m_free_indexes.size()) {
-      index = m_free_indexes.top();
-      m_free_indexes.pop();
+      auto iter = m_free_indexes.begin();
+      index = *iter;
+      m_free_indexes.erase(iter);
       m_elements[index] = _e;
     }
     else {
-      index = m_next_index++;
+      index = m_elements.size();
       m_elements.push_back(_e);
     }
 
@@ -104,9 +105,10 @@ namespace nonstd {
   collection<element_type>::
   take(size_t _i)
   {
-    auto elem = m_elements[_i];
+    auto elem = this->operator[](_i);
     m_elements[_i] = nullptr;
-    m_free_indexes.push(_i);
+    m_free_indexes.insert(_i);
+
     return elem;
   }
 
@@ -116,9 +118,9 @@ namespace nonstd {
   collection<element_type>::
   operator[](size_t _i)
   {
-    assert_msg(_i < m_next_index, "nonstd::collection error: out-of-bounds "
+    assert_msg(_i < m_elements.size(), "nonstd::collection error: out-of-bounds "
         "request for index " + std::to_string(_i) + " (max index is " +
-        std::to_string(m_next_index) + ")");
+        std::to_string(m_elements.size() - 1) + ")");
 
     return m_elements[_i];
   }
