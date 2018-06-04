@@ -65,12 +65,14 @@ namespace glutils {
 
   /*----------------------------- Modifiers ----------------------------------*/
 
-  void
+  triangle_facet&
   triangle_facet::
   reverse() noexcept
   {
     std::reverse(m_indexes.begin() + 1, m_indexes.end());
     m_normal *= -1;
+
+    return *this;
   }
 
   /*------------------------------ Equality ----------------------------------*/
@@ -309,12 +311,13 @@ namespace glutils {
   }
 
 
-  void
+  triangulated_model&
   triangulated_model::
   reverse() noexcept
   {
     for(auto& facet : m_facets)
       facet.reverse();
+    return *this;
   }
 
   /*------------------------------ Equality ----------------------------------*/

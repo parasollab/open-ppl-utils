@@ -76,7 +76,7 @@ namespace glutils {
       ///@{
 
       /// Reverse the facet so that the normal faces the opposite direction.
-      void reverse() noexcept;
+      triangle_facet& reverse() noexcept;
 
       ///@}
       ///@name Equality
@@ -198,7 +198,7 @@ namespace glutils {
       void clean() noexcept;
 
       /// Reverse the facets so that the normals face the opposite direction.
-      void reverse() noexcept;
+      triangulated_model& reverse() noexcept;
 
       ///@}
       ///@name Equality
