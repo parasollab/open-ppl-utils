@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 
+
 namespace glutils {
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangle Facet ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -23,7 +24,7 @@ namespace glutils {
 
   /*----------------------------- Accessors ----------------------------------*/
 
-  triangle_facet::iterator
+  triangle_facet::index_iterator
   triangle_facet::
   begin() const noexcept
   {
@@ -31,7 +32,7 @@ namespace glutils {
   }
 
 
-  triangle_facet::iterator
+  triangle_facet::index_iterator
   triangle_facet::
   end() const noexcept
   {
@@ -62,14 +63,14 @@ namespace glutils {
     return m_normal;
   }
 
-  /*------------------------------ Helpers -----------------------------------*/
+  /*----------------------------- Modifiers ----------------------------------*/
 
   void
   triangle_facet::
-  compute_normal() noexcept
+  reverse() noexcept
   {
-    m_normal = (get_point(1) - get_point(0)) % (get_point(2) - get_point(0));
-    m_normal.normalize();
+    std::reverse(m_indexes.begin() + 1, m_indexes.end());
+    m_normal *= -1;
   }
 
   /*------------------------------ Equality ----------------------------------*/
@@ -116,6 +117,16 @@ namespace glutils {
     return false;
   }
 
+  /*------------------------------ Helpers -----------------------------------*/
+
+  void
+  triangle_facet::
+  compute_normal() noexcept
+  {
+    m_normal = (get_point(1) - get_point(0)) % (get_point(2) - get_point(0));
+    m_normal.normalize();
+  }
+
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~ Triangulated Model ~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   /*--------------------------- Creation Interface ---------------------------*/
 
@@ -139,6 +150,25 @@ namespace glutils {
   {
     m_facets.emplace_back(_i1, _i2, _i3, m_points);
     return m_facets.size() - 1;
+  }
+
+
+  void
+  triangulated_model::
+  add_model(const triangulated_model& _t)
+  {
+    // Add points from _t to this, keeping track of the mapping from old index to
+    // new index.
+    std::vector<size_t> indexMap(_t.m_points.size(), 0);
+
+    for(size_t i = 0; i < _t.m_points.size(); ++i)
+      indexMap[i] = add_point(_t.get_point(i));
+
+    for(auto iter = _t.facets_begin(); iter != _t.facets_end(); ++iter)
+    {
+      const auto& f = *iter;
+      add_facet(indexMap[f[0]], indexMap[f[1]], indexMap[f[2]]);
+    }
   }
 
   /*------------------------------- Accessors --------------------------------*/
@@ -276,6 +306,15 @@ namespace glutils {
     for(auto iter = m_facets.begin(); iter != m_facets.end(); ++iter)
       for(auto& index : iter->m_indexes)
         index -= change_map.at(index);
+  }
+
+
+  void
+  triangulated_model::
+  reverse() noexcept
+  {
+    for(auto& facet : m_facets)
+      facet.reverse();
   }
 
   /*------------------------------ Equality ----------------------------------*/
