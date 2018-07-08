@@ -13,6 +13,9 @@
 #include <utility>
 #include <vector>
 
+#include "nonstd/exception.h"
+
+
 namespace nonstd {
 
   ///@name IO
@@ -27,18 +30,55 @@ namespace nonstd {
   /// Print the contents of a container to a std::string. The container must
   /// support bi-directional iterators.
   /// @param _c The container to print.
+  /// @param _bracket The enclosing brackets to use from ' ', '(', '{', '[', '<',
+  ///                 (space for none).
+  /// @param _delimiter The delimiter to use between elements (space for none).
   /// @return A string representation of _c's contents.
   template <typename ContainerType>
   std::string
-  print_container(const ContainerType& _c)
+  print_container(const ContainerType& _c, const char _bracket = '{',
+      const char _delimiter = ',')
   {
     std::ostringstream os;
-    os << "{";
+
+    // Print opening bracket.
+    if(_bracket != ' ')
+      os << _bracket;
+
+    // Create the delimiter string.
+    std::string delimiter(1, _delimiter);
+    if(_delimiter != ' ')
+      delimiter += ' ';
+
+    // Print the container contents.
     auto last = _c.end();
     --last;
     for(auto i = _c.begin(); i != last; ++i)
-      os << *i << ", ";
-    os << *last << "}";
+      os << *i << delimiter;
+    os << *last;
+
+    // Print the closing bracket.
+    switch(_bracket)
+    {
+      case ' ':
+        break;
+      case '(':
+        os << ')';
+        break;
+      case '{':
+        os << '}';
+        break;
+      case '[':
+        os << ']';
+        break;
+      case '<':
+        os << '>';
+        break;
+      default:
+        throw nonstd::exception(WHERE) << "Unrecognized bracket '" << _bracket
+                                       << "', choices are ' ', '(', '{', '['.";
+    }
+
     return os.str();
   }
 
@@ -52,6 +92,7 @@ namespace nonstd {
 namespace std {
 
   template <typename T1, typename T2>
+  inline
   ostream&
   operator<<(ostream& _os, const pair<T1, T2>& _p)
   {
@@ -60,6 +101,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const list<T...>& _l)
   {
@@ -68,6 +110,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const map<T...>& _m)
   {
@@ -76,6 +119,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const unordered_map<T...>& _m)
   {
@@ -84,6 +128,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const set<T...>& _s)
   {
@@ -92,6 +137,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const unordered_set<T...>& _s)
   {
@@ -100,6 +146,7 @@ namespace std {
 
 
   template <typename... T>
+  inline
   ostream&
   operator<<(ostream& _os, const vector<T...>& _v)
   {
@@ -108,6 +155,7 @@ namespace std {
 
 
   template <typename T, size_t N>
+  inline
   ostream&
   operator<<(ostream& _os, const array<T, N>& _a)
   {

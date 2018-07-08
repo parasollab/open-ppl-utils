@@ -10,7 +10,9 @@ using namespace nonstd;
 static const string er = "\ttest_io error: ";
 
 
-void test_read_file() {
+void
+test_read_file()
+{
   // Read the test file.
   auto lines = read_file("test/test_file.txt");
 
@@ -29,7 +31,9 @@ void test_read_file() {
 }
 
 
-void test_std_ostream() {
+void
+test_std_ostream()
+{
   ostringstream out;
 
   out << pair<int, char>(0, 'a') << endl

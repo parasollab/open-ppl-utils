@@ -13,7 +13,7 @@ using nonstd::assert_msg;
 
 static const string er = "\n\t\terror: ";
 static const string test_file = "temp.obj";
-static const string known_file[1] = "test/support/test_file.obj";
+static const string known_file = "test/support/test_file.obj";
 
 
 /// Check that reading in an obj file produces the correct triangulated model.
@@ -21,7 +21,7 @@ void
 test_read()
 {
   // Produce triangulated model from known file.
-  obj_file obj(known_file[0]);
+  obj_file obj(known_file);
   triangulated_model t;
   obj >> t;
 
@@ -44,7 +44,7 @@ test_write()
 
   // Compare the temporary file with a known good version.
   auto test = nonstd::read_file(test_file);
-  auto known = nonstd::read_file(known_file[0]);
+  auto known = nonstd::read_file(known_file);
   assert_msg(test == known, er + "output test failed.");
 
   // Destroy the temporary file.

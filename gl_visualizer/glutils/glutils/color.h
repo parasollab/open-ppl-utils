@@ -3,6 +3,10 @@
 
 #include "glutils/gltraits.h"
 
+#include <array>
+#include <iostream>
+
+
 namespace glutils {
 
   //////////////////////////////////////////////////////////////////////////////
@@ -11,14 +15,26 @@ namespace glutils {
   //////////////////////////////////////////////////////////////////////////////
   class color {
 
-    GLfloat m_rgba[4];   ///< The red, green, blue, alpha values.
-
     public:
 
+      ///@name Local Types
+      ///@{
+
+      typedef std::array<GLfloat, 4>       storage_type;
+      typedef storage_type::iterator       iterator;
+      typedef storage_type::const_iterator const_iterator;
+
+      ///@}
       ///@name Construction
       ///@{
 
-      color(GLfloat _r = 0, GLfloat _g = 0, GLfloat _b = 0, GLfloat _a = 1);
+      /// Construct a color (default is solid black).
+      /// @param _r The red value in [0, 1].
+      /// @param _g The green value in [0, 1].
+      /// @param _b The blue value in [0, 1].
+      /// @param _a The alpha value in [0, 1].
+      color(const GLfloat _r = 0, const GLfloat _g = 0, const GLfloat _b = 0,
+          const GLfloat _a = 1);
 
       ///@}
       ///@name Implicit Conversions to OpenGL Arrays
@@ -37,13 +53,10 @@ namespace glutils {
       GLfloat& operator[](const unsigned short _i) noexcept;
       const GLfloat& operator[](const unsigned short _i) const noexcept;
 
-      typedef GLfloat* iterator;
-      typedef const GLfloat* const_iterator;
-
-      iterator begin() {return m_rgba;}
-      iterator end() {return m_rgba + 4;}
-      const_iterator begin() const {return m_rgba;}
-      const_iterator end() const {return m_rgba + 4;}
+      iterator begin() noexcept;
+      iterator end() noexcept;
+      const_iterator begin() const noexcept;
+      const_iterator end() const noexcept;
 
       ///@}
       ///@name Equality
@@ -95,13 +108,23 @@ namespace glutils {
 
       ///@}
 
+    private:
+
+      ///@name Internal State
+      ///@{
+
+      storage_type m_rgba;   ///< The red, green, blue, alpha values.
+
+      ///@}
+
   };
 
 }
 
 /*---------------------------- ostream overloads -----------------------------*/
 
-std::ostream& operator<<(std::ostream& _os, const glutils::color& _c);
+std::ostream& operator<<(std::ostream&, const glutils::color&);
+std::istream& operator>>(std::istream&, glutils::color&);
 
 /*---------------------------------- Hasher ----------------------------------*/
 

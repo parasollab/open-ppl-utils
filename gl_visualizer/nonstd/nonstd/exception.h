@@ -6,6 +6,15 @@
 #include <string>
 
 
+// Define a macro for specifying source-code location if it does not already
+// exist.
+#ifndef WHERE
+#define WHERE std::string("\n\tFile: ") + std::string(__FILE__) \
+            + std::string("\n\tFunction: ") + std::string(__PRETTY_FUNCTION__) \
+            + std::string("\n\tLine: ") + std::to_string(__LINE__) \
+            + std::string("\n")
+#endif
+
 namespace nonstd {
 
   //////////////////////////////////////////////////////////////////////////////

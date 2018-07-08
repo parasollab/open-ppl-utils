@@ -3,46 +3,45 @@
 #include "nonstd/io.h"
 #include "nonstd/numerics.h"
 
+#include <cctype>
+
+
 namespace glutils {
 
   /*--------------------------- Construction ---------------------------------*/
 
   color::
-  color(GLfloat _r, GLfloat _g, GLfloat _b, GLfloat _a)
-  {
-    m_rgba[0] = _r;
-    m_rgba[1] = _g;
-    m_rgba[2] = _b;
-    m_rgba[3] = _a;
-  }
+  color(const GLfloat _r, const GLfloat _g, const GLfloat _b, const GLfloat _a)
+      : m_rgba{_r, _g, _b, _a}
+  { }
 
   /*----------------- Implicit Conversions to OpenGL Arrays ------------------*/
 
   color::
   operator GLfloat*() noexcept
   {
-    return m_rgba;
+    return m_rgba.data();
   }
 
 
   color::
   operator const GLfloat*() const noexcept
   {
-    return m_rgba;
+    return m_rgba.data();
   }
 
 
   color::
   operator GLvoid*() noexcept
   {
-    return static_cast<GLvoid*>(m_rgba);
+    return static_cast<GLvoid*>(m_rgba.data());
   }
 
 
   color::
   operator const GLvoid*() const noexcept
   {
-    return static_cast<const GLvoid*>(m_rgba);
+    return static_cast<const GLvoid*>(m_rgba.data());
   }
 
   /*------------------------------ Accessors ---------------------------------*/
@@ -60,6 +59,38 @@ namespace glutils {
   operator[](const unsigned short _i) const noexcept
   {
     return m_rgba[_i];
+  }
+
+
+  color::iterator
+  color::
+  begin() noexcept
+  {
+    return m_rgba.begin();
+  }
+
+
+  color::iterator
+  color::
+  end() noexcept
+  {
+    return m_rgba.end();
+  }
+
+
+  color::const_iterator
+  color::
+  begin() const noexcept
+  {
+    return m_rgba.begin();
+  }
+
+
+  color::const_iterator
+  color::
+  end() const noexcept
+  {
+    return m_rgba.end();
   }
 
   /*------------------------------ Equality ----------------------------------*/
@@ -141,6 +172,37 @@ operator<<(std::ostream& _os, const glutils::color& _c)
 {
   _os << "{" << _c[0] << ", " << _c[1] << ", " << _c[2] << ", " << _c[3] << "}";
   return _os;
+}
+
+
+std::istream&
+operator>>(std::istream& _is, glutils::color& _c)
+{
+  char buffer;
+  bool leadingDelim = false;
+
+  // Read each of the four values.
+  for(size_t i = 0; i < 4; ++i)
+  {
+    // Clear whitespace.
+    _is >> std::ws;
+
+    // Check for a delimiter (not a digit or decimal).
+    const unsigned char next = _is.peek();
+    if(!isdigit(next) and next != u'.')
+    {
+      _is >> buffer;
+      if(i == 0)
+        leadingDelim = true;
+    }
+    _is >> _c[i];
+  }
+
+  // If there was a leading delimiter, extract the following delimiter as well.
+  if(leadingDelim)
+    _is >> std::ws >> buffer;
+
+  return _is;
 }
 
 /*---------------------------------- Hasher ----------------------------------*/
