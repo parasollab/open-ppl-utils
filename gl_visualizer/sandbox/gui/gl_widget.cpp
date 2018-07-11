@@ -209,51 +209,39 @@ void
 gl_widget::
 initializeGL()
 {
-  // Set clear color to black
-  glClearColor(0., 0., 0., 1.);
+  // Set clear color to white.
+  glClearColor(1., 1., 1., 1.);
 
-  // Enable material coloring with glColor
+  // Enable material coloring with glColor.
   glEnable(GL_COLOR_MATERIAL);
 
-  // Create some lights to show 3d objects as 3d
+  // Create some lights to show 3d objects as 3d.
   glEnable(GL_LIGHTING);
-  glLightfv(GL_LIGHT0, GL_AMBIENT, color::black);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, color::dark_grey);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, color::white);
   glLightfv(GL_LIGHT0, GL_SPECULAR, color::white);
-  glLightfv(GL_LIGHT1, GL_AMBIENT, color::black);
-  glLightfv(GL_LIGHT1, GL_DIFFUSE, color::white);
-  glLightfv(GL_LIGHT1, GL_SPECULAR, color::white);
   glEnable(GL_LIGHT0);
-  glEnable(GL_LIGHT1);
 
-  // Position the lights
-  GLfloat light0Pos[] = {250., 250., 250., 1.};
-  GLfloat light1Pos[] = {-250., 250., -250., 1.};
+  // Position the lights.
+  GLfloat light0Pos[] = {100., 100., 100., 1.};
   glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
-  glLightfv(GL_LIGHT1, GL_POSITION, light1Pos);
 
-  // Set material response to light
-  glMaterialfv(GL_FRONT, GL_AMBIENT, color::light_grey);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, color::light_grey);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, color::white);
-  glMaterialf(GL_FRONT, GL_SHININESS, 100.);
-
-  // Enable depth test
+  // Enable depth test.
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
   glClearDepth(1.0);
 
-  // Enable alpha blending
-  glEnable(GL_BLEND);
+  // Specify the alpha blending function. Blending doesn't play nice with depth
+  // and must be enabled separately.
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  // Enable point anti-aliasing
+  // Enable point anti-aliasing.
   glEnable(GL_POINT_SMOOTH);
 
-  // Enable smooth shading
+  // Enable smooth shading.
   glShadeModel(GL_SMOOTH);
 
-  // Enable back-face culling to see through boundaries
+  // Enable back-face culling to see through boundaries.
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
 }

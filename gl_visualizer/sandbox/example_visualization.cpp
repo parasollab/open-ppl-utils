@@ -14,9 +14,13 @@ class drawable_sphere :
   virtual void build() override
   {
     glColor4f(.5, .1, .5, .5);
+    glEnable(GL_BLEND);
+    glDepthMask(GL_FALSE);
     glLineWidth(1);
     glutils::draw::sphere(5);
     glutils::draw::sphere_frame(5);
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
   }
 
   virtual void build_select() override
@@ -34,9 +38,13 @@ class drawable_sphere :
 
   virtual void build_highlighted() override
   {
+    glEnable(GL_BLEND);
+    glDepthMask(GL_FALSE);
     glLineWidth(1);
     glColor4f(0, .1, .6, .4);
     glutils::draw::sphere(5.1);
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
   }
 
 };
