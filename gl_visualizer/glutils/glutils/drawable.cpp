@@ -36,7 +36,15 @@ namespace glutils {
 
   void
   drawable::
-  rebuild()
+  initialize()
+  {
+    m_initialized = true;
+  }
+
+
+  void
+  drawable::
+  uninitialize()
   {
     m_initialized = false;
   }
@@ -188,15 +196,6 @@ namespace glutils {
   unhighlight() noexcept
   {
     m_highlighted = false;
-  }
-
-  /*-------------------------- Drawing Instructions --------------------------*/
-
-  void
-  drawable::
-  initialize()
-  {
-    m_initialized = true;
   }
 
   /*------------------------ Selection ID Generation -------------------------*/

@@ -1,5 +1,5 @@
-#ifndef GLUTILS_DRAWABLE_CALL_LIST_H_
-#define GLUTILS_DRAWABLE_CALL_LIST_H_
+#ifndef GLUTILS_DRAWABLE_DISPLAY_LIST_H_
+#define GLUTILS_DRAWABLE_DISPLAY_LIST_H_
 
 #include <memory>
 
@@ -8,25 +8,25 @@
 
 namespace glutils {
 
-  class call_list_set;
+  class display_list_set;
 
   //////////////////////////////////////////////////////////////////////////////
-  /// A drawable object that can be represented with a call list.
+  /// A drawable object that can be represented with a display list.
   //////////////////////////////////////////////////////////////////////////////
-  class drawable_call_list :
+  class drawable_display_list :
       public drawable
   {
 
     ///@name Local Types
     ///@{
 
-    typedef std::shared_ptr<call_list_set> call_list_ptr;
+    typedef std::shared_ptr<display_list_set> display_list_ptr;
 
     ///@}
     ///@name Internal State
     ///@{
 
-    call_list_ptr m_lists; ///< Shared pointer to a set of call lists.
+    display_list_ptr m_lists; ///< Shared pointer to a set of display lists.
 
     ///@}
 
@@ -35,17 +35,19 @@ namespace glutils {
       ///@name Construction
       ///@{
 
-      /// Create a new drawable with a new call list.
-      drawable_call_list();
+      /// Create a new drawable with a new display list.
+      drawable_display_list();
 
-      /// Create a drawable from an existing call list.
-      /// @param[in] _cl A shared pointer to an existing call list set, which
-      ///                will be used in place of generating a new call list.
-      drawable_call_list(call_list_ptr _cl) noexcept;
+      /// Create a drawable from an existing display list.
+      /// @param _cl A shared pointer to an existing display list set, which
+      ///            will be used in place of generating a new display list.
+      drawable_display_list(display_list_ptr _cl) noexcept;
 
-      virtual void rebuild() override;
+      virtual ~drawable_display_list();
 
-      virtual ~drawable_call_list();
+      virtual void initialize() override;
+
+      virtual void uninitialize() override;
 
       ///@}
 
@@ -77,8 +79,6 @@ namespace glutils {
       ///@}
       ///@name drawable Overrides
       ///@{
-
-      virtual void initialize() override final; ///< Compile the call lists.
 
       virtual void draw() override final;
       virtual void draw_select() override final;

@@ -95,11 +95,11 @@ class base_visualization
     ///@{
 
     /// Add a drawable to the visualization.
-    /// @param[in] _d The drawable to add.
+    /// @param _d The drawable to add.
     virtual void add_drawable(glutils::drawable* _d);
 
     /// Remove a drawable from the visualization and delete it.
-    /// @param[in] _d The drawable to remove.
+    /// @param _d The drawable to remove.
     virtual void remove_drawable(glutils::drawable* _d);
 
     ///@}

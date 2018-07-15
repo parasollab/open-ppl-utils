@@ -55,8 +55,19 @@ namespace glutils {
       drawable(const drawable& _d) noexcept;
       drawable(drawable&& _d) noexcept;
 
+      /// Define any initialization commands to perform on first draw (within
+      /// the GL context). Will be called automatically if the object is not
+      /// already initialized.
+      ///
+      /// Derived classes which override this function must always call the parent
+      /// implementation.
+      virtual void initialize();
+
       /// Uninitialize the drawable to force a re-build.
-      virtual void rebuild();
+      ///
+      /// Derived classes which override this function must always call the parent
+      /// implementation.
+      virtual void uninitialize();
 
       virtual ~drawable();
 
@@ -137,8 +148,6 @@ namespace glutils {
       /// base graphic, decorations for selected and highlighted objects are
       /// (optionally) supported. The modelview matrix will be saved/restored
       /// prior to/after drawing, so there is no need to do so explicitly.
-
-      virtual void initialize(); ///< Init to perform on first draw.
 
       virtual void draw() = 0;           ///< Render the object.
       virtual void draw_select() = 0;    ///< Render for selection (no colors).

@@ -2,13 +2,13 @@
 
 #include "glutils/color.h"
 #include "glutils/draw.h"
-#include "glutils/drawable_call_list.h"
+#include "glutils/drawable_display_list.h"
 #include "nonstd/io.h"
 
 
 /// Example of a drawable object.
 class drawable_sphere :
-    public glutils::drawable_call_list
+    public glutils::drawable_display_list
 {
 
   virtual void build() override
