@@ -47,6 +47,8 @@ namespace nonstd {
       ///@name Construction
       ///@{
 
+      /// Construct an exception object.
+      /// @param _init The initial error message.
       exception(const std::string& _init = "");
 
       exception(const exception& _other);
@@ -71,16 +73,26 @@ namespace nonstd {
 
       exception& operator<<(basic_ostream& (*_f)(basic_ostream&));
 
-      template <typename T>
-      exception&
-      operator<<(const T& _t) {
-        m_stream << _t;
-        return *this;
-      }
+      template <typename T> exception& operator<<(const T& _t);
 
       ///@}
 
   };
+
+  /*--------------------------- ostream Interface ----------------------------*/
+
+  template <typename T>
+  inline
+  exception&
+  exception::
+  operator<<(
+      const T& _t
+  ) {
+    m_stream << _t;
+    return *this;
+  }
+
+  /*--------------------------------------------------------------------------*/
 
 }
 

@@ -11,21 +11,26 @@ namespace glutils {
   /*--------------------------- Construction ---------------------------------*/
 
   color::
-  color(const GLfloat _r, const GLfloat _g, const GLfloat _b, const GLfloat _a)
-      : m_rgba{_r, _g, _b, _a}
+  color(
+      const value_type _r,
+      const value_type _g,
+      const value_type _b,
+      const value_type _a
+  )
+    : m_rgba{_r, _g, _b, _a}
   { }
 
   /*----------------- Implicit Conversions to OpenGL Arrays ------------------*/
 
   color::
-  operator GLfloat*() noexcept
+  operator value_type*() noexcept
   {
     return m_rgba.data();
   }
 
 
   color::
-  operator const GLfloat*() const noexcept
+  operator const value_type*() const noexcept
   {
     return m_rgba.data();
   }
@@ -46,7 +51,7 @@ namespace glutils {
 
   /*------------------------------ Accessors ---------------------------------*/
 
-  GLfloat&
+  color::value_type&
   color::
   operator[](const unsigned short _i) noexcept
   {
@@ -54,7 +59,7 @@ namespace glutils {
   }
 
 
-  const GLfloat&
+  const color::value_type&
   color::
   operator[](const unsigned short _i) const noexcept
   {
@@ -170,38 +175,19 @@ namespace glutils {
 std::ostream&
 operator<<(std::ostream& _os, const glutils::color& _c)
 {
-  _os << "{" << _c[0] << ", " << _c[1] << ", " << _c[2] << ", " << _c[3] << "}";
-  return _os;
+  constexpr char bracket   = ' ',
+                 delimiter = ' ';
+  return _os << nonstd::print_container(_c.begin(), _c.end(), bracket, delimiter);
 }
 
 
 std::istream&
 operator>>(std::istream& _is, glutils::color& _c)
 {
-  char buffer;
-  bool leadingDelim = false;
-
-  // Read each of the four values.
-  for(size_t i = 0; i < 4; ++i)
-  {
-    // Clear whitespace.
-    _is >> std::ws;
-
-    // Check for a delimiter (not a digit or decimal).
-    const unsigned char next = _is.peek();
-    if(!isdigit(next) and next != u'.')
-    {
-      _is >> buffer;
-      if(i == 0)
-        leadingDelim = true;
-    }
-    _is >> _c[i];
-  }
-
-  // If there was a leading delimiter, extract the following delimiter as well.
-  if(leadingDelim)
-    _is >> std::ws >> buffer;
-
+  constexpr char bracket   = ' ',
+                 delimiter = ' ';
+  nonstd::input_container<glutils::color::value_type>(_is, _c.begin(), 4, bracket,
+      delimiter);
   return _is;
 }
 
@@ -211,7 +197,7 @@ size_t
 std::hash<glutils::color>::
 operator()(const glutils::color& _c) const noexcept
 {
-  std::hash<GLfloat> hasher;
+  std::hash<glutils::color::value_type> hasher;
   return hasher(_c[0] * 1000 + _c[1] * 100 + _c[2] * 10 + _c[3]);
 }
 

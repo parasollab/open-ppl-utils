@@ -39,7 +39,8 @@ class gl_widget
     ///@{
 
     gl_widget(QWidget* _parent);
-    ~gl_widget();
+
+    virtual ~gl_widget();
 
     ///@}
     ///@name Accessors

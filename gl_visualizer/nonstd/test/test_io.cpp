@@ -32,7 +32,7 @@ test_read_file()
 
 
 void
-test_std_ostream()
+test_print_container()
 {
   ostringstream out;
 
@@ -46,16 +46,124 @@ test_std_ostream()
                     "{0, 1, 2, 3, 4}\n"
                     "{0, 1, 2, 3}\n";
 
-  assert_msg(out.str() == expected, er + "when testing std operator<< helpers, "
+  assert_msg(out.str() == expected, er + "when testing print_container, "
       "expected:\n" + expected + "...but got:\n" + out.str());
 }
 
 
-int main() {
+template <typename ContainerType>
+void
+test_input_container(
+    const ContainerType& _expected,
+    const std::string& _good_input,
+    const std::vector<std::string>& _bad_inputs
+) {
+  const std::string when = "when testing input_container, ";
+
+  ContainerType test;
+
+  // Test good input.
+  {
+    try
+    {
+      std::istringstream buffer(_good_input);
+      buffer >> test;
+    }
+    catch(nonstd::exception _e)
+    {
+      _e << "\n" << when << "good input '" << _good_input << "' failed.";
+      throw _e;
+    }
+
+    assert_msg(test == _expected, er + when + "expected good input '" +
+        _good_input + "' to produce equivalent object.");
+  }
+
+  // Test bad input.
+  for(const auto& string : _bad_inputs)
+  {
+    std::istringstream buffer(string);
+    try
+    {
+      buffer >> test;
+    }
+    catch(const nonstd::exception&)
+    {
+      continue;
+    }
+
+    exit_msg(er + when + "expected bad input '" + string +
+        "' to produce an exception.");
+  }
+}
+
+
+void
+test_input_container()
+{
+
+  // Test pair.
+  {
+    std::pair<int, char> expected(0, 'a');
+    std::string good_input("(0, a)");
+    std::vector<std::string> bad_inputs{"0, a",
+                                        "(0, 12)",
+                                        "(a, a)",
+                                        "(0, a, a)",
+                                        "(0)"};
+
+    test_input_container(expected, good_input, bad_inputs);
+  }
+
+  // Test list.
+  {
+    std::list<float> expected{0., 1.1, 2.2};
+    std::string good_input("{0, 1.1, 2.2}");
+    std::vector<std::string> bad_inputs{"0, 1.1, 2.2",
+                                        "(0, 1.1, 2.2)",
+                                        "{0, a, 2.2}",
+                                        "0 1.1 2.2",
+                                        "{0, 1.1, 2.2"};
+
+    test_input_container(expected, good_input, bad_inputs);
+  }
+
+  // Test vector.
+  {
+    std::vector<int> expected{0, 1, 2, 3, 4};
+    std::string good_input("{0, 1, 2, 3, 4}");
+    std::vector<std::string> bad_inputs{"0, 1, 2, 3, 4",
+                                        "(0, 1, 2, 3, 4)",
+                                        "{0, a, 2, 3, 4}",
+                                        "0 1 2 3 4",
+                                        "{0, 1, 2, 3, 4"};
+
+    test_input_container(expected, good_input, bad_inputs);
+  }
+
+  // Test array.
+  {
+    std::array<short, 4> expected{0, 1, 2, 3};
+    std::string good_input("{0, 1, 2, 3}");
+    std::vector<std::string> bad_inputs{"0, 1, 2, 3",
+                                        "(0, 1, 2, 3)",
+                                        "{0, a, 2, 3}",
+                                        "0 1 2 3",
+                                        "{0, 1, 2, 3"};
+
+    test_input_container(expected, good_input, bad_inputs);
+  }
+}
+
+
+int
+main()
+{
   cerr << "\ttesting io..." << flush;
 
   test_read_file();
-  test_std_ostream();
+  test_print_container();
+  test_input_container();
 
   cerr << "passed" << endl;
 }

@@ -20,7 +20,8 @@ namespace glutils {
       ///@name Local Types
       ///@{
 
-      typedef std::array<GLfloat, 4>       storage_type;
+      typedef GLfloat                      value_type;
+      typedef std::array<value_type, 4>    storage_type;
       typedef storage_type::iterator       iterator;
       typedef storage_type::const_iterator const_iterator;
 
@@ -33,15 +34,15 @@ namespace glutils {
       /// @param _g The green value in [0, 1].
       /// @param _b The blue value in [0, 1].
       /// @param _a The alpha value in [0, 1].
-      color(const GLfloat _r = 0, const GLfloat _g = 0, const GLfloat _b = 0,
-          const GLfloat _a = 1);
+      color(const value_type _r = 0, const value_type _g = 0, const value_type _b = 0,
+          const value_type _a = 1);
 
       ///@}
       ///@name Implicit Conversions to OpenGL Arrays
       ///@{
 
-      operator GLfloat*() noexcept;
-      operator const GLfloat*() const noexcept;
+      operator value_type*() noexcept;
+      operator const value_type*() const noexcept;
 
       operator GLvoid*() noexcept;
       operator const GLvoid*() const noexcept;
@@ -50,8 +51,8 @@ namespace glutils {
       ///@name Accessors
       ///@}
 
-      GLfloat& operator[](const unsigned short _i) noexcept;
-      const GLfloat& operator[](const unsigned short _i) const noexcept;
+      value_type& operator[](const unsigned short _i) noexcept;
+      const value_type& operator[](const unsigned short _i) const noexcept;
 
       iterator begin() noexcept;
       iterator end() noexcept;

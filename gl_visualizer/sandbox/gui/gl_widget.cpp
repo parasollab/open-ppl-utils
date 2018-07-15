@@ -52,6 +52,7 @@ gl_widget(QWidget* _parent) :
 gl_widget::
 ~gl_widget()
 {
+  m_clock->stop();
   delete m_camera;
 }
 

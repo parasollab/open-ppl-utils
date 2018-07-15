@@ -14,9 +14,31 @@ main_window()
   initialize_layout();
   initialize_key_maps();
   connect_components();
+
+  if(!main_window::get())
+    main_window::get() = this;
+}
+
+
+main_window::
+~main_window()
+{
+  if(main_window::get() == this)
+    main_window::get() = nullptr;
 }
 
 /*------------------------------- Accessors ----------------------------------*/
+
+static main_window* main_window_singleton = nullptr;
+
+
+main_window*&
+main_window::
+get() noexcept
+{
+  return main_window_singleton;
+}
+
 
 gl_widget*
 main_window::

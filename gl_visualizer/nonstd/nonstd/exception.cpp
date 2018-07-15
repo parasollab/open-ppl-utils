@@ -15,7 +15,7 @@ namespace nonstd {
   exception::
   exception(const exception& _other) : std::runtime_error("")
   {
-    m_stream.str(_other.m_stream.str());
+    m_stream << _other.m_stream.str();
   }
 
 
@@ -26,7 +26,8 @@ namespace nonstd {
 
   const char*
   exception::
-  what() const noexcept {
+  what() const noexcept
+  {
     m_message = m_stream.str();
     return m_message.data();
   }
@@ -35,7 +36,8 @@ namespace nonstd {
 
   exception&
   exception::
-  operator<<(std::ios_base& (*_f)(std::ios_base&)) {
+  operator<<(std::ios_base& (*_f)(std::ios_base&))
+  {
     m_stream << _f;
     return *this;
   }
@@ -43,7 +45,8 @@ namespace nonstd {
 
   exception&
   exception::
-  operator<<(exception::basic_ios& (*_f)(exception::basic_ios&)) {
+  operator<<(exception::basic_ios& (*_f)(exception::basic_ios&))
+  {
     m_stream << _f;
     return *this;
   }
@@ -51,7 +54,8 @@ namespace nonstd {
 
   exception&
   exception::
-  operator<<(exception::basic_ostream& (*_f)(exception::basic_ostream&)) {
+  operator<<(exception::basic_ostream& (*_f)(exception::basic_ostream&))
+  {
     m_stream << _f;
     return *this;
   }

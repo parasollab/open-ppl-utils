@@ -63,12 +63,19 @@ class main_window
     ///@{
 
     main_window();
+
     main_window(const main_window&) = delete;
-    virtual ~main_window() = default;
+
+    virtual ~main_window();
 
     ///@}
     ///@name Accessors
     ///@{
+
+    /// Most applications will use just one main window. For those cases, this
+    /// accessor provides a single point of access. If not already set, it will
+    /// point to the next instance created.
+    static main_window*& get() noexcept;
 
     gl_widget* gl() const;
 

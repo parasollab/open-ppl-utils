@@ -19,7 +19,7 @@ test_write()
 {
   // Create a color and the expected output string.
   const glutils::color c(1, .2, .3, .4);
-  const std::string expected = "{1, 0.2, 0.3, 0.4}";
+  const std::string expected = "1 0.2 0.3 0.4";
 
   // Write the color to a string.
   std::ostringstream output;
@@ -38,36 +38,56 @@ test_read()
 {
   // Create a color.
   const glutils::color expected(1, .2, .3, .4);
-  std::ostringstream expectedOutput;
-  expectedOutput << expected;
+  std::ostringstream expected_output;
+  expected_output << expected;
 
   // Create a bunch of alternate string representations of this color.
-  const std::vector<std::string> inputStrings{"{1, .2, .3, .4}",
-                                              "1, .2, .3, .4",
-                                              "1 .2 .3 .4",
-                                              "{1 .2 .3 .4}",
-                                              "[1 .2 .3 .4]",
-                                              "(1 .2 .3 .4)",
-                                              "(1, .2, .3, .4)",
-                                              "(1; .2; .3; .4)",
-                                              "/1 .2 .3 .4|"};
+  const std::string good_input("1 .2 .3 .4");
+  const std::vector<std::string> bad_inputs{"{1, .2, .3, .4}",
+                                            "1, .2, .3, .4",
+                                            "1 .2 .3",
+                                            "{1 .2 .3 .4}",
+                                            "[1 .2 .3 .4]",
+                                            "(1 .2 .3 .4)",
+                                            "(1, .2, .3, .4)",
+                                            "(1; .2; .3; .4)",
+                                            "/1 .2 .3 .4|"};
 
-  // Test that each input string produces the expected color.
-  for(const auto& string : inputStrings)
+  // Test that the good input produces the expected color.
   {
     // Read the input string into a color object.
     glutils::color test;
-    std::istringstream input(string);
+    std::istringstream input(good_input);
     input >> test;
 
     // Verify the produced color is equal to the expected value.
-    assert_msg(test == expected, er + "input string '" + string + "' did not "
-        "produce the expected color '" + expectedOutput.str() + "'.");
+    assert_msg(test == expected, er + "input string '" + good_input + "' did not "
+        "produce the expected color '" + expected_output.str() + "'.");
+  }
+
+  // Test that each bad input string produces an exception.
+  for(const auto& string : bad_inputs)
+  {
+    // Read the input string into a color object.
+    try
+    {
+      glutils::color test;
+      std::istringstream input(string);
+      input >> test;
+    }
+    catch(const nonstd::exception& _e)
+    {
+      continue;
+    }
+
+    assert_msg(false, er + "bad input string '" + string + "' did not "
+        "produce an exception.");
   }
 }
 
 
-int main()
+int
+main()
 {
   cerr << "\ttesting color..." << flush;
 
