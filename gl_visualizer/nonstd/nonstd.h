@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace nonstd { }
 
+#include "nonstd/call_on_destruct.h"
 #include "nonstd/collection.h"
 #include "nonstd/condition_counter.h"
 #include "nonstd/container_ops.h"
