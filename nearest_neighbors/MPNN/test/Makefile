@@ -8,17 +8,15 @@
 #
 ################################################################
 
-OS = Linux
-
 C++ = g++
 
 C++FLAGS = -g -Wall
-LDFLAGS = 
-CPPFLAGS = 
+LDFLAGS =
+CPPFLAGS =
 
 ########   ANN Configuration
-DNNINC = -I/users/bcb2913/ann-2008/sandbox/MPNN/include
-DNNLIB = -L/users/bcb2913/ann-2008/sandbox/MPNN/lib -lDNN
+DNNINC = -I../include
+DNNLIB = -L../src -lMPNN
 DNNFLAGS = -DUSE_DNN
 
 ######## INC configuration

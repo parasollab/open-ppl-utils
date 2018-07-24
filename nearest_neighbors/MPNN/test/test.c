@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>			// C I/O
 #include <stdint.h>
-#include <fstream.h>			// file I/O
-#include <iostream.h>			// file I/O
-#include <string.h>			// string manipulation
-#include <math.h>			// math routines
+#include <fstream>			// file I/O
+#include <iostream>			// file I/O
+#include <string>			// string manipulation
+#include <math.h> 			// math routines
 #include <list>
 #include <queue>
 #include <time.h>
@@ -41,26 +41,26 @@ void randomDistPoint(int dim, int *tt, ANNpoint &p)
       else if (tt[kk] == 3) {
 	double tmp1 = rand()/(2.14783e+09);
 	double tmp2 = rand()/(2.14783e+09);
-	
+
 	double Theta1 = 2*PI*tmp1;
 	double Theta2 = PI*tmp2 - PI/2;
 	double r1 = sqrt(1 - tmp);
 	double r2 = sqrt(tmp);
-	
+
 	p[kk] =  sin(Theta1)*r1;
 	p[kk + 1] = cos(Theta1)*r1;
 	p[kk + 2] = sin(Theta2)*r2;
 	p[kk + 3] = cos(Theta2)*r2;
-	
+
 	kk = kk + 3;		// random quaternions
       }
-      else 
+      else
 	p[kk] = 200*tmp - 100; 	//region -100 to 100
     }
 
 }
 
-void randomDist(int dim, int *tt, ANNpointArray &data_pts) 
+void randomDist(int dim, int *tt, ANNpointArray &data_pts)
 {
   int n_pts = 0;
   while (n_pts < m_pts) {
@@ -73,7 +73,7 @@ void randomDist(int dim, int *tt, ANNpointArray &data_pts)
 double Metric(ANNpoint x1, ANNpoint x2, int dim, int *topology, ANNpoint scale) {
 
   double rho = 0, fd, dtheta;
-  
+
   for (int i = 0; i < dim; i++) {
     if (topology[i] == 1) {
       rho += ANN_POW(scale[i]*(x1[i] - x2[i]));
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
     MultiANN		*MAG;			// search structure
 
 
-    srand(time(NULL)); 
+    srand(time(NULL));
     dimStream.open("dim", ios::in);		// open query file
     if (!topologyStream) {
       cerr << "Cannot open dim file\n";
@@ -156,7 +156,7 @@ int main(int argc, char **argv)
     }
     topology_in = &topologyStream;	      	// make this query stream
     readPt(*topology_in, topology);		// read topology
-    
+
     for (int i = 0; i < dim; i++) {
       if (topology[i] == 1) scale[i] = 1.0;
       else if (topology[i] == 2) scale[i] = 50/PI;
@@ -169,10 +169,10 @@ int main(int argc, char **argv)
     }
     cout << "\n";
 
-  
+
     randomDist(dim, topology, data_pts);		// generate random points
     randomDistPoint(dim, topology, query_pt);		// generate query point
-    
+
     cout << "MaxNeighbors=" << MaxNeighbors << "\t";
     cout << "m_pts=" << m_pts << "\t";
     cout << "dim=" << dim << "\t";
@@ -186,12 +186,12 @@ int main(int argc, char **argv)
     randomDistPoint(dim, topology, query_pt);		// generate query point
 
     //***********************Construction phase**********************/
-    
+
     clock_t tv1, tv2;
-    double time;    
+    double time;
     tv1 = clock();
 
-    MAG = new MultiANN(dim, MaxNeighbors, topology, scale);	// create a data structure	
+    MAG = new MultiANN(dim, topology, scale, 0.);	// create a data structure
     for (int j = 0; j < m_pts; j++) {
       MAG->AddPoint(data_pts[j], data_pts[j]);		// add new data point
     }
@@ -207,15 +207,15 @@ int main(int argc, char **argv)
 
     //*************************Query phase*******************************/
 
-    
-    double d;   
+
+    double d;
     for (int j = 0; j < numIt; j++) {
       //randomDistPoint(dim, topology, query_pt);				// generate query point
       d_ann = INFINITY;
       result_pt = (ANNpoint)MAG->NearestNeighbor(query_pt, idx_ann, d_ann);	// compute nearest neighbor using library
       //idx_ann = a->NearestNeighbor(topology, scale, query_pt, d_ann);		// compute nearest neighbor using library
     }
-       
+
 
     tv2 = clock();
     time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
@@ -251,9 +251,9 @@ int main(int argc, char **argv)
      for (int j = 0; j < numIt; j++) {
       //randomDistPoint(dim, topology, query_pt);				// generate query point
       d_ann = INFINITY;
-      MAG->NearestNeighbor(query_pt, d_best_list, idx_best_list, (void **)n_best_list);	// compute nearest neighbor using library
+      MAG->NearestNeighbor(query_pt, MaxNeighbors, d_best_list, idx_best_list, (void **)n_best_list);	// compute nearest neighbor using library
     }
-       
+
 
     tv2 = clock();
     time = (tv2 - tv1)/(CLOCKS_PER_SEC / (double) 1000.0);
@@ -284,15 +284,15 @@ int main(int argc, char **argv)
     cout << "ANN distance = " << d_ann << endl;
     cout << "nearest neighbor";
     for (int i = 0; i < MaxNeighbors; i++) {
-      if (d_best_list[i] < 30) 
+      if (d_best_list[i] < 30)
 	printPt(cout, (double *)n_best_list[i]);
     }
-    
+
     cout << "Brute distance = " << d_brute << endl;
     cout << "nearest neighbor";
     for (ni = best_list.begin(); ni != best_list.end(); ni++)
       printPt(cout, (*ni));
-  
+
 
     if (MAG){
       MAG->ResetMultiANN();
@@ -300,18 +300,21 @@ int main(int argc, char **argv)
     }
 
     /************report problems if any*************************************/
-    
-    if (idx_ann != idx_brute) 			// report error if different nearest neighbors
-      cout << "PROBLEM!!!!!!!"; 
-      
+
+    if (idx_ann != idx_brute) {			// report error if different nearest neighbors
+      std::cerr << "Error, different nearest neighbor found by brute force ("
+                << idx_brute << ") and ann (" << idx_ann << ").";
+      std::exit(1);
+    }
+
     cout << "ANN distance = " << d_ann << endl;
     cout << "nearest neighbor";
     printPt(cout, result_pt);
-    
+
     cout << "Brute distance = " << d_brute << endl;
     cout << "nearest neighbor";
     printPt(cout, data_pts[idx_brute]);
-  }  
+  }
 }
 
 
