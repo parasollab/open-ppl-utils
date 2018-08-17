@@ -169,11 +169,6 @@ namespace mathtool {
                           {sinG * cosB * cosA - cosG * sinB * sinA,
                            cosG * sinB * cosA + sinG * cosB * sinA,
                            cosG * cosB * sinA - sinG * sinB * cosA});
-
-    ///// TODO Fix this to avoid the intermediate matrix conversion.
-    //Matrix3x3 m;
-    //convertFromEulerAngle(m, _e);
-    //return convertFromMatrix(_q, m);
   }
 
 
@@ -181,8 +176,11 @@ namespace mathtool {
   Quaternion&
   convertFromEulerVector(Quaternion& _q, const EulerVector& _v)
   {
-    const double magnitude = _v.norm(),
-                 sin       = std::sin(magnitude / 2.),
+    const double magnitude = _v.norm();
+    if(mathtool::approx(magnitude, 0.))
+      return _q = Quaternion();
+
+    const double sin       = std::sin(magnitude / 2.),
                  cos       = std::cos(magnitude / 2.);
     return _q = Quaternion(cos, _v * (sin / magnitude));
   }
