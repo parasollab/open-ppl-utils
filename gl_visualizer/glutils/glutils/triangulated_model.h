@@ -1,8 +1,9 @@
-#ifndef GL_UTILS_TRIANGULATED_MODEL
-#define GL_UTILS_TRIANGULATED_MODEL
+#ifndef GLUTILS_TRIANGULATED_MODEL_H_
+#define GLUTILS_TRIANGULATED_MODEL_H_
 
 #include <array>
 #include <cstddef>
+#include <utility>
 #include <vector>
 
 #include "glutils/gltraits.h"
@@ -48,35 +49,54 @@ namespace glutils {
       /// @param _i2 The second point index.
       /// @param _i3 The third point index.
       /// @param _pl The owning model's point list.
-      triangle_facet(const index _i1, const index _i2, const index _i3,
-          const point_list& _pl);
+      triangle_facet(
+          const index _i1,
+          const index _i2,
+          const index _i3,
+          const point_list& _pl
+      );
 
       ///@}
       ///@name Accessors
       ///@{
 
-      index_iterator begin() const noexcept; ///< Iterate over point indexes.
-      index_iterator end() const noexcept;   ///< Iterate over point indexes.
+      /// Get a begin iterator to the point indexes.
+      index_iterator
+      begin() const noexcept;
+
+      /// Get an end iterator to the point indexes.
+      index_iterator
+      end() const noexcept;
 
       /// Get the index (in the owning model) of a facet point.
       /// @param _i The index (in this facet) of the point.
       /// @return The index of point _i in the owning model.
-      index operator[](const size_t _i) const noexcept;
+      index
+      operator[](
+          const size_t _i
+      ) const noexcept;
 
       /// Get a facet point.
       /// @param _i The index (in this facet) of the point.
       /// @return The point in the owning model referenced by facet index _i.
-      const point& get_point(const size_t _i) const noexcept;
+      const point&
+      get_point(
+          const size_t _i
+      ) const noexcept;
 
       /// Get the facet normal.
-      const vector3f& get_normal() const noexcept;
+      /// @return The normal vector.
+      const vector3f&
+      get_normal() const noexcept;
 
       ///@}
       ///@name Modifiers
       ///@{
 
       /// Reverse the facet so that the normal faces the opposite direction.
-      triangle_facet& reverse() noexcept;
+      /// @return A reference to self.
+      triangle_facet&
+      reverse() noexcept;
 
       ///@}
       ///@name Equality
@@ -84,15 +104,25 @@ namespace glutils {
       /// Determine whether two facets represent the same set of points in the
       /// same order.
 
-      bool operator==(const triangle_facet& _t) const noexcept;
-      bool operator!=(const triangle_facet& _t) const noexcept;
+      bool
+      operator==(
+          const triangle_facet& _t
+      ) const noexcept;
+
+      bool
+      operator!=(
+          const triangle_facet& _t
+      ) const noexcept;
 
       ///@}
       ///@name Ordering
       ///@{
 
       /// Defines a weak ordering to allow sorting.
-      bool operator<(const triangle_facet& _t) const noexcept;
+      bool
+      operator<(
+          const triangle_facet& _t
+      ) const noexcept;
 
       ///@}
 
@@ -104,7 +134,8 @@ namespace glutils {
       ///@{
 
       /// Compute the facet normal.
-      void compute_normal() noexcept;
+      void
+      compute_normal() noexcept;
 
       ///@}
 
@@ -116,16 +147,14 @@ namespace glutils {
   class triangulated_model final
   {
 
-    ///@name Local Types
+    ///@name Internal Types
     ///@{
 
     typedef glutils::vector3f          point;
     typedef std::vector<point>         point_list;
-    typedef point_list::const_iterator point_iterator;
 
     typedef glutils::triangle_facet    facet;
     typedef std::vector<facet>         facet_list;
-    typedef facet_list::const_iterator facet_iterator;
 
     ///@}
     ///@name Internal State
@@ -138,6 +167,16 @@ namespace glutils {
 
     public:
 
+      ///@name Local Types
+      ///@{
+
+      typedef point_list::iterator       point_iterator;
+      typedef facet_list::iterator       facet_iterator;
+
+      typedef point_list::const_iterator const_point_iterator;
+      typedef facet_list::const_iterator const_facet_iterator;
+
+      ///@}
       ///@name Creation Interface
       ///@{
 
@@ -145,46 +184,110 @@ namespace glutils {
       /// @param _p The point to add.
       /// @param _duplicates Allow duplicate points?
       /// @return The index of the added point.
-      size_t add_point(const point& _p, const bool _duplicates = false);
+      size_t
+      add_point(
+          const point& _p,
+          const bool _duplicates = false
+      );
 
       /// Add a facet to the model by referencing the indexes of existing points.
       /// @param _i1 The index of the first point.
       /// @param _i1 The index of the second point.
       /// @param _i1 The index of the third point.
       /// @return The index of the added facet.
-      size_t add_facet(const size_t _i1, const size_t _i2, const size_t _i3);
+      size_t
+      add_facet(
+          const size_t _i1,
+          const size_t _i2,
+          const size_t _i3
+      );
 
       /// Copy the points and facets from another triangulated model into this
       /// one.
       /// @param _t The source model.
-      void add_model(const triangulated_model& _t);
+      void
+      add_model(
+          const triangulated_model& _t
+      );
 
       ///@}
       ///@name Accessors
       ///@{
 
-      const point& get_point(const size_t _i) const noexcept;
-      const facet& get_facet(const size_t _i) const noexcept;
+      /// Get a point in the model.
+      /// @param _i The point index.
+      /// @return The _ith point in the model.
+      const point&
+      get_point(
+          const size_t _i
+      ) const noexcept;
 
-      point_iterator points_begin() const noexcept;
-      point_iterator points_end() const noexcept;
+      /// Get a facet in the model.
+      /// @param _i The facet index.
+      /// @return The _ith facet in the model.
+      const facet&
+      get_facet(
+          const size_t _i
+      ) const noexcept;
 
-      facet_iterator facets_begin() const noexcept;
-      facet_iterator facets_end() const noexcept;
+      /// Get a begin iterator to the model points.
+      const_point_iterator
+      points_begin() const noexcept;
+
+      /// Get an end iterator to the model points.
+      const_point_iterator
+      points_end() const noexcept;
+
+      /// Get a begin iterator to the model facets.
+      const_facet_iterator
+      facets_begin() const noexcept;
+
+      /// Get an end iterator to the model facets.
+      const_facet_iterator
+      facets_end() const noexcept;
+
+      /// Get a begin iterator to the model points.
+      point_iterator
+      points_begin() noexcept;
+
+      /// Get an end iterator to the model points.
+      point_iterator
+      points_end() noexcept;
+
+      /// Get a begin iterator to the model facets.
+      facet_iterator
+      facets_begin() noexcept;
+
+      /// Get an end iterator to the model facets.
+      facet_iterator
+      facets_end() noexcept;
 
       ///@}
       ///@name Queries
       ///@{
 
       /// Get the number of vertices in the model.
-      size_t num_points() const noexcept;
+      size_t
+      num_points() const noexcept;
 
       /// Get the number of facets in the model.
-      size_t num_facets() const noexcept;
+      size_t
+      num_facets() const noexcept;
 
       /// Find the model's centroid by averaging all of its vertices.
       /// @return The centroid of the model's vertices.
-      const vector3f find_center() const noexcept;
+      vector3f
+      find_centroid() const noexcept;
+
+      /// Find the center of the model's axis-aligned bounding box.
+      /// @return The center of the model's axis-aligned bounding box.
+      vector3f
+      find_aabb_center() const noexcept;
+
+      /// Find the corners of the model's axis-aligned bounding box.
+      /// @return The min, max corners of the model's axis-aligned bounding box.
+      std::pair<vector3f, vector3f>
+      find_aabb_corners() const noexcept;
 
       ///@}
       ///@name Modifiers
@@ -192,33 +295,61 @@ namespace glutils {
 
       /// Translate all of the vertices in the model.
       /// @param _v The translation vector to apply.
-      void translate(const vector3f& _v) noexcept;
+      /// @return A reference to self.
+      triangulated_model&
+      translate(
+          const vector3f& _v
+      ) noexcept;
+
+      /// Rotate the model about its local frame.
+      /// @param _v The rotaton vector (Euler vector format).
+      /// @return A reference to self.
+      triangulated_model&
+      rotate(
+          const vector3f& _v
+      ) noexcept;
 
       /// Remove duplicate vertices from the model.
-      void clean() noexcept;
+      /// @return A reference to self.
+      triangulated_model&
+      clean() noexcept;
 
       /// Reverse the facets so that the normals face the opposite direction.
-      triangulated_model& reverse() noexcept;
+      /// @return A reference to self.
+      triangulated_model&
+      reverse() noexcept;
 
       ///@}
       ///@name Equality
       ///@{
       /// Determine whether two models contain the same facets and vertices.
 
-      bool operator==(const triangulated_model& _t) const noexcept;
-      bool operator!=(const triangulated_model& _t) const noexcept;
+      bool
+      operator==(
+          const triangulated_model& _t
+      ) const noexcept;
+
+      bool
+      operator!=(
+          const triangulated_model& _t
+      ) const noexcept;
 
       ///@}
       ///@name Common Shapes
       ///@{
 
-      /// Create a box model.
-      /// @param _lenX The box length in the x direction.
-      /// @param _lenY The box length in the y direction.
-      /// @param _lenZ The box length in the z direction.
-      /// @return A triangulated box model of size _lenX x _lenY x _lenZ.
-      static triangulated_model make_box(GLfloat _lenX = 1, GLfloat _lenY = 1,
-          GLfloat _lenZ = 1);
+      /// Create a box centered at the origin.
+      /// @param _length_x The box length in the x direction.
+      /// @param _length_y The box length in the y direction.
+      /// @param _length_z The box length in the z direction.
+      /// @return A triangulated box model.
+      static
+      triangulated_model
+      make_box(
+          const GLfloat _length_x = 1,
+          const GLfloat _length_y = 1,
+          const GLfloat _length_z = 1
+      );
 
       /// Create a sphere centered at the origin with axis along the z direction.
       /// @param _radius The sphere radius.
@@ -226,24 +357,56 @@ namespace glutils {
       ///                  _segments - 2 rings of _segments squares and 2 rings
       ///                  of _segments triangles, for a total of
       ///                  2 * _segments * (_segments - 1) triangles.
-      /// @return A triangulated sphere model of radius _radius.
-      static triangulated_model make_sphere(const GLfloat _radius = 1,
-          const size_t _segments = 16);
+      /// @return A triangulated sphere model.
+      static
+      triangulated_model
+      make_sphere(
+          const GLfloat _radius = 1,
+          const size_t _segments = 16
+      );
 
-      /// Draw a cone with the base centered at the origin and tip pointed away
-      /// from the camera.
+      /// Create a cone with the base centered at the origin and tip pointed away
+      /// from the camera (-z direction).
       /// @param _radius The radius of the base.
       /// @param _height The height of the cone.
       /// @param _segments The number of segments to use for the sides.
-      static triangulated_model make_cone(const GLfloat _radius = 1,
-          const GLfloat _height = 1, const size_t _segments = 16);
+      /// @return A triangulated cone model.
+      static
+      triangulated_model
+      make_cone(
+          const GLfloat _radius = 1,
+          const GLfloat _height = 1,
+          const size_t _segments = 16
+      );
 
-      /// Draw a cylinder centered at the origin and oriented along the z-axis.
+      /// Create a cylinder centered at the origin and oriented along the z-axis.
       /// @param _radius The cylinder radius.
       /// @param _length The length perpendicular to the radius.
       /// @param _segments The number of segments to use for the side wall.
-      static triangulated_model make_cylinder(const GLfloat _radius = 1,
-          const GLfloat _length = 1, const size_t _segments = 16);
+      /// @return A triangulated cylinder model.
+      static
+      triangulated_model
+      make_cylinder(
+          const GLfloat _radius = 1,
+          const GLfloat _length = 1,
+          const size_t _segments = 16
+      );
+
+      /// Create a hollow cylinder centered at the origin and oriented along the
+      /// z-axis.
+      /// @param _outerRadius The outer radius.
+      /// @param _innerRadius The inner radius.
+      /// @param _length The length perpendicular to the radius.
+      /// @param _segments The number of segments to use for the side wall.
+      /// @return A triangulated cylinder model.
+      static
+      triangulated_model
+      make_pipe(
+          const GLfloat _outerRadius = 1,
+          const GLfloat _innerRadius = .9,
+          const GLfloat _length = 1,
+          const size_t _segments = 16
+      );
 
       ///@}
 

@@ -6,7 +6,7 @@
 #include "nonstd/io.h"
 
 
-/// Example of a drawable object.
+// Example of a drawable object.
 class drawable_sphere :
     public glutils::drawable_display_list
 {
@@ -46,6 +46,22 @@ class drawable_sphere :
     glDepthMask(GL_TRUE);
     glDisable(GL_BLEND);
   }
+
+  /*
+  // Example for how to hide an object on selection.
+  virtual void select() noexcept override
+  {
+    hide();
+    glutils::drawable::select();
+  }
+
+  // Example for how to unhide an object on deselection.
+  virtual void deselect() noexcept override
+  {
+    unhide();
+    glutils::drawable::deselect();
+  }
+  */
 
 };
 

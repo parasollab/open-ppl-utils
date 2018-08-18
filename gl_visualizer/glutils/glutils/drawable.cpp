@@ -59,6 +59,9 @@ namespace glutils {
   drawable::
   render()
   {
+    if(m_hidden)
+      return;
+
     glPushMatrix();
 
     if(!m_initialized)
@@ -80,6 +83,9 @@ namespace glutils {
   drawable::
   render_select()
   {
+    if(m_hidden)
+      return;
+
     glPushMatrix();
 
     apply_transform(m_transforms.front());
@@ -96,6 +102,9 @@ namespace glutils {
   drawable::
   render_color_pick()
   {
+    if(m_hidden)
+      return;
+
     glPushMatrix();
 
     apply_transform(m_transforms.front());
@@ -104,6 +113,30 @@ namespace glutils {
     draw_select();
 
     glPopMatrix();
+  }
+
+
+  void
+  drawable::
+  hide() noexcept
+  {
+    m_hidden = true;
+  }
+
+
+  void
+  drawable::
+  unhide() noexcept
+  {
+    m_hidden = false;
+  }
+
+
+  bool
+  drawable::
+  is_hidden() const noexcept
+  {
+    return m_hidden;
   }
 
   /*------------------------------- Transform --------------------------------*/

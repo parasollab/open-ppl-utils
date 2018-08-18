@@ -1,10 +1,11 @@
 #include "glutils/obj_file.h"
 #include "glutils/triangulated_model.h"
 
-#include <exception>
 #include <fstream>
 
+#include "nonstd/exception.h"
 #include "nonstd/string.h"
+
 
 namespace glutils {
 
@@ -14,16 +15,18 @@ namespace glutils {
   {
     std::ifstream file(m_filename);
     if(!file.good())
-      throw std::runtime_error("glutils::obj_file::operator>>() error: could "
-          "not open the file '" + m_filename + "'.");
+      throw nonstd::exception(WHERE) << "Could not open the file '"
+                                     << m_filename << "'.";
 
     char c1, c2;
     std::string buffer;
-    while(file >> c1) {
+    while(file >> c1)
+    {
       file.get(c2);
       if(c2 != ' ')
         continue;
-      switch(c1) {
+      switch(c1)
+      {
         case 'v': // It's a vertex, Jim.
         {
           vector3f v;
@@ -56,14 +59,24 @@ namespace glutils {
   {
     std::ofstream file(m_filename);
     if(!file.is_open())
-      throw std::runtime_error("glutils::obj_file::operator<<() error: could "
-          "not open the file '" + m_filename + "'.");
+      throw nonstd::exception(WHERE) << "Could not open the file '"
+                                     << m_filename << "'.";
 
     if(!m_message.str().empty())
       file << m_message.str() << std::endl;
 
-    file << "# Vertices: " << _t.num_points() << std::endl
-         << "# Facets: " << _t.num_facets() << std::endl;
+    auto corners = _t.find_aabb_corners();
+    auto& min = corners.first,
+        & max = corners.second;
+
+    file << "# Vertices: " << _t.num_points()
+         << "\n# Facets: " << _t.num_facets()
+         << "\n# Centroid: " << _t.find_centroid()
+         << "\n# AABB ranges: [" << min[0] << ":" << max[0] << " "
+                                 << min[1] << ":" << max[1] << " "
+                                 << min[2] << ":" << max[2] << "]"
+         << "\n# AABB center: " << _t.find_aabb_center()
+         << std::endl;
 
     file << std::fixed;
     for(auto p = _t.points_begin(); p != _t.points_end(); ++p)

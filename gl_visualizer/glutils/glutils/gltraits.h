@@ -7,6 +7,7 @@
 
 #include "nonstd/vector.h"
 
+
 namespace glutils {
 
   ///@name Constants
@@ -40,7 +41,7 @@ namespace glutils {
   typedef std::array<GLfloat, 16> transform;
 
   /// Apply an OpenGL transform matrix to the current GL stack.
-  /// @param[in] _t The transform to apply.
+  /// @param _t The transform to apply.
   void apply_transform(const transform& _t) noexcept;
 
   /// Generate an identity transform.

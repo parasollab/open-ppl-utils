@@ -36,6 +36,7 @@ namespace glutils {
 
       std::atomic<bool> m_selected{false};    ///< Is selected?
       std::atomic<bool> m_highlighted{false}; ///< Is highlighted?
+      std::atomic<bool> m_hidden{false};      ///< Is hidden?
 
       /// The transform queue.
       std::queue<transform, std::list<transform>> m_transforms;
@@ -83,6 +84,16 @@ namespace glutils {
 
       /// Render this object for color picking.
       void render_color_pick();
+
+      /// Hide this object. It will not be rendered in the scene or for
+      /// selection.
+      virtual void hide() noexcept;
+
+      /// Unhide this object.
+      virtual void unhide() noexcept;
+
+      /// Check if the visualization is hidden.
+      bool is_hidden() const noexcept;
 
       ///@}
       ///@name Transform

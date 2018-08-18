@@ -212,6 +212,9 @@ namespace nonstd {
       /// Rotate this about _axis by _radians. Only works for 3d vectors.
       vector_type& rotate(const vector_type& _axis, const T _radians) noexcept;
 
+      /// Rotate this about an Euler vector _axis. Only works for 3d vectors.
+      vector_type& rotate(const vector_type& _axis) noexcept;
+
       ///@}
       ///@name Generators
       ///@{
@@ -674,9 +677,18 @@ namespace nonstd {
 
     const vector_type pivot = this->proj(_axis);
     const vector_type arm = *this - pivot;
-    const vector_type xPrime = cos(_radians) * arm;
-    const vector_type yPrime = sin(_radians) * (_axis.hat() % arm);
+    const vector_type xPrime = std::cos(_radians) * arm;
+    const vector_type yPrime = std::sin(_radians) * (_axis.hat() % arm);
     return *this = pivot + xPrime + yPrime;
+  }
+
+
+  template <typename T, size_t N>
+  vector_type<T, N>&
+  vector_type<T, N>::
+  rotate(const vector_type& _axis) noexcept
+  {
+    return rotate(_axis, _axis.mag());
   }
 
   /*------------------------------- Generators -------------------------------*/
@@ -684,7 +696,8 @@ namespace nonstd {
   template <typename T, size_t N>
   vector_type<T, N>
   vector_type<T, N>::
-  make_basis(const size_t _i) noexcept {
+  make_basis(const size_t _i) noexcept
+  {
     vector_type basis;
     basis[_i] = T(1);
     return basis;

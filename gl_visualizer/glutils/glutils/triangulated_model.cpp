@@ -4,6 +4,8 @@
 #include <list>
 #include <map>
 
+#include "nonstd/exception.h"
+
 
 namespace glutils {
 
@@ -11,9 +13,14 @@ namespace glutils {
   /*----------------------------- Construction -------------------------------*/
 
   triangle_facet::
-  triangle_facet(const index _i1, const index _i2, const index _i3,
-      const point_list& _pl)
-    : m_indexes{_i1, _i2, _i3}, m_points(_pl)
+  triangle_facet(
+      const index _i1,
+      const index _i2,
+      const index _i3,
+      const point_list& _pl
+  )
+  : m_indexes{_i1, _i2, _i3},
+    m_points(_pl)
   {
     // Rotate the vertex list so that the lowest index is always first. This
     // helps check for equality efficiently.
@@ -42,7 +49,9 @@ namespace glutils {
 
   triangle_facet::index
   triangle_facet::
-  operator[](const size_t _i) const noexcept
+  operator[](
+      const size_t _i
+  ) const noexcept
   {
     return m_indexes[_i];
   }
@@ -50,7 +59,9 @@ namespace glutils {
 
   const triangle_facet::point&
   triangle_facet::
-  get_point(const size_t _i) const noexcept
+  get_point(
+      const size_t _i
+  ) const noexcept
   {
     return m_points[_i];
   }
@@ -79,16 +90,20 @@ namespace glutils {
 
   bool
   triangle_facet::
-  operator==(const triangle_facet& _t) const noexcept
+  operator==(
+      const triangle_facet& _t
+  ) const noexcept
   {
     // If both facets have the same point list, we can just check the indexes.
-    if(&m_points == &_t.m_points) {
+    if(&m_points == &_t.m_points)
+    {
       for(size_t i = 0; i < 3; ++i)
         if(m_indexes[i] != _t.m_indexes[i])
           return false;
     }
     // Otherwise, we need to check the actual points.
-    else {
+    else
+    {
       for(size_t i = 0; i < 3; ++i)
         if(get_point(i) != _t.get_point(i))
           return false;
@@ -99,7 +114,9 @@ namespace glutils {
 
   bool
   triangle_facet::
-  operator!=(const triangle_facet& _t) const noexcept
+  operator!=(
+      const triangle_facet& _t
+  ) const noexcept
   {
     return !(*this == _t);
   }
@@ -108,9 +125,12 @@ namespace glutils {
 
   bool
   triangle_facet::
-  operator<(const triangle_facet& _t) const noexcept
+  operator<(
+      const triangle_facet& _t
+  ) const noexcept
   {
-    for(size_t i = 0; i < 3; ++i) {
+    for(size_t i = 0; i < 3; ++i)
+    {
       if(m_indexes[0] < _t.m_indexes[0])
         return true;
       else if(_t.m_indexes[0] < m_indexes[0])
@@ -134,13 +154,21 @@ namespace glutils {
 
   size_t
   triangulated_model::
-  add_point(const point& _p, const bool _duplicates)
+  add_point(
+      const point& _p,
+      const bool _duplicates
+  )
   {
-    if(!_duplicates) {
+    // If not duplicating points, first check for an existing copy of _p.
+    if(!_duplicates)
+    {
       auto iter = std::find(m_points.begin(), m_points.end(), _p);
       if(iter != m_points.end())
         return std::distance(m_points.begin(), iter);
     }
+
+    // We are either not checking duplicates or _p isn't in the point set. Add
+    // it and return the new index.
     m_points.push_back(_p);
     return m_points.size() - 1;
   }
@@ -148,7 +176,11 @@ namespace glutils {
 
   size_t
   triangulated_model::
-  add_facet(const size_t _i1, const size_t _i2, const size_t _i3)
+  add_facet(
+      const size_t _i1,
+      const size_t _i2,
+      const size_t _i3
+  )
   {
     m_facets.emplace_back(_i1, _i2, _i3, m_points);
     return m_facets.size() - 1;
@@ -157,7 +189,9 @@ namespace glutils {
 
   void
   triangulated_model::
-  add_model(const triangulated_model& _t)
+  add_model(
+      const triangulated_model& _t
+  )
   {
     // Add points from _t to this, keeping track of the mapping from old index to
     // new index.
@@ -168,8 +202,8 @@ namespace glutils {
 
     for(auto iter = _t.facets_begin(); iter != _t.facets_end(); ++iter)
     {
-      const auto& f = *iter;
-      add_facet(indexMap[f[0]], indexMap[f[1]], indexMap[f[2]]);
+      const auto& facet = *iter;
+      add_facet(indexMap[facet[0]], indexMap[facet[1]], indexMap[facet[2]]);
     }
   }
 
@@ -177,7 +211,9 @@ namespace glutils {
 
   const triangulated_model::point&
   triangulated_model::
-  get_point(const size_t _i) const noexcept
+  get_point(
+      const size_t _i
+  ) const noexcept
   {
     return m_points[_i];
   }
@@ -185,13 +221,15 @@ namespace glutils {
 
   const triangulated_model::facet&
   triangulated_model::
-  get_facet(const size_t _i) const noexcept
+  get_facet(
+      const size_t _i
+  ) const noexcept
   {
     return m_facets[_i];
   }
 
 
-  triangulated_model::point_iterator
+  triangulated_model::const_point_iterator
   triangulated_model::
   points_begin() const noexcept
   {
@@ -199,7 +237,7 @@ namespace glutils {
   }
 
 
-  triangulated_model::point_iterator
+  triangulated_model::const_point_iterator
   triangulated_model::
   points_end() const noexcept
   {
@@ -207,7 +245,7 @@ namespace glutils {
   }
 
 
-  triangulated_model::facet_iterator
+  triangulated_model::const_facet_iterator
   triangulated_model::
   facets_begin() const noexcept
   {
@@ -215,9 +253,41 @@ namespace glutils {
   }
 
 
-  triangulated_model::facet_iterator
+  triangulated_model::const_facet_iterator
   triangulated_model::
   facets_end() const noexcept
+  {
+    return m_facets.end();
+  }
+
+
+  triangulated_model::point_iterator
+  triangulated_model::
+  points_begin() noexcept
+  {
+    return m_points.begin();
+  }
+
+
+  triangulated_model::point_iterator
+  triangulated_model::
+  points_end() noexcept
+  {
+    return m_points.end();
+  }
+
+
+  triangulated_model::facet_iterator
+  triangulated_model::
+  facets_begin() noexcept
+  {
+    return m_facets.begin();
+  }
+
+
+  triangulated_model::facet_iterator
+  triangulated_model::
+  facets_end() noexcept
   {
     return m_facets.end();
   }
@@ -240,9 +310,9 @@ namespace glutils {
   }
 
 
-  const vector3f
+  vector3f
   triangulated_model::
-  find_center() const noexcept
+  find_centroid() const noexcept
   {
     vector3f center;
     for(const auto& p : m_points)
@@ -250,27 +320,77 @@ namespace glutils {
     return center /= m_points.size();
   }
 
-  /*------------------------------ Modifiers ---------------------------------*/
 
-  void
+  vector3f
   triangulated_model::
-  translate(const vector3f& _v) noexcept
+  find_aabb_center() const noexcept
   {
-    for(auto& p : m_points)
-      p += _v;
+    std::pair<vector3f, vector3f> corners = find_aabb_corners();
+    return (corners.first + corners.second) / 2;
   }
 
 
-  void
+  std::pair<vector3f, vector3f>
+  triangulated_model::
+  find_aabb_corners() const noexcept
+  {
+    constexpr GLfloat lowest  = std::numeric_limits<GLfloat>::lowest(),
+                      highest = std::numeric_limits<GLfloat>::max();
+
+    // Define the min and max corners.
+    std::pair<vector3f, vector3f> corners{{highest, highest, highest},
+                                          {lowest, lowest, lowest}};
+    auto& min = corners.first,
+        & max = corners.second;
+
+    for(const auto& p : m_points)
+    {
+      for(size_t i = 0; i < 3; ++i)
+      {
+        min[i] = std::min(min[i], p[i]);
+        max[i] = std::max(max[i], p[i]);
+      }
+    }
+
+    return corners;
+  }
+
+  /*------------------------------ Modifiers ---------------------------------*/
+
+  triangulated_model&
+  triangulated_model::
+  translate(
+      const vector3f& _v
+  ) noexcept
+  {
+    for(auto& p : m_points)
+      p += _v;
+
+    return *this;
+  }
+
+
+  triangulated_model&
+  triangulated_model::
+  rotate(
+      const vector3f& _v
+  ) noexcept
+  {
+    for(auto& p : m_points)
+      p.rotate(_v);
+
+    return *this;
+  }
+
+
+  triangulated_model&
   triangulated_model::
   clean() noexcept
   {
     // Remove vertices that don't refer to anything.
 
     // Create a map from each vertex index to the facets that contain it.
-    using std::map;
-    using std::list;
-    map<size_t, list<facet*>> index_map;
+    std::map<size_t, std::list<facet*>> index_map;
 
     // Add each index to the map with an empty facet list.
     for(size_t i = 0; i < num_points(); ++i)
@@ -285,7 +405,8 @@ namespace glutils {
     // recompute the indexes.
     /// @TODO Fix this silly O(n^2) algorithm and replace with O(n) solution by
     ///       re-writing a new point list and swapping.
-    for(auto iter = index_map.rbegin(); iter != index_map.rend(); ++iter) {
+    for(auto iter = index_map.rbegin(); iter != index_map.rend(); ++iter)
+    {
       const bool unused = iter->second.empty();
       if(unused)
         m_points.erase(m_points.begin() + iter->first);
@@ -294,9 +415,10 @@ namespace glutils {
     // When we removed the unused vertices, we shifted the indexes of the
     // remaining points. We will need to adjust the indexes in all of the facets
     // appropriately. First, figure out how much each index needs to change.
-    map<size_t, size_t> change_map;
+    std::map<size_t, size_t> change_map;
     size_t offset = 0;
-    for(const auto& pair : index_map) {
+    for(const auto& pair : index_map)
+    {
       const bool unused = pair.second.empty();
       offset += unused;
       if(!unused)
@@ -308,6 +430,8 @@ namespace glutils {
     for(auto iter = m_facets.begin(); iter != m_facets.end(); ++iter)
       for(auto& index : iter->m_indexes)
         index -= change_map.at(index);
+
+    return *this;
   }
 
 
@@ -324,7 +448,9 @@ namespace glutils {
 
   bool
   triangulated_model::
-  operator==(const triangulated_model& _t) const noexcept
+  operator==(
+      const triangulated_model& _t
+  ) const noexcept
   {
     // First check that the number of points are the same.
     if(num_points() != _t.num_points())
@@ -339,7 +465,9 @@ namespace glutils {
 
   bool
   triangulated_model::
-  operator!=(const triangulated_model& _t) const noexcept
+  operator!=(
+      const triangulated_model& _t
+  ) const noexcept
   {
     return !(*this == _t);
   }
@@ -348,22 +476,37 @@ namespace glutils {
 
   triangulated_model
   triangulated_model::
-  make_box(GLfloat _lenX, GLfloat _lenY, GLfloat _lenZ)
+  make_box(
+      const GLfloat _length_x,
+      const GLfloat _length_y,
+      const GLfloat _length_z
+  )
   {
+    // Require sensible values for the input parameters.
+    if(_length_x <= 0)
+      throw nonstd::exception(WHERE) << "Positive X length required (received "
+                                     << _length_x << ").";
+    if(_length_y <= 0)
+      throw nonstd::exception(WHERE) << "Positive Y length required (received "
+                                     << _length_y << ").";
+    if(_length_z <= 0)
+      throw nonstd::exception(WHERE) << "Positive Z length required (received "
+                                     << _length_z << ").";
+
     // Get half-lengths.
-    _lenX /= 2;
-    _lenY /= 2;
-    _lenZ /= 2;
+    const GLfloat h_length_x = _length_x / 2,
+                  h_length_y = _length_y / 2,
+                  h_length_z = _length_z / 2;
 
     // Make vertices.
-    vector3f pts[8] = {{-_lenX,  _lenY,  _lenZ},
-                       {-_lenX, -_lenY,  _lenZ},
-                       { _lenX, -_lenY,  _lenZ},
-                       { _lenX,  _lenY,  _lenZ},
-                       {-_lenX,  _lenY, -_lenZ},
-                       {-_lenX, -_lenY, -_lenZ},
-                       { _lenX, -_lenY, -_lenZ},
-                       { _lenX,  _lenY, -_lenZ}};
+    vector3f pts[8] = {{-h_length_x,  h_length_y,  h_length_z},
+                       {-h_length_x, -h_length_y,  h_length_z},
+                       { h_length_x, -h_length_y,  h_length_z},
+                       { h_length_x,  h_length_y,  h_length_z},
+                       {-h_length_x,  h_length_y, -h_length_z},
+                       {-h_length_x, -h_length_y, -h_length_z},
+                       { h_length_x, -h_length_y, -h_length_z},
+                       { h_length_x,  h_length_y, -h_length_z}};
 
     // Add points to the model and get their indexes.
     triangulated_model t;
@@ -395,8 +538,19 @@ namespace glutils {
 
   triangulated_model
   triangulated_model::
-  make_sphere(const GLfloat _radius, const size_t _segments)
+  make_sphere(
+      const GLfloat _radius,
+      const size_t _segments
+  )
   {
+    // Require sensible values for the input parameters.
+    if(_radius <= 0)
+      throw nonstd::exception(WHERE) << "Positive radius required (received "
+                                     << _radius << ").";
+    if(_segments < 3)
+      throw nonstd::exception(WHERE) << "Minimum of three segments are required "
+                                     << "(received " << _segments << ").";
+
     triangulated_model t;
 
     const GLfloat zIncr = glutils::PI / _segments; // Angle increment for z.
@@ -417,7 +571,8 @@ namespace glutils {
 
       z = _radius * std::cos(zIncr);
       r = _radius * std::sin(zIncr);
-      for(size_t i = 0; i < _segments; ++i) {
+      for(size_t i = 0; i < _segments; ++i)
+      {
         x = r * std::cos(oIncr * i);
         y = r * std::sin(oIncr * i);
         indexes.push_back(t.add_point({x, y, z}));
@@ -435,7 +590,8 @@ namespace glutils {
       // Create a ring of segments following the previous.
       std::vector<size_t> topIndexes, bottomIndexes;
 
-      for(size_t j = 1; j < _segments - 1; ++j) {
+      for(size_t j = 1; j < _segments - 1; ++j)
+      {
         // The top and bottom point rings in this segment ring each require a
         // different z and planar radius.
         z  = _radius * std::cos(zIncr * j);
@@ -446,7 +602,8 @@ namespace glutils {
         // Generate the points for this segment ring.
         topIndexes.clear();
         bottomIndexes.clear();
-        for(size_t i = 0; i < _segments; ++i) {
+        for(size_t i = 0; i < _segments; ++i)
+        {
           x = std::cos(oIncr * i);
           y = std::sin(oIncr * i);
           topIndexes.push_back(   t.add_point({x * r , y * r ,  z}));
@@ -454,7 +611,8 @@ namespace glutils {
         }
 
         // Create facets to complete this segment ring.
-        for(size_t i = 0; i < _segments; ++i) {
+        for(size_t i = 0; i < _segments; ++i)
+        {
           const size_t i2 = (i + 1) % _segments;
           t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
           t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
@@ -475,7 +633,8 @@ namespace glutils {
 
       z = _radius * std::cos(zIncr * (_segments - 1));
       r = _radius * std::sin(zIncr * (_segments - 1));
-      for(size_t i = 0; i < _segments; ++i) {
+      for(size_t i = 0; i < _segments; ++i)
+      {
         x = r * std::cos(oIncr * i);
         y = r * std::sin(oIncr * i);
         indexes.push_back(t.add_point({x, y, z}));
@@ -492,8 +651,23 @@ namespace glutils {
 
   triangulated_model
   triangulated_model::
-  make_cone(const GLfloat _radius, const GLfloat _height, const size_t _segments)
+  make_cone(
+      const GLfloat _radius,
+      const GLfloat _height,
+      const size_t _segments
+  )
   {
+    // Require sensible values for the input parameters.
+    if(_radius <= 0)
+      throw nonstd::exception(WHERE) << "Positive radius required (received "
+                                     << _radius << ").";
+    if(_height <= 0)
+      throw nonstd::exception(WHERE) << "Positive height is required (received "
+                                     << _height << ").";
+    if(_segments < 3)
+      throw nonstd::exception(WHERE) << "Minimum of three segments are required "
+                                     << "(received " << _segments << ").";
+
     triangulated_model t;
 
     const GLfloat incr = 2. * glutils::PI / _segments;
@@ -502,7 +676,8 @@ namespace glutils {
     // Create the point ring.
     z = 0;
     std::vector<size_t> ringIndexes;
-    for(size_t i = 0; i < _segments; ++i) {
+    for(size_t i = 0; i < _segments; ++i)
+    {
       x = _radius * std::cos(incr * i);
       y = _radius * std::sin(incr * i);
       ringIndexes.push_back(t.add_point({x, y, z}));
@@ -542,12 +717,26 @@ namespace glutils {
 
   triangulated_model
   triangulated_model::
-  make_cylinder(const GLfloat _radius, const GLfloat _length,
-      const size_t _segments)
+  make_cylinder(
+      const GLfloat _radius,
+      const GLfloat _length,
+      const size_t _segments
+  )
   {
+    // Require sensible values for the input parameters.
+    if(_length <= 0)
+      throw nonstd::exception(WHERE) << "Positive length is required (received "
+                                     << _length << ").";
+    if(_segments < 3)
+      throw nonstd::exception(WHERE) << "Minimum of three segments are required "
+                                     << "(received " << _segments << ").";
+    if(_radius <= 0)
+      throw nonstd::exception(WHERE) << "Positive radius required (received "
+                                     << _radius << ").";
+
     triangulated_model t;
 
-    const GLfloat incr = 2. * glutils::PI / _segments,
+    const GLfloat incr       = 2. * glutils::PI / _segments,
                   halfLength = _length / 2.;
     GLfloat x, y, z;
 
@@ -559,7 +748,8 @@ namespace glutils {
 
     // Create the top point ring.
     std::vector<size_t> topIndexes;
-    for(size_t i = 0; i < _segments; ++i) {
+    for(size_t i = 0; i < _segments; ++i)
+    {
       x = _radius * std::cos(incr * i);
       y = _radius * std::sin(incr * i);
       topIndexes.push_back(t.add_point({x, y, z}));
@@ -577,7 +767,8 @@ namespace glutils {
 
     // Create the bottom point ring.
     std::vector<size_t> bottomIndexes;
-    for(size_t i = 0; i < _segments; ++i) {
+    for(size_t i = 0; i < _segments; ++i)
+    {
       x = _radius * std::cos(incr * i);
       y = _radius * std::sin(incr * i);
       bottomIndexes.push_back(t.add_point({x, y, z}));
@@ -589,10 +780,89 @@ namespace glutils {
                   bottomIndexes[i]);
 
     // Create facets connecting the top and bottom rings.
-    for(size_t i = 0; i < _segments; ++i) {
+    for(size_t i = 0; i < _segments; ++i)
+    {
       const size_t i2 = (i + 1) % _segments;
       t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
       t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
+    }
+
+    return t;
+  }
+
+
+  triangulated_model
+  triangulated_model::
+  make_pipe(
+      const GLfloat _outerRadius,
+      const GLfloat _innerRadius,
+      const GLfloat _length,
+      const size_t _segments
+  )
+  {
+    // Require sensible values for the input parameters.
+    if(_length <= 0)
+      throw nonstd::exception(WHERE) << "Positive length is required (received "
+                                     << _length << ").";
+    if(_segments < 3)
+      throw nonstd::exception(WHERE) << "Minimum of three segments are required "
+                                     << "(received " << _segments << ").";
+    if(_innerRadius <= 0)
+      throw nonstd::exception(WHERE) << "Positive inner radius required "
+                                     << "(received " << _innerRadius << ").";
+    if(_outerRadius <= 0)
+      throw nonstd::exception(WHERE) << "Positive outer radius required "
+                                     << "(received " << _outerRadius << ").";
+    if(_innerRadius >= _outerRadius)
+      throw nonstd::exception(WHERE) << "Outer radius (" << _outerRadius << ") "
+                                     << "must exceed inner radius ("
+                                     << _innerRadius << ").";
+
+    triangulated_model t;
+
+    const GLfloat incr       = 2. * glutils::PI / _segments,
+                  halfLength = _length / 2.;
+    GLfloat x, y, z;
+
+    // Create the point rings.
+    z = halfLength;
+    std::vector<size_t> topOuter, topInner, bottomOuter, bottomInner;
+    for(size_t i = 0; i < _segments; ++i)
+    {
+      x = std::cos(incr * i);
+      y = std::sin(incr * i);
+
+      topOuter.push_back(t.add_point({x * _outerRadius, y * _outerRadius, z}));
+      topInner.push_back(t.add_point({x * _innerRadius, y * _innerRadius, z}));
+
+      bottomOuter.push_back(t.add_point({x * _outerRadius, y * _outerRadius, -z}));
+      bottomInner.push_back(t.add_point({x * _innerRadius, y * _innerRadius, -z}));
+    }
+
+    // Create facets.
+    for(size_t i = 0; i < _segments; ++i)
+    {
+      const size_t i2 = (i + 1) % _segments;
+
+      // Connect top and bottom rings:
+
+      // Outer facets.
+      t.add_facet(topOuter[i] , bottomOuter[i], topOuter[i2]);
+      t.add_facet(topOuter[i2], bottomOuter[i], bottomOuter[i2]);
+
+      // Inner facets.
+      t.add_facet(topInner[i] , topInner[i2]   , bottomInner[i]);
+      t.add_facet(topInner[i2], bottomInner[i2], bottomInner[i]);
+
+      // Connect inner and outer rings:
+
+      // Top facets.
+      t.add_facet(topOuter[i] , topOuter[i2], topInner[i2]);
+      t.add_facet(topInner[i2], topInner[i] , topOuter[i]);
+
+      // Bottom facets.
+      t.add_facet(bottomOuter[i] , bottomInner[i2], bottomOuter[i2]);
+      t.add_facet(bottomInner[i2], bottomOuter[i] , bottomInner[i]);
     }
 
     return t;
