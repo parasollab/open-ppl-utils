@@ -37,6 +37,13 @@ namespace mathtool {
       Matrix3x3& matrix() {return m_matrix;}
       const Matrix3x3& matrix() const {return m_matrix;}
 
+      /// Get a basis vector for the rotated frame.
+      /// @param _i The dimension.
+      /// @return The basis vector for dimension _i.
+      Vector3d getBasis(const size_t _i) const {
+        return Vector3d(m_matrix[0][_i], m_matrix[1][_i], m_matrix[2][_i]);
+      }
+
       //equality - if they aren't the same type: convert _o to type of *this and
       //compare
       bool operator==(const MatrixOrientation& _o) const {
