@@ -551,8 +551,10 @@ namespace mathtool{
       /// Normalize this vector to the range [-pi,pi] by adjusting the magnitude
       /// by some multiple of 2pi.
       Vector& eulerSelfNormalize() {
-        const T magnitude  = norm(),
-                equivalent = std::fmod(magnitude + PI, TWOPI) - PI;
+        const T magnitude  = norm();
+        if(approx(magnitude, 0.))
+          return this->operator()(0., 0., 0.);
+        const T equivalent = std::fmod(magnitude + PI, TWOPI) - PI;
         return *this *= (equivalent / magnitude);
       }
 

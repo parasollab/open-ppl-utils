@@ -193,11 +193,6 @@ namespace mathtool {
   EulerAngle&
   convertFromQuaternion(EulerAngle& _e, const Quaternion& _q)
   {
-    /// TODO Fix this to avoid the intermediate matrix conversion.
-    //Matrix3x3 m;
-    //convertFromQuaternion(m, _q);
-    //return convertFromMatrix(_e, m);
-
     const double r = _q.real(),
                  i = _q.imaginary()[0],
                  j = _q.imaginary()[1],
@@ -248,7 +243,7 @@ namespace mathtool {
   convertFromQuaternion(EulerVector& _v, const Quaternion& _q)
   {
     const double norm = _q.imaginary().norm();
-    if(norm == 0)
+    if(mathtool::approx(norm, 0.))
       return _v(0, 0, 0);
     _v = (2. * std::acos(_q.real()) / norm) * _q.imaginary();
     return _v.eulerSelfNormalize();
