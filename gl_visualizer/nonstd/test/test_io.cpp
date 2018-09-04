@@ -11,12 +11,12 @@ static const string er = "\ttest_io error: ";
 
 
 void
-test_read_file()
+test_read_file_lines()
 {
   // Read the test file.
-  auto lines = read_file("test/test_file.txt");
+  auto lines = read_file_lines("test/test_file.txt");
 
-  string when = "when testing read_file, ";
+  string when = "when testing read_file_lines, ";
   vector<string> expected = {"the quick black cat", "jumped over",
       "the lazy dog"};
 
@@ -28,6 +28,21 @@ test_read_file()
   for(size_t i = 0; i < 3; ++i)
     assert_msg(lines[i] == expected[i], er + when + "expected line " +
         to_string(i) + " = '" + expected[i] + "', but got '" + lines[i] + "'!");
+}
+
+
+void
+test_read_file()
+{
+  // Read the test file.
+  const std::string contents = read_file("test/test_file.txt");
+  const std::string expected = "the quick black cat\njumped over\nthe lazy dog";
+  const std::string when     = "when testing read_file, ";
+
+  // Check for string match
+  assert_msg(contents == expected, er + when + "test file contents did not match "
+      "expected value\nexpected: '" + expected + "'\ncontents: '" + contents +
+      "'");
 }
 
 
@@ -161,6 +176,7 @@ main()
 {
   cerr << "\ttesting io..." << flush;
 
+  test_read_file_lines();
   test_read_file();
   test_print_container();
   test_input_container();

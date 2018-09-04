@@ -22,15 +22,30 @@ namespace nonstd {
   ///@{
 
   /// Read a file line-by-line.
-  /// @param[in] _filename The name of the file to read.
+  /// @param _filename The name of the file to read.
   /// @return A vector holding the lines of the file.
-  std::vector<std::string> read_file(const std::string& _filename);
+  std::vector<std::string>
+  read_file_lines(
+      const std::string& _filename
+  );
+
+
+  /// Read a file into a single string.
+  /// @param _filename The name of the file to read.
+  /// @return A string holding the file contents.
+  std::string
+  read_file(
+      const std::string& _filename
+  );
 
 
   /// Get the match for a bracket symbol.
   /// @param _bracket The bracket symbol to match.
   /// @return The matching bracket facing the other way.
-  char matching_bracket(const char _bracket);
+  char
+  matching_bracket(
+      const char _bracket
+  );
 
 
   /// Print the contents of a container to a std::string.
