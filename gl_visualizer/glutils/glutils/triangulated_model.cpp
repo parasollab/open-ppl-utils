@@ -868,5 +868,279 @@ namespace glutils {
     return t;
   }
 
+
+  triangulated_model
+  triangulated_model::
+  make_capped_cylinder(
+      const GLfloat _radius,
+      const GLfloat _firstSphereRadius,
+      const GLfloat _secondSphereRadius,
+      const GLfloat _length,
+      const size_t _segments
+  )
+  {
+    const bool useFirstSphere = _firstSphereRadius != 0.,
+               useSecondSphere = _secondSphereRadius != 0.;
+
+    // Require sensible values for the input parameters.
+    if(_radius <= 0)
+      throw nonstd::exception(WHERE) << "Positive radius required (received "
+                                     << _radius << ").";
+    if(useFirstSphere and _firstSphereRadius < _radius)
+      throw nonstd::exception(WHERE) << "First sphere radius " << _firstSphereRadius
+                                     << " must not be less than cylinder radius "
+                                     << _radius << ".";
+    if(useSecondSphere and _secondSphereRadius < _radius)
+      throw nonstd::exception(WHERE) << "Second sphere radius " << _secondSphereRadius
+                                     << " must not be less than cylinder radius "
+                                     << _radius << ".";
+    if(_length <= 0)
+      throw nonstd::exception(WHERE) << "Positive length is required (received "
+                                     << _length << ").";
+    if(_length <= _firstSphereRadius + _secondSphereRadius)
+      throw nonstd::exception(WHERE) << "Cylinder length " << _length
+                                     << " should be longer than the summed sphere "
+                                     << "radii " << _firstSphereRadius << " + "
+                                     << _secondSphereRadius << " = "
+                                     << _firstSphereRadius + _secondSphereRadius
+                                     << ".";
+    if(_segments < 3)
+      throw nonstd::exception(WHERE) << "Minimum of three segments are required "
+                                     << "(received " << _segments << ").";
+
+    triangulated_model t;
+
+    const GLfloat halfLength = _length / 2.,
+                  zIncr = glutils::PI / _segments, // Angle increment for z.
+                  oIncr = 2 * zIncr;               // Angle increment for x,y.
+    GLfloat x, y, z, r;
+
+    // Start drawing first sphere or cap. Save the last ring of points for
+    // connection to the bottom later on.
+    std::vector<size_t> upperRing;
+    // sphere:
+    //   make point rings until the radius border would be crossed. then make
+    //   top point ring as last ring of the sphere by scaling distance back
+    //   until r = _radius.
+    if(useFirstSphere) {
+      // Create the +zHat pole.
+      {
+        x = 0;
+        y = 0;
+        z = _firstSphereRadius + halfLength;
+        const size_t capIndex = t.add_point({x, y, z});
+
+        // Create the ring of points beneath the pole.
+        std::vector<size_t> indexes;;
+
+        z = _firstSphereRadius * std::cos(zIncr) + halfLength;
+        r = _firstSphereRadius * std::sin(zIncr);
+        for(size_t i = 0; i < _segments; ++i)
+        {
+          x = r * std::cos(oIncr * i);
+          y = r * std::sin(oIncr * i);
+          indexes.push_back(t.add_point({x, y, z}));
+        }
+
+        // Create the facets connecting the pole to the point ring.
+        for(size_t i = 0; i < _segments; ++i)
+          t.add_facet(capIndex, indexes[i], indexes[(i + 1) % _segments]);
+      }
+
+      // Draw main surface.
+      {
+        GLfloat z2, r2;
+
+        // Create a ring of segments following the previous.
+        std::vector<size_t> topIndexes, bottomIndexes;
+
+        for(size_t j = 1; j < _segments - 1; ++j)
+        {
+          // The top and bottom point rings in this segment ring each require a
+          // different z and planar radius.
+          z  = _firstSphereRadius * std::cos(zIncr * j) + halfLength;
+          r  = _firstSphereRadius * std::sin(zIncr * j);
+          z2 = _firstSphereRadius * std::cos(zIncr * (j + 1)) + halfLength;
+          r2 = _firstSphereRadius * std::sin(zIncr * (j + 1));
+
+          // Test for crossing the _radius boundary on the descending side.
+          const bool crossed = r2 <= r
+                           and r  >= _radius
+                           and r2 <= _radius;
+          if(crossed) {
+            r2 = _radius;
+            const GLfloat angle = std::asin(r2 / _firstSphereRadius);
+            z2 = -_firstSphereRadius * std::cos(angle)
+               + halfLength;
+          }
+
+          // Generate the points for this segment ring.
+          topIndexes.clear();
+          bottomIndexes.clear();
+          for(size_t i = 0; i < _segments; ++i)
+          {
+            x = std::cos(oIncr * i);
+            y = std::sin(oIncr * i);
+            topIndexes.push_back(   t.add_point({x * r , y * r ,  z}));
+            bottomIndexes.push_back(t.add_point({x * r2, y * r2, z2}));
+          }
+
+          // Create facets to complete this segment ring.
+          for(size_t i = 0; i < _segments; ++i)
+          {
+            const size_t i2 = (i + 1) % _segments;
+            t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
+            t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
+          }
+
+          // If we crossed the border, save the upper points and break out.
+          if(crossed) {
+            upperRing = std::move(bottomIndexes);
+            break;
+          }
+        }
+      }
+    }
+    // cap:
+    //   make top point ring
+    //   join to center point
+    else {
+      // Create the cap point.
+      const size_t topCapIndex = t.add_point({0, 0, halfLength});
+
+      // Create the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+      {
+        x = _radius * std::cos(oIncr * i);
+        y = _radius * std::sin(oIncr * i);
+        upperRing.push_back(t.add_point({x, y, halfLength}));
+      }
+
+      // Create facets connecting the cap to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(topCapIndex, upperRing[i], upperRing[(i + 1) % _segments]);
+    }
+
+    // Start drawing second sphere or cap.
+    std::vector<size_t> lowerRing;
+    // if sphere:
+    //   skip point rings until the radius border would be crossed. make bottom
+    //   point ring as the first ring of the sphere by scaling distance back
+    //   until r = _radius.
+    if(useSecondSphere) {
+      // Draw main surface.
+      {
+        GLfloat z2, r2;
+
+        // Create a ring of segments following the previous.
+        std::vector<size_t> topIndexes, bottomIndexes;
+
+        bool crossed = false;
+
+        for(size_t j = 1; j < _segments - 1; ++j)
+        {
+          // The top and bottom point rings in this segment ring each require a
+          // different z and planar radius.
+          z  = _secondSphereRadius * std::cos(zIncr * j) - halfLength;
+          r  = _secondSphereRadius * std::sin(zIncr * j);
+          z2 = _secondSphereRadius * std::cos(zIncr * (j + 1)) - halfLength;
+          r2 = _secondSphereRadius * std::sin(zIncr * (j + 1));
+
+          // Test for crossing the _radius boundary on the ascending side.
+          bool justCrossed = false;
+          if(!crossed) {
+            justCrossed = r2 >= r
+                      and r  <= _radius
+                      and r2 >= _radius;
+            if(justCrossed) {
+              r = _radius;
+              const GLfloat angle = std::asin(r / _secondSphereRadius);
+              z = _secondSphereRadius * std::cos(angle) - halfLength;
+              crossed = true;
+            }
+            else
+              continue; // Skip this ring.
+          }
+
+          // Generate the points for this segment ring.
+          topIndexes.clear();
+          bottomIndexes.clear();
+          for(size_t i = 0; i < _segments; ++i)
+          {
+            x = std::cos(oIncr * i);
+            y = std::sin(oIncr * i);
+            topIndexes.push_back(   t.add_point({x * r , y * r ,  z}));
+            bottomIndexes.push_back(t.add_point({x * r2, y * r2, z2}));
+          }
+
+          // Create facets to complete this segment ring.
+          for(size_t i = 0; i < _segments; ++i)
+          {
+            const size_t i2 = (i + 1) % _segments;
+            t.add_facet(topIndexes[i] , bottomIndexes[i], topIndexes[i2]);
+            t.add_facet(topIndexes[i2], bottomIndexes[i], bottomIndexes[i2]);
+          }
+
+          // If we crossed the border, save the upper points and break out.
+          if(justCrossed)
+            lowerRing = topIndexes;
+        }
+      }
+
+      // Draw -zHat cap.
+      {
+        // Create the +zHat pole.
+        z = -_secondSphereRadius - halfLength;
+        const size_t capIndex = t.add_point({0, 0, z});
+
+        // Create the ring of points above the pole.
+        std::vector<size_t> indexes;
+
+        z = _secondSphereRadius * std::cos(zIncr * (_segments - 1)) - halfLength;
+        r = _secondSphereRadius * std::sin(zIncr * (_segments - 1));
+        for(size_t i = 0; i < _segments; ++i)
+        {
+          x = r * std::cos(oIncr * i);
+          y = r * std::sin(oIncr * i);
+          indexes.push_back(t.add_point({x, y, z}));
+        }
+
+        // Create the facets connecting the pole to the point ring.
+        for(size_t i = 0; i < _segments; ++i)
+          t.add_facet(capIndex, indexes[(i + 1) % _segments], indexes[i]);
+      }
+    }
+    // if cap:
+    //   make bottom point ring
+    //   joint to center point
+    else {
+      // Draw cap point.
+      const size_t bottomCapIndex = t.add_point({0, 0, -halfLength});
+
+      // Create the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+      {
+        x = _radius * std::cos(oIncr * i);
+        y = _radius * std::sin(oIncr * i);
+        lowerRing.push_back(t.add_point({x, y, -halfLength}));
+      }
+
+      // Create facets connecting the cap to the point ring.
+      for(size_t i = 0; i < _segments; ++i)
+        t.add_facet(bottomCapIndex, lowerRing[(i + 1) % _segments],
+                    lowerRing[i]);
+    }
+
+    // Create facets connecting the top and bottom rings.
+    for(size_t i = 0; i < _segments; ++i)
+    {
+      const size_t i2 = (i + 1) % _segments;
+      t.add_facet(upperRing[i] , lowerRing[i], upperRing[i2]);
+      t.add_facet(upperRing[i2], lowerRing[i], lowerRing[i2]);
+    }
+
+    return t;
+  }
+
   /*--------------------------------------------------------------------------*/
 }

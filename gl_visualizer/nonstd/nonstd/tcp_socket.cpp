@@ -20,6 +20,10 @@ namespace nonstd {
 
 
   tcp_socket::
+  tcp_socket() = default;
+
+
+  tcp_socket::
   tcp_socket(const string& _server, const string& _port)
   {
     connect(_server, _port);
@@ -41,7 +45,7 @@ namespace nonstd {
     // Ensure there is a connection to close.
     if(m_id == -1)
       return;
-    else if(m_debug)
+    else if(s_debug)
       cout << "nonstd::tcp_socket: closing connection to " << m_server
            << " at port " << m_port << "." << endl;
 
@@ -63,11 +67,11 @@ namespace nonstd {
   {
     // Ensure the socket isn't already connected.
     if(m_id != -1) {
-      if(m_debug)
+      if(s_debug)
         cout << "nonstd::tcp_socket: listen called when already connected.\n";
       return false;
     }
-    else if(m_debug)
+    else if(s_debug)
       cout << "nonstd::tcp_socket: initiating connection to " << _server
            << " at port " << _port << "..." << endl;
 
@@ -83,14 +87,14 @@ namespace nonstd {
       // Get address info for communicating with server.
       if(getaddrinfo(_server.c_str(), _port.c_str(), &hints, &info) == -1)
         throw string("could not get address info");
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tfound server info..." << endl;
 
       // Request a socket from the os.
       m_id = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
       if(m_id == -1)
         throw string("could not create socket");
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tsocket created with id " << m_id
              << "..." << endl;
 
@@ -98,7 +102,7 @@ namespace nonstd {
       if(::connect(m_id, info->ai_addr, info->ai_addrlen) == -1)
         throw string("could not connect to server " + _server + " at port " +
             _port);
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tsuccess. tcp_socket is connected." << endl;
 
       freeaddrinfo(info);
@@ -124,11 +128,11 @@ namespace nonstd {
   {
     // Ensure the socket isn't already connected.
     if(m_id != -1) {
-      if(m_debug)
+      if(s_debug)
         cout << "nonstd::tcp_socket: listen called when already connected.\n";
       return false;
     }
-    else if(m_debug)
+    else if(s_debug)
       cout << "nonstd::tcp_socket: trying to listen on port " << _port << "...\n";
 
     // Setup helper data.
@@ -144,26 +148,26 @@ namespace nonstd {
       // Get address info.
       if(getaddrinfo(nullptr, _port.c_str(), &hints, &info) == -1)
         throw string("could not get address info");
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tgot address info..." << endl;
 
       // Request a listening socket from the os.
       m_id = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
       if(m_id == -1)
         throw string("could not create socket");
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tsocket created with id " << m_id << "..." << endl;
 
       // Bind the socket to the specified port.
       if(bind(m_id, info->ai_addr, info->ai_addrlen) == -1)
         throw string("could not bind socket");
-      else if(m_debug)
+      else if(s_debug)
         cout << "\tbind successful..." << endl;
 
       // Listen.
       if(::listen(m_id, _backlog) == -1)
         throw string("could not set listen");
-      else if(m_debug)
+      else if(s_debug)
         cout << "success. tcp_socket is listening." << endl;
 
       freeaddrinfo(info);
@@ -227,7 +231,7 @@ namespace nonstd {
       getnameinfo((struct sockaddr*)&info, addr_length, ip, sizeof(ip),
           port, sizeof(port), NI_NUMERICSERV);
 
-      if(m_debug)
+      if(s_debug)
         cout << "nonstd::tcp_socket: request accepted from " << ip << " at port "
              << port << "." << endl;
 

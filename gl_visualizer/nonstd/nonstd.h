@@ -11,6 +11,7 @@ namespace nonstd { }
 #include "nonstd/collection.h"
 #include "nonstd/condition_counter.h"
 #include "nonstd/container_ops.h"
+#include "nonstd/endian.h"
 #include "nonstd/exception.h"
 #include "nonstd/factory.h"
 #include "nonstd/graph.h"

@@ -408,6 +408,29 @@ namespace glutils {
           const size_t _segments = 16
       );
 
+      /// Create a cylinder capped by one or two spheres. Centered at the origin
+      /// and oriented along the z-axis.
+      /// @param _radius The cylinder radius.
+      /// @param _firstSphereRadius The radius for the first sphere, which
+      ///                           should be greater than or equal to _radius.
+      ///                           Alternatively it can be 0 to cap the cylinder.
+      /// @param _secondSphereRadius The radius for the second sphere, which
+      ///                           should be greater than or equal to _radius.
+      ///                           Alternatively it can be 0 to cap the cylinder.
+      /// @param _length The length between sphere centerse, perpendicular to
+      ///                the radius. Must be greater than the two sphere radii.
+      /// @param _segments The number of segments to use for the side wall.
+      /// @return A triangulated capped cylinder model.
+      static
+      triangulated_model
+      make_capped_cylinder(
+          const GLfloat _radius = 1,
+          const GLfloat _firstSphereRadius = 2,
+          const GLfloat _secondSphereRadius = 2,
+          const GLfloat _length = 8,
+          const size_t _segments = 16
+      );
+
       ///@}
 
   };
