@@ -208,7 +208,6 @@ bool tetgenio::load_node(char* filebasename)
     printf("  Cannot access file %s.\n", innodefilename);
     return false;
   }
-  printf("Opening %s.\n", innodefilename);
 
   // Set initial flags.
   mesh_dim = 3;
@@ -280,10 +279,8 @@ bool tetgenio::load_edge(char* filebasename)
   strcat(inedgefilename, ".edge");
 
   infile = fopen(inedgefilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", inedgefilename);
-  } else {
-    //printf("  Cannot access file %s.\n", inedgefilename);
+  if(infile == (FILE *) NULL) {
+    printf("  Cannot access file %s.\n", inedgefilename);
     return false;
   }
 
@@ -362,9 +359,7 @@ bool tetgenio::load_face(char* filebasename)
   strcat(infilename, ".face");
 
   infile = fopen(infilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", infilename);
-  } else {
+  if(infile == (FILE *) NULL)  {
     return false;
   }
 
@@ -458,9 +453,7 @@ bool tetgenio::load_tet(char* filebasename)
   strcat(infilename, ".ele");
 
   infile = fopen(infilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", infilename);
-  } else {
+  if (infile == (FILE *) NULL) {
     return false;
   }
 
@@ -565,9 +558,7 @@ bool tetgenio::load_vol(char* filebasename)
   strcat(infilename, ".vol");
 
   infile = fopen(infilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", infilename);
-  } else {
+  if (infile == (FILE *) NULL) {
     return false;
   }
 
@@ -625,9 +616,7 @@ bool tetgenio::load_var(char* filebasename)
   strcpy(varfilename, filebasename);
   strcat(varfilename, ".var");
   infile = fopen(varfilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", varfilename);
-  } else {
+  if (infile == (FILE *) NULL) {
     return false;
   }
 
@@ -737,9 +726,7 @@ bool tetgenio::load_mtr(char* filebasename)
   strcpy(mtrfilename, filebasename);
   strcat(mtrfilename, ".mtr");
   infile = fopen(mtrfilename, "r");
-  if (infile != (FILE *) NULL) {
-    printf("Opening %s.\n", mtrfilename);
-  } else {
+  if (infile == (FILE *) NULL) {
     return false;
   }
 
@@ -821,12 +808,10 @@ bool tetgenio::load_poly(char* filebasename)
              inpolyfilename, insmeshfilename);
       return false;
     } else {
-      printf("Opening %s.\n", insmeshfilename);
       infilename = insmeshfilename;
     }
     smesh = 1;
   } else {
-    printf("Opening %s.\n", inpolyfilename);
     infilename = inpolyfilename;
   }
 
@@ -1278,7 +1263,6 @@ bool tetgenio::load_off(char* filebasename)
     printf("  Unable to open file %s\n", infilename);
     return false;
   }
-  printf("Opening %s.\n", infilename);
 
   while ((bufferp = readline(buffer, fp, &line_count)) != NULL) {
     // Check section
@@ -1440,7 +1424,6 @@ bool tetgenio::load_ply(char* filebasename)
     printf("Error:  Unable to open file %s\n", infilename);
     return false;
   }
-  printf("Opening %s.\n", infilename);
 
   while ((bufferp = readline(buffer, fp, &line_count)) != NULL) {
     if (!endheader) {
@@ -1656,7 +1639,6 @@ bool tetgenio::load_stl(char* filebasename)
     printf("Error:  Unable to open file %s\n", infilename);
     return false;
   }
-  printf("Opening %s.\n", infilename);
 
   // STL file has no number of points available. Use a list to read points.
   plist = new tetgenmesh::arraypool(sizeof(double) * 3, 10);
@@ -1789,7 +1771,6 @@ bool tetgenio::load_medit(char* filebasename, int istetmesh)
     printf("Error:  Unable to open file %s\n", infilename);
     return false;
   }
-  printf("Opening %s.\n", infilename);
 
   while ((bufferp = readline(buffer, fp, &line_count)) != NULL) {
     if (*bufferp == '#') continue;  // A comment line is skipped.
@@ -2150,7 +2131,6 @@ bool tetgenio::load_vtk(char* filebasename)
     printf("Error:  Unable to open file %s\n", infilename);
     return false;
   }
-  printf("Opening %s.\n", infilename);
 
   // Default uses the index starts from '0'.
   firstnumber = 0;
