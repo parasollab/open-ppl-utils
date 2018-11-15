@@ -35,7 +35,7 @@ namespace nonstd
   status::
   is_complete() const noexcept
   {
-    return m_state == state::complete;
+    return m_state == state::completed;
   }
 
   /*------------------------------- Modifiers --------------------------------*/
@@ -68,9 +68,9 @@ namespace nonstd
 
   void
   status::
-  finish() noexcept
+  complete() noexcept
   {
-    m_state = state::complete;
+    m_state = state::completed;
   }
 
 

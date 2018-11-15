@@ -45,7 +45,7 @@ main()
   assert_msg(!s.is_complete(), er + when + "the status should not be complete.");
 
   // Set s to finished.
-  s.finish();
+  s.complete();
   when = "after finishing, ";
   assert_msg(s.is_started(),   er + when + "the status should be started.");
   assert_msg(!s.is_on_hold(),  er + when + "the status should not be on hold.");

@@ -34,13 +34,13 @@ namespace nonstd
       bool is_complete() const noexcept; ///< Is the task complete?
 
       ///@}
-      ///@name Modifies
+      ///@name Modifiers
       ///@{
 
       void start() noexcept;    ///< Mark the task as started.
       void hold() noexcept;     ///< Mark the task as on hold.
       void resume() noexcept;   ///< Mark the task as not on hold.
-      void finish() noexcept;   ///< Mark the task as complete.
+      void complete() noexcept; ///< Mark the task as complete.
       void reset() noexcept;    ///< Reset to the ready state.
 
       ///@}
@@ -51,7 +51,7 @@ namespace nonstd
       ///@{
 
       /// The possible completion states for a process/task.
-      enum state {ready, in_progress, on_hold, complete};
+      enum state {ready, in_progress, on_hold, completed};
 
       ///@}
       ///@name Internal State
