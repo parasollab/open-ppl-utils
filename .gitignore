@@ -2,3 +2,4 @@
 *.o
 *.a
 build
+CD-libs/PQP_v1.2/include/*.h
