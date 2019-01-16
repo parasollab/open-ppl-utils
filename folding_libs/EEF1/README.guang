@@ -1,0 +1,12 @@
+      How to make the EEF1 code compilable on different platforms?
+      ============================================================
+03/21/02
+on sun (Chris) 12/26/01
+
+
+on sgi (Chris)
+use -O2 option. (-O3 causes compiled program to hang there)
+
+on linux, using intel fortran compiler (ifc)
+doesn't recognize -freeform option.
+rename aux/lbfgsb.f to aux/lbfgsb.f90

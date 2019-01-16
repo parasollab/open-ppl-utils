@@ -1,0 +1,201 @@
+arbgcomp.h:30:class ARluCompGenEig:
+arbgcomp.h-31-public virtual
+arbgcomp.h-32-ARCompGenEig<ARFLOAT, ARbdNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT >,
+arbgcomp.h-33-ARbdNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT > > {
+--
+arbgnsym.h:29:class ARluNonSymGenEig:
+arbgnsym.h-30-public virtual 
+              ARNonSymGenEig<ARFLOAT, ARbdNonSymPencil<ARFLOAT, ARFLOAT>,
+arbgnsym.h-31-ARbdNonSymPencil<ARFLOAT, ARFLOAT> > {
+--
+arbgsym.h:29:class ARluSymGenEig:
+arbgsym.h-30-public virtual ARSymGenEig<ARFLOAT, ARbdSymPencil<ARFLOAT>,
+arbgsym.h-31-ARbdSymPencil<ARFLOAT> > {
+--
+arbnsmat.h:33:class ARbdNonSymMatrix: public ARMatrix<ARTYPE> {
+arbnsmat.h-35-  friend class ARbdNonSymPencil<ARTYPE, ARFLOAT>;
+arbnsmat.h-36-  friend class ARbdNonSymPencil<ARFLOAT, ARFLOAT>;
+--
+arbnspen.h:28:class ARbdNonSymPencil
+--
+arbscomp.h:29:class ARluCompStdEig:
+arbscomp.h-30-public virtual ARCompStdEig<ARFLOAT,
+arbscomp.h-31-ARbdNonSymMatrix<arcomplex<ARFLOAT>, ARFLOAT> > {
+--
+arbsmat.h:33:class ARbdSymMatrix: public ARMatrix<ARTYPE> {
+arbsmat.h-35-  friend class ARbdSymPencil<ARTYPE>;
+--
+arbsnsym.h:28:class ARluNonSymStdEig:
+arbsnsym.h-29-public virtual 
+              ARNonSymStdEig<ARFLOAT, ARbdNonSymMatrix<ARFLOAT, ARFLOAT> > {
+--
+arbspen.h:28:class ARbdSymPencil
+--
+arbssym.h:28:class ARluSymStdEig:
+arbssym.h-29-  public virtual ARSymStdEig<ARFLOAT, ARbdSymMatrix<ARFLOAT> > {
+--
+ardfmat.h:32:class ARdfMatrix {
+--
+ardgcomp.h:30:class ARluCompGenEig:
+ardgcomp.h-31-  public virtual
+ardgcomp.h-32-ARCompGenEig<ARFLOAT, ARdsNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT >,
+ardgcomp.h-33-ARdsNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT > > {
+--
+ardgnsym.h:29:class ARluNonSymGenEig:
+ardgnsym.h-30-public virtual 
+              ARNonSymGenEig<ARFLOAT, ARdsNonSymPencil<ARFLOAT, ARFLOAT>,
+ardgnsym.h-31-ARdsNonSymPencil<ARFLOAT, ARFLOAT> > {
+--
+ardgsym.h:29:class ARluSymGenEig:
+ardgsym.h-30-public virtual ARSymGenEig<ARFLOAT, ARdsSymPencil<ARFLOAT>,
+ardgsym.h-31-ARdsSymPencil<ARFLOAT> > {
+--
+ardnsmat.h:34:class ARdsNonSymMatrix: public ARMatrix<ARTYPE> {
+ardnsmat.h-36-  friend class ARdsNonSymPencil<ARTYPE, ARFLOAT>;
+ardnsmat.h-37-  friend class ARdsNonSymPencil<ARFLOAT, ARFLOAT>;
+--
+ardnspen.h:28:class ARdsNonSymPencil
+--
+ardscomp.h:29:class ARluCompStdEig:
+ardscomp.h-30-  public virtual ARCompStdEig<ARFLOAT, 
+ardscomp.h-31-ARdsNonSymMatrix<arcomplex<ARFLOAT>, ARFLOAT> > {
+--
+ardsmat.h:33:class ARdsSymMatrix: public ARMatrix<ARTYPE> {
+ardsmat.h-35-  friend class ARdsSymPencil<ARTYPE>;
+--
+ardsnsym.h:28:class ARluNonSymStdEig:
+ardsnsym.h-29-public virtual ARNonSymStdEig<ARFLOAT, ARdsNonSymMatrix<ARFLOAT, ARFLOAT> > {
+--
+ardspen.h:28:class ARdsSymPencil
+--
+ardssym.h:28:class ARluSymStdEig:
+ardssym.h-29-public virtual ARSymStdEig<ARFLOAT, ARdsSymMatrix<ARFLOAT> > {
+--
+arerror.h:36:class ArpackError {
+--
+argcomp.h:26:class ARCompGenEig:
+argcomp.h-27-  virtual public ARGenEig<ARFLOAT, arcomplex<ARFLOAT>, ARFOP, ARFB>,
+argcomp.h-28-  virtual public ARCompStdEig<ARFLOAT, ARFOP>  {
+--
+argeig.h:31:class ARGenEig:
+argeig.h-32-  virtual public ARrcGenEig<ARFLOAT, ARTYPE>,
+argeig.h-33-  virtual public ARStdEig<ARFLOAT, ARTYPE, ARFOP> {
+--
+argnsym.h:29:class ARNonSymGenEig:
+argnsym.h-30-  virtual public ARGenEig<ARFLOAT, ARFLOAT, ARFOP, ARFB>,
+argnsym.h-31-  virtual public ARNonSymStdEig<ARFLOAT, ARFOP>,
+argnsym.h-32-  virtual public ARrcNonSymGenEig<ARFLOAT>  {
+--
+argsym.h:27:class ARSymGenEig:
+argsym.h-28-  virtual public ARGenEig<ARFLOAT, ARFLOAT, ARFOP, ARFB>,
+argsym.h-29-  virtual public ARSymStdEig<ARFLOAT, ARFOP>,
+argsym.h-30-  virtual public ARrcSymGenEig<ARFLOAT> {
+--
+arhbmat.h:32:class ARhbMatrix {
+--
+arlgcomp.h:30:class ARluCompGenEig:
+arlgcomp.h-31-public virtual
+arlgcomp.h-32-ARCompGenEig<ARFLOAT, ARluNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT >,
+arlgcomp.h-33-ARluNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT > > {
+--
+arlgnsym.h:29:class ARluNonSymGenEig:
+arlgnsym.h-30-public virtual ARNonSymGenEig<ARFLOAT, ARluNonSymPencil<ARFLOAT, ARFLOAT>,
+arlgnsym.h-31-ARluNonSymPencil<ARFLOAT, ARFLOAT> > {
+--
+arlgsym.h:30:class ARluSymGenEig:
+arlgsym.h-31-public virtual ARSymGenEig<ARFLOAT, ARluSymPencil<ARFLOAT>,
+arlgsym.h-32-ARluSymPencil<ARFLOAT> > {
+--
+arlnsmat.h:36:class ARluNonSymMatrix: public ARMatrix<ARTYPE> {
+arlnsmat.h-38-  friend class ARluNonSymPencil<ARTYPE, ARFLOAT>;
+arlnsmat.h-39-  friend class ARluNonSymPencil<ARFLOAT, ARFLOAT>;
+--
+arlnspen.h:31:class ARluNonSymPencil
+--
+arlscomp.h:29:class ARluCompStdEig:
+arlscomp.h-30-  public virtual ARCompStdEig<ARFLOAT, 
+arlscomp.h-31-ARluNonSymMatrix<arcomplex<ARFLOAT>, ARFLOAT> > {
+--
+arlsmat.h:36:class ARluSymMatrix: public ARMatrix<ARTYPE> {
+arlsmat.h-38-  friend class ARluSymPencil<ARTYPE>;
+--
+arlsnsym.h:27:class ARluNonSymStdEig:
+arlsnsym.h-28-  public virtual ARNonSymStdEig<ARFLOAT, ARluNonSymMatrix<ARFLOAT, ARFLOAT> > {
+--
+arlspen.h:31:class ARluSymPencil
+--
+arlssym.h:29:class ARluSymStdEig:
+arlssym.h-30-  public virtual ARSymStdEig<ARFLOAT, ARluSymMatrix<ARFLOAT> > {
+--
+armat.h:21:class ARMatrix {
+--
+arrgcomp.h:26:class ARrcCompGenEig:
+arrgcomp.h-27-  virtual public ARrcGenEig<ARFLOAT, arcomplex<ARFLOAT> >,
+arrgcomp.h-28-  virtual public ARrcCompStdEig<ARFLOAT>  {
+--
+arrgeig.h:29:class ARrcGenEig: virtual public ARrcStdEig<ARFLOAT, ARTYPE> {
+--
+arrgnsym.h:26:class ARrcNonSymGenEig:
+arrgnsym.h-27-  virtual public ARrcGenEig<ARFLOAT, ARFLOAT>,
+arrgnsym.h-28-  virtual public ARrcNonSymStdEig<ARFLOAT>  {
+--
+arrgsym.h:26:class ARrcSymGenEig:
+arrgsym.h-27-  virtual public ARrcGenEig<ARFLOAT, ARFLOAT>,
+arrgsym.h-28-  virtual public ARrcSymStdEig<ARFLOAT> {
+--
+arrscomp.h:29:class ARrcCompStdEig: 
+	      virtual public ARrcStdEig<ARFLOAT, arcomplex<ARFLOAT> > {
+--
+arrseig.h:37:class ARrcStdEig {
+--
+arrsnsym.h:30:class ARrcNonSymStdEig: public virtual ARrcStdEig<ARFLOAT, ARFLOAT> {
+--
+arrssym.h:30:class ARrcSymStdEig: public virtual ARrcStdEig<ARFLOAT, ARFLOAT> {
+--
+arscomp.h:26:class ARCompStdEig:
+arscomp.h-27-  virtual public ARStdEig<ARFLOAT, arcomplex<ARFLOAT>, ARFOP>,
+arscomp.h-28-  virtual public ARrcCompStdEig<ARFLOAT> {
+--
+arseig.h:30:class ARStdEig: virtual public ARrcStdEig<ARFLOAT, ARTYPE> {
+--
+arsnsym.h:27:class ARNonSymStdEig:
+arsnsym.h-28-  public virtual ARStdEig<ARFLOAT, ARFLOAT, ARFOP>,
+arsnsym.h-29-  public virtual ARrcNonSymStdEig<ARFLOAT> {
+--
+arssym.h:27:class ARSymStdEig:
+arssym.h-28-  public virtual ARStdEig<ARFLOAT, ARFLOAT, ARFOP>,
+arssym.h-29-  public virtual ARrcSymStdEig<ARFLOAT> {
+--
+arugcomp.h:30:class ARluCompGenEig:
+arugcomp.h-31-  public virtual
+arugcomp.h-32-ARCompGenEig<ARFLOAT, ARumNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT >,
+arugcomp.h-33-ARumNonSymPencil<arcomplex<ARFLOAT>, ARFLOAT > > {
+-
+arugnsym.h:29:class ARluNonSymGenEig:
+arugnsym.h-30-public virtual ARNonSymGenEig<ARFLOAT, ARumNonSymPencil<ARFLOAT, ARFLOAT>,
+arugnsym.h-31-ARumNonSymPencil<ARFLOAT, ARFLOAT> > {
+--
+arugsym.h:30:class ARluSymGenEig:
+arugsym.h-31-public virtual ARSymGenEig<ARFLOAT, ARumSymPencil<ARFLOAT>,
+arugsym.h-32-ARumSymPencil<ARFLOAT> > {
+--
+arunsmat.h:34:class ARumNonSymMatrix: public ARMatrix<ARTYPE> {
+arunsmat.h-36-  friend class ARumNonSymPencil<ARTYPE, ARFLOAT>;
+arunsmat.h-37-  friend class ARumNonSymPencil<ARFLOAT, ARFLOAT>;
+--
+arunspen.h:28:class ARumNonSymPencil
+--
+aruscomp.h:29:class ARluCompStdEig:
+aruscomp.h-30-public virtual ARCompStdEig<ARFLOAT, 
+aruscomp.h-31-ARumNonSymMatrix<arcomplex<ARFLOAT>, ARFLOAT> > {
+--
+arusmat.h:34:class ARumSymMatrix: public ARMatrix<ARTYPE> {
+arusmat.h-36-  friend class ARumSymPencil<ARTYPE>;
+--
+arusnsym.h:28:class ARluNonSymStdEig:
+arusnsym.h-29-  public virtual ARNonSymStdEig<ARFLOAT, ARumNonSymMatrix<ARFLOAT, ARFLOAT> > {
+--
+aruspen.h:28:class ARumSymPencil
+--
+arussym.h:28:class ARluSymStdEig:
+arussym.h-29-  public virtual ARSymStdEig<ARFLOAT, ARumSymMatrix<ARFLOAT> > {

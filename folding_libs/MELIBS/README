@@ -1,0 +1,7 @@
+
+9-1-06
+In order to compile these libraries into your C code, you may 
+need to explicitly link in the Fortran compatability lib such as:
+/usr/lib/gcc/i386-redhat-linux/3.4.5/libg2c.a 
+(location may change)
+-LET

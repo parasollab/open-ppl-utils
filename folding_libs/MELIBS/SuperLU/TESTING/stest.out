@@ -1,0 +1,24 @@
+Single-precision testing output
+== LAPACK test matrices
+
+n=9 nrhs=5 lwork=0
+All tests for SGE driver passed the threshold (   659 tests run)
+
+n=9 nrhs=5 lwork=10000000
+All tests for SGE driver passed the threshold (   659 tests run)
+
+n=19 nrhs=5 lwork=0
+All tests for SGE driver passed the threshold (   659 tests run)
+
+n=19 nrhs=5 lwork=10000000
+All tests for SGE driver passed the threshold (   659 tests run)
+
+== sparse matrix: g10
+
+w=8 relax=4 nrhs=5 lwork=0
+10x10 grid, with COLMMD order                                                   
+All tests for SGE driver passed the threshold (    82 tests run)
+
+w=8 relax=4 nrhs=5 lwork=10000000
+10x10 grid, with COLMMD order                                                   
+All tests for SGE driver passed the threshold (    82 tests run)

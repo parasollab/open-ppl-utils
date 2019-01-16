@@ -1,0 +1,8 @@
+IN_PDB_NAME             2MLT.pdb
+PRINT_LEVEL             0
+MINIMIZE_AT_SETUP       NO
+TIME_COHERENT           NO
+MINIMIZATION_MODE	0
+FTOL                    1.0e+09
+GTOL                    80.0e-00 
+MAX_ITER                20

@@ -1,0 +1,14 @@
+Single-precision complex testing output
+== LAPACK test matrices
+
+n=9 nrhs=5 lwork=0
+All tests for CGE driver passed the threshold (   659 tests run)
+
+n=9 nrhs=5 lwork=10000000
+All tests for CGE driver passed the threshold (   659 tests run)
+
+n=19 nrhs=5 lwork=0
+All tests for CGE driver passed the threshold (   659 tests run)
+
+n=19 nrhs=5 lwork=10000000
+All tests for CGE driver passed the threshold (   659 tests run)

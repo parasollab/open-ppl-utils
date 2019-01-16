@@ -1,0 +1,69 @@
+This is a fortran 90 program. We have used NAGware f95 compiler, and I don't 
+know how it works with other compilers. Please let me know if you have any 
+problems.
+
+Structure:
+
+
+1. bin/ 
+ * contents: input files, executables, pdb file
+   a. Following input files that should not be changed:	
+	topology_eng.in, topology_geo.in, parameters.in
+   b. You can change 
+      user_input.in:
+	first column should not be changed.
+      entries:
+  	IN_PDB_NAME : input pdb file name
+	PRINT_LEVEL : prints nothing if 0, prints something if > 0.
+	MINIMIZE_AT_SETUP:
+	        if YES, minimize potential starting from the pdb
+		structure in setup_potential
+        TIME_COHERENT:
+		if YES, make use of the temporal coherence
+		if NO, do not make use of the temporal coherence 
+			in potential calculation
+
+2. src/ 
+ * contents: source files, makefile,
+            src/aux/ (contains lbfgs-b minimization routine)
+ * subroutines: You can find the usage of the following routines in
+	       main.F90.
+   a. setup_potential()
+	read a pdb file (pdb file name should be given in the input file,
+	bin/user_input.in), and setup everything.
+ 	If MINIMIZE_AT_SETUP = NO, set the protein structure to
+	the pdb structure. If YES, set the protein structure to
+	the energy minimized pdb structure. All degrees of freedom 
+	are set to the (energy minimized) pdb values.
+	Miscellaneous notes:
+	 - Many pdb files have missing atoms, such as hydrogen. This routine
+	   puts in those atoms using some canonical bond lengths and angles.
+	 - Disulfide bond info will also be read from the pdb file. 
+  	   If you do not wish to include disulfide bonds, 
+	   please make sure that there is no 'SSBOND' entry in the pdb file.
+	 - If multiple structures are given in the pdb file, only the first
+	   structure will be read.
+   b. finalize_potential()
+	finalize everything.
+	should be called at the end of the program.
+   c. potential(dim, phi, psi, omega, f)
+	I assume that following choice is natural. If your convention is
+	different, please let me know.
+
+	dim: should be equal to the number of residues - 1
+	phi, psi, omega : double precision arrays of dimension dim.
+		all angles are in units of radian, not degree.
+		phi(i): phi angles of the (i+1)th residue
+		psi(i), omega(i): psi and omega angles of the ith residue
+	f: potential at given phi, psi, omega, and all other variables 
+	   	at native (or energy minimized, if minimize_energy() is
+		called after setup_potential) values
+   f. get_phipsi(dim, phi, psi, omega)
+	get phi, psi, omega of the current structure.
+	dim, phi, psi, omega as defined above.
+   f. write_pdb(out_pdb_name)
+	write a pdb file of the current structure.
+
+Please let me know if you have any questions or suggestions. Thanks,
+
+Chaok 

@@ -1,0 +1,5 @@
+The subroutine for the energy function is
+     potential(dim, phi, psi, omega, f) in the module "energy".
+The subroutine setup_potential should be called first. 
+Please refer to the README file for the explanation of the arguments.
+Data files are in the bin/ directory. 

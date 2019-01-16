@@ -1,0 +1,2154 @@
+** DATA FILE FOR REFERENCE RESIDUES FOR ENERGY **
+
+--------------------------------------------------------------------------
+RES CYS 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM SG   SH1E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   SG                   1.8100000000000001
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   SG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   SG            112.5000000000000000
+DPN CB   SG  
+PRN DIH  N    CA   CB   SG  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES MET 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM SD   S   
+ATM CE   CH3E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   SD                   1.8100000000000001
+BND SD   CE                   1.7700000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   SD       180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   SD            112.5000000000000000
+DPN CG   SD  
+PRN DIH  CA   CB   CG   SD  
+
+DIH CB   CG   SD   CE       180.0000000000000000
+PRN ANG  CB   CG   SD  
+
+ANG CG   SD   CE             99.5000000000000000
+DPN SD   CE  
+PRN DIH  CB   CG   SD   CE  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES PHE 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CR  
+ATM CD1  CR1E
+ATM CD2  CR1E
+ATM CE1  CR1E
+ATM CE2  CR1E
+ATM CZ   CR1E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD1                  1.3799999999999999
+BND CG   CD2                  1.3799999999999999
+BND CD1  CE1                  1.3799999999999999
+BND CD2  CE2                  1.3799999999999999
+BND CE1  CZ                   1.3799999999999999
+BND CE2  CZ                   1.3799999999999999
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD1       90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD1           120.0000000000000000
+DPN CG   CD1 
+PRN DIH  CA   CB   CG   CD1 
+
+DIH CA   CB   CG   CD2      -90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD2           120.0000000000000000
+DPN CG   CD2 
+PRN DIH  CA   CB   CG   CD2 
+
+DIH CB   CG   CD2  CE2      180.0000000000000000
+PRN ANG  CB   CG   CD2 
+
+ANG CG   CD2  CE2           120.0000000000000000
+DPN CD2  CE2 
+PRN DIH  CB   CG   CD2  CE2 
+
+DIH CB   CG   CD1  CE1      180.0000000000000000
+PRN ANG  CB   CG   CD1 
+
+ANG CG   CD1  CE1           120.0000000000000000
+DPN CD1  CE1 
+PRN DIH  CB   CG   CD1  CE1 
+
+DIH CG   CD2  CE2  CZ         0.0000000000000000
+PRN ANG  CG   CD2  CE2 
+
+ANG CD2  CE2  CZ            120.0000000000000000
+DPN CE2  CZ  
+PRN DIH  CG   CD2  CE2  CZ  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES ILE 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH1E
+ATM CG1  CH2E
+ATM CG2  CH3E
+ATM CD1  CH3E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5300000000000000
+BND CB   CG1                  1.5200000000000000
+BND CB   CG2                  1.5200000000000000
+BND CG1  CD1                  1.5400000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG1      180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG1           112.5000000000000000
+DPN CB   CG1 
+PRN DIH  N    CA   CB   CG1 
+
+DIH CA   CB   CG1  CD1      180.0000000000000000
+PRN ANG  CA   CB   CG1 
+
+ANG CB   CG1  CD1           113.0000000000000000
+DPN CG1  CD1 
+PRN DIH  CA   CB   CG1  CD1 
+
+DIH N    CA   CB   CG2       60.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG2           111.0000000000000000
+DPN CB   CG2 
+PRN DIH  N    CA   CB   CG2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES LEU 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH1E
+ATM CD1  CH3E
+ATM CD2  CH3E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD1                  1.5200000000000000
+BND CG   CD2                  1.5200000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            117.0000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD1      180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD1           111.5000000000000000
+DPN CG   CD1 
+PRN DIH  CA   CB   CG   CD1 
+
+DIH CA   CB   CG   CD2      -60.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD2           111.5000000000000000
+DPN CG   CD2 
+PRN DIH  CA   CB   CG   CD2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES VAL 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH1E
+ATM CG1  CH3E
+ATM CG2  CH3E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5300000000000000
+BND CB   CG1                  1.5200000000000000
+BND CB   CG2                  1.5200000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG1      180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG1           111.0000000000000000
+DPN CB   CG1 
+PRN DIH  N    CA   CB   CG1 
+
+DIH N    CA   CB   CG2      -60.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG2           111.0000000000000000
+DPN CB   CG2 
+PRN DIH  N    CA   CB   CG2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES TRP 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CR  
+ATM CD1  CR1E
+ATM CD2  CR  
+ATM NE1  NH1 
+ATM CE2  CR  
+ATM CE3  CR1E
+ATM CZ2  CR1E
+ATM CZ3  CR1E
+ATM CH2  CR1E
+ATM H    H   
+ATM HE1  H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD1                  1.3815000000000000
+BND CG   CD2                  1.3673000000000000
+BND CD1  NE1                  1.3203000000000000
+BND CD2  CE2                  1.3551000000000000
+BND NE1  HE1                  0.9802000000000000
+BND NE1  CE2                  1.3300000000000001
+BND CD2  CE3                  1.3728000000000000
+BND CE2  CZ2                  1.3712000000000000
+BND CE3  CZ3                  1.3882000000000001
+BND CZ2  CH2                  1.3876999999999999
+BND CZ3  CH2                  1.3799999999999999
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD2       90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD2           127.4500000000000028
+DPN CG   CD2 
+PRN DIH  CA   CB   CG   CD2 
+
+DIH CA   CB   CG   CD1      -90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD1           121.7800000000000011
+DPN CG   CD1 
+PRN DIH  CA   CB   CG   CD1 
+
+DIH CB   CG   CD2  CE2      180.0000000000000000
+PRN ANG  CB   CG   CD2 
+
+ANG CG   CD2  CE2           102.5100000000000051
+DPN CD2  CE2 
+PRN DIH  CB   CG   CD2  CE2 
+
+DIH CB   CG   CD1  NE1      180.0000000000000000
+PRN ANG  CB   CG   CD1 
+
+ANG CG   CD1  NE1           106.2999999999999972
+DPN CD1  NE1 
+PRN DIH  CB   CG   CD1  NE1 
+
+DIH CG   CD1  NE1  HE1      180.0000000000000000
+PRN ANG  CG   CD1  NE1 
+
+ANG CD1  NE1  HE1           125.4599999999999937
+DPN NE1  HE1 
+PRN DIH  CG   CD1  NE1  HE1 
+
+DIH CB   CG   CD2  CE3        0.0000000000000000
+PRN ANG  CB   CG   CD2 
+
+ANG CG   CD2  CE3           134.7299999999999898
+DPN CD2  CE3 
+PRN DIH  CB   CG   CD2  CE3 
+
+DIH CG   CD2  CE3  CZ3      180.0000000000000000
+PRN ANG  CG   CD2  CE3 
+
+ANG CD2  CE3  CZ3           115.2199999999999989
+DPN CE3  CZ3 
+PRN DIH  CG   CD2  CE3  CZ3 
+
+DIH CG   CD2  CE2  CZ2      180.0000000000000000
+PRN ANG  CG   CD2  CE2 
+
+ANG CD2  CE2  CZ2           123.5600000000000023
+DPN CE2  CZ2 
+PRN DIH  CG   CD2  CE2  CZ2 
+
+DIH CD2  CE2  CZ2  CH2        0.0000000000000000
+PRN ANG  CD2  CE2  CZ2 
+
+ANG CE2  CZ2  CH2           114.9599999999999937
+DPN CZ2  CH2 
+PRN DIH  CD2  CE2  CZ2  CH2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES TYR 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CR  
+ATM CD1  CR1E
+ATM CD2  CR1E
+ATM CE1  CR1E
+ATM CE2  CR1E
+ATM CZ   C   
+ATM OH   OH1 
+ATM H    H   
+ATM HH   H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD1                  1.3799999999999999
+BND CG   CD2                  1.3799999999999999
+BND CD1  CE1                  1.3799999999999999
+BND CD2  CE2                  1.3799999999999999
+BND CE1  CZ                   1.3799999999999999
+BND CE2  CZ                   1.3799999999999999
+BND CZ   OH                   1.3799999999999999
+BND OH   HH                   0.9600000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD1       90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD1           120.0000000000000000
+DPN CG   CD1 
+PRN DIH  CA   CB   CG   CD1 
+
+DIH CA   CB   CG   CD2      -90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD2           120.0000000000000000
+DPN CG   CD2 
+PRN DIH  CA   CB   CG   CD2 
+
+DIH CB   CG   CD1  CE1      180.0000000000000000
+PRN ANG  CB   CG   CD1 
+
+ANG CG   CD1  CE1           120.0000000000000000
+DPN CD1  CE1 
+PRN DIH  CB   CG   CD1  CE1 
+
+DIH CB   CG   CD2  CE2      180.0000000000000000
+PRN ANG  CB   CG   CD2 
+
+ANG CG   CD2  CE2           120.0000000000000000
+DPN CD2  CE2 
+PRN DIH  CB   CG   CD2  CE2 
+
+DIH CG   CD2  CE2  CZ         0.0000000000000000
+PRN ANG  CG   CD2  CE2 
+
+ANG CD2  CE2  CZ            120.0000000000000000
+DPN CE2  CZ  
+PRN DIH  CG   CD2  CE2  CZ  
+
+DIH CD2  CE2  CZ   OH       180.0000000000000000
+PRN ANG  CD2  CE2  CZ  
+
+ANG CE2  CZ   OH            120.0000000000000000
+DPN CZ   OH  
+PRN DIH  CD2  CE2  CZ   OH  
+
+DIH CE2  CZ   OH   HH       180.0000000000000000
+PRN ANG  CE2  CZ   OH  
+
+ANG CZ   OH   HH            109.5000000000000000
+DPN OH   HH  
+PRN DIH  CE2  CZ   OH   HH  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES ALA 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH3E
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            108.5000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES GLY 
+
+ATM N    NH1 
+ATM CA   CH2E
+ATM C    C   
+ATM O    O   
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5999999999999943
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES THR 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH1E
+ATM OG1  OH1 
+ATM CG2  CH3E
+ATM H    H   
+ATM HG1  H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5300000000000000
+BND CB   OG1                  1.4199999999999999
+BND CB   CG2                  1.5200000000000000
+BND OG1  HG1                  0.9600000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   OG1      180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   OG1           104.5000000000000000
+DPN CB   OG1 
+PRN DIH  N    CA   CB   OG1 
+
+DIH N    CA   CB   CG2       60.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG2           111.0000000000000000
+DPN CB   CG2 
+PRN DIH  N    CA   CB   CG2 
+
+DIH CA   CB   OG1  HG1      180.0000000000000000
+PRN ANG  CA   CB   OG1 
+
+ANG CB   OG1  HG1           109.5000000000000000
+DPN OG1  HG1 
+PRN DIH  CA   CB   OG1  HG1 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES SER 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM OG   OH1 
+ATM H    H   
+ATM HG   H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   OG                   1.4199999999999999
+BND OG   HG                   0.9600000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   OG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   OG            111.0000000000000000
+DPN CB   OG  
+PRN DIH  N    CA   CB   OG  
+
+DIH CA   CB   OG   HG       180.0000000000000000
+PRN ANG  CA   CB   OG  
+
+ANG CB   OG   HG            109.5000000000000000
+DPN OG   HG  
+PRN DIH  CA   CB   OG   HG  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES GLN 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM CD   C   
+ATM OE1  O   
+ATM NE2  NH2 
+ATM H    H   
+ATM HE21 H   
+ATM HE22 H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD                   1.5200000000000000
+BND CD   OE1                  1.2300000000000000
+BND CD   NE2                  1.3300000000000001
+BND NE2  HE21                 0.9800000000000000
+BND NE2  HE22                 0.9800000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD       180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD            113.0000000000000000
+DPN CG   CD  
+PRN DIH  CA   CB   CG   CD  
+
+DIH CB   CG   CD   OE1      180.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   OE1           121.5999999999999943
+DPN CD   OE1 
+PRN DIH  CB   CG   CD   OE1 
+
+DIH CB   CG   CD   NE2        0.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   NE2           117.5000000000000000
+DPN CD   NE2 
+PRN DIH  CB   CG   CD   NE2 
+
+DIH CG   CD   NE2  HE21     180.0000000000000000
+PRN ANG  CG   CD   NE2 
+
+ANG CD   NE2  HE21          120.0000000000000000
+DPN NE2  HE21
+PRN DIH  CG   CD   NE2  HE21
+
+DIH CG   CD   NE2  HE22       0.0000000000000000
+PRN ANG  CG   CD   NE2 
+
+ANG CD   NE2  HE22          120.0000000000000000
+DPN NE2  HE22
+PRN DIH  CG   CD   NE2  HE22
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES ASN 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   C   
+ATM OD1  O   
+ATM ND2  NH2 
+ATM H    H   
+ATM HD21 H   
+ATM HD22 H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   OD1                  1.2300000000000000
+BND CG   ND2                  1.3300000000000001
+BND ND2  HD21                 0.9800000000000000
+BND ND2  HD22                 0.9800000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   OD1      180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   OD1           121.5999999999999943
+DPN CG   OD1 
+PRN DIH  CA   CB   CG   OD1 
+
+DIH CA   CB   CG   ND2        0.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   ND2           117.5000000000000000
+DPN CG   ND2 
+PRN DIH  CA   CB   CG   ND2 
+
+DIH CB   CG   ND2  HD21     180.0000000000000000
+PRN ANG  CB   CG   ND2 
+
+ANG CG   ND2  HD21          120.0000000000000000
+DPN ND2  HD21
+PRN DIH  CB   CG   ND2  HD21
+
+DIH CB   CG   ND2  HD22       0.0000000000000000
+PRN ANG  CB   CG   ND2 
+
+ANG CG   ND2  HD22          120.0000000000000000
+DPN ND2  HD22
+PRN DIH  CB   CG   ND2  HD22
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES GLU 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM CD   C   
+ATM OE1  OC  
+ATM OE2  OC  
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD                   1.5200000000000000
+BND CD   OE1                  1.2300000000000000
+BND CD   OE2                  1.2300000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD       180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD            113.0000000000000000
+DPN CG   CD  
+PRN DIH  CA   CB   CG   CD  
+
+DIH CB   CG   CD   OE1      180.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   OE1           118.5000000000000000
+DPN CD   OE1 
+PRN DIH  CB   CG   CD   OE1 
+
+DIH CB   CG   CD   OE2        0.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   OE2           118.5000000000000000
+DPN CD   OE2 
+PRN DIH  CB   CG   CD   OE2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES ASP 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   C   
+ATM OD1  OC  
+ATM OD2  OC  
+ATM H    H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   OD1                  1.2300000000000000
+BND CG   OD2                  1.2300000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   OD1      180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   OD1           118.5000000000000000
+DPN CG   OD1 
+PRN DIH  CA   CB   CG   OD1 
+
+DIH CA   CB   CG   OD2        0.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   OD2           118.5000000000000000
+DPN CG   OD2 
+PRN DIH  CA   CB   CG   OD2 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES HIS 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CR  
+ATM ND1  NH1 
+ATM CD2  CR1E
+ATM CE1  CR1E
+ATM NE2  NR  
+ATM H    H   
+ATM HD1  H   
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   ND1                  1.3300000000000001
+BND CG   CD2                  1.3799999999999999
+BND ND1  HD1                  0.9800000000000000
+BND ND1  CE1                  1.3049999999999999
+BND CD2  NE2                  1.3049999999999999
+BND CE1  NE2                  1.3049999999999999
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD2       90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD2           121.5000000000000000
+DPN CG   CD2 
+PRN DIH  CA   CB   CG   CD2 
+
+DIH CA   CB   CG   ND1      -90.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   ND1           117.5000000000000000
+DPN CG   ND1 
+PRN DIH  CA   CB   CG   ND1 
+
+DIH CB   CG   ND1  CE1      180.0000000000000000
+PRN ANG  CB   CG   ND1 
+
+ANG CG   ND1  CE1           108.0000000000000000
+DPN ND1  CE1 
+PRN DIH  CB   CG   ND1  CE1 
+
+DIH CB   CG   CD2  NE2      180.0000000000000000
+PRN ANG  CB   CG   CD2 
+
+ANG CG   CD2  NE2           106.5000000000000000
+DPN CD2  NE2 
+PRN DIH  CB   CG   CD2  NE2 
+
+DIH CB   CG   ND1  HD1        0.0000000000000000
+PRN ANG  CB   CG   ND1 
+
+ANG CG   ND1  HD1           120.0000000000000000
+DPN ND1  HD1 
+PRN DIH  CB   CG   ND1  HD1 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES ARG 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM CD   CH2E
+ATM NE   NH1 
+ATM CZ   CR  
+ATM NH1  NC2 
+ATM NH2  NC2 
+ATM H    H   
+ATM HE   H   
+ATM HH11 HC  
+ATM HH12 HC  
+ATM HH21 HC  
+ATM HH22 HC  
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD                   1.5200000000000000
+BND CD   NE                   1.4500000000000000
+BND NE   HE                   0.9800000000000000
+BND NE   CZ                   1.3300000000000001
+BND CZ   NH1                  1.3300000000000001
+BND CZ   NH2                  1.3300000000000001
+BND NH1  HH11                 1.0000000000000000
+BND NH1  HH12                 1.0000000000000000
+BND NH2  HH21                 1.0000000000000000
+BND NH2  HH22                 1.0000000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD       180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD            110.0000000000000000
+DPN CG   CD  
+PRN DIH  CA   CB   CG   CD  
+
+DIH CB   CG   CD   NE       180.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   NE            111.0000000000000000
+DPN CD   NE  
+PRN DIH  CB   CG   CD   NE  
+
+DIH CG   CD   NE   CZ       180.0000000000000000
+PRN ANG  CG   CD   NE  
+
+ANG CD   NE   CZ            120.0000000000000000
+DPN NE   CZ  
+PRN DIH  CG   CD   NE   CZ  
+
+DIH CD   NE   CZ   NH1      180.0000000000000000
+PRN ANG  CD   NE   CZ  
+
+ANG NE   CZ   NH1           120.0000000000000000
+DPN CZ   NH1 
+PRN DIH  CD   NE   CZ   NH1 
+
+DIH CD   NE   CZ   NH2        0.0000000000000000
+PRN ANG  CD   NE   CZ  
+
+ANG NE   CZ   NH2           120.0000000000000000
+DPN CZ   NH2 
+PRN DIH  CD   NE   CZ   NH2 
+
+DIH CG   CD   NE   HE         0.0000000000000000
+PRN ANG  CG   CD   NE  
+
+ANG CD   NE   HE            120.0000000000000000
+DPN NE   HE  
+PRN DIH  CG   CD   NE   HE  
+
+DIH NE   CZ   NH1  HH11     180.0000000000000000
+PRN ANG  NE   CZ   NH1 
+
+ANG CZ   NH1  HH11          120.0000000000000000
+DPN NH1  HH11
+PRN DIH  NE   CZ   NH1  HH11
+
+DIH NE   CZ   NH1  HH12       0.0000000000000000
+PRN ANG  NE   CZ   NH1 
+
+ANG CZ   NH1  HH12          120.0000000000000000
+DPN NH1  HH12
+PRN DIH  NE   CZ   NH1  HH12
+
+DIH NE   CZ   NH2  HH21     180.0000000000000000
+PRN ANG  NE   CZ   NH2 
+
+ANG CZ   NH2  HH21          120.0000000000000000
+DPN NH2  HH21
+PRN DIH  NE   CZ   NH2  HH21
+
+DIH NE   CZ   NH2  HH22       0.0000000000000000
+PRN ANG  NE   CZ   NH2 
+
+ANG CZ   NH2  HH22          120.0000000000000000
+DPN NH2  HH22
+PRN DIH  NE   CZ   NH2  HH22
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES LYS 
+
+ATM N    NH1 
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM CD   CH2E
+ATM CE   CH2E
+ATM NZ   NH3 
+ATM H    H   
+ATM HZ1  HC  
+ATM HZ2  HC  
+ATM HZ3  HC  
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    H                    0.9800000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CG   CD                   1.5200000000000000
+BND CD   CE                   1.5200000000000000
+BND CE   NZ                   1.4500000000000000
+BND NZ   HZ1                  1.0400000000000000
+BND NZ   HZ2                  1.0400000000000000
+BND NZ   HZ3                  1.0400000000000000
+
+DIH -CA  -C   N    H          0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    H             120.0000000000000000
+DPN N    H   
+PRN DIH  -CA  -C   N    H   
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB        60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            110.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH N    CA   CB   CG       180.0000000000000000
+PRN ANG  N    CA   CB  
+
+ANG CA   CB   CG            112.5000000000000000
+DPN CB   CG  
+PRN DIH  N    CA   CB   CG  
+
+DIH CA   CB   CG   CD       180.0000000000000000
+PRN ANG  CA   CB   CG  
+
+ANG CB   CG   CD            110.0000000000000000
+DPN CG   CD  
+PRN DIH  CA   CB   CG   CD  
+
+DIH CB   CG   CD   CE       180.0000000000000000
+PRN ANG  CB   CG   CD  
+
+ANG CG   CD   CE            110.0000000000000000
+DPN CD   CE  
+PRN DIH  CB   CG   CD   CE  
+
+DIH CG   CD   CE   NZ       180.0000000000000000
+PRN ANG  CG   CD   CE  
+
+ANG CD   CE   NZ            110.5000000000000000
+DPN CE   NZ  
+PRN DIH  CG   CD   CE   NZ  
+
+DIH CD   CE   NZ   HZ1      180.0000000000000000
+PRN ANG  CD   CE   NZ  
+
+ANG CE   NZ   HZ1           109.5000000000000000
+DPN NZ   HZ1 
+PRN DIH  CD   CE   NZ   HZ1 
+
+DIH CD   CE   NZ   HZ2      -60.0000000000000000
+PRN ANG  CD   CE   NZ  
+
+ANG CE   NZ   HZ2           109.5000000000000000
+DPN NZ   HZ2 
+PRN DIH  CD   CE   NZ   HZ2 
+
+DIH CD   CE   NZ   HZ3       60.0000000000000000
+PRN ANG  CD   CE   NZ  
+
+ANG CE   NZ   HZ3           109.5000000000000000
+DPN NZ   HZ3 
+PRN DIH  CD   CE   NZ   HZ3 
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES PRO 
+
+ATM N    N   
+ATM CA   CH1E
+ATM C    C   
+ATM O    O   
+ATM CB   CH2E
+ATM CG   CH2E
+ATM CD   CH2E
+ATM +N   NH1 
+
+BND N    CA                   1.4500000000000000
+BND CA   C                    1.5200000000000000
+BND C    +N                   1.3300000000000001
+BND C    O                    1.2300000000000000
+BND N    CD                   1.4500000000000000
+BND CA   CB                   1.5200000000000000
+BND CB   CG                   1.5200000000000000
+BND CD   CG                   1.5200000000000000
+
+DIH -CA  -C   N    CD         0.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CD            120.0000000000000000
+DPN N    CD  
+PRN DIH  -CA  -C   N    CD  
+
+DIH -CA  -C   N    CA       180.0000000000000000
+PRN ANG  -CA  -C   N   
+
+ANG -C   N    CA            120.0000000000000000
+DPN N    CA  
+PRN DIH  -CA  -C   N    CA  
+
+DIH -C   N    CA   C        -60.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   C             111.5999999999999943
+DPN CA   C   
+PRN DIH  -C   N    CA   C   
+
+DIH N    CA   C    O          0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    O             121.5000000000000000
+DPN C    O   
+PRN DIH  N    CA   C    O   
+
+DIH -C   N    CA   CB       180.0000000000000000
+PRN ANG  -C   N    CA  
+
+ANG N    CA   CB            104.0000000000000000
+DPN CA   CB  
+PRN DIH  -C   N    CA   CB  
+
+DIH -C   N    CD   CG       180.0000000000000000
+PRN ANG  -C   N    CD  
+
+ANG N    CD   CG            105.0000000000000000
+DPN CD   CG  
+PRN DIH  -C   N    CD   CG  
+
+DIH N    CA   C    +N       180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    +N            117.5000000000000000
+DPN C    +N  
+PRN DIH  N    CA   C    +N  
+
+--------------------------------------------------------------------------
+RES NTER
+
+ATM N    NH3 
+ATM CA   CH1E
+ATM HT1  HC  
+ATM HT2  HC  
+ATM HT3  HC  
+
+BND HT1  N                    1.0400000000000000
+BND N    HT2                  1.0400000000000000
+BND N    HT3                  1.0400000000000000
+
+DIH -CA  -C   HT1  N        180.0000000000000000
+PRN ANG  -CA  -C   HT1 
+
+ANG -C   HT1  N               0.0000000000000000
+DPN HT1  N   
+PRN DIH  -CA  -C   HT1  N   
+
+DIH -C   HT1  N    CA       180.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    CA            109.5000000000000000
+DPN N    CA  
+PRN DIH  -C   HT1  N    CA  
+
+DIH -C   HT1  N    HT2       60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    HT2           109.5000000000000000
+DPN N    HT2 
+PRN DIH  -C   HT1  N    HT2 
+
+DIH -C   HT1  N    HT3      -60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    HT3           109.5000000000000000
+DPN N    HT3 
+PRN DIH  -C   HT1  N    HT3 
+
+DIH HT1  N    CA   C        180.0000000000000000
+PRN ANG  HT1  N    CA  
+
+ANG N    CA   C               0.0000000000000000
+DPN CA   C   
+PRN DIH  HT1  N    CA   C   
+
+DIH HT1  N    CA   CB        60.0000000000000000
+PRN ANG  HT1  N    CA  
+
+ANG N    CA   CB              0.0000000000000000
+DPN CA   CB  
+PRN DIH  HT1  N    CA   CB  
+
+--------------------------------------------------------------------------
+RES GLYP
+
+ATM N    NH3 
+ATM CA   CH2E
+ATM HT1  HC  
+ATM HT2  HC  
+ATM HT3  HC  
+
+BND HT1  N                    1.0400000000000000
+BND N    HT2                  1.0400000000000000
+BND N    HT3                  1.0400000000000000
+
+DIH -CA  -C   HT1  N        180.0000000000000000
+PRN ANG  -CA  -C   HT1 
+
+ANG -C   HT1  N               0.0000000000000000
+DPN HT1  N   
+PRN DIH  -CA  -C   HT1  N   
+
+DIH -C   HT1  N    CA       180.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    CA            109.5000000000000000
+DPN N    CA  
+PRN DIH  -C   HT1  N    CA  
+
+DIH -C   HT1  N    HT2       60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    HT2           109.5000000000000000
+DPN N    HT2 
+PRN DIH  -C   HT1  N    HT2 
+
+DIH -C   HT1  N    HT3      -60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    HT3           109.5000000000000000
+DPN N    HT3 
+PRN DIH  -C   HT1  N    HT3 
+
+DIH HT1  N    CA   C        180.0000000000000000
+PRN ANG  HT1  N    CA  
+
+ANG N    CA   C               0.0000000000000000
+DPN CA   C   
+PRN DIH  HT1  N    CA   C   
+
+--------------------------------------------------------------------------
+RES PROP
+
+ATM N    NH3 
+ATM CA   CH1E
+ATM CD   CH2E
+ATM HT1  HC  
+ATM HT2  HC  
+
+BND HT1  N                    1.0400000000000000
+BND N    HT2                  1.0400000000000000
+
+DIH -CA  -C   HT1  N         86.0699999999999932
+PRN ANG  -CA  -C   HT1 
+
+ANG -C   HT1  N               0.0000000000000000
+DPN HT1  N   
+PRN DIH  -CA  -C   HT1  N   
+
+DIH -C   HT1  N    CA       180.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    CA            109.5000000000000000
+DPN N    CA  
+PRN DIH  -C   HT1  N    CA  
+
+DIH -C   HT1  N    CD        60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    CD            109.5000000000000000
+DPN N    CD  
+PRN DIH  -C   HT1  N    CD  
+
+DIH -C   HT1  N    HT2      -60.0000000000000000
+PRN ANG  -C   HT1  N   
+
+ANG HT1  N    HT2           109.5000000000000000
+DPN N    HT2 
+PRN DIH  -C   HT1  N    HT2 
+
+DIH HT1  N    CA   C        -60.0000000000000000
+PRN ANG  HT1  N    CA  
+
+ANG N    CA   C               0.0000000000000000
+DPN CA   C   
+PRN DIH  HT1  N    CA   C   
+
+DIH HT1  N    CA   CB       180.0000000000000000
+PRN ANG  HT1  N    CA  
+
+ANG N    CA   CB              0.0000000000000000
+DPN CA   CB  
+PRN DIH  HT1  N    CA   CB  
+
+DIH HT1  N    CD   CG       180.0000000000000000
+PRN ANG  HT1  N    CD  
+
+ANG N    CD   CG              0.0000000000000000
+DPN CD   CG  
+PRN DIH  HT1  N    CD   CG  
+
+--------------------------------------------------------------------------
+RES CTER
+
+ATM C    C   
+ATM OT1  OC  
+ATM OT2  OC  
+
+BND C    OT1                  1.2300000000000000
+BND C    OT2                  1.2300000000000000
+
+DIH N    CA   C    OT1        0.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    OT1             0.0000000000000000
+DPN C    OT1 
+PRN DIH  N    CA   C    OT1 
+
+DIH N    CA   C    OT2      180.0000000000000000
+PRN ANG  N    CA   C   
+
+ANG CA   C    OT2             0.0000000000000000
+DPN C    OT2 
+PRN DIH  N    CA   C    OT2 
+
+--------------------------------------------------------------------------
+RES DISU
+
+ATM 1CB  CH2E
+ATM 1SG  S   
+ATM 2SG  S   
+ATM 2CB  CH2E
+
+BND 1SG  2SG                  2.0200000000000000
+
+END

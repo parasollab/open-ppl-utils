@@ -1,0 +1,912 @@
+** DATA FILE FOR REFERENCE RESIDUES FOR GEOMETRY **
+
+--------------------------------------------------------------------------
+RES CYS 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    6    ENDC    0
+ATM O     3   O     -0.55000    7    O       0
+ATM CB    2   CH2E   0.19000    4    SG      0
+ATM SG    2   SH1E  -0.19000    5    SG      0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   SG  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   SG  
+
+--------------------------------------------------------------------------
+RES MET 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000    8    ENDC    0
+ATM O     4   O     -0.55000    9    O       0
+ATM CB    2   CH2E   0.00000    4    CE      0
+ATM CG    3   CH2E   0.06000    5    CE      0
+ATM SD    3   S     -0.12000    6    CE      0
+ATM CE    3   CH3E   0.06000    7    CE      0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   SD  
+DIH CB   CG   SD   CE  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   SD  
+ANG CG   SD   CE  
+
+--------------------------------------------------------------------------
+RES PHE 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000   11    ENDC    0
+ATM O     4   O     -0.55000   12    O       0
+ATM CB    2   CH2E   0.00000    4    CZ      0
+ATM CG    2   CR     0.00000    5    CZ      1
+ATM CD1   2   CR1E   0.00000    6    CE1     1
+ATM CD2   2   CR1E   0.00000    8    CZ      1
+ATM CE1   3   CR1E   0.00000    7    CE1     1
+ATM CE2   3   CR1E   0.00000    9    CZ      1
+ATM CZ    3   CR1E   0.00000   10    CZ      1
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   CD1  CE1  CZ  
+IMP CD1  CE1  CZ   CE2 
+IMP CE1  CZ   CE2  CD2 
+IMP CZ   CE2  CD2  CG  
+IMP CE2  CD2  CG   CD1 
+IMP CD2  CG   CD1  CE1 
+IMP CG   CD1  CD2  CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD1 
+ANG CB   CG   CD2 
+ANG CD1  CG   CD2 
+ANG CG   CD1  CE1 
+ANG CG   CD2  CE2 
+ANG CD1  CE1  CZ  
+ANG CD2  CE2  CZ  
+ANG CE1  CZ   CE2 
+
+--------------------------------------------------------------------------
+RES ILE 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000    8    ENDC    0
+ATM O     4   O     -0.55000    9    O       0
+ATM CB    2   CH1E   0.00000    4    CG2     0
+ATM CG1   3   CH2E   0.00000    5    CD1     0
+ATM CG2   2   CH3E   0.00000    7    CG2     0
+ATM CD1   3   CH3E   0.00000    6    CD1     0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG1 
+DIH CA   CB   CG1  CD1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CB   CG1  CG2  CA  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG1 
+ANG CA   CB   CG2 
+ANG CG1  CB   CG2 
+ANG CB   CG1  CD1 
+
+--------------------------------------------------------------------------
+RES LEU 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    8    ENDC    0
+ATM O     3   O     -0.55000    9    O       0
+ATM CB    2   CH2E   0.00000    4    CD2     0
+ATM CG    2   CH1E   0.00000    5    CD2     0
+ATM CD1   2   CH3E   0.00000    6    CD1     0
+ATM CD2   2   CH3E   0.00000    7    CD2     0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD2 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   CD2  CD1  CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD1 
+ANG CB   CG   CD2 
+ANG CD1  CG   CD2 
+
+--------------------------------------------------------------------------
+RES VAL 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    7    ENDC    0
+ATM O     3   O     -0.55000    8    O       0
+ATM CB    2   CH1E   0.00000    4    CG2     0
+ATM CG1   2   CH3E   0.00000    5    CG1     0
+ATM CG2   2   CH3E   0.00000    6    CG2     0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CB   CG2  CG1  CA  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG1 
+ANG CA   CB   CG2 
+ANG CG1  CB   CG2 
+
+--------------------------------------------------------------------------
+RES TRP 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     6   C      0.55000   15    ENDC    0
+ATM O     6   O     -0.55000   16    O       0
+ATM CB    2   CH2E   0.00000    4    CH2     0
+ATM CG    3   CR    -0.03000    5    CH2     1
+ATM CD1   4   CR1E   0.06000    6    HE1     1
+ATM CD2   3   CR     0.10000    9    CH2     1
+ATM NE1   4   NH1   -0.36000    7    HE1     1
+ATM CE2   3   CR    -0.04000   12    CH2     1
+ATM CE3   3   CR1E  -0.03000   10    CZ3     1
+ATM CZ2   5   CR1E   0.00000   13    CH2     1
+ATM CZ3   5   CR1E   0.00000   11    CZ3     1
+ATM CH2   5   CR1E   0.00000   14    CH2     1
+ATM H     1   H      0.25000    2    H       0
+ATM HE1   4   H      0.30000    8    HE1     0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD1 
+DIH CD1  CE2  CD2  CZ3 
+DIH CD1  CD2  CE2  CH2 
+DIH CZ2  CE2  CD2  CG  
+DIH CE3  CD2  CE2  NE1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   CD1  CD2  CB  
+IMP NE1  CD1  CE2  HE1 
+IMP CD2  CE2  CZ2  CH2 
+IMP CE2  CZ2  CH2  CZ3 
+IMP CZ2  CH2  CZ3  CE3 
+IMP CH2  CZ3  CE3  CD2 
+IMP CZ3  CE3  CD2  CE2 
+IMP CE3  CD2  CE2  CZ2 
+IMP CG   CD1  NE1  CE2 
+IMP CD1  NE1  CE2  CD2 
+IMP NE1  CE2  CD2  CG  
+IMP CE2  CD2  CG   CD1 
+IMP CD2  CG   CD1  NE1 
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD1 
+ANG CB   CG   CD2 
+ANG CD1  CG   CD2 
+ANG CG   CD1  NE1 
+ANG CG   CD2  CE2 
+ANG CG   CD2  CE3 
+ANG CE2  CD2  CE3 
+ANG CD1  NE1  HE1 
+ANG CD1  NE1  CE2 
+ANG HE1  NE1  CE2 
+ANG CD2  CE2  NE1 
+ANG CD2  CE2  CZ2 
+ANG NE1  CE2  CZ2 
+ANG CD2  CE3  CZ3 
+ANG CE2  CZ2  CH2 
+ANG CE3  CZ3  CH2 
+ANG CZ2  CH2  CZ3 
+
+--------------------------------------------------------------------------
+RES TYR 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     6   C      0.55000   13    ENDC    0
+ATM O     6   O     -0.55000   14    O       0
+ATM CB    2   CH2E   0.00000    4    HH      0
+ATM CG    2   CR     0.00000    5    HH      1
+ATM CD1   3   CR1E   0.00000    6    CE1     1
+ATM CD2   4   CR1E   0.00000    8    HH      1
+ATM CE1   3   CR1E   0.00000    7    CE1     1
+ATM CE2   4   CR1E   0.00000    9    HH      1
+ATM CZ    5   C      0.25000   10    HH      1
+ATM OH    5   OH1   -0.65000   11    HH      0
+ATM H     1   H      0.25000    2    H       0
+ATM HH    5   H      0.40000   12    HH      0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD1 
+DIH CE2  CZ   OH   HH  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   CD1  CD2  CB  
+IMP CZ   CE1  CE2  OH  
+IMP CG   CD1  CE1  CZ  
+IMP CD1  CE1  CZ   CE2 
+IMP CE1  CZ   CE2  CD2 
+IMP CZ   CE2  CD2  CG  
+IMP CE2  CD2  CG   CD1 
+IMP CD2  CG   CD1  CE1 
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD1 
+ANG CB   CG   CD2 
+ANG CD1  CG   CD2 
+ANG CG   CD1  CE1 
+ANG CG   CD2  CE2 
+ANG CD1  CE1  CZ  
+ANG CD2  CE2  CZ  
+ANG CE1  CZ   CE2 
+ANG CE1  CZ   OH  
+ANG CE2  CZ   OH  
+ANG CZ   OH   HH  
+
+--------------------------------------------------------------------------
+RES ALA 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    5    ENDC    0
+ATM O     3   O     -0.55000    6    O       0
+ATM CB    2   CH3E   0.00000    4    CB      0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+
+--------------------------------------------------------------------------
+RES GLY 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH2E   0.10000    3    ENDC    0
+ATM C     2   C      0.55000    4    ENDC    0
+ATM O     2   O     -0.55000    5    O       0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+
+--------------------------------------------------------------------------
+RES THR 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000    8    ENDC    0
+ATM O     4   O     -0.55000    9    O       0
+ATM CB    2   CH1E   0.25000    4    CG2     0
+ATM OG1   2   OH1   -0.65000    5    HG1     0
+ATM CG2   3   CH3E   0.00000    7    CG2     0
+ATM H     1   H      0.25000    2    H       0
+ATM HG1   2   H      0.40000    6    HG1     0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   OG1 
+DIH CA   CB   OG1  HG1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CB   OG1  CG2  CA  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   OG1 
+ANG CA   CB   CG2 
+ANG OG1  CB   CG2 
+ANG CB   OG1  HG1 
+
+--------------------------------------------------------------------------
+RES SER 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    7    ENDC    0
+ATM O     3   O     -0.55000    8    O       0
+ATM CB    2   CH2E   0.25000    4    HG      0
+ATM OG    2   OH1   -0.65000    5    HG      0
+ATM H     1   H      0.25000    2    H       0
+ATM HG    2   H      0.40000    6    HG      0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   OG  
+DIH CA   CB   OG   HG  
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   OG  
+ANG CB   OG   HG  
+
+--------------------------------------------------------------------------
+RES GLN 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     5   C      0.55000   11    ENDC    0
+ATM O     5   O     -0.55000   12    O       0
+ATM CB    2   CH2E   0.00000    4    HE22    0
+ATM CG    2   CH2E   0.00000    5    HE22    0
+ATM CD    3   C      0.55000    6    HE22    0
+ATM OE1   3   O     -0.55000    7    OE1     0
+ATM NE2   4   NH2   -0.60000    8    HE22    0
+ATM H     1   H      0.25000    2    H       0
+ATM HE21  4   H      0.30000    9    HE21    0
+ATM HE22  4   H      0.30000   10    HE22    0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD  
+DIH CB   CG   CD   OE1 
+DIH CG   CD   NE2  HE21
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CD   OE1  NE2  CG  
+IMP NE2  HE21 HE22 CD  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD  
+ANG CG   CD   OE1 
+ANG CG   CD   NE2 
+ANG OE1  CD   NE2 
+ANG CD   NE2  HE21
+ANG CD   NE2  HE22
+ANG HE21 NE2  HE22
+
+--------------------------------------------------------------------------
+RES ASN 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     5   C      0.55000   10    ENDC    0
+ATM O     5   O     -0.55000   11    O       0
+ATM CB    2   CH2E   0.00000    4    HD22    0
+ATM CG    3   C      0.55000    5    HD22    0
+ATM OD1   3   O     -0.55000    6    OD1     0
+ATM ND2   4   NH2   -0.60000    7    HD22    0
+ATM H     1   H      0.25000    2    H       0
+ATM HD21  4   H      0.30000    8    HD21    0
+ATM HD22  4   H      0.30000    9    HD22    0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   OD1 
+DIH CB   CG   ND2  HD21
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   OD1  ND2  CB  
+IMP ND2  HD21 HD22 CG  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   OD1 
+ANG CB   CG   ND2 
+ANG OD1  CG   ND2 
+ANG CG   ND2  HD21
+ANG CG   ND2  HD22
+ANG HD21 ND2  HD22
+
+--------------------------------------------------------------------------
+RES GLU 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000    9    ENDC    0
+ATM O     4   O     -0.55000   10    O       0
+ATM CB    2   CH2E   0.00000    4    OE2     0
+ATM CG    3   CH2E  -0.15000    5    OE2     0
+ATM CD    3   C      1.35000    6    OE2     0
+ATM OE1   3   OC    -0.60000    7    OE1     0
+ATM OE2   3   OC    -0.60000    8    OE2     0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD  
+DIH CB   CG   CD   OE1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CD   OE1  OE2  CG  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD  
+ANG CG   CD   OE1 
+ANG CG   CD   OE2 
+ANG OE1  CD   OE2 
+
+--------------------------------------------------------------------------
+RES ASP 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     3   C      0.55000    8    ENDC    0
+ATM O     3   O     -0.55000    9    O       0
+ATM CB    2   CH2E  -0.15000    4    OD2     0
+ATM CG    2   C      1.35000    5    OD2     0
+ATM OD1   2   OC    -0.60000    6    OD1     0
+ATM OD2   2   OC    -0.60000    7    OD2     0
+ATM H     1   H      0.25000    2    H       0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   OD1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   OD1  OD2  CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   OD1 
+ANG CB   CG   OD2 
+ANG OD1  CG   OD2 
+
+--------------------------------------------------------------------------
+RES HIS 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     5   C      0.55000   11    ENDC    0
+ATM O     5   O     -0.55000   12    O       0
+ATM CB    2   CH2E   0.00000    4    NE2     0
+ATM CG    3   CR     0.10000    5    NE2     1
+ATM ND1   3   NH1   -0.40000    6    CE1     1
+ATM CD2   4   CR1E   0.10000    9    NE2     1
+ATM CE1   4   CR1E   0.30000    8    CE1     1
+ATM NE2   4   NR    -0.40000   10    NE2     1
+ATM H     1   H      0.25000    2    H       0
+ATM HD1   3   H      0.30000    7    HD1     0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   ND1 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP CG   ND1  CD2  CB  
+IMP ND1  CG   CE1  HD1 
+IMP CG   ND1  CE1  NE2 
+IMP ND1  CE1  NE2  CD2 
+IMP CE1  NE2  CD2  CG  
+IMP NE2  CD2  CG   ND1 
+IMP CD2  CG   ND1  CE1 
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   ND1 
+ANG CB   CG   CD2 
+ANG ND1  CG   CD2 
+ANG CG   ND1  HD1 
+ANG CG   ND1  CE1 
+ANG HD1  ND1  CE1 
+ANG CG   CD2  NE2 
+ANG ND1  CE1  NE2 
+ANG CD2  NE2  CE1 
+
+--------------------------------------------------------------------------
+RES ARG 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     6   C      0.55000   16    ENDC    0
+ATM O     6   O     -0.55000   17    O       0
+ATM CB    2   CH2E   0.00000    4    HH22    0
+ATM CG    2   CH2E   0.00000    5    HH22    0
+ATM CD    3   CH2E   0.10000    6    HH22    0
+ATM NE    3   NH1   -0.40000    7    HH22    0
+ATM CZ    3   CR     0.25000    9    HH22    0
+ATM NH1   4   NC2   -0.85000   10    HH12    0
+ATM NH2   5   NC2   -0.85000   13    HH22    0
+ATM H     1   H      0.25000    2    H       0
+ATM HE    3   H      0.15000    8    HE      0
+ATM HH11  4   HC     0.40000   11    HH11    0
+ATM HH12  4   HC     0.40000   12    HH12    0
+ATM HH21  5   HC     0.40000   14    HH21    0
+ATM HH22  5   HC     0.40000   15    HH22    0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD  
+DIH CB   CG   CD   NE  
+DIH CG   CD   NE   CZ  
+DIH CD   NE   CZ   NH1 
+DIH NE   CZ   NH1  HH11
+DIH NE   CZ   NH2  HH21
+DIH NE   CZ   NH1  HH12
+DIH NE   CZ   NH2  HH22
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+IMP NE   CD   CZ   HE  
+IMP CZ   NH1  NH2  NE  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD  
+ANG CG   CD   NE  
+ANG CD   NE   HE  
+ANG CD   NE   CZ  
+ANG HE   NE   CZ  
+ANG NE   CZ   NH1 
+ANG NE   CZ   NH2 
+ANG NH1  CZ   NH2 
+ANG CZ   NH1  HH11
+ANG CZ   NH1  HH12
+ANG HH11 NH1  HH12
+ANG CZ   NH2  HH21
+ANG CZ   NH2  HH22
+ANG HH21 NH2  HH22
+
+--------------------------------------------------------------------------
+RES LYS 
+
+ATM N     1   NH1   -0.35000    1    ENDC    0
+ATM CA    1   CH1E   0.10000    3    ENDC    0
+ATM C     4   C      0.55000   12    ENDC    0
+ATM O     4   O     -0.55000   13    O       0
+ATM CB    2   CH2E   0.00000    4    HZ3     0
+ATM CG    2   CH2E   0.00000    5    HZ3     0
+ATM CD    2   CH2E   0.00000    6    HZ3     0
+ATM CE    3   CH2E   0.00000    7    HZ3     0
+ATM NZ    3   NH3   -1.35000    8    HZ3     0
+ATM H     1   H      0.25000    2    H       0
+ATM HZ1   3   HC     0.45000    9    HZ1     0
+ATM HZ2   3   HC     0.45000   10    HZ2     0
+ATM HZ3   3   HC     0.45000   11    HZ3     0
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD  
+DIH CB   CG   CD   CE  
+DIH CG   CD   CE   NZ  
+DIH CD   CE   NZ   HZ1 
+DIH CD   CE   NZ   HZ2 
+DIH CD   CE   NZ   HZ3 
+IMP N    -C   CA   H   
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    H   
+ANG CA   N    -C  
+ANG H    N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD  
+ANG CG   CD   CE  
+ANG CD   CE   NZ  
+ANG CE   NZ   HZ1 
+ANG CE   NZ   HZ2 
+ANG CE   NZ   HZ3 
+ANG HZ1  NZ   HZ2 
+ANG HZ1  NZ   HZ3 
+ANG HZ2  NZ   HZ3 
+
+--------------------------------------------------------------------------
+RES PRO 
+
+ATM N     1   N     -0.20000    1    ENDC    1
+ATM CA    1   CH1E   0.10000    4    ENDC    1
+ATM C     3   C      0.55000    6    ENDC    0
+ATM O     3   O     -0.55000    7    O       0
+ATM CB    2   CH2E   0.00000    5    CB      1
+ATM CG    2   CH2E   0.00000    3    CG      1
+ATM CD    1   CH2E   0.10000    2    CG      1
+
+DIH -C   N    CA   C   
+DIH N    CA   C    +N  
+DIH -CA  -C   N    CA  
+DIH N    CA   CB   CG  
+DIH CA   CB   CG   CD  
+DIH CB   CG   CD   N   
+DIH CG   CD   N    CA  
+IMP N    CA   CD   -C  
+IMP C    CA   +N   O   
+IMP CA   N    C    CB  
+ANG CA   N    CD  
+ANG CA   N    -C  
+ANG CD   N    -C  
+ANG N    CA   C   
+ANG N    CA   CB  
+ANG C    CA   CB  
+ANG CA   C    +N  
+ANG CA   C    O   
+ANG +N   C    O   
+ANG CA   CB   CG  
+ANG CB   CG   CD  
+ANG N    CD   CG  
+
+--------------------------------------------------------------------------
+RES NTER
+
+ATM N     1   NH3   -1.35000
+ATM CA    1   CH1E   0.00000
+ATM HT1   1   HC     0.45000
+ATM HT2   1   HC     0.45000
+ATM HT3   1   HC     0.45000
+
+DIH HT2  N    CA   C   
+DIH HT1  N    CA   C   
+DIH HT3  N    CA   C   
+ANG HT1  N    HT2 
+ANG HT1  N    HT3 
+ANG HT1  N    CA  
+ANG HT2  N    HT3 
+ANG HT2  N    CA  
+ANG HT3  N    CA  
+
+--------------------------------------------------------------------------
+RES GLYP
+
+ATM N     1   NH3   -1.35000
+ATM CA    1   CH2E   0.00000
+ATM HT1   1   HC     0.45000
+ATM HT2   1   HC     0.45000
+ATM HT3   1   HC     0.45000
+
+DIH HT2  N    CA   C   
+DIH HT1  N    CA   C   
+DIH HT3  N    CA   C   
+ANG HT1  N    HT2 
+ANG HT1  N    HT3 
+ANG HT1  N    CA  
+ANG HT2  N    HT3 
+ANG HT2  N    CA  
+ANG HT3  N    CA  
+
+--------------------------------------------------------------------------
+RES PROP
+
+ATM N     1   NH3   -1.40000
+ATM CA    1   CH1E   0.25000
+ATM CD    1   CH2E   0.25000
+ATM HT1   1   HC     0.45000
+ATM HT2   1   HC     0.45000
+
+DIH HT2  N    CA   C   
+DIH HT1  N    CA   C   
+ANG HT1  N    HT2 
+ANG HT1  N    CA  
+ANG HT1  N    CD  
+ANG HT2  N    CA  
+ANG HT2  N    CD  
+
+--------------------------------------------------------------------------
+RES CTER
+
+ATM C     1   C      1.20000
+ATM OT1   1   OC    -0.60000
+ATM OT2   1   OC    -0.60000
+
+DIH N    CA   C    OT2 
+IMP C    CA   OT2  OT1 
+ANG OT1  C    OT2 
+ANG OT1  C    CA  
+ANG OT2  C    CA  
+
+--------------------------------------------------------------------------
+RES DISU
+
+ATM 1CB   1   CH2E   0.19000
+ATM 1SG   1   S     -0.19000
+ATM 2SG   2   S     -0.19000
+ATM 2CB   2   CH2E   0.19000
+
+DIH 1CA  1CB  1SG  2SG 
+DIH 1CB  1SG  2SG  2CB 
+DIH 1SG  2SG  2CB  2CA 
+ANG 2SG  1SG  1CB 
+ANG 1SG  2SG  2CB 
+
+END

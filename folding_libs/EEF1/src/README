@@ -1,0 +1,5 @@
+Guang 08/03/2002
+
+quickfit.o and libf96.so libf96.so.1 are the library files from NAGWare f95 compiler.
+
+I change utils.F90 so that omega values need not be setup.
