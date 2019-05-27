@@ -4,7 +4,8 @@ include ../makefile_includes/Makefile.defaults
 
 # Compiler Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-INCL := -I. -I../mathtool/
+DEFS := $(CGAL_DEF)
+INCL := -I. -I../mathtool/ $(CGAL_INCL)
 ifeq (${platform}, CRAY_gcc)
   # TODO Remove Matthew's personal directory from this include and replace with
   #      a system copy. If one is not present, we should get it there or add a
