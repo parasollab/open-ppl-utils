@@ -13,28 +13,28 @@ SYS_LIB := /usr/lib64
 
 # CGAL Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Version 4.9.1 is the highest version that works on cmake v2.x, which is
-# required for CentOS. Check for ability to upgrade on next major CentOS
-# version.
-CGAL_VER := 4.9.1
+CGAL_VER := 4.14
 GIT_REPO := https://github.com/CGAL/cgal.git
 GIT_OPS  := --depth 1 --branch releases/CGAL-$(CGAL_VER)
 
+CMAKE_BIN := cmake3
 CMAKE_OPS := -G"Unix Makefiles" \
   -DBLAS_DEFINITIONS= \
-  -DBLAS_INCLUDE_DIR= \
+  -DBLAS_INCLUDE_DIR=$(SYS_INC) \
   -DBLAS_LIBRARIES=$(SYS_LIB)/libblas.so \
   -DBLAS_LIBRARIES_DIR=$(SYS_LIB) \
   -DBUILD_DOC=OFF \
   -DBUILD_SHARED_LIBS=ON \
   -DBUILD_TESTING=OFF \
   -DCGAL_CREATE_CMAKE_SCRIPT=$(SOURCE_DIR)/Scripts/scripts/cgal_create_cmake_script \
+  -DCGAL_CTEST_DISPLAY_MEM_AND_TIME=OFF \
+  -DCGAL_DEV_MODE=OFF \
   -DCGAL_CXX_FLAGS= -frounding-math \
-  -DCGAL_DONT_OVERRIDE_CMAKE_FLAGS=TRUE \
   -DCGAL_ENABLE_CHECK_HEADERS=OFF \
   -DCGAL_ENABLE_PRECONFIG=ON \
+  -DCGAL_HEADER_ONLY=OFF \
   -DCGAL_INSTALL_BIN_DIR=bin \
-  -DCGAL_INSTALL_CMAKE_DIR=lib64/CGAL \
+  -DCGAL_INSTALL_CMAKE_DIR=lib64/cmake \
   -DCGAL_INSTALL_DOC_DIR=doc \
   -DCGAL_INSTALL_INC_DIR=include \
   -DCGAL_INSTALL_LIB_DIR=lib64 \
@@ -66,12 +66,10 @@ CMAKE_OPS := -G"Unix Makefiles" \
   -DWITH_IPE=OFF \
   -DWITH_LAPACK=ON \
   -DWITH_LEDA=OFF \
-  -DWITH_MPFI=OFF \
   -DWITH_MPFR=ON \
   -DWITH_NTL=OFF \
   -DWITH_OpenGL=OFF \
   -DWITH_OpenNL=OFF \
-  -DWITH_QGLViewer=OFF \
   -DWITH_RS=OFF \
   -DWITH_RS3=OFF \
   -DWITH_ZLIB=OFF \
@@ -87,7 +85,7 @@ $(INSTALL_DIR): $(SOURCE_DIR)
 	@echo Building CGAL library...
 	@rm -rf $(BUILD_DIR)
 	@mkdir $(BUILD_DIR)
-	@cd $(BUILD_DIR) && cmake $(CMAKE_OPS) $(SOURCE_DIR) && make install
+	@cd $(BUILD_DIR) && $(CMAKE_BIN) $(CMAKE_OPS) $(SOURCE_DIR) && make install
 	@rm -r $(BUILD_DIR)
 
 # Fetch the CGAL git repo.
