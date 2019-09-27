@@ -14,7 +14,9 @@
 
 #include <vector>
 #include <limits>
-#include "values.h"
+#ifndef __APPLE__
+  #include "values.h"
+#endif
 #include "util/d_ary_heap.h"
 #include "graph_algo_util.h"
 #include <stapl/containers/type_traits/index_bounds.hpp>

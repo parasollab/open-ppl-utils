@@ -44,5 +44,10 @@ cmake -G"Unix Makefiles" \
 
 # Bullet takes a while to build, so use parallel make with max number of
 # processors.
-numprocs=$(grep -c ^processor /proc/cpuinfo)
+platform=${1:-LINUX_gcc}
+if [ "${platform}" = 'MACOS_gcc' ]; then
+  numprocs=1
+else
+  numprocs=$(grep -c ^processor /proc/cpuinfo)
+fi;
 make install -j${numprocs}

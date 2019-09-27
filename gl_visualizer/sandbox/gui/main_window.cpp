@@ -1,6 +1,10 @@
 #include "main_window.h"
 
 #include "gl_widget.h"
+#include <QMessageBox>
+#include <QDockWidget>
+#include <QToolBar>
+#include <QStatusBar>
 
 #include <iostream>
 

@@ -1,3 +1,5 @@
+platform ?= LINUX_gcc
+
 # Directory Layout ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Directories for our build.
@@ -6,9 +8,15 @@ BUILD_DIR   := $(CURDIR)/build
 INSTALL_DIR := $(CURDIR)/install
 
 # Important system directories.
-SYS_BIN := /usr/bin
-SYS_INC := /usr/include
-SYS_LIB := /usr/lib64
+ifeq ($(platform), MACOS_gcc)
+  SYS_BIN := /usr/local/bin
+  SYS_INC := /usr/local/include
+  SYS_LIB := /usr/local/lib
+else
+  SYS_BIN := /usr/bin
+  SYS_INC := /usr/include
+  SYS_LIB := /usr/lib64
+endif
 
 
 # CGAL Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -17,19 +25,35 @@ CGAL_VER := 4.14
 GIT_REPO := https://github.com/CGAL/cgal.git
 GIT_OPS  := --depth 1 --branch releases/CGAL-$(CGAL_VER)
 
-CMAKE_BIN := cmake3
+BUILD_SHARED_LIBS := ON
+ifeq ($(platform), MACOS_gcc)
+  BUILD_SHARED_LIBS := OFF
+endif
+
+LIB_EXTENSION := so
+ifeq ($(platform), MACOS_gcc)
+  LIB_EXTENSION := dylib
+endif
+
+ifeq ($(platform), MACOS_gcc)
+  CMAKE_BIN := cmake
+else
+  CMAKE_BIN := cmake3
+endif
+
 CMAKE_OPS := -G"Unix Makefiles" \
   -DBLAS_DEFINITIONS= \
   -DBLAS_INCLUDE_DIR=$(SYS_INC) \
   -DBLAS_LIBRARIES=$(SYS_LIB)/libblas.so \
   -DBLAS_LIBRARIES_DIR=$(SYS_LIB) \
   -DBUILD_DOC=OFF \
-  -DBUILD_SHARED_LIBS=ON \
+  -DBUILD_SHARED_LIBS=$(BUILD_SHARED_LIBS) \
   -DBUILD_TESTING=OFF \
   -DCGAL_CREATE_CMAKE_SCRIPT=$(SOURCE_DIR)/Scripts/scripts/cgal_create_cmake_script \
   -DCGAL_CTEST_DISPLAY_MEM_AND_TIME=OFF \
   -DCGAL_DEV_MODE=OFF \
-  -DCGAL_CXX_FLAGS= -frounding-math \
+  -DCGAL_CXX_FLAGS= -frounding-math -Wno-error=catch-value \
+  -DCGAL_DONT_OVERRIDE_CMAKE_FLAGS=TRUE \
   -DCGAL_ENABLE_CHECK_HEADERS=OFF \
   -DCGAL_ENABLE_PRECONFIG=ON \
   -DCGAL_HEADER_ONLY=OFF \
@@ -45,14 +69,14 @@ CMAKE_OPS := -G"Unix Makefiles" \
   -DEIGEN3_INCLUDE_DIR=$(SYS_INC)/eigen3 \
   -DGIT_EXECUTABLE=$(SYS_BIN)/git \
   -DGMP_INCLUDE_DIR=$(SYS_INC) \
-  -DGMP_LIBRARIES=$(SYS_LIB)/libgmp.so \
+  -DGMP_LIBRARIES=$(SYS_LIB)/libgmp.$(LIB_EXTENSION) \
   -DGMP_LIBRARIES_DIR=$(SYS_LIB) \
   -DLAPACK_DEFINITIONS= \
   -DLAPACK_INCLUDE_DIR=$(SYS_INC) \
   -DLAPACK_LIBRARIES=$(SYS_LIB)/liblapack.so \
   -DLAPACK_LIBRARIES_DIR=$(SYS_LIB) \
   -DMPFR_INCLUDE_DIR=$(SYS_INC) \
-  -DMPFR_LIBRARIES=$(SYS_LIB)/libmpfr.so \
+  -DMPFR_LIBRARIES=$(SYS_LIB)/libmpfr.$(LIB_EXTENSION) \
   -DMPFR_LIBRARIES_DIR=$(SYS_LIB) \
   -DWITH_BLAS=ON \
   -DWITH_CGAL_Core=ON \
@@ -76,7 +100,6 @@ CMAKE_OPS := -G"Unix Makefiles" \
   -DWITH_demos=OFF \
   -DWITH_examples=OFF \
   -DWITH_tests=OFF
-
 
 # Recipes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 

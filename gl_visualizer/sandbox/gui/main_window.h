@@ -8,6 +8,8 @@
 #include <vector>
 
 #include <QtGui>
+#include <QMainWindow>
+#include <QStackedWidget>
 
 class base_visualization;
 class gl_widget;

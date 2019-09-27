@@ -1,14 +1,28 @@
+platform ?= LINUX_gcc
+
 # Externals ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # Set up externals here.
 
 # Qt
 BASE         := /usr/include
-QT_INCL      := -I$(BASE)/Qt -I$(BASE)/QtCore -I$(BASE)/QtGui -I$(BASE)/QtOpenGL
+ifeq ($(platform), MACOS_gcc)
+  BASE         := /usr/local/opt/qt/include
+endif
+QT_INCL      := -I$(BASE)/ -I$(BASE)/QtCore -I$(BASE)/QtGui -I$(BASE)/QtOpenGL \
+                -I$(BASE)/QtWidgets
 QT_LIBS      := -lQtCore -lQtGui -lQtOpenGL
+
+ifeq ($(platform), MACOS_gcc)
+  QT_LIBS      := -F/usr/local/opt/qt/Frameworks -framework QtCore \
+                  -framework QtGui -framework QtOpenGL -framework QtWidgets
+endif
 
 # GL
 GL_LIBS      := -lGLU -lGL
+ifeq ($(platform), MACOS_gcc)
+  GL_LIBS      := -framework GLUT -framework OpenGL
+endif
 
 # nonstd
 NONSTD_DIR   := ../nonstd
@@ -37,11 +51,11 @@ EXTERNAL_LIBS := $(QT_LIBS) $(GLUTILS_LIBS) $(GL_LIBS) $(NONSTD_LIBS)
 OBJ_DIR  := build
 MOC_DIR  := $(OBJ_DIR)/moc
 SRC_DIRS := $(patsubst ./%,%, $(shell find . -type d \
-		    ! \( -name $(OBJ_DIR) -o -path ./$(MOC_DIR) -o -name '.' \) ))
+		    ! \( -path "./$(OBJ_DIR)*" -o -name "." \) ))
 DOC_DIR  := docs
 
 $(OBJ_DIR):
-	@mkdir $@
+	@mkdir -p $@ $(patsubst %,$(OBJ_DIR)/%,$(SRC_DIRS))
 $(MOC_DIR): | $(OBJ_DIR)
 	@mkdir $@
 
@@ -67,7 +81,8 @@ TRACK_DEPS  = cat $(DEP_GLOB) >> $(DEP_FILE) ; rm -f $(DEP_GLOB)
 
 CXX   := g++
 FLAGS := -std=c++11 -fPIC -g3 -O3
-WARN  := -Wall -Werror -Wextra
+WARN  := -Wall -Werror -Wextra -Wno-deprecated-copy \
+         -Wno-error=deprecated-declarations
 DEFS  := $(EXTERNAL_DEFS)
 INCL  := -I. $(EXTERNAL_INCL)
 DEPS   = -MMD -MF $(DEP_GLOB)
@@ -98,12 +113,18 @@ MOC := moc
 # Scan the source and test directories to look for files with suffix '.cpp'.
 
 SRCS     := $(patsubst ./%,%, $(shell find . -type f -name '*.cpp' \
-		    ! -name 'moc_*.cpp' ! -name 'main.cpp' -printf "%f "))
-MOC_SRCS := $(patsubst ./%.h,moc_%.cpp, $(shell find . -type f \
+		    ! -name 'moc_*.cpp' ! -name 'main.cpp' -print))
+ifeq ($(platform), MACOS_gcc)
+  MOC_SRCS := $(patsubst ./%.h,moc_%.cpp, $(shell find . -type f \
+		    -name '*.h' -exec grep -rl Q_OBJECT \{} + ))
+else
+  MOC_SRCS := $(patsubst ./%.h,moc_%.cpp, $(shell find . -type f \
 		    -name '*.h' -execdir grep -rl Q_OBJECT \{} + ))
+endif
 
 $(MOC_DIR)/moc_%.cpp: %.h | $(MOC_DIR)
 	@echo Moc\'ing $(shell echo $< | sed 's|.*/||' )...
+	@mkdir -p $(MOC_DIR)/moc_$(shell dirname $<)
 	@$(MOC) $< -o $@
 
 
@@ -113,11 +134,7 @@ $(MOC_DIR)/moc_%.cpp: %.h | $(MOC_DIR)
 # recipes.
 
 OBJS     := $(patsubst %.cpp,$(OBJ_DIR)/%.o, $(SRCS))
-MOC_OBJS := $(patsubst %.cpp,$(OBJ_DIR)/%.o, $(MOC_SRCS))
-
-$(OBJ_DIR)/moc_%.o: $(MOC_DIR)/moc_%.cpp %.h | $(MOC_DIR)
-	@echo Compiling $(shell echo $< | sed 's|.*/||' )...
-	@$(CXX) $(FLAGS) $(WARN) $(INCL) -c $< -o $@
+MOC_OBJS := $(patsubst %.cpp,$(MOC_DIR)/%.o, $(MOC_SRCS))
 
 $(OBJ_DIR)/%.o: %.cpp %.h | $(OBJ_DIR)
 	@echo Compiling $(shell echo $< | sed 's|.*/||' )...
@@ -127,6 +144,11 @@ $(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 	@echo Compiling $(shell echo $< | sed 's|.*/||' ) \
 	      \(no associated header\)...
 	@$(CXX) $(FLAGS) $(WARN) $(INCL) -c $< -o $@
+
+$(MOC_DIR)/moc_%.o: $(MOC_DIR)/moc_%.cpp %.h | $(MOC_DIR)
+	@echo Compiling Moc\'d source $(shell echo $< | sed 's|.*/||' )...
+	@$(CXX) $(FLAGS) $(WARN) $(INCL) -c $< -o $@
+
 
 
 # Libraries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

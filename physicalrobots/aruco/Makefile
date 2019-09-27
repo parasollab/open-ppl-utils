@@ -78,7 +78,7 @@ OPENCV_LIBS := -lopencv_calib3d -lopencv_contrib -lopencv_core \
 LIBS := -L$(BUILD_DIR) -l$(LIBRARY_NAME) $(OPENCV_LIBS)
 
 
-EXECUTABLES := $(shell grep -rlI --include='aruco*' -e 'int main' \
+EXECUTABLES := $(shell grep -rlI --include='aruco*' -e 'int main' . \
                               | sed 's|^|$(BUILD_DIR)/|' | sed 's|\.cpp||' )
 
 $(BUILD_DIR)/$(UTILS_DIR)/%: $(UTILS_DIR)/%.cpp $(UTILS_OBJS) $(LIBRARY)

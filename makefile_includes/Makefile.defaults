@@ -23,6 +23,7 @@
 
 CFLAGS := -Wall -Werror -Wno-misleading-indentation -Wno-unused-local-typedefs \
 	  -Wno-unknown-pragmas -Wno-error=deprecated-declarations \
+          -Wno-deprecated-copy \
 	  -Wno-deprecated -Wno-comment -Wno-terminate
 CXXFLAGS := -std=c++11 $(CFLAGS)
 

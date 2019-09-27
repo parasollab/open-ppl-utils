@@ -53,7 +53,8 @@ TRACK_DEPS  = cat $(DEP_GLOB) >> $(DEP_FILE) ; rm -f $(DEP_GLOB)
 
 CXX   := g++
 FLAGS := -std=c++11 -fPIC -g3 -O3
-WARN  := -Wall -Werror -Wextra -Wno-parentheses
+WARN  := -Wall -Werror -Wextra -Wno-parentheses -Wno-deprecated-copy \
+         -Wno-error=deprecated-declarations
 DEFS  := $(EXTERNAL_DEFS)
 INCL  := -I. $(EXTERNAL_INCL)
 DEPS   = -MMD -MF $(DEP_GLOB)

@@ -98,7 +98,9 @@
 #include <stdio.h>			// standard I/O (for NULL)
 #include <iostream>			// I/O streams
 #include <math.h>			// math includes
-#include <values.h>			// special values
+#ifndef __APPLE__
+  #include <values.h>			// special values
+#endif
 #include <limits>
 #include <cstddef>
 

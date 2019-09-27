@@ -96,7 +96,7 @@ LINK := $(LINKER) $(LINK_OPTS)
 # Scan the local directory tree to look for source files with suffix '.cpp' but
 # no definition for the main function.
 
-SRCS := $(shell grep -rLIz -m 1 --include='*.cpp' 'int\s*main')
+SRCS := $(shell grep -rLIz -m 1 --include='*.cpp' 'int\s*main' .)
 
 
 # Object configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

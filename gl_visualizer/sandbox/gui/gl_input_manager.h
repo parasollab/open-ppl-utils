@@ -2,6 +2,7 @@
 #define GL_INPUT_MANAGER_H_
 
 #include <QtGui>
+#include <QWidget>
 
 class gl_widget;
 
