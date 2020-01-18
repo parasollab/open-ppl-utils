@@ -232,10 +232,10 @@ namespace mathtool {
   //matrix inverse for 3x3
   inline Matrix3x3 inverse(const Matrix3x3& _m) {
     Matrix3x3 m;
-    float det = _m[0][0]*(_m[1][1]*_m[2][2] - _m[2][1]*_m[1][2])
+    const double det = _m[0][0]*(_m[1][1]*_m[2][2] - _m[2][1]*_m[1][2])
       -_m[0][1]*(_m[1][0]*_m[2][2]-_m[1][2]*_m[2][0])
       +_m[0][2]*(_m[1][0]*_m[2][1]-_m[1][1]*_m[2][0]);
-    float invdet = 1.0/det;
+    const double invdet = 1.0/det;
     m[0][0] =  (_m[1][1]*_m[2][2] - _m[2][1]*_m[1][2]) * invdet;
     m[1][0] = -(_m[0][1]*_m[2][2] - _m[0][2]*_m[2][1]) * invdet;
     m[2][0] =  (_m[0][1]*_m[1][2] - _m[0][2]*_m[1][1]) * invdet;

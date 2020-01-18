@@ -9,13 +9,13 @@
 
 namespace mathtool {
 
-  //constants
+  // PI to 100 significant figures
 #ifndef PI
-#define PI 3.1415926535897
+#define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068
 #endif
 
 #ifndef TWOPI
-#define TWOPI 6.2831853071794
+#define TWOPI (2 * PI)
 #endif
 
   template<typename T>
