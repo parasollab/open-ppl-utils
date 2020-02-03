@@ -12,6 +12,7 @@
 #ifndef STAPL_CONTAINERS_SEQUENTIAL_GRAPH_ADJACENCY_LIST_CORE_GRAPH_HPP
 #define STAPL_CONTAINERS_SEQUENTIAL_GRAPH_ADJACENCY_LIST_CORE_GRAPH_HPP
 
+#include "runtime/stapl_assert.hpp"
 #include "adj_list_vertex_edge.h"
 #include "graph_iterator.h"
 
