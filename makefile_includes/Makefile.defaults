@@ -33,7 +33,7 @@ debug ?= 0
 ifeq ($(debug), 0)
   OPTS := -O3
 else
-  OPTS := -g3 -Og
+  OPTS := -g3 -O0
 endif
 
 asan ?= 0
