@@ -16,7 +16,18 @@ else
   SYS_BIN := /usr/bin
   SYS_INC := /usr/include
   SYS_LIB := /usr/lib64
+
+  # Look for the newer version of eigen3 on UIUC machines
+  UIUC_EIGEN_DIR     := /software/eigen-3.3.7/include/eigen3
+  SIGNATURE_FILE     := $(UIUC_EIGEN_DIR)/signature_of_eigen3_matrix_library
+  NEW_VERSION_EXISTS := $(wildcard $(SIGNATURE_FILE))
+  ifneq ($(NEW_VERSION_EXISTS), "")
+    EIGEN_DIR := $(UIUC_EIGEN_DIR)
+  endif
 endif
+
+# Use the default eigen directory if we didn't set it above.
+EIGEN_DIR ?= $(SYS_INC)/eigen3
 
 
 # CGAL Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -66,7 +77,7 @@ CMAKE_OPS := -G"Unix Makefiles" \
   -DCGAL_REPORT_DUPLICATE_FILES=OFF \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=$(INSTALL_DIR) \
-  -DEIGEN3_INCLUDE_DIR=$(SYS_INC)/eigen3 \
+  -DEIGEN3_INCLUDE_DIR=$(EIGEN_DIR) \
   -DGIT_EXECUTABLE=$(SYS_BIN)/git \
   -DGMP_INCLUDE_DIR=$(SYS_INC) \
   -DGMP_LIBRARIES=$(SYS_LIB)/libgmp.$(LIB_EXTENSION) \
