@@ -13,7 +13,7 @@
 
 # Directories for our build.
 SOURCE_DIR  := $(CURDIR)/source
-INSTALL_DIR := $(CURDIR)/install
+INSTALL_DIR := $(CURDIR)/install/nlohmann
 
 
 # Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -29,7 +29,7 @@ GIT_OPS  := --depth 1 --branch $(TAG)
 $(INSTALL_DIR): $(SOURCE_DIR)
 	@echo Building nlohmann-json library...
 	@rm -rf $(INSTALL_DIR)
-	@mkdir $(INSTALL_DIR)
+	@mkdir -p $(INSTALL_DIR)
 	@cp $(SOURCE_DIR)/single_include/nlohmann/json.hpp $(INSTALL_DIR)
 
 # Fetch the CGAL git repo.
