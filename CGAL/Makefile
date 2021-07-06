@@ -52,7 +52,7 @@ endif
 
 ifeq ($(platform), MACOS_gcc)
   CMAKE_BIN := cmake
-else ifeq ($(platform), Ubuntu)
+else ($(platform), Ubuntu)
   CMAKE_BIN := cmake
 else
   CMAKE_BIN := cmake3
