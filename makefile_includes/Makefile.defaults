@@ -43,11 +43,11 @@ endif
 
 # Platform Detection ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-PLATFORMS = "LINUX_gcc LINUX_gcc_mh MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc_brazos LINUX_gcc_hopper CRAY_gcc"
+PLATFORMS = "LINUX_gcc LINUX_gcc_mh Ubuntu MACOS_gcc AIX_64_gcc AIX_64_xlC LINUX_gcc_brazos LINUX_gcc_hopper CRAY_gcc"
 
 FOUNDPLAT = 0
 
-ifeq ($(platform), $(filter $(platform), LINUX_gcc MACOS_gcc CRAY_gcc))
+ifeq ($(platform), $(filter $(platform), LINUX_gcc MACOS_gcc CRAY_gcc Ubuntu))
   FOUNDPLAT := 1
   CC := gcc
   AR := ar rc
