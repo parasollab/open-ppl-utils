@@ -12,7 +12,7 @@ ifeq ($(platform), MACOS_gcc)
   SYS_BIN := /usr/local/bin
   SYS_INC := /usr/local/include
   SYS_LIB := /usr/local/lib
-else ifeq ($(platform), Ubuntu)
+else ($(platform), Ubuntu)
   SYS_BIN := /usr/bin
   SYS_BIN := /usr/include
   SYS_LIB := /usr/lib/x86_64-linux-gnu
