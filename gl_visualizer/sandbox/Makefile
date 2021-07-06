@@ -9,6 +9,10 @@ BASE         := /usr/include
 ifeq ($(platform), MACOS_gcc)
   BASE         := /usr/local/opt/qt/include
 endif
+ifeq ($(platform), Ubuntu)
+  BASE := /usr/include/qt4
+endif
+
 QT_INCL      := -I$(BASE)/ -I$(BASE)/QtCore -I$(BASE)/QtGui -I$(BASE)/QtOpenGL \
                 -I$(BASE)/QtWidgets
 QT_LIBS      := -lQtCore -lQtGui -lQtOpenGL
