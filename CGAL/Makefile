@@ -12,6 +12,10 @@ ifeq ($(platform), MACOS_gcc)
   SYS_BIN := /usr/local/bin
   SYS_INC := /usr/local/include
   SYS_LIB := /usr/local/lib
+else ifeq ($(platform), Ubuntu)
+  SYS_BIN := /usr/bin
+  SYS_BIN := /usr/include
+  SYS_LIB := /usr/lib/x86_64-linux-gnu
 else
   SYS_BIN := /usr/bin
   SYS_INC := /usr/include
@@ -47,6 +51,8 @@ ifeq ($(platform), MACOS_gcc)
 endif
 
 ifeq ($(platform), MACOS_gcc)
+  CMAKE_BIN := cmake
+else ifeq ($(platform), Ubuntu)
   CMAKE_BIN := cmake
 else
   CMAKE_BIN := cmake3
