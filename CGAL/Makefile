@@ -69,7 +69,6 @@ CMAKE_OPS := -G"Unix Makefiles" \
   -DCGAL_CREATE_CMAKE_SCRIPT=$(SOURCE_DIR)/Scripts/scripts/cgal_create_cmake_script \
   -DCGAL_CTEST_DISPLAY_MEM_AND_TIME=OFF \
   -DCGAL_DEV_MODE=OFF \
-  -DCGAL_CXX_FLAGS= -frounding-math -Wno-error=catch-value \
   -DCGAL_DONT_OVERRIDE_CMAKE_FLAGS=TRUE \
   -DCGAL_ENABLE_CHECK_HEADERS=OFF \
   -DCGAL_ENABLE_PRECONFIG=ON \
